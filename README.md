@@ -1,6 +1,8 @@
 # PF-Doctorine
 
-## Commit & Push Progress:
+# Links importantes a utilizar:
+https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
+# Commit & Push Progress:
 
 <p align="left">
   <img height="500" src="./img/Github 1.PNG" />
