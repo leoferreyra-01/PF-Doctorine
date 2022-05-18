@@ -16,3 +16,17 @@
 
 - Una vez que el commit esta realizado les va a aparecer el boton azul de "Push".
 - Cuando pusheen su trabajo como tal pasa poner en comun lo trabajado.
+
+## Luego de la reunion semanal
+
+<p align="left">
+  <img height="600" src="./img/GitHub 2.PNG" />
+</p>
+
+- Una vez que se haya terminado la reunion semanal, y la version nueva en la que hemos trabajado este en el main, vamos a mergear la version del main en nuestra branch. Para ello nos vamos, como indica la foto, al apartado de branch y nos posamos donde dice "compare to branch" o simplemente tecleamos Ctrl + Shift + B, asegurandonos de estar parados sobre nuestra branch de trabajo.
+
+<p align="left">
+  <img height="600" src="./img/GitHub 2.PNG" />
+</p>
+
+- Alli seleccionamos la branch con la cual queremos comparar nuestra branch 
