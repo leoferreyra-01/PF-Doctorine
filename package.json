@@ -1,0 +1,20 @@
+{
+  "name": "noname",
+  "version": "1.0.0",
+  "description": "Inicio de Back",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoferreyra-01/PF-Indefinido.git"
+  },
+  "author": "Juan M.Grupo Back",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leoferreyra-01/PF-Indefinido/issues"
+  },
+  "homepage": "https://github.com/leoferreyra-01/PF-Indefinido#readme"
+
+}
