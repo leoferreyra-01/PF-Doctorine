@@ -29,4 +29,26 @@
   <img height="500" src="./img/Github 4.PNG" />
 </p>
 
-- Alli seleccionamos la branch con la cual queremos comparar nuestra branch y abajo a la izquierda, similiar a cuando commiteamos lo trabajado, nos aparecera para mergear los cambios encontrados. Una vez clickeado esto ya tendremos nuestro branch listo para trabajar.
+- Alli seleccionamos la branch con la cual queremos comparar nuestra branch y abajo a la izquierda, similiar a cuando commiteamos lo trabajado, nos aparecera para mergear los cambios encontrados
+
+<p align="left">
+  <img height="500" src="./img/Github 5.PNG" />
+</p>
+
+- Una vez clickeado esto ya tendremos nuestro branch listo para trabajar con la version mas actualizada y completa de nuestro proyecto.
+
+# Como crear tu propio Branch
+-Si bien esto no tendrían por que hacerlo, ya que vamos a crear los difetentes branches juntos, les dejo aclarado como tendrían que hacerlo por si es que lo llegan a necesitar.
+<p align="left">
+  <img height="500" src="./img/Github 6.PNG" />
+</p>
+
+- __IMPORTANTE:__ Nos aseguramos de estar parados en la rama DEV.
+- Una vez parados alli simplemente clickeando en "New Branch" nos llevara a la creacion de la misma.
+
+<p align="left">
+  <img height="500" src="./img/Github 6.PNG" />
+</p>
+
+- __IMPORTANTE:__  Hay que crear la branch en DEV asegurense, como en la foto de arriba, de seleccionar esa y no MAIN.
+- Y luego le eligen el nombre en especifico que quieran, por comodidad nosotros vamos a nombrar cada branch por el nombre de cada uno.
