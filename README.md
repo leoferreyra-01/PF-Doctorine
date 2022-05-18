@@ -52,3 +52,4 @@
 
 - __IMPORTANTE:__  Hay que crear la branch en DEV asegurense, como en la foto de arriba, de seleccionar esa y no MAIN.
 - Y luego le eligen el nombre en especifico que quieran, por comodidad nosotros vamos a nombrar cada branch por el nombre de cada uno.
+- Esto los llevara a su nueva Branch de prueba para lo que deseen hacer. Para poder volver a la branch anterior o mergearla o lo que se desee hacer con ello, simplemente sigan los pasos anteriores que van a encontrar su respuesta.
