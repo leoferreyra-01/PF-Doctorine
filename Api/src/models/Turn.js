@@ -3,21 +3,26 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = sequelize => {
   // defino el modelo
-  sequelize.define('Turn', {
-    ID_Turn: {
-      primaryKey: true,
+  sequelize.define(
+    'Turn',
+    {
+      ID_Turn: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
+      date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
+      name: {
+        // no  creo que haga falta
+        type: DataTypes.STRING,
+      },
+      description: {
+        // no  creo que haga falta
+        type: DataTypes.STRING,
+      },
     },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    name: {
-      // no  creo que haga falta
-      type: DataTypes.STRING,
-    },
-    description: {
-      // no  creo que haga falta
-      type: DataTypes.STRING,
-    },
-  });
+    { timestamps: false } //eliminar
+  );
 };
