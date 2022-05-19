@@ -1,21 +1,19 @@
-const { DataTypes } = require("sequelize");
-module.exports = (sequelize) => {
+const { DataTypes } = require('sequelize');
+module.exports = sequelize => {
   sequelize.define(
-    "Medic",
+    'Teeth', //"Medic",
     {
+      ID: {
+        type: DataTypes.INTEGER,
+      },
       zone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      ID_Teeth: {
-        type: DataTypes.INTEGER
-     
-    },
-    position:{
-        type: DataTypes.INTEGER
+
+      position: {
+        type: DataTypes.INTEGER,
+      },
     }
-
-
-}
   );
 };

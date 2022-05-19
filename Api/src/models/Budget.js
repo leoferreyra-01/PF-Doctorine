@@ -6,7 +6,7 @@ module.exports = sequelize => {
   sequelize.define(
     'Budget',
     {
-      ID_Budget: {
+      ID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
