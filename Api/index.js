@@ -44,3 +44,4 @@ conn.sync(syncConfig).then(() => {
     console.log('-');
   });
 });
+//hola :)
