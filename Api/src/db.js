@@ -61,9 +61,9 @@ const { Medic, Pacient, Calendar, Hc, User, Turn, Budget } = sequelize.models;
 Medic.belongsToMany(Pacient, { through: Calendar });
 Pacient.hasOne(Medic, { through: Calendar });
 
-// relacion usario- paciente (1:1)
-/* User.hasOne(Pacient);
-Pacient.belongsTo(User); */
+//|!|  relacion usario- paciente (1:1)
+//|| User.hasOne(Pacient);
+//|| Pacient.belongsTo(User);
 // relacion paciente-presupuesto (1:N)
 Pacient.hasMany(Budget);
 Budget.belongsTo(Pacient);
