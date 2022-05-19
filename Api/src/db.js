@@ -30,14 +30,7 @@ let sequelize =
       })
     : new Sequelize(
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-        {
-          logging: false,
-          native: false,
-          // -FIX-
-          define: {
-            timestamps: false,
-          },
-        }
+        { logging: false, native: false }
       );
 const basename = path.basename(__filename);
 
@@ -63,10 +56,24 @@ let capsEntries = entries.map(entry => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Medic, Pacient, Calendar, Hc } = sequelize.models;
+const { Medic, Pacient, Calendar, Hc, User, Turn, Budget } = sequelize.models;
 
 Medic.belongsToMany(Pacient, { through: Calendar });
 Pacient.hasOne(Medic, { through: Calendar });
+
+//|!|  relacion usario- paciente (1:1)
+//|| User.hasOne(Pacient);
+//|| Pacient.belongsTo(User);
+// relacion paciente-presupuesto (1:N)
+Pacient.hasMany(Budget);
+Budget.belongsTo(Pacient);
+//relacion paciente-turno (1:N)
+Pacient.hasMany(Turn);
+Turn.belongsTo(Pacient);
+//relacion medico-turno (1:N)
+Medic.hasMany(Turn);
+Turn.belongsTo(Medic);
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

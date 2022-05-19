@@ -31,7 +31,6 @@ const { conn } = require('./src/db.js');
 // Syncing all the models at once.
 
 const syncConfig = { force: true }; // -FIX-
-const PORT = 3001;
 
 conn.sync(syncConfig).then(() => {
   server.listen(process.env.PORT, () => {
@@ -39,7 +38,7 @@ conn.sync(syncConfig).then(() => {
     console.log('°');
     console.log('°');
     console.log('°');
-    console.log('<>----------[ Listening at', PORT, ']----------<>');
+    console.log('<>----------[ Listening at', process.env.PORT, ']----------<>');
     console.log('-');
     console.log('Sync Config: ', syncConfig);
     console.log('-');
