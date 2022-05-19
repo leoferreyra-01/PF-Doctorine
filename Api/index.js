@@ -38,7 +38,11 @@ conn.sync(syncConfig).then(() => {
     console.log('°');
     console.log('°');
     console.log('°');
-    console.log('<>----------[ Listening at', process.env.PORT, ']----------<>');
+    console.log(
+      '<>----------[ Listening at',
+      process.env.PORT,
+      ']----------<>'
+    );
     console.log('-');
     console.log('Sync Config: ', syncConfig);
     console.log('-');
