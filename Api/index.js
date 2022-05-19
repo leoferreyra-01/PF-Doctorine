@@ -23,14 +23,14 @@
 //             .~?JJ?7!!!!!7?J?~.
 //                 .:^~~!~~^:.
 //
-//|+|~~~~~~~~~~~~~~~DOCTORINE~~~~~~~~~~~~~~~~~~~~~~hola
+//|+|~~~~~~~~~~~~~~~DOCTORINE~~~~~~~~~~~~~~~~~~~~~~
 
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
 
 // Syncing all the models at once.
 
-const syncConfig = { force: true }; // -FIX- //|?| By Alfons
+const syncConfig = { force: true }; // -FIX-
 
 conn.sync(syncConfig).then(() => {
   server.listen(process.env.PORT, () => {
@@ -48,4 +48,3 @@ conn.sync(syncConfig).then(() => {
     console.log('-');
   });
 });
-//hola :)
