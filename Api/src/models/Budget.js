@@ -4,19 +4,26 @@ const { DataTypes } = require('sequelize');
 module.exports = sequelize => {
   // defino el modelo
   sequelize.define(
-    'Pacient',
+    'Budget',
     {
-      ID: {
+      ID_Budget: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      medicalService: {
-        type: DataTypes.STRING,
+      date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      services: {
+        type: DataTypes.JSON,
+        allowNull: false,
+      },
+      discount: {
+        type: DataTypes.FLOAT,
         defaultValue: null,
       },
-
-      name: {
-        type: DataTypes.STRING,
+      totalPrice: {
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
     },
