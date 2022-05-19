@@ -28,7 +28,7 @@
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
 
-// Syncing all the models at once.
+// Syncing all the models at once
 
 const syncConfig = { force: true }; // -FIX-
 
