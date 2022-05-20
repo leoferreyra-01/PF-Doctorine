@@ -6,7 +6,7 @@ module.exports = sequelize => {
   sequelize.define(
     'Turn',
     {
-      ID_Turn: {
+      ID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
