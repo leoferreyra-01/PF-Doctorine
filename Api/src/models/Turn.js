@@ -4,20 +4,23 @@ const { DataTypes } = require('sequelize');
 module.exports = sequelize => {
   // defino el modelo
   sequelize.define(
-    'Pacient',
+    'Turn',
     {
-      ID: {
+      ID_Turn: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      medicalService: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-
-      name: {
-        type: DataTypes.STRING,
+      date: {
+        type: DataTypes.DATE,
         allowNull: false,
+      },
+      name: {
+        // no  creo que haga falta
+        type: DataTypes.STRING,
+      },
+      description: {
+        // no  creo que haga falta
+        type: DataTypes.STRING,
       },
     },
     { timestamps: false } //eliminar
