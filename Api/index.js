@@ -29,6 +29,7 @@ const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
 
 // Syncing all the models at once
+// Prueba Deploy
 
 const syncConfig = { force: true }; // -FIX-
 
