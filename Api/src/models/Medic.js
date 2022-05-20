@@ -1,28 +1,26 @@
-const { DataTypes } = require("sequelize");
-module.exports = (sequelize) => {
+const { DataTypes } = require('sequelize');
+module.exports = sequelize => {
   sequelize.define(
-    "Medic",
+    'Medic',
     {
+      ID: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      ID_Medic: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        primaryKey: true,
+      specialization: {
+        type: DataTypes.STRING,
       },
-      specialization:{
-       type:DataTypes.STRING
+      tuition_date: {
+        type: DataTypes.DATE,
       },
-      tuition_date:{
-        type: DataTypes.DATE
-        
+      tuition_number: {
+        type: DataTypes.INTEGER,
       },
-      tuition_number:{
-        type: DataTypes.INTEGER
-      }
     },
     { timestamps: false }
   );
