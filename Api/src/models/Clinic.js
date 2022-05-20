@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-module.export = sequelize => {
+module.exports = sequelize => {
   sequelize.define('Clinic', {
     // no estaba definida la tabla
     ID: {
@@ -23,7 +23,7 @@ module.export = sequelize => {
       type: DataTypes.INTEGER,
     },
     telephone: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER /* (10) */,
     },
     email: {
       type: DataTypes.STRING,

@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-module.export = sequalize => {
+module.exports = sequelize => {
+  // le falta la s al exports
   sequelize.define('User', {
     //estaba sequialize
     ID: {
@@ -27,10 +28,10 @@ module.export = sequalize => {
       alllownull: false,
     },
     telephone: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER /* (10) */,
     },
     cellphone: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER /* (10) */,
     },
     street: {
       type: DataTypes.STRING,

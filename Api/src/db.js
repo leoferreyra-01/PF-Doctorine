@@ -57,7 +57,8 @@ let capsEntries = entries.map(entry => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Medic, Pacient, Calendar, Hc, Turn, Budget } = sequelize.models;
+const { User, Medic, Pacient, Calendar, Turn, Budget, Clinic, Hc, Teeth } =
+  sequelize.models;
 
 Medic.belongsToMany(Pacient, { through: Calendar });
 Pacient.hasOne(Medic, { through: Calendar });
