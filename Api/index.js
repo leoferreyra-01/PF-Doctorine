@@ -28,7 +28,7 @@
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
 
-// Syncing all the models at once.
+// Syncing all the models at once
 
 const syncConfig = { force: true }; // -FIX-
 
@@ -38,7 +38,11 @@ conn.sync(syncConfig).then(() => {
     console.log('°');
     console.log('°');
     console.log('°');
-    console.log('<>----------[ Listening at', process.env.PORT, ']----------<>');
+    console.log(
+      '<>----------[ Listening at',
+      process.env.PORT,
+      ']----------<>'
+    );
     console.log('-');
     console.log('Sync Config: ', syncConfig);
     console.log('-');
