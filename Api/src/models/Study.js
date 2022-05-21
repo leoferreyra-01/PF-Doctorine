@@ -4,7 +4,8 @@ module.exports = sequelize => {
   sequelize.define('Study', {
     ID: {
       type: DataTypes.INTEGER,
-      primarykey: true,
+      autoIncrement: true,
+      primaryKey: true,
     },
     studyType: {
       type: DataTypes.ENUM('laboratory', 'complementary'),
