@@ -60,7 +60,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { User, Medic, Pacient, Calendar, Turn, Budget, Clinic, Hc, Teeth } =
   sequelize.models;
 
-Medic.belongsToMany(Pacient, { through: Calendar });
+/* Medic.belongsToMany(Pacient, { through: Calendar });
 Pacient.hasOne(Medic, { through: Calendar });
 
 //relacion usario- paciente (1:1)
@@ -74,7 +74,7 @@ Pacient.hasMany(Turn);
 Turn.belongsTo(Pacient);
 //relacion medico-turno (1:N)
 Medic.hasMany(Turn);
-Turn.belongsTo(Medic);
+Turn.belongsTo(Medic); */
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
