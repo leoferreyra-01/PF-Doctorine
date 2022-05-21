@@ -57,24 +57,66 @@ let capsEntries = entries.map(entry => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Medic, Pacient, Calendar, Turn, Budget, Clinic, Hc, Teeth } =
-  sequelize.models;
+const {
+  User,
+  Medic,
+  Patient,
+  Turn,
+  Budget,
+  Clinic,
+  ClinicalHistory,
+  Treatment,
+  Teeth,
+  Study,
+  Evolution,
+  Teeth_Treatment,
+} = sequelize.models;
 
-/* Medic.belongsToMany(Pacient, { through: Calendar });
-Pacient.hasOne(Medic, { through: Calendar });
+//|+| TABLE: https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?viewport_loc=-1807%2C61%2C1932%2C879%2C0_0&invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
 
-//relacion usario- paciente (1:1)
-User.hasOne(Pacient);
-Pacient.belongsTo(User);
-// relacion paciente-presupuesto (1:N)
-Pacient.hasMany(Budget);
-Budget.belongsTo(Pacient);
-//relacion paciente-turno (1:N)
-Pacient.hasMany(Turn);
-Turn.belongsTo(Pacient);
-//relacion medico-turno (1:N)
+User.hasOne(Medic);
+Medic.belongsTo(User);
+
+User.hasOne(Patient);
+Patient.belongsTo(User);
+
+Patient.hasMany(Turn);
+Turn.belongsTo(Patient);
+
 Medic.hasMany(Turn);
-Turn.belongsTo(Medic); */
+Turn.belongsTo(Medic);
+
+Patient.hasMany(Budget);
+Budget.belongsTo(Patient);
+
+Medic.hasOne(Clinic);
+Clinic.belongsTo(Medic);
+
+Patient.hasOne(ClinicalHistory);
+ClinicalHistory.belongsTo(Patient);
+
+ClinicalHistory.hasMany(Study);
+Study.belongsTo(ClinicalHistory);
+
+Clinic.hasMany(Treatment);
+Treatment.belongsTo(Clinic);
+
+Treatment.belongsToMany(Teeth, { through: Teeth_Treatment });
+Teeth.belongsToMany(Treatment, { through: Teeth_Treatment });
+
+// EVOLUTION
+
+ClinicalHistory.hasMany(Evolution);
+Evolution.belongsTo(ClinicalHistory);
+
+Medic.hasOne(Evolution);
+Evolution.belongsTo(Medic);
+
+Treatment.hasOne(Evolution);
+Evolution.belongsTo(Treatment);
+
+Teeth_Treatment.hasOne(Evolution);
+Evolution.belongsTo(Teeth_Treatment);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
