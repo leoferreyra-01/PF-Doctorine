@@ -1,18 +1,18 @@
 const { DataTypes } = require('sequelize');
+
 module.exports = sequelize => {
-  // le falta la s al exports
   sequelize.define('User', {
-    //estaba sequialize
     ID: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     userType: {
-      type: DataTypes.ENUM('Medic', 'Pacient'),
+      type: DataTypes.ENUM('Medic', 'Patient'),
       alllownull: false,
     },
     document: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       alllownull: false,
     },
     name: {
@@ -20,7 +20,7 @@ module.exports = sequelize => {
       alllownull: false,
     },
     lastName: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(20),
       alllownull: false,
     },
     birth: {
@@ -28,10 +28,10 @@ module.exports = sequelize => {
       alllownull: false,
     },
     telephone: {
-      type: DataTypes.INTEGER /* (10) */,
+      type: DataTypes.INTEGER,
     },
     cellphone: {
-      type: DataTypes.INTEGER /* (10) */,
+      type: DataTypes.INTEGER,
     },
     street: {
       type: DataTypes.STRING,
@@ -46,10 +46,12 @@ module.exports = sequelize => {
       type: DataTypes.INTEGER,
     },
     email: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
+      alllownull: false,
     },
     password: {
       type: DataTypes.STRING,
+      alllownull: false,
     },
     imageProfile: {
       type: DataTypes.STRING,
