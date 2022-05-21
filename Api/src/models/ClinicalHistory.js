@@ -7,30 +7,32 @@ module.exports = sequelize => {
       autoIncrement: true,
       primaryKey: true,
     },
-    a_smoker: {
+    // BACKGROUND
+    b_smoker: {
       type: DataTypes.BOOLEAN,
     },
-    a_useDrugs: {
+    b_useDrugs: {
       type: DataTypes.BOOLEAN,
     },
-    a_pregnant: {
+    b_pregnant: {
       type: DataTypes.BOOLEAN,
     },
-    a_takeMedicine: {
+    b_takeMedicine: {
       type: DataTypes.BOOLEAN,
     },
-    a_sufferedFromIllness: {
+    b_sufferedFromIllness: {
       type: DataTypes.BOOLEAN,
     },
-    a_alergicToMedicine: {
+    b_alergicToMedicine: {
       type: DataTypes.BOOLEAN,
     },
-    a_normalWoundHealing: {
+    b_normalWoundHealing: {
       type: DataTypes.BOOLEAN,
     },
-    a_other: {
+    b_other: {
       type: DataTypes.STRING,
     },
+    // INFECTION, CARDIOVASCULAR
     ic_anginaPectoris: {
       type: DataTypes.BOOLEAN,
     },
@@ -46,6 +48,7 @@ module.exports = sequelize => {
     ic_others: {
       type: DataTypes.STRING,
     },
+    // INFECTION, HEMATOLOGICAL
     ih_anemia: {
       type: DataTypes.BOOLEAN,
     },
@@ -61,6 +64,7 @@ module.exports = sequelize => {
     ih_others: {
       type: DataTypes.STRING,
     },
+    // INFECTION, RESPIRATORY
     ir_asthma: {
       type: DataTypes.BOOLEAN,
     },
@@ -79,6 +83,7 @@ module.exports = sequelize => {
     ir_others: {
       type: DataTypes.STRING,
     },
+    // INFECTION, GASTROINTESTINAL
     ig_ulcer: {
       type: DataTypes.BOOLEAN,
     },
@@ -91,6 +96,7 @@ module.exports = sequelize => {
     ig_others: {
       type: DataTypes.STRING,
     },
+    // INFECTION, NERVOUS
     in_epilepsy: {
       type: DataTypes.BOOLEAN,
     },
@@ -103,6 +109,7 @@ module.exports = sequelize => {
     in_other: {
       type: DataTypes.STRING,
     },
+    // INFECTION, BONES
     ib_osteoporosis: {
       type: DataTypes.BOOLEAN,
     },
