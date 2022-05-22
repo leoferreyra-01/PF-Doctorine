@@ -11,7 +11,7 @@ module.exports = sequelize => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    services: {
+    treatments: {
       type: DataTypes.JSON,
       allowNull: false,
     },
