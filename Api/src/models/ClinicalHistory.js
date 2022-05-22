@@ -10,6 +10,7 @@ module.exports = sequelize => {
     // BACKGROUND
     b_smoker: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     b_useDrugs: {
       type: DataTypes.BOOLEAN,
@@ -31,6 +32,7 @@ module.exports = sequelize => {
     },
     b_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
     // INFECTION, CARDIOVASCULAR
     ic_anginaPectoris: {
@@ -45,8 +47,9 @@ module.exports = sequelize => {
     ic_vascularAffections: {
       type: DataTypes.BOOLEAN,
     },
-    ic_others: {
+    ic_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
     // INFECTION, HEMATOLOGICAL
     ih_anemia: {
@@ -61,8 +64,9 @@ module.exports = sequelize => {
     ih_alterationWhiteSerie: {
       type: DataTypes.BOOLEAN,
     },
-    ih_others: {
+    ih_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
     // INFECTION, RESPIRATORY
     ir_asthma: {
@@ -80,8 +84,9 @@ module.exports = sequelize => {
     ir_chronicBronchitis: {
       type: DataTypes.BOOLEAN,
     },
-    ir_others: {
+    ir_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
     // INFECTION, GASTROINTESTINAL
     ig_ulcer: {
@@ -93,8 +98,9 @@ module.exports = sequelize => {
     ig_cirrohsis: {
       type: DataTypes.BOOLEAN,
     },
-    ig_others: {
+    ig_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
     // INFECTION, NERVOUS
     in_epilepsy: {
@@ -108,6 +114,7 @@ module.exports = sequelize => {
     },
     in_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
     // INFECTION, BONES
     ib_osteoporosis: {
@@ -124,6 +131,7 @@ module.exports = sequelize => {
     },
     ib_other: {
       type: DataTypes.STRING,
+      defaultValue: null,
     },
   });
 };
