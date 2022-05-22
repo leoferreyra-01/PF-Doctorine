@@ -78,7 +78,8 @@ const {
   Teeth_Treatment,
 } = sequelize.models;
 
-//|+| TABLE: https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?viewport_loc=-1807%2C61%2C1932%2C879%2C0_0&invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
+//|> Link to Entity-Relationship Graph
+//|+| https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?viewport_loc=-1807%2C61%2C1932%2C879%2C0_0&invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
 
 User.hasOne(Medic);
 Medic.belongsTo(User);
