@@ -7,20 +7,7 @@ module.exports = sequelize => {
       primaryKey: true,
     },
     treatmentType: {
-      type: DataTypes.ENUM(
-        'consultas',
-        'operatoria',
-        'endodoncia',
-        'protesis',
-        'prevencion',
-        'ortodoncia',
-        'odontopediatria',
-        'periodoncia',
-        'radiologia',
-        'cirugia',
-        'implantologiaBucal',
-        'prestacionesVarias'
-      ),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     description: {
