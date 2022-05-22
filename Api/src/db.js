@@ -95,9 +95,6 @@ Turn.belongsTo(Medic);
 Patient.hasMany(Budget);
 Budget.belongsTo(Patient);
 
-Clinic.hasMany(Budget);
-Budget.belongsTo(Clinic);
-
 Clinic.hasOne(Medic);
 Medic.belongsTo(Clinic);
 
