@@ -10,7 +10,7 @@ module.exports = sequelize => {
     name: {
       type: DataTypes.STRING,
     },
-    stret: {
+    street: {
       type: DataTypes.STRING,
     },
     number: {
