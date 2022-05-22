@@ -4,6 +4,7 @@ module.exports = sequelize => {
   sequelize.define('Budget', {
     ID: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     date: {
