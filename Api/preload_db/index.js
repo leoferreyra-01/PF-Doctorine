@@ -26,6 +26,7 @@ async function preload_db() {
   addBudget();
   addClinicalHistory();
   addStudy();
+  addEvolution();
 }
 
 async function addClinic() {
@@ -94,10 +95,9 @@ async function addUserMedic() {
     tuition_number: 33354,
   };
 
-  const newUser = await User.create(infoUser);
   const newMedic = await Medic.create(infoMedic);
 
-  newMedic.setUser(newUser);
+  newMedic.createUser(infoUser);
   newMedic.setClinic(1);
 }
 
@@ -126,9 +126,8 @@ async function addUserPatient() {
   };
 
   const newUser = await User.create(infoUser);
-  const newPatient = await Patient.create(infoPatient);
 
-  newPatient.setUser(newUser);
+  newUser.createPatient(infoPatient);
 }
 
 async function addTeeths() {
@@ -223,9 +222,19 @@ async function addStudy() {
   newStudy.setClinicalHistory(1);
 }
 
-/* -NOTE- -FIX- -TODO-
-Faltra precargar una Evolution. Pero posiblemente no sea necesaria la tabla Teeth-Treatment porque todas esas relaciones pueden estar simplemente en Evolution. Ya que éste solo contiene un tratamiento, un diente, un médico y la fecha en que se registra.
-*/
+async function addEvolution() {
+  const infoEvolution = {
+    date: '2022-05-23',
+    observations: 'El diente le quedó muy lindo',
+  };
+
+  const newEvolution = await Evolution.create(infoEvolution);
+
+  newEvolution.setClinicalHistory(1);
+  newEvolution.setMedic(1);
+  newEvolution.setTreatment('0201');
+  newEvolution.setTooth(11);
+}
 
 module.exports = {
   preload_db,

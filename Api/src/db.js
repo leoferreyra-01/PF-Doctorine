@@ -107,9 +107,6 @@ Study.belongsTo(ClinicalHistory);
 Clinic.hasMany(Treatment);
 Treatment.belongsTo(Clinic);
 
-Treatment.belongsToMany(Teeth, { through: Teeth_Treatment });
-Teeth.belongsToMany(Treatment, { through: Teeth_Treatment });
-
 // EVOLUTION
 
 ClinicalHistory.hasMany(Evolution);
@@ -121,8 +118,8 @@ Evolution.belongsTo(Medic);
 Treatment.hasOne(Evolution);
 Evolution.belongsTo(Treatment);
 
-Teeth_Treatment.hasOne(Evolution);
-Evolution.belongsTo(Teeth_Treatment);
+Teeth.hasOne(Evolution);
+Evolution.belongsTo(Teeth);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
