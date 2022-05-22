@@ -1,19 +1,19 @@
 'use strict';
-const { Op } = require('sequelize');
+
 const {
-  User,
+  User, // Medic/Patient.createUser(...)
   Medic,
   Patient,
   Turn,
   Budget,
   Clinic,
-  ClinicalHistory,
+  ClinicalHistory, // Patient.createClinicalHistory(...)
   Treatment,
   Teeth,
   Study,
   Evolution,
-  Teeth_Treatment,
 } = require('../src/db');
+
 const { treatments } = require('./treatmentsList');
 
 async function preload_db() {
@@ -24,7 +24,6 @@ async function preload_db() {
   addTreatments();
   addTurn();
   addBudget();
-  addClinicalHistory();
   addStudy();
   addEvolution();
 }
@@ -67,7 +66,7 @@ async function addClinic() {
     imgLogo: null,
   };
 
-  const newClinic = Clinic.create(infoClinic);
+  Clinic.create(infoClinic);
 }
 
 async function addUserMedic() {
@@ -125,9 +124,10 @@ async function addUserPatient() {
     tutor: null,
   };
 
-  const newUser = await User.create(infoUser);
+  const newPatient = await Patient.create(infoPatient);
 
-  newUser.createPatient(infoPatient);
+  newPatient.createUser(infoUser);
+  newPatient.createClinicalHistory(); // all default
 }
 
 async function addTeeths() {
@@ -203,13 +203,6 @@ async function addBudget() {
   newBudget.setPatient(1);
 }
 
-async function addClinicalHistory() {
-  // All defaultValue
-  const newClinicalHistory = await ClinicalHistory.create();
-
-  newClinicalHistory.setPatient(1);
-}
-
 async function addStudy() {
   const infoStudy = {
     studyType: 'laboratory',
@@ -225,7 +218,7 @@ async function addStudy() {
 async function addEvolution() {
   const infoEvolution = {
     date: '2022-05-23',
-    observations: 'El diente le quedó muy lindo',
+    observations: 'El diente le quedó muy lindo.',
   };
 
   const newEvolution = await Evolution.create(infoEvolution);
