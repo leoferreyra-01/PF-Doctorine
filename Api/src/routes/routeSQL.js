@@ -21,8 +21,4 @@ router.get('/:sql', async (req, res) => {
 
 //#endregion
 
-//|> /sql
-// const SQL = require('./routeSQL');
-// router.use('/sql', SQL);
-
 module.exports = router;
