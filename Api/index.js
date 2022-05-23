@@ -27,13 +27,14 @@
 
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
+const { preload_db } = require('./preload_db/');
 
 // Syncing all the models at once
 
 const syncConfig = { force: true }; // -FIX-
 
 conn.sync(syncConfig).then(() => {
-  server.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, async () => {
     // eslint-disable-line no-console
     console.log('°');
     console.log('°');
@@ -46,5 +47,7 @@ conn.sync(syncConfig).then(() => {
     console.log('-');
     console.log('Sync Config: ', syncConfig);
     console.log('-');
+
+    if (syncConfig.force === true) await preload_db();
   });
 });
