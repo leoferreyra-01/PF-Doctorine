@@ -16,10 +16,10 @@ const {
   Evolution,
 } = require('../db');
 
-//|> CONTROLLERS
+//|> CONTROLLER
 
-async function putMedic() {}
+async function getMedic() {}
 
 module.exports = {
-  putMedic,
+  getMedic,
 };
