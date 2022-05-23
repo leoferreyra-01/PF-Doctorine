@@ -2,15 +2,15 @@ const { DataTypes } = require('sequelize');
 
 module.exports = sequelize => {
   sequelize.define('Clinic', {
-    // no estaba definida la tabla
     ID: {
-      primaryKey: true,
       type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
     },
-    stret: {
+    street: {
       type: DataTypes.STRING,
     },
     number: {
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       type: DataTypes.INTEGER,
     },
     telephone: {
-      type: DataTypes.INTEGER /* (10) */,
+      type: DataTypes.INTEGER,
     },
     email: {
       type: DataTypes.STRING,

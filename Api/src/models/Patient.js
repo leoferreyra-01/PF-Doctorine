@@ -1,24 +1,23 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = sequelize => {
-  sequelize.define('Medic', {
+  sequelize.define('Patient', {
     ID: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    title: {
+    medicalService: {
       type: DataTypes.STRING,
-      allowNull: false,
+      defaultValue: null,
     },
-    specialization: {
-      type: DataTypes.STRING,
+    showClinicalHistory: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-    tuition_date: {
-      type: DataTypes.DATE,
-    },
-    tuition_number: {
+    tutor: {
       type: DataTypes.INTEGER,
+      defaultValue: null,
     },
   });
 };

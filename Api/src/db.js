@@ -31,7 +31,13 @@ let sequelize =
       })
     : new Sequelize(
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-        { logging: false, native: false }
+        {
+          logging: false,
+          native: false,
+          define: {
+            timestamps: false,
+          },
+        }
       );
 const basename = path.basename(__filename);
 
@@ -57,26 +63,66 @@ let capsEntries = entries.map(entry => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Medic, Pacient, Calendar, Turn, Budget, Clinic, Hc, Teeth } =
-  sequelize.models;
+const {
+  User,
+  Medic,
+  Patient,
+  Turn,
+  Budget,
+  Clinic,
+  ClinicalHistory,
+  Treatment,
+  Teeth,
+  Study,
+  Evolution,
+} = sequelize.models;
 
-Medic.belongsToMany(Pacient, { through: Calendar });
-Pacient.hasOne(Medic, { through: Calendar });
+//|> Link to Entity-Relationship Graph
+//|+| https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?viewport_loc=-1807%2C61%2C1932%2C879%2C0_0&invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
 
-//relacion usario- paciente (1:1)
-User.hasOne(Pacient);
-Pacient.belongsTo(User);
-// relacion paciente-presupuesto (1:N)
-Pacient.hasMany(Budget);
-Budget.belongsTo(Pacient);
-//relacion paciente-turno (1:N)
-Pacient.hasMany(Turn);
-Turn.belongsTo(Pacient);
-//relacion medico-turno (1:N)
+User.hasOne(Medic);
+Medic.belongsTo(User);
+
+User.hasOne(Patient);
+Patient.belongsTo(User);
+
+Patient.hasMany(Turn);
+Turn.belongsTo(Patient);
+
 Medic.hasMany(Turn);
 Turn.belongsTo(Medic);
 
+Patient.hasMany(Budget);
+Budget.belongsTo(Patient);
+
+Clinic.hasOne(Medic);
+Medic.belongsTo(Clinic);
+
+Patient.hasOne(ClinicalHistory);
+ClinicalHistory.belongsTo(Patient);
+
+ClinicalHistory.hasMany(Study);
+Study.belongsTo(ClinicalHistory);
+
+Clinic.hasMany(Treatment);
+Treatment.belongsTo(Clinic);
+
+// EVOLUTION
+
+ClinicalHistory.hasMany(Evolution);
+Evolution.belongsTo(ClinicalHistory);
+
+Medic.hasOne(Evolution);
+Evolution.belongsTo(Medic);
+
+Treatment.hasOne(Evolution);
+Evolution.belongsTo(Treatment);
+
+Teeth.hasOne(Evolution);
+Evolution.belongsTo(Teeth);
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  sequelize,
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
 };

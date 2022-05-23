@@ -1,18 +1,17 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = sequelize => {
-  sequelize.define('Teeth', {
+  sequelize.define('Evolution', {
     ID: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
-    zone: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    date: {
+      type: DataTypes.DATE,
     },
-    position: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    observations: {
+      type: DataTypes.TEXT,
     },
   });
 };
