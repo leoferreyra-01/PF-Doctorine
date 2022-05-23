@@ -29,7 +29,7 @@ const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
 const { preload_db } = require('./preload_db/');
 
-// Syncing all the models at once.
+// Syncing all the models at once
 
 const syncConfig = { force: true }; // -FIX-
 
