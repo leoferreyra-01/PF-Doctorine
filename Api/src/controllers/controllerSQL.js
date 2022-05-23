@@ -14,11 +14,15 @@ const {
   Teeth,
   Study,
   Evolution,
+  sequelize,
 } = require('../db');
 
 //|> CONTROLLER
 
-async function getSQL() {}
+async function getSQL(sql) {
+  sql = sql.split('%').join(' ');
+  return (await sequelize.query(sql))[0];
+}
 
 module.exports = {
   getSQL,
