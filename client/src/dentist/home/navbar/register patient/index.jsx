@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { patientSchema } from './patientSchema';
 
-export default function CreatePatient() {
+export default function RegisterPatient() {
   const {
     handleSubmit,
     register,
@@ -12,77 +12,65 @@ export default function CreatePatient() {
     resolver: yupResolver(patientSchema),
   });
   const onSubmit = data => {
+    data.password = data.document;
     data.userType = 'Patient';
     console.log(data);
   };
 
   return (
     <div>
-      <h2>Create Patient</h2>
+      <h2>Register Patient</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
           {...register('name')}
-          placeholder="Ingrese su nombre ..."
+          placeholder="Ingrese el nombre del paciente..."
         />
         {errors.name && <span>{errors.name.message}</span>}
         <input
           type="text"
           {...register('lastName')}
-          placeholder="Ingrese su apellido ..."
+          placeholder="Ingrese el apellido del paciente..."
         />
         {errors.lastName && <span>{errors.lastName.message}</span>}
         <input
           type="text"
           {...register('document')}
-          placeholder="Ingrese su dni ..."
+          placeholder="Ingrese el dni del paciente..."
         />
         {errors.document && <span>{errors.document.message}</span>}
         <input
           type="text"
           {...register('email')}
-          placeholder="Ingrese su correo electronico ..."
+          placeholder="Ingrese el correo electronico del paciente..."
         />
         {errors.email && <span>{errors.email.message}</span>}
         <input
           type="text"
           {...register('street')}
-          placeholder="Ingrese su calle ..."
+          placeholder="Ingrese la calle del paciente..."
         />
         {errors.street && <span>{errors.street.message}</span>}
         <input
           type="text"
           {...register('city')}
-          placeholder="Ingrese su ciudad ..."
+          placeholder="Ingrese la ciudad del paciente..."
         />
         {errors.city && <span>{errors.city.message}</span>}
         <input
           type="text"
           {...register('postalCode')}
-          placeholder="Ingrese su codigo postal ..."
+          placeholder="Ingrese el codigo postal del paciente..."
         />
         {errors.postalCode && <span>{errors.postalCode.message}</span>}
-        <input type="date" {...register('birthDate')} />
-        {/*Ver como se valida este tipo de input */}
+        <input type="date" {...register('birthDate')} placeholder="" />
+        {/*Ver como se valida este campo */}
         <input
           type="text"
           {...register('cellphone')}
-          placeholder="Ingrese su numero de telefono ..."
+          placeholder="Ingrese el numero de telefono del paciente..."
         />
         {errors.cellphone && <span>{errors.cellphone.message}</span>}
-        <input
-          type="password"
-          {...register('password')}
-          placeholder="Ingrese su contraseña ..."
-        />
-        {errors.password && <span>{errors.password.message}</span>}
-        <input
-          placeholder="confirme su contraseña..."
-          {...register('confirmPassword')}
-        />
-        {errors.confirmPassword && (
-          <span>'Las contraseñas deben coincidir'</span>
-        )}
         <input type="submit" value="Enviar" />
       </form>
     </div>
