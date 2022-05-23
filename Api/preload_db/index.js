@@ -23,6 +23,7 @@ async function preload_db() {
   addTeeths();
   addTreatments();
   addTurn();
+  addTurn();
   addBudget();
   addStudy();
   addEvolution();
