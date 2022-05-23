@@ -14,13 +14,12 @@ const {
   Teeth,
   Study,
   Evolution,
-  sequelize,
 } = require('../db');
 
 //|> CONTROLLER
 
-async function getMedic() {}
+async function getSQL() {}
 
 module.exports = {
-  getMedic,
+  getSQL,
 };

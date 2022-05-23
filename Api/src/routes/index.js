@@ -4,7 +4,7 @@
 const router = require('express').Router();
 
 //|> /medics
-const Medic = require('./routerMedic');
+const Medic = require('./routeMedic');
 router.use('/medics', Medic);
 
 module.exports = router;
