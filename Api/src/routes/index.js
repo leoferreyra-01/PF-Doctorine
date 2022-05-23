@@ -1,5 +1,4 @@
 'use strict';
-
 //|> EXPRESS ROUTER
 const router = require('express').Router();
 
@@ -11,4 +10,7 @@ router.use('/sql', SQL);
 const Medic = require('./routeMedic');
 router.use('/medics', Medic);
 
+//|> /turns
+const Turns = require('./routerturns');
+router.use('/turns', Turns);
 module.exports = router;
