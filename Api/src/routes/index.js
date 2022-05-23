@@ -1,21 +1,34 @@
-const { Router } = require('express');
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
+'use strict';
+//|> SEQUELIZE
+const { Op } = require('sequelize');
 
-const calendar = require('./calendar');
-const medic = require('./medic');
-const  pacient= require('./pacient');
-const hc = require('./hc')
+//|> EXPRESS ROUTER
+const router = require('express').Router();
 
-const router = Router();
+//|> RUTES
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-// router.use('/types', typesRouter);
+//#region GET
 
-router.use('/medic', medic);
-// router.use('/pacients', pacient);
-// router.use('/hc', hc);
-// router.use('/calendar', calendar);
+router.get('/', async (req, res) => {});
 
-module.exports = router
+//#endregion
+
+//#region POST
+
+router.post('/', async (req, res) => {});
+
+//#endregion
+
+//#region PUT
+
+router.put('/', async (req, res) => {});
+
+//#endregion
+
+//#region DELETE
+
+router.delete('/', async (req, res) => {});
+
+//#endregion
+
+module.exports = router;
