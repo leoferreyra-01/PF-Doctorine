@@ -31,7 +31,13 @@ let sequelize =
       })
     : new Sequelize(
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-        { logging: false, native: false }
+        {
+          logging: false,
+          native: false,
+          define: {
+            timestamps: false,
+          },
+        }
       );
 const basename = path.basename(__filename);
 
@@ -69,10 +75,10 @@ const {
   Teeth,
   Study,
   Evolution,
-  Teeth_Treatment,
 } = sequelize.models;
 
-//|+| TABLE: https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?viewport_loc=-1807%2C61%2C1932%2C879%2C0_0&invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
+//|> Link to Entity-Relationship Graph
+//|+| https://lucid.app/lucidchart/df218597-db1f-4af2-9be3-44065e6a2742/edit?viewport_loc=-1807%2C61%2C1932%2C879%2C0_0&invitationId=inv_d35df4bd-465c-489d-a869-6f0639658c4f
 
 User.hasOne(Medic);
 Medic.belongsTo(User);
@@ -89,8 +95,8 @@ Turn.belongsTo(Medic);
 Patient.hasMany(Budget);
 Budget.belongsTo(Patient);
 
-Medic.hasOne(Clinic);
-Clinic.belongsTo(Medic);
+Clinic.hasOne(Medic);
+Medic.belongsTo(Clinic);
 
 Patient.hasOne(ClinicalHistory);
 ClinicalHistory.belongsTo(Patient);
@@ -100,9 +106,6 @@ Study.belongsTo(ClinicalHistory);
 
 Clinic.hasMany(Treatment);
 Treatment.belongsTo(Clinic);
-
-Treatment.belongsToMany(Teeth, { through: Teeth_Treatment });
-Teeth.belongsToMany(Treatment, { through: Teeth_Treatment });
 
 // EVOLUTION
 
@@ -115,8 +118,8 @@ Evolution.belongsTo(Medic);
 Treatment.hasOne(Evolution);
 Evolution.belongsTo(Treatment);
 
-Teeth_Treatment.hasOne(Evolution);
-Evolution.belongsTo(Teeth_Treatment);
+Teeth.hasOne(Evolution);
+Evolution.belongsTo(Teeth);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

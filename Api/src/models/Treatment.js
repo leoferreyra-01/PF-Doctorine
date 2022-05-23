@@ -3,31 +3,18 @@ const { DataTypes } = require('sequelize');
 module.exports = sequelize => {
   sequelize.define('Treatment', {
     ID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
     },
     treatmentType: {
-      type: DataTypes.ENUM(
-        'consultas',
-        'operatoria',
-        'endodoncia',
-        'protesis',
-        'prevencion',
-        'ortodoncia',
-        'odontopediatria',
-        'periodoncia',
-        'radiologia',
-        'cirugia',
-        'implantologiaBucal',
-        'prestacionesVarias'
-      ),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     description: {
       type: DataTypes.TEXT,
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
     },
   });
 };

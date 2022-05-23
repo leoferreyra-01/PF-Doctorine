@@ -11,10 +11,13 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       defaultValue: null,
     },
-
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    showClinicalHistory: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    tutor: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
     },
   });
 };
