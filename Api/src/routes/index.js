@@ -7,28 +7,28 @@ const router = require('express').Router();
 
 //|> RUTES
 
-//#region GET
+//#region <>-------------------- GET --------------------<>
 const {} = require('./controllersGET');
 
 router.get('/', async (req, res) => {});
 
 //#endregion
 
-//#region POST
+//#region <>-------------------- POST --------------------<>
 const {} = require('./controllersPOST');
 
 router.post('/', async (req, res) => {});
 
 //#endregion
 
-//#region PUT
+//#region <>-------------------- PUT --------------------<>
 const {} = require('./controllersPUT');
 
 router.put('/', async (req, res) => {});
 
 //#endregion
 
-//#region DELETE
+//#region <>-------------------- DELETE --------------------<>
 const {} = require('./controllersDELETE');
 
 router.delete('/', async (req, res) => {});

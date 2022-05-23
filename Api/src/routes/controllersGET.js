@@ -3,9 +3,23 @@
 //|> SEQUELIZE
 const { Op } = require('sequelize');
 const {
-  /* models */
+  User,
+  Medic,
+  Patient,
+  Turn,
+  Budget,
+  Clinic,
+  ClinicalHistory,
+  Treatment,
+  Teeth,
+  Study,
+  Evolution,
 } = require('../db');
 
 //|> CONTROLLERS
 
-module.exports = {};
+async function getMedic() {}
+
+module.exports = {
+  getMedic,
+};

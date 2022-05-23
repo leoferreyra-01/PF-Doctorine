@@ -75,7 +75,6 @@ const {
   Teeth,
   Study,
   Evolution,
-  Teeth_Treatment,
 } = sequelize.models;
 
 //|> Link to Entity-Relationship Graph
