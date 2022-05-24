@@ -13,6 +13,10 @@ router.use('/medics', Medic);
 //|> /turns
 const Turns = require('./routerturns');
 router.use('/turns', Turns);
+
+//|> /historyclinics
+const ClinicalHistory = require('./routeClinicalHistory');
+router.use('/clinicalhistory', ClinicalHistory);
 module.exports = router;
 
 //|> /clinics(Laura)

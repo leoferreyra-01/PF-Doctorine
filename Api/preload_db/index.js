@@ -21,6 +21,7 @@ async function preload_db() {
   addUserMedic();
   addUserMedic();
   addUserPatient();
+  addUserPatient();
   addTeeths();
   addTreatments();
   addTurn();

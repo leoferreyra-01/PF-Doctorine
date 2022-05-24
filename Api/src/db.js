@@ -101,16 +101,16 @@ Medic.belongsTo(Clinic);
 Patient.hasOne(ClinicalHistory);
 ClinicalHistory.belongsTo(Patient);
 
-ClinicalHistory.hasMany(Study);
-Study.belongsTo(ClinicalHistory);
+Patient.hasMany(Study);
+Study.belongsTo(Patient);
 
 Clinic.hasMany(Treatment);
 Treatment.belongsTo(Clinic);
 
 // EVOLUTION
 
-ClinicalHistory.hasMany(Evolution);
-Evolution.belongsTo(ClinicalHistory);
+Patient.hasMany(Evolution);
+Evolution.belongsTo(Patient);
 
 Medic.hasOne(Evolution);
 Evolution.belongsTo(Medic);
