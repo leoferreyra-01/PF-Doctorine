@@ -5,6 +5,7 @@ const router = require('express').Router();
 const { getPatient } = require('../controllers/getPatient');
 const { postPatient } = require('../controllers/postPatient');
 const { putPatient } = require('../controllers/putPatient');
+const { deletePatient } = require('../controllers/deletePatient');
 
 //|> RUTE
 
@@ -69,17 +70,17 @@ router.put('/:ID', async (req, res) => {
 
 //#region <>-------------------- DELETE --------------------<>
 
-// router.delete('/:ID', async (req, res) => {
-//   const { ID } = req.params;
+router.delete('/:ID', async (req, res) => {
+  const { ID } = req.params;
 
-//   try {
-//     deleteMedic(ID);
-//     res.status(200).send('Medic deleted.');
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send(error.message);
-//   }
-// });
+  try {
+    deletePatient(ID);
+    res.status(200).send('Patient deleted.');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
 
 //#endregion
 
