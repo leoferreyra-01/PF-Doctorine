@@ -11,20 +11,20 @@ const { deleteMedic } = require('../controllers/deleteMedic');
 
 //#region <>-------------------- GET --------------------<>
 
-router.get('/:ID', async (req, res) => {
-  const { ID } = req.params;
-
+router.get('/', async (req, res) => {
   try {
-    res.status(200).json(await getMedic(ID));
+    res.status(200).json(await getMedic());
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/:ID', async (req, res) => {
+  const { ID } = req.params;
+
   try {
-    res.status(200).json(await getMedic());
+    res.status(200).json(await getMedic(ID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
