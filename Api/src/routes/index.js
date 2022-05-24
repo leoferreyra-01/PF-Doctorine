@@ -14,3 +14,15 @@ router.use('/medics', Medic);
 const Turns = require('./routerturns');
 router.use('/turns', Turns);
 module.exports = router;
+
+//|> /clinics(Laura)
+const Clinics = require('./routerClinics');
+router.use('/Clinics', Clinics);
+
+//|> /budgets(Laura)
+const Budget = require('./routerBudgets.js');
+router.use('/budgets', Budget);
+
+//|> /treatments(Laura)
+const Treatment = require('./routerTreatmensts');
+router.use('/treatments', Treatment);
