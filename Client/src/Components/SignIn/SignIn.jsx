@@ -14,9 +14,9 @@ export function validate(input) {
   let errors = {};
   console.log(errors);
 
-  if (!input.username) {
+  if (!input.email) {
     errors.username = "Username is required";
-  } else if (!/\S+@\S+\.\S+/.test(input.username)) {
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.username = "Username is invalid";
   }
   if (!input.password) {
@@ -29,7 +29,7 @@ export function validate(input) {
 
 function SignUp() {
   const [input, setInput] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -74,12 +74,12 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async (respuesta) => {
-    const register = await axios.post("/oneUser", {
+    const register = await axios.post("http://localhost:3001/oneUser", {
       username: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
     if (register.data.hasOwnProperty("success")) {
-      const user = await axios.post("/login", {
+      const user = await axios.post("http://localhost:3001/login", {
         username: respuesta.profileObj.email,
         password: respuesta.profileObj.googleId,
       });
@@ -90,13 +90,13 @@ function SignUp() {
         navigate("/");
       }
     } else {
-      const userRegister = await axios.post("/register", {
+      const userRegister = await axios.post("http://localhost:3001/register", {
         username: respuesta.profileObj.email,
         password: respuesta.profileObj.googleId,
       });
       if (userRegister.data.hasOwnProperty("success")) {
          setTimeout(async() => {
-           const user = await axios.post("/login", {
+           const user = await axios.post("http://localhost:3001/login", {
              username: respuesta.profileObj.email,
              password: respuesta.profileObj.googleId,
            });
@@ -126,13 +126,13 @@ function SignUp() {
             <label>Username</label>
             <input
               onChange={handleInputChange}
-              value={input.username}
+              value={input.email}
               placeholder="Email"
               type="text"
-              name="username"
+              name="email"
               className="input-usuario"
             />
-            {errors.username && <p className="error">{errors.username}</p>}
+            {errors.email && <p className="error">{errors.email}</p>}
 
             <label>Contraseña</label>
             <input

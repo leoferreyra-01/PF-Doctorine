@@ -8,9 +8,9 @@ import S from "./SingUp.module.css"
 
 export function validate(input) {
   let errors = {};
-  if (!input.username) {
+  if (!input.email) {
     errors.username = "Username is required";
-  } else if (!/\S+@\S+\.\S+/.test(input.username)) {
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.username = "Username is invalid";
   }
   if (!input.password) {
@@ -24,14 +24,38 @@ export function validate(input) {
   } else if (input.password !== input.passwordConfirm) {
     errors.passwordConfirm = "Las contraseñas no coinciden";
   }
+  if (!input.name) {
+    errors.name = "Name is required";
+  } else if (!/^[a-zA-Z\s]/.test(input.name)) {
+    errors.name = "Name is invalid";
+  }
+  if (!input.lastName) {
+    errors.lastName = "Last Name is required";
+  } else if (!/^[a-zA-Z\s]/.test(input.lastName)) {
+    errors.lastName = "Last Name is invalid";
+  }
+  if (!input.document) {
+    errors.document = "Document is required";
+  } else if (!/^[0-9]+$/.test(input.document)) {
+    errors.document = "Document is invalid";
+  }
+  if (!input.birth) {
+    errors.birth = "Birth is required";
+  }
+
   return errors;
 }
 
 function SignUp() {
   const [input, setInput] = useState({
-    username: "",
+    email: "",
+    name:"",
+    lastName:"",
+    document:"",
+    birth:"",
     password: "",
     passwordConfirm: "",
+    userType: "Patient"
   });
   const navigate = useNavigate();
 
@@ -55,9 +79,14 @@ function SignUp() {
       return toast.error("Debes rellenar todos los campos de forma correcta.");
     } else {
       axios
-        .post("/register", {
-          username: input.username,
+        .post("http://localhost:3001/register", {
+          email: input.email,
           password: input.password,
+          userType: "Patient",
+          document: input.document,
+          name: input.name,
+          lastName: input.lastName,
+          birth: input.birth
         })
         .then((response) => {
           toast.success(response.data.success);
@@ -73,21 +102,16 @@ function SignUp() {
     <>
       <SignUpDivContainer>
         <Toaster position="top-center" reverseOrder={false} />
-        <ImgSignUp>
-          <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px" />
-          </Link>
-        </ImgSignUp>
 
         <SignUpContainer>
           <form onSubmit={register}>
             <label>Email</label>
             <input
               onChange={handleInputChange}
-              value={input.username}
+              value={input.email}
               placeholder="Email"
               type="text"
-              name="username"
+              name="email"
             />
             {errors.username && <p className="error">{errors.username}</p>}
             <label>Contraseña</label>
@@ -110,6 +134,42 @@ function SignUp() {
             {errors.passwordConfirm && (
               <p className="error">{errors.passwordConfirm}</p>
             )}
+            <label>Nombre</label>
+            <input
+              onChange={handleInputChange}
+              value={input.name}
+              placeholder="Nombre"
+              type="text"
+              name="name"
+            />
+            {errors.name && <p className="error">{errors.name}</p>}
+            <label>Apellido</label>
+            <input
+              onChange={handleInputChange}
+              value={input.lastName}
+              placeholder="Apellido"
+              type="text"
+              name="lastName"
+            />
+            {errors.lastName && <p className="error">{errors.lastName}</p>}
+            <label>Documento</label>
+            <input
+              onChange={handleInputChange}
+              value={input.document}
+              placeholder="Documento"
+              type="text"
+              name="document"
+            />
+            {errors.document && <p className="error">{errors.document}</p>}
+            <label>Cumpleaños</label>
+            <input
+              onChange={handleInputChange}
+              value={input.birth}
+              placeholder="Email"
+              type="date"
+              name="birth"
+            />
+            {errors.birth && <p className="error">{errors.birth}</p>}
             <button type="submit">Registrarme</button>
           </form>
         </SignUpContainer>
@@ -130,7 +190,7 @@ const SignUpDivContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: 135vh;
   width: 100%;
   background-color: grey;
   object-fit: fill;
@@ -213,7 +273,7 @@ const SignUpContainer = styled.div`
     }
   }
   .error {
-    color: white;
+    color: red;
   }
   button {
     margin: 25px 0 25px 0;

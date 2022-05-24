@@ -41,7 +41,7 @@ export function getSuccess(payload) {
     try {
       console.log(token2.token)
       console.log(payload)
-      const json = await axios.get("/success?payment_id=" + payload, {
+      const json = await axios.get("http://localhost:3001/success?payment_id=" + payload, {
         headers: {
           Authorization: `Bearer ${token2.token}`,
         },
@@ -60,7 +60,7 @@ export function getSuccess(payload) {
 export function loginUser(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("/login", payload);
+      let json = await axios.post("http://localhost:3001/login", payload);
       console.log(json.data);
       return dispatch({ type: "LOGIN_USER", info: json.data });
     } catch (err) {
@@ -80,7 +80,7 @@ export function postPasswordReset(payload) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "/passwordReset",
+        "http://localhost:3001/passwordReset",
         payload
       );
       if(response.data.error){
@@ -100,7 +100,7 @@ export function postNewPassword(payload) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "/newPassword",
+        "http://localhost:3001/newPassword",
         payload
       );
       return response;
@@ -118,7 +118,7 @@ export function authSwitch() {
 
 export function getUsers() {
   return async function (dispatch) {
-    const users = await axios.get("/allUsers");
+    const users = await axios.get("http://localhost:3001/allUsers");
     return dispatch({
       type: "GET_USERS",
       payload: users.data,

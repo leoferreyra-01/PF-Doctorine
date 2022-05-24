@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const login = async credentials => { 
     console.log(credentials)
-    const {data} = await axios.post("/login" , credentials)
+    const {data} = await axios.post("http://localhost:3001/login" , credentials)
     return data
 } 
 
