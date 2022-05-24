@@ -215,7 +215,7 @@ async function addStudy() {
 
   const newStudy = await Study.create(infoStudy);
 
-  newStudy.setClinicalHistory(1);
+  newStudy.setPatient(1);
 }
 
 async function addEvolution() {
@@ -226,7 +226,7 @@ async function addEvolution() {
 
   const newEvolution = await Evolution.create(infoEvolution);
 
-  newEvolution.setClinicalHistory(1);
+  newEvolution.setPatient(1);
   newEvolution.setMedic(1);
   newEvolution.setTreatment('0201');
   newEvolution.setTooth(11);
