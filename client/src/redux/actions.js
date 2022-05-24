@@ -1,4 +1,5 @@
 import axios from 'axios'
+import toast from "react-hot-toast"; //Esto tambien del login
 export const GET_PATIENT = 'GET_PATIENT';
 export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
