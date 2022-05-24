@@ -9,10 +9,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { mainNavbarItems } from './const/navbarItems';
 import { navbarStyles } from './styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
-  const history = useHistory();
+  const history = useNavigate();
   return (
     <Drawer sx={navbarStyles.drawer} variant="permanent" anchor="left">
       <Toolbar />
