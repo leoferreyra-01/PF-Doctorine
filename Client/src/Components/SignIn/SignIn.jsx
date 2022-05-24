@@ -8,7 +8,7 @@ import GoogleLogin from "react-google-login";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import S from "./SingIn.module.css"
-import { loginUser } from "../../redux/actions";
+
 
 export function validate(input) {
   let errors = {};

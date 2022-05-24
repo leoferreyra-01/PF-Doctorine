@@ -15,13 +15,13 @@ import store from './redux/store.js';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <BrowserRouter>
-      <ThemeProvider theme={dashboardTheme}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <App />
-        </MuiPickersUtilsProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+      <BrowserRouter>
+        <ThemeProvider theme={dashboardTheme}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <App />
+          </MuiPickersUtilsProvider>
+        </ThemeProvider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

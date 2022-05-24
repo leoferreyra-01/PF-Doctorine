@@ -12,10 +12,4 @@ const setToken = newToken => {
 }
 let token2 = JSON.parse(window.localStorage.getItem("loggedToken"))
 
-
-
-
-
-
-
 export default { login , setToken }

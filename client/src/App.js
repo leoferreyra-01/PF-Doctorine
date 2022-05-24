@@ -1,7 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Route } from "react-router-dom";
-import LandingPage from "./landingPage";
+import { Routes, Route } from "react-router-dom";
 import Home from "./dentist/home";
 import RegisterPatient from "./dentist/home/navbar/register patient/";
 import Calendar from "./dentist/home/calendar";
@@ -16,17 +15,18 @@ import NewPassword from "./Components/NewPassword/NewPassword";
 function App() {
   return (
     <div className="App">
-      <Route exact path="/" render={() => <LandingPage />} />
-      <Route path="/home" render={() => <Home />} />
-      <Route path="/createPatient" render={() => <RegisterPatient />} />
-      <Route path="/home/calendar" render={() => <Calendar />} />
-      <Route path="/home/budget" render={() => <Budget />} />
-      <Route path="/patient-home" render={() => <PatientHome />} />
-      {/* RUTAS LOGIN */}
-      <Route path="/SignIn" element={<SignIn />} />
-      <Route path="/SignUp" element={<SignUp />} />
-      <Route path="/passwordReset" element={<PasswordReset />} />
-      <Route path="/newPassword" element={<NewPassword />} />
+      <Routes>
+        <Route path="/home" render={() => <Home />} />
+        <Route path="/createPatient" render={() => <RegisterPatient />} />
+        <Route path="/home/calendar" render={() => <Calendar />} />
+        <Route path="/home/budget" render={() => <Budget />} />
+        <Route path="/patient-home" render={() => <PatientHome />} />
+        {/* RUTAS LOGIN */}
+        <Route path="/" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/newPassword" element={<NewPassword />} />
+      </Routes>
     </div>
   );
 }
