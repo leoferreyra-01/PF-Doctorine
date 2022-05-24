@@ -6,6 +6,7 @@ import Home from './dentist/home';
 import RegisterPatient from './dentist/home/navbar/register patient/';
 import Calendar from './dentist/home/calendar';
 import Budget from './dentist/home/budget';
+import PatientHome from './patient/home';
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
       <Route path="/createPatient" render={() => <RegisterPatient />} />
       <Route path="/home/calendar" render={() => <Calendar />} />
       <Route path="/home/budget" render={() => <Budget />} />
+      <Route path="/patientHome" render={() => <PatientHome />} />
     </div>
   );
 }
 
-// linea 9: del odontologo
+// path Home: del odontologo
 
 export default App;

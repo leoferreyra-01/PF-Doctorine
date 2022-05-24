@@ -7,16 +7,20 @@ import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
 //import { Provider } from 'react-redux';
 import { dashboardTheme } from './common/theme/dashboardTheme';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={dashboardTheme}>
-      {/* <Provider store={store}> */}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      {/* </Provider> */}
-    </ThemeProvider>
+    {/* <Provider store={store}> */}
+    <BrowserRouter>
+      <ThemeProvider theme={dashboardTheme}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+    {/* </Provider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
