@@ -38,8 +38,6 @@ async function putMedic(MedicID, infoUser, infoMedic, ClinicID) {
     },
   });
 
-  console.log(getMedic);
-
   await User.update(infoUser, {
     where: {
       ID: getMedic[0].dataValues.UserID,
