@@ -5,14 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
-//import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { dashboardTheme } from './common/theme/dashboardTheme';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import store from './redux/store.js';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
     <BrowserRouter>
       <ThemeProvider theme={dashboardTheme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -20,7 +22,7 @@ ReactDOM.render(
         </MuiPickersUtilsProvider>
       </ThemeProvider>
     </BrowserRouter>
-    {/* </Provider> */}
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
