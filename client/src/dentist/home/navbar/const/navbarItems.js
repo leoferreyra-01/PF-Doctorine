@@ -1,3 +1,4 @@
+import React from 'react';
 import PeopleIcon from '@mui/icons-material/People';
 import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';

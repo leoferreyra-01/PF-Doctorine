@@ -16,7 +16,7 @@ function App() {
       <Route path="/createPatient" render={() => <RegisterPatient />} />
       <Route path="/home/calendar" render={() => <Calendar />} />
       <Route path="/home/budget" render={() => <Budget />} />
-      <Route path="/patientHome" render={() => <PatientHome />} />
+      <Route path="/patient-home" render={() => <PatientHome />} />
     </div>
   );
 }
