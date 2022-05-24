@@ -4,11 +4,11 @@ const router = require('express').Router();
 //|> CONTROLLERS
 const { getMedic } = require('../controllers/getMedic');
 const { postMedic } = require('../controllers/postMedic');
+const { putMedic } = require('../controllers/putMedic');
 
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
-// const {} = require('./controllersGET');
 
 router.get('/:ID', async (req, res) => {
   const { ID } = req.params;
@@ -33,7 +33,6 @@ router.get('/', async (req, res) => {
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
-// const {} = require('./controllersPOST');
 
 router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
@@ -41,7 +40,7 @@ router.post('/', async (req, res) => {
   try {
     await postMedic(infoUser, infoMedic, ClinicID);
 
-    res.status(200).send('Medic created');
+    res.status(200).send('Medic created.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -51,14 +50,24 @@ router.post('/', async (req, res) => {
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
-// const {} = require('./controllersPUT');
 
-router.put('/', async (req, res) => {});
+router.put('/:ID', async (req, res) => {
+  const { ID } = req.params;
+  const { infoUser, infoMedic, ClinicID } = req.body;
+
+  try {
+    await putMedic(ID, infoUser, infoMedic, ClinicID);
+
+    res.status(200).send('Medic modified');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
 
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
-// const {} = require('./controllersDELETE');
 
 router.delete('/', async (req, res) => {});
 
