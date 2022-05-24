@@ -10,6 +10,10 @@ router.use('/sql', SQL);
 const Medic = require('./routeMedic');
 router.use('/medics', Medic);
 
+//|> /patients
+const Patient = require('./routerPatient');
+router.use('/patients', Patient);
+
 //|> /turns
 const Turns = require('./routerturns');
 router.use('/turns', Turns);
