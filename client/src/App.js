@@ -4,6 +4,8 @@ import { Route } from 'react-router-dom';
 import LandingPage from './landingPage';
 import Home from './dentist/home';
 import RegisterPatient from './dentist/home/navbar/register patient/';
+import Calendar from './dentist/home/calendar';
+import Budget from './dentist/home/budget';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Route exact path="/" render={() => <LandingPage />} />
       <Route path="/home" render={() => <Home />} />
       <Route path="/createPatient" render={() => <RegisterPatient />} />
+      <Route path="/home/calendar" render={() => <Calendar />} />
+      <Route path="/home/budget" render={() => <Budget />} />
     </div>
   );
 }

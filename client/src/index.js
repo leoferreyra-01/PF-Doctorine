@@ -3,17 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
 //import { Provider } from 'react-redux';
+import { dashboardTheme } from './common/theme/dashboardTheme';
 
 ReactDOM.render(
   <React.StrictMode>
+    <ThemeProvider theme={dashboardTheme}>
       {/* <Provider store={store}> */}
-         <BrowserRouter>
-            <App />
-         </BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
       {/* </Provider> */}
-   </React.StrictMode>,
+    </ThemeProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

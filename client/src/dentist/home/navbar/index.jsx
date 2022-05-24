@@ -1,15 +1,36 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import SearchBar from './searchBar';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { mainNavbarItems } from './const/navbarItems';
+import { navbarStyles } from './styles';
+import { useHistory } from 'react-router-dom';
 
 export default function NavBar() {
-    return (
-        <>
-            <Link to='/createPatient'>
-                <button>Create new patient</button>
-            </Link>
-
-            <SearchBar/>
-        </>
-    );
-};
+  const history = useHistory();
+  return (
+    <Drawer sx={navbarStyles.drawer} variant="permanent" anchor="left">
+      <Toolbar />
+      <Divider />
+      <List>
+        {mainNavbarItems.map(item => (
+          <ListItem
+            key={item.id}
+            disablePadding
+            onClick={() => history.push(item.route)}
+          >
+            <ListItemButton>
+              <ListItemIcon sx={navbarStyles.icons}>{item.icon}</ListItemIcon>
+              <ListItemText sx={navbarStyles.text} primary={item.label} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
+  );
+}

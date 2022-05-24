@@ -1,14 +1,11 @@
 import React from 'react';
 import NavBar from './navbar';
-import Calendar from './calendar';
-import Budget from './budget';
+import Grid from '@mui/material/Grid';
 
-export default function Home(){
-    return(
-        <>
-            <NavBar/>
-            <Calendar/>
-            <Budget/>
-        </>
-    )
-};
+export default function Home() {
+  return (
+    <Grid container>
+      <NavBar />
+    </Grid>
+  );
+}
