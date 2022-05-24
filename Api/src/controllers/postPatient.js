@@ -1,0 +1,31 @@
+'use strict';
+
+//|> SEQUELIZE
+const { Op } = require('sequelize');
+const {
+  User,
+  Medic,
+  Patient,
+  Turn,
+  Budget,
+  Clinic,
+  ClinicalHistory,
+  Treatment,
+  Teeth,
+  Study,
+  Evolution,
+  sequelize,
+} = require('../db');
+
+//|> CONTROLLER
+
+async function postPatient(infoUser, infoPatient) {
+  const newPatient = await Patient.create(infoPatient);
+
+  newPatient.createUser(infoUser);
+  newPatient.createClinicalHistory(); // all default
+}
+
+module.exports = {
+  postPatient,
+};
