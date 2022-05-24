@@ -57,7 +57,10 @@ module.exports = {
 
     //* buscamos en el DB si existe una Clinica con ese nombre
     const clinicDB = await Clinic.findOne({
-      where: { name /* : name.toLowerCase() */ },
+      where: {
+        name: name,
+        /* .toLowerCase() */
+      },
     });
 
     if (clinicDB) {
