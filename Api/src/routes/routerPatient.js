@@ -3,6 +3,8 @@ const router = require('express').Router();
 
 //|> CONTROLLERS
 const { getPatient } = require('../controllers/getPatient');
+const { postPatient } = require('../controllers/postPatient');
+const { putPatient } = require('../controllers/putPatient');
 
 //|> RUTE
 
@@ -32,19 +34,52 @@ router.get('/:ID', async (req, res) => {
 
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', async (req, res) => {});
+router.post('/', async (req, res) => {
+  const { infoUser, infoPatient } = req.body;
+
+  try {
+    await postPatient(infoUser, infoPatient);
+
+    res.status(200).send('Patient created.');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', async (req, res) => {});
+router.put('/:ID', async (req, res) => {
+  const { ID } = req.params;
+  const { infoUser, infoPatient } = req.body;
+
+  try {
+    await putPatient(ID, infoUser, infoPatient);
+
+    res.status(200).send('Patient modified.');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
 
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
 
-router.delete('/', async (req, res) => {});
+// router.delete('/:ID', async (req, res) => {
+//   const { ID } = req.params;
+
+//   try {
+//     deleteMedic(ID);
+//     res.status(200).send('Medic deleted.');
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).send(error.message);
+//   }
+// });
 
 //#endregion
 
