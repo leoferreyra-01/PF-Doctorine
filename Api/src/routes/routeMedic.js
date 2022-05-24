@@ -9,8 +9,24 @@ const { getMedic } = require('../controllers/getMedic');
 //#region <>-------------------- GET --------------------<>
 // const {} = require('./controllersGET');
 
+router.get('/:ID', async (req, res) => {
+  const { ID } = req.params;
+
+  try {
+    res.status(200).json(await getMedic(ID));
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
+
 router.get('/', async (req, res) => {
-  // getMedic()
+  try {
+    res.status(200).json(await getMedic());
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
 });
 
 //#endregion

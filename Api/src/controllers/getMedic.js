@@ -18,7 +18,20 @@ const {
 
 //|> CONTROLLER
 
-async function getMedic() {}
+async function getMedic(MedicID = null) {
+  let query = {};
+  if (MedicID)
+    where = {
+      ID: MedicID,
+    };
+
+  const medic = Medic.findAll({
+    where: query,
+    include: [User, Clinic],
+  });
+
+  return medic;
+}
 
 module.exports = {
   getMedic,
