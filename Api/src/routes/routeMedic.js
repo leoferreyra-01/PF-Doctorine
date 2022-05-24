@@ -1,8 +1,9 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
 
-//|> CONTROLLER
+//|> CONTROLLERS
 const { getMedic } = require('../controllers/getMedic');
+const { postMedic } = require('../controllers/postMedic');
 
 //|> RUTE
 
@@ -34,7 +35,18 @@ router.get('/', async (req, res) => {
 //#region <>-------------------- POST --------------------<>
 // const {} = require('./controllersPOST');
 
-router.post('/', async (req, res) => {});
+router.post('/', async (req, res) => {
+  const { infoUser, infoMedic, ClinicID } = req.body;
+
+  try {
+    await postMedic(infoUser, infoMedic, ClinicID);
+
+    res.status(200).send('Medic created');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
 
 //#endregion
 
