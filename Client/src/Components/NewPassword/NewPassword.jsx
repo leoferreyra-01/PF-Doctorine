@@ -4,7 +4,7 @@ import styled from "styled-components";
 import logo from "./Logo/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { postNewPassword } from "../../redux/actions/actions";
+import { postNewPassword } from "../../redux/actions";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import S from "./NewPassword.module.css"
