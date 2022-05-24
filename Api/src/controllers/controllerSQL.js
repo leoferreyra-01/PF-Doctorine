@@ -19,8 +19,11 @@ const {
 
 //|> CONTROLLER
 
-async function getMedic() {}
+async function getSQL(sql) {
+  sql = sql.split('%').join(' ');
+  return (await sequelize.query(sql))[0];
+}
 
 module.exports = {
-  getMedic,
+  getSQL,
 };
