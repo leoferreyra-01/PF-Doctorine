@@ -1,61 +1,60 @@
-const {DataTypes}= require ('sequelize');
-module.export = (sequalize) =>{
-    sequialize.define('User',
-    {
-       ID_User:{
-           type: DataTypes.INTEGER,
-           primaryKey: true
-       },
-       userType:{
-           type: DataTypes.ENUM("Medic", "Pacient"),
-           alllownull: false
+const { DataTypes } = require('sequelize');
 
-       },
-       document:{
-       type: DataTypes.STRING,   
-       alllownull:false 
-       },
-       name:{
-         type: DataTypes.STRING(10),
-         alllownull: false
-       },
-       lastName:
-       {
-           type:DataTypes.STRING(10),
-           alllownull:false
-
-       },
-       birth:{
-           type: DataTypes.DATE,
-           alllownull:false
-       },
-       telephone:{
-           type: DataTypes.INTEGER(10)  
-       },
-       cellphone:{
-           type: DataTypes.INTEGER(10)
-       },
-       street:{
-           type: DataTypes.STRING
-       },
-       number:{
-           type: DataTypes.INTEGER
-       },
-       city:{
-           type: DataTypes.STRING
-       },
-       postalCode:{
-           type: DataTypes.INTEGER
-       },
-       email:{
-           type: DataTypes.INTEGER
-       },
-       password:{
-           type: DataTypes.STRING
-       },
-       imageProfile:{
-          type: DataTypes.STRING
-       }
-
-    })
-}
+module.exports = sequelize => {
+  sequelize.define('User', {
+    ID: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    userType: {
+      type: DataTypes.ENUM('Medic', 'Patient'),
+      alllownull: false,
+    },
+    document: {
+      type: DataTypes.INTEGER,
+      alllownull: false,
+    },
+    name: {
+      type: DataTypes.STRING(10),
+      alllownull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING(20),
+      alllownull: false,
+    },
+    birth: {
+      type: DataTypes.DATE,
+      alllownull: false,
+    },
+    telephone: {
+      type: DataTypes.INTEGER,
+    },
+    cellphone: {
+      type: DataTypes.INTEGER,
+    },
+    street: {
+      type: DataTypes.STRING,
+    },
+    number: {
+      type: DataTypes.INTEGER,
+    },
+    city: {
+      type: DataTypes.STRING,
+    },
+    postalCode: {
+      type: DataTypes.INTEGER,
+    },
+    email: {
+      type: DataTypes.STRING,
+      alllownull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      alllownull: false,
+    },
+    imageProfile: {
+      type: DataTypes.STRING,
+    },
+  });
+};

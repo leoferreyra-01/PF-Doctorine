@@ -1,26 +1,20 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = sequelize => {
-  sequelize.define('Turn', {
+  sequelize.define('Study', {
     ID: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    time: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    duration: {
-      type: DataTypes.FLOAT,
-      DefaultValue: 0.5,
+    studyType: {
+      type: DataTypes.ENUM('laboratory', 'complementary'),
     },
     description: {
       type: DataTypes.TEXT,
+    },
+    attach: {
+      type: DataTypes.STRING,
     },
   });
 };
