@@ -1,4 +1,4 @@
-const { Users } = require("../db");
+const { User } = require("../db");
 var NODEMAILER = require("nodemailer");  
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -24,25 +24,27 @@ var registerMail = async (username) => {
 
 const registerUser = async(req, res) => { 
     try {
-        const { username, password } = req.body;
-        const user = await Users.findAll({ where: { username } });
+        const { email, password, userType, document, name, lastName, birth } = req.body;
+        const user = await User.findAll({ where: { email } });
         if (!user.length) {
           bcrypt.hash(password, saltRounds, async (err, hash) => {
             if (err) {
               console.log(err);
             }
-            await Users.findOrCreate({
+            await User.findOrCreate({
               where: {
-                username,
+                email: email,
                 password: hash,
-                favourites: [],
-                isAdmin: false,
-                payment: 0
+                userType: userType,
+                document: document,
+                name: name,
+                lastName: lastName,
+                birth: birth
               }, 
             });
           });
           res.json({ success: "Usuario creado correctamente"});
-          registerMail(username);
+          registerMail(email);
         } else {
           res
             .status(401)

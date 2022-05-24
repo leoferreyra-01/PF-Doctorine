@@ -1,19 +1,19 @@
-const { Users } = require("../db");
+const { User } = require("../db");
 
 const newPassword = async(req, res) => { 
     try{ 
-        const { username, password } = req.body;
-        const user = await Users.findAll({ where: { username } });
+        const { email, password } = req.body;
+        const user = await User.findAll({ where: { email } });
         if (user.length) {
           bcrypt.hash(password, saltRounds, async (err, hash) => {
             if (err) {
               console.log(err);
             }
-            await Users.update(
+            await User.update(
               {
                 password: hash,
               },
-              { where: { username: username } }
+              { where: { email: email } }
             );
           });
           res.send("Password actualizado correctamente");

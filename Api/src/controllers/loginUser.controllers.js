@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt")
-const { Users } = require("../db");
+const { User } = require("../db");
 const loginUser = async(req , res) => { 
     try { 
-        const { username, password } = req.body; 
-        console.log(req.body)
-        const user = await Users.findOne({ where: { username: username } });
-        console.log(user)
+        const { email, password } = req.body; 
+        // console.log(req.body)
+        const user = await User.findOne({ where: { email: email } });
+        // console.log(user)
     
         if (!user) {
           return res.status(401).json({ error: "invalid user or password" });
@@ -20,18 +20,20 @@ const loginUser = async(req , res) => {
         }
     
         const userForToken = {
-          id: user.id,
-          username: user.username,
+          ID: user.ID,
+          email: user.email,
         };
     
         const token = jwt.sign(userForToken, process.env.SECRET);
     
         res.send({
-          username: user.username,
-          favourites: user.favourites,
+          email: user.email,
           token,
-          isAdmin: user.isAdmin,
-          payment: user.payment
+          userType: user.userType,
+          name: user.name,
+          lastName: user.lastName,
+          document: user.document,
+          birth: user.birth,
         });
       } catch (err) {
         console.log(err);

@@ -1,10 +1,10 @@
-const { Users } = require("../db")
+const { User } = require("../db")
 
 const userExist = async(req, res) => {
     try {
-        const { username } = req.body
-        const user = await Users.findOne({ where: {username}})
-        console.log(user)
+        const { email } = req.body
+        const user = await User.findOne({ where: {email}})
+        // console.log(user)
         if(user){ 
             return res.json({ success: "usuario encontrado"})
         }else{ 

@@ -1,13 +1,13 @@
-const { Users } = require("../db");
+const { User } = require("../db");
 const allUsers = async(req, res) => { 
     try {
-        const users = await Users.findAll();
+        const users = await User.findAll();
         res.json(users);
       } catch (e) {
         console.log(e);
       }
 }  
-Users
+User
 
 module.exports = { 
     allUsers

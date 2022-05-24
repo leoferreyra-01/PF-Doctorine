@@ -1,10 +1,10 @@
-const { Users } = require("../db");
+const { User } = require("../db");
 var NODEMAILER = require("nodemailer");
 const passwordReset = async(req , res) => { 
     try{  
-        const user = await Users.findOne({
+        const user = await User.findOne({
             where: {
-              username: req.body.username,
+              email: req.body.email,
             },
           });
           if (user) {
