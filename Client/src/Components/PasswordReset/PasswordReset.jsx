@@ -4,7 +4,7 @@ import logo from "./Logo/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { postPasswordReset } from "../../redux/actions/actions";
+import { postPasswordReset } from "../../redux/actions";
 import S from "./PasswordReset.module.css"
 
 export function validate(input) {
