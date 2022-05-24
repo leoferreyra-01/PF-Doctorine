@@ -19,6 +19,7 @@ const { treatments } = require('./treatmentsList');
 async function preload_db() {
   addClinic();
   addUserMedic();
+  addUserMedic();
   addUserPatient();
   addTeeths();
   addTreatments();
