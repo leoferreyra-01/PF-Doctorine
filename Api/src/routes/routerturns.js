@@ -39,9 +39,9 @@ router.put('/update/:id', updateTurns);
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
-// const {} = require('./controllersDELETE');
+const { deleteTurns } = require('../controllers/DeleteTurn');
 
-router.delete('/', async (req, res) => {});
+router.delete('/delete/:id', deleteTurns);
 
 //#endregion
 
