@@ -19,16 +19,19 @@ const {
 //|> CONTROLLER
 
 async function getMedic(MedicID = null) {
-  let query = {};
+  let find = {
+    include: [User, Clinic],
+  };
+
   if (MedicID)
-    where = {
-      ID: MedicID,
+    find = {
+      where: {
+        ID: MedicID,
+      },
+      include: [User, Clinic],
     };
 
-  const medic = Medic.findAll({
-    where: query,
-    include: [User, Clinic],
-  });
+  const medic = Medic.findAll(find);
 
   return medic;
 }
