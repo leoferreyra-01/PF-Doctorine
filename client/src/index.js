@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
 //import { Provider } from 'react-redux';
-import { dashboardTheme } from './common/theme/dashboardTheme';
+import { dashboardTheme } from './sharedComponents/theme/dashboardTheme';
+import { ThemeProvider } from '@mui/material/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 

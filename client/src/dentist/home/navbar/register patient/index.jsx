@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { patientSchema } from '../../../../sharedComponents/patientSchema.js';
+import { registerPatientSchema } from './registerPatientSchema';
 
 export default function RegisterPatient() {
   const {
@@ -9,7 +9,7 @@ export default function RegisterPatient() {
     register,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(patientSchema),
+    resolver: yupResolver(registerPatientSchema),
   });
   const onSubmit = data => {
     data.password = data.document;

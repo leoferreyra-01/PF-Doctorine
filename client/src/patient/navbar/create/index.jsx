@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { patientSchema } from '../../../sharedComponents/patientSchema';
+import { patientSchema } from './patientSchema';
 
 export default function CreatePatient() {
   const {
