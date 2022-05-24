@@ -15,7 +15,23 @@ async function getTurns() {
 
   return res;
 }
-
+async function getTurnsid(UserId) {
+  const searchid = await Turn.findByPk(UserId, {
+    where: { ID: UserId },
+    include: [Patient, Medic],
+  });
+  const resp = {
+    ID: searchid.ID,
+    date: searchid.date,
+    time: searchid.time,
+    duration: searchid.duration,
+    description: searchid.description,
+    Patient: searchid.Patient,
+    Medic: searchid.Medic,
+  };
+  return resp;
+}
 module.exports = {
   getTurns,
+  getTurnsid,
 };
