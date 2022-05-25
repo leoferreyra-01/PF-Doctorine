@@ -20,7 +20,7 @@ const {
 
 async function getPatient(PatientID = null) {
   let find = {
-    include: [User, ClinicalHistory],
+    include: [User],
   };
 
   if (PatientID)
@@ -28,7 +28,7 @@ async function getPatient(PatientID = null) {
       where: {
         ID: PatientID,
       },
-      include: [User, ClinicalHistory],
+      include: [User],
     };
 
   const patient = Patient.findAll(find);
