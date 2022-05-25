@@ -64,7 +64,7 @@ router.put('/', async (req, res) => {
 
 //#region <>-------------------- DELETE --------------------<>
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const id = req.params.id;
     await deleteTreatment(id);

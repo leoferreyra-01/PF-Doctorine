@@ -9,7 +9,7 @@ module.exports = sequelize => {
     },
     date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: false, // deberia de crear la fecha por defecto
     },
     treatments: {
       type: DataTypes.JSON,

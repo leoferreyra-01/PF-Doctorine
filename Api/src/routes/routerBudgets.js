@@ -7,6 +7,7 @@ const {
   getBudgetById,
   getBudgetByPatient,
   createBudget,
+  putBudget,
 } = require('../controllers/budgets');
 
 //|> RUTE
@@ -57,7 +58,14 @@ router.post('/', async (req, res) => {
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', async (req, res) => {});
+router.put('/', async (req, res) => {
+  try {
+    await putBudget(req.body);
+    res.status(201).json({ msg: 'budget paid successfully' });
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
 
 //#endregion
 
