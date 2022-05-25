@@ -17,16 +17,27 @@ const {
 const { treatments } = require('./treatmentsList');
 
 async function preload_db() {
+  //|> Basic info.
   addClinic();
   addUserMedic();
-  addUserPatient();
   addTeeths();
   addTreatments();
-  addTurn();
-  addTurn();
-  addBudget();
-  addStudy();
-  addEvolution();
+
+  //|> User-Patients pre-gen-examples
+  const patients = 20;
+  for (let n = 1; n <= patients; n++) {
+    addUserPatient(n);
+    addEvolution(n);
+    addStudy(n);
+    addTurn(n);
+    addBudget(n);
+    if (n % 2 === 0) {
+      updateBudget(n);
+    }
+  }
+
+  console.log(`<>----- PRELOAD x${patients} SUCCESSFULL-----<>`);
+  console.log(`-`);
 }
 
 async function addClinic() {
@@ -101,26 +112,26 @@ async function addUserMedic() {
   newMedic.setClinic(1);
 }
 
-async function addUserPatient() {
+async function addUserPatient(n) {
   const infoUser = {
     userType: 'Patient',
-    document: 30500702,
+    document: 30500700 + n,
     name: 'Patient',
-    lastName: 'DePrueba1',
+    lastName: 'DePrueba' + n,
     birth: '1992-05-22',
-    telephone: 385444332,
-    cellphone: 385444333,
-    street: 'Alsina',
-    number: '553',
-    city: 'San Salvador',
-    postalCode: 5800,
-    email: 'pacientedeprueba1@dalequeva.com',
+    telephone: 385444330 + n,
+    cellphone: 385555220 + n,
+    street: 'Calle',
+    number: '' + n,
+    city: 'Santiago del Estero',
+    postalCode: 4200,
+    email: 'pacientedeprueba' + n + '@dalequeva.com',
     password: '123456',
     imageProfile: null,
   };
 
   const infoPatient = {
-    medicalService: 'Sancor Salud',
+    medicalService: 'Sancor Salud - Plan: ' + n,
     showClinicalHistory: false,
     tutor: null,
   };
@@ -128,7 +139,7 @@ async function addUserPatient() {
   const newPatient = await Patient.create(infoPatient);
 
   newPatient.createUser(infoUser);
-  newPatient.createClinicalHistory(); // all default
+  // newPatient.createClinicalHistory(); // all default
 }
 
 async function addTeeths() {
@@ -158,35 +169,35 @@ async function addTreatments() {
   });
 }
 
-async function addTurn() {
+async function addTurn(n) {
   const infoTurn = {
     date: '2022-06-17',
-    time: 9.5,
+    time: 9.5 + n,
     duration: 1,
-    description: 'Primer turno!',
+    description: 'Turno ' + n,
   };
 
   const newTurn = await Turn.create(infoTurn);
 
   newTurn.setMedic(1);
-  newTurn.setPatient(1);
+  newTurn.setPatient(n);
 }
 
-async function addBudget() {
+async function addBudget(n) {
   const treatments = JSON.stringify([
     {
       ID: '0201',
       treatmentType: 'operatoria',
       description: 'Obturación con Amalgama Cavidad Simple.',
-      price: 1950,
+      price: 1950 + n,
       quantity: 2,
-      subTotalPrice: 1950 * 2,
+      subTotalPrice: (1950 + n) * 2,
     },
     {
       ID: '0202',
       treatmentType: 'operatoria',
       description: 'Obturación con Amalgama Cavidad Compuesta.',
-      price: 2340,
+      price: 2340 + n,
       quantity: 1,
       subTotalPrice: 2340,
     },
@@ -196,15 +207,28 @@ async function addBudget() {
     date: '2022-05-22',
     treatments,
     discount: null,
-    totalPrice: 1950 * 2 + 2340,
+    totalPrice: (1950 + n) * 2 + 2340 + n,
   };
 
   const newBudget = await Budget.create(infoBudget);
 
-  newBudget.setPatient(1);
+  newBudget.setPatient(n);
 }
 
-async function addStudy() {
+async function updateBudget(n) {
+  Budget.update(
+    {
+      paid: true,
+    },
+    {
+      where: {
+        ID: n,
+      },
+    }
+  );
+}
+
+async function addStudy(n) {
   const infoStudy = {
     studyType: 'laboratory',
     description: null,
@@ -213,10 +237,10 @@ async function addStudy() {
 
   const newStudy = await Study.create(infoStudy);
 
-  newStudy.setClinicalHistory(1);
+  newStudy.setPatient(n);
 }
 
-async function addEvolution() {
+async function addEvolution(n) {
   const infoEvolution = {
     date: '2022-05-23',
     observations: 'El diente le quedó muy lindo.',
@@ -224,7 +248,7 @@ async function addEvolution() {
 
   const newEvolution = await Evolution.create(infoEvolution);
 
-  newEvolution.setClinicalHistory(1);
+  newEvolution.setPatient(n);
   newEvolution.setMedic(1);
   newEvolution.setTreatment('0201');
   newEvolution.setTooth(11);
