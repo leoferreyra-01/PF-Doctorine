@@ -18,24 +18,24 @@ const {
 
 //|> CONTROLLER
 
-async function getMedic(MedicID = null) {
+async function getPatient(PatientID = null) {
   let find = {
-    include: [User, Clinic],
+    include: [User],
   };
 
-  if (MedicID)
+  if (PatientID)
     find = {
       where: {
-        ID: MedicID,
+        ID: PatientID,
       },
-      include: [User, Clinic],
+      include: [User],
     };
 
-  const medic = Medic.findAll(find);
+  const patient = Patient.findAll(find);
 
-  return medic;
+  return patient;
 }
 
 module.exports = {
-  getMedic,
+  getPatient,
 };
