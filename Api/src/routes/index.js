@@ -10,36 +10,31 @@ router.use('/sql', SQL);
 const Medic = require('./routeMedic');
 router.use('/medics', Medic);
 
+//|> /patients
+const Patient = require('./routerPatient');
+router.use('/patients', Patient);
+
 //|> /turns
 const Turns = require('./routerturns');
 router.use('/turns', Turns);
 
-//|> /allUsers
-const allUsers = require("./allUsers");
-router.use("/allUsers" , allUsers);
-
-//|> /login
-const loginUser = require("./loginUser") 
-router.use("/login" , loginUser) 
-
-//|> /newPassword
-const newPassword = require("./newPassword") 
-router.use("/newPassword", newPassword)
-
-//|> /passwordReset
-const passwordReset = require("./passwordReset") 
-router.use("/passwordReset", passwordReset) 
-
-//|> /register
-const registerUser = require("./registerUser")
-router.use("/register", registerUser) 
-
-//|> /oneUser
-const userExist = require("./userExist");
-router.use("/oneUser" , userExist)
-
-//|> /oneUser
-const getEvolution = require("./routeEvolutions");
-router.use("/evolutions" , getEvolution)
-
+//|> /clinicalhistories
+const ClinicalHistory = require('./routeClinicalHistory');
+router.use('/clinicalhistories', ClinicalHistory);
 module.exports = router;
+
+//|> /clinics
+const Clinics = require('./routerClinics');
+router.use('/clinics', Clinics);
+
+//|> /budgets
+const Budget = require('./routerBudgets.js');
+router.use('/budgets', Budget);
+
+//|> /treatments
+const Treatment = require('./routerTreatmensts');
+router.use('/treatments', Treatment);
+
+//|> /studies
+const Study = require('./routerStudies');
+router.use('/studies', Study);
