@@ -56,4 +56,16 @@ module.exports = {
     //*se vincula con el ID del paciente
     CreateBudget.setPatient(PatientID);
   },
+  putBudget: async function (infoUpdateBudget) {
+    const { paid, ID } = infoUpdateBudget; // req.body
+
+    const BudgetByPatient = await Budget.findByPk(ID);
+
+    if (!BudgetByPatient) {
+      //* Crea un error si no existe  el presupuesto  en la DB
+      throw new Error('There is no budget with that ID!');
+    }
+    const updatePatient = await BudgetByPatient.update({ paid: paid });
+    return updatePatient;
+  },
 };
