@@ -38,3 +38,7 @@ router.use('/treatments', Treatment);
 //|> /studies
 const Study = require('./routerStudies');
 router.use('/studies', Study);
+
+//|> /evolutions
+const getEvolution = require("./routeEvolutions");
+router.use("/evolutions" , getEvolution)
