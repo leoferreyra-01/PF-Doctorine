@@ -11,6 +11,7 @@ import {
   GET_USERS,
   USER_TO_ADMIN,
   DELETE_USER,
+  GET_CLINICAL_HISTORY,
 } from "./actions";
 
 const initialState = {
@@ -22,6 +23,8 @@ const initialState = {
   allUsers: [],
   success: [],
   auth: false,
+  ///////////
+  clinicalHistory: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -112,6 +115,12 @@ export default function rootReducer(state = initialState, action) {
         ),
       };
     ////////
+
+    case GET_CLINICAL_HISTORY:
+      return{
+        ...state,
+        clinicalHistory: [...state.clinicalHistory, ...action.payload]
+      }
     default:
       return { ...state };
   }

@@ -5,6 +5,7 @@ export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
 export const GET_TURNS = 'GET_TURNS';
 export const GET_ALL_PATIENTS = 'GET_ALL_PATIENTS';
+export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 //login
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
@@ -173,3 +174,13 @@ export function userDelete(id) {
   }
 
 export function getTurns(){};
+
+export function getClinicalHistory(ID){
+  return async function(dispatch){
+    const clinicalHistory = await axios.get(`/clinicalhistories/${ID}`)
+    return dispatch({
+      type: GET_CLINICAL_HISTORY,
+      payload: clinicalHistory.data
+    })
+  } 
+};

@@ -11,6 +11,7 @@ import SignUp from "./Components/SignUp/SignUp.jsx";
 import SignIn from "./Components/SignIn/SignIn.jsx";
 import PasswordReset from "./Components/PasswordReset/PasswordReset.jsx";
 import NewPassword from "./Components/NewPassword/NewPassword";
+import ClinicalHistory from "./dentist/home/navbar/detail/clinic-history/get";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/home/calendar" render={() => <Calendar />} />
         <Route path="/home/budget" render={() => <Budget />} />
         <Route path="/patient-home" render={() => <PatientHome />} />
+        <Route path='/clinical-history' render={()=> <ClinicalHistory/>}/>
         {/* RUTAS LOGIN */}
         <Route path="/" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
