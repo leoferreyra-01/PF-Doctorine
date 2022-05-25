@@ -34,3 +34,7 @@ router.use('/budgets', Budget);
 //|> /treatments(Laura)
 const Treatment = require('./routerTreatmensts');
 router.use('/treatments', Treatment);
+
+//|> /studies
+const Study = require('./routerStudies');
+router.use('/studies', Study);
