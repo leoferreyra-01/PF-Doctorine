@@ -38,7 +38,7 @@ export const dashboardTheme = createTheme({
       main: '#2F8F9D',
     },
     white: {
-      main: '#fff',
+      main: '#fff!important',
     },
     secondary: {
       main: '#3BACB6',

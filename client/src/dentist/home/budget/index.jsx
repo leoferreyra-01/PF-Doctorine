@@ -1,12 +1,12 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
+import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import Header from '../Header/Header';
 
 export default function Landing() {
   return (
-    <Grid item xs={8}>
+    <GridWrapper>
       BUDGET
       <Header title="Budget" />
-    </Grid>
+    </GridWrapper>
   );
 }

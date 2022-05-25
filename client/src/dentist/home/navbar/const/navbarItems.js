@@ -1,46 +1,27 @@
 import React from 'react';
-import PeopleIcon from '@mui/icons-material/People';
-import ImageIcon from '@mui/icons-material/Image';
-import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
-import DnsIcon from '@mui/icons-material/Dns';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 export const mainNavbarItems = [
   {
     id: 0,
-    icon: <PeopleIcon />,
-    label: 'Authentication',
-    route: '/home/authentication',
+    icon: <CalendarTodayIcon />,
+    label: 'Calendar',
+    route: 'calendar',
   },
+
   {
     id: 1,
-    icon: <DnsIcon />,
-    label: 'Database',
-    route: '/home/calendar',
+    icon: <NoteAltIcon />,
+    label: 'Register Patient',
+    route: 'register',
   },
+
   {
     id: 2,
-    icon: <ImageIcon />,
-    label: 'Storage',
-    route: '/home/storage',
-  },
-  {
-    id: 3,
-    icon: <PublicIcon />,
-    label: 'Hosting',
-    route: '/home/hosting',
-  },
-  {
-    id: 4,
-    icon: <SettingsEthernetIcon />,
-    label: 'Functions',
-    route: '/home/budget',
-  },
-  {
-    id: 5,
-    icon: <SettingsInputComponentIcon />,
-    label: 'Machine learning',
-    route: '/home/machine-learning',
+    icon: <PaymentsIcon />,
+    label: 'Budget',
+    route: 'budget',
   },
 ];

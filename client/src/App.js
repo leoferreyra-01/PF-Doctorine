@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LandingPage from './landingPage';
 import Home from './dentist/home';
 import RegisterPatient from './dentist/home/navbar/register patient/';
@@ -9,14 +10,22 @@ import Budget from './dentist/home/budget';
 import PatientHome from './patient/home';
 
 function App() {
+  console.log('renderice app');
+  const homeToShow = useSelector(state => state.homeToShow);
   return (
     <div className="App">
-      <Route exact path="/" render={() => <LandingPage />} />
-      <Route path="/home" render={() => <Home />} />
-      <Route path="/createPatient" render={() => <RegisterPatient />} />
-      <Route path="/home/calendar" render={() => <Calendar />} />
-      <Route path="/home/budget" render={() => <Budget />} />
-      <Route path="/patientHome" render={() => <PatientHome />} />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        {homeToShow === 'medic' ? (
+          <Route path="/home" element={<Home />}>
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="budget" element={<Budget />} />
+            <Route path="register" element={<RegisterPatient />} />
+          </Route>
+        ) : (
+          <Route path="/home" element={<PatientHome />} />
+        )}
+      </Routes>
     </div>
   );
 }

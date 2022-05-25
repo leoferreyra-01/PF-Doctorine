@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-//import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './redux/store.js';
 import { dashboardTheme } from './sharedComponents/theme/dashboardTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -12,15 +13,15 @@ import DateFnsUtils from '@date-io/date-fns';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
-    <BrowserRouter>
-      <ThemeProvider theme={dashboardTheme}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <App />
-        </MuiPickersUtilsProvider>
-      </ThemeProvider>
-    </BrowserRouter>
-    {/* </Provider> */}
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={dashboardTheme}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <App />
+          </MuiPickersUtilsProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
