@@ -18,20 +18,20 @@ router.use('/patients', Patient);
 const Turns = require('./routerturns');
 router.use('/turns', Turns);
 
-//|> /historyclinics
+//|> /clinicalhistories
 const ClinicalHistory = require('./routeClinicalHistory');
-router.use('/clinicalhistory', ClinicalHistory);
+router.use('/clinicalhistories', ClinicalHistory);
 module.exports = router;
 
-//|> /clinics(Laura)
+//|> /clinics
 const Clinics = require('./routerClinics');
-router.use('/Clinics', Clinics);
+router.use('/clinics', Clinics);
 
-//|> /budgets(Laura)
+//|> /budgets
 const Budget = require('./routerBudgets.js');
 router.use('/budgets', Budget);
 
-//|> /treatments(Laura)
+//|> /treatments
 const Treatment = require('./routerTreatmensts');
 router.use('/treatments', Treatment);
 
