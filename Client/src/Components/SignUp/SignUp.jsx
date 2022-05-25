@@ -161,7 +161,7 @@ function SignUp() {
               name="document"
             />
             {errors.document && <p className="error">{errors.document}</p>}
-            <label>Cumpleaños</label>
+            <label>Fecha de nacimiento</label>
             <input
               onChange={handleInputChange}
               value={input.birth}

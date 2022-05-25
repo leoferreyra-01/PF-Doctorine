@@ -64,7 +64,7 @@ function SignUp() {
       window.localStorage.setItem("loggedToken", JSON.stringify(user));
       service.setToken(user.token);
       if (user.token) {
-        toast.success(`Bienvenido al Home ${user.username}`);
+        toast.success(`Bienvenido al Home ${user.name}`);
         navigate("/");
       }
       console.log(user);
@@ -75,35 +75,40 @@ function SignUp() {
   };
   const respuestaGoogle = async (respuesta) => {
     const register = await axios.post("http://localhost:3001/oneUser", {
-      username: respuesta.profileObj.email,
+      email: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
     if (register.data.hasOwnProperty("success")) {
       const user = await axios.post("http://localhost:3001/login", {
-        username: respuesta.profileObj.email,
+        email: respuesta.profileObj.email,
         password: respuesta.profileObj.googleId,
       });
       window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
       service.setToken(user.data.token);
       if (user.data.token) {
-        toast.success(`Bienvenido  ${user.data.username}`);
+        toast.success(`Bienvenido  ${user.data.name}`);
         navigate("/");
       }
     } else {
       const userRegister = await axios.post("http://localhost:3001/register", {
-        username: respuesta.profileObj.email,
+        email: respuesta.profileObj.email,
         password: respuesta.profileObj.googleId,
+        userType: "Patient",
+        document: 0,
+        name: "User",
+        lastName: "",
+        birth: 0
       });
       if (userRegister.data.hasOwnProperty("success")) {
          setTimeout(async() => {
            const user = await axios.post("http://localhost:3001/login", {
-             username: respuesta.profileObj.email,
+             email: respuesta.profileObj.email,
              password: respuesta.profileObj.googleId,
            });
            window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
            service.setToken(user.data.token);
            if (user.data.token) {
-             toast.success(`Bienvenido al Home ${user.data.username}`);
+             toast.success(`Bienvenido al Home ${user.data.name}`);
              navigate("/");
            }
          }, 3000);
@@ -240,7 +245,6 @@ const SignUpContainer = styled.div`
   }
   label {
     padding-top: 10px;
-    margin-top: 0.5rem;
     font-weight: 500;
     color: #ffffff;
     letter-spacing: 0.2rem;
