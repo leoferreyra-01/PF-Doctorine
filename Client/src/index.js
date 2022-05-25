@@ -10,7 +10,6 @@ import { dashboardTheme } from './sharedComponents/theme/dashboardTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import store from './redux/store.js';
 
 ReactDOM.render(
   <React.StrictMode>

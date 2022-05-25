@@ -38,17 +38,6 @@ export function getAllPatients() {
   };
 }
 
-export function getAllPatients() {
-  return function (dispatch) {
-    // return axios.get(`http://localhost:3001/allPatients`)
-    //     .then(res => dispatch({ type: GET_ALL_PATIENTS, payload: res.data }))
-    //     .catch(error => {
-    //         if (error.response.status === 404) return alert(error.response.data.msg)
-    //         alert(error.message)
-    //     })
-  };
-}
-
 export function clear() {
   return {
     type: CLEAR,
