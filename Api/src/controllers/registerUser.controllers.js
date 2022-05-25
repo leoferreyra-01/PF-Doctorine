@@ -19,7 +19,6 @@ var registerMail = async (username) => {
       subject: "Registro exitoso!",
       text: "Hola, queremos informarte que tu cuenta fue registrada correctamente en mode parfum ❤",
     };
-    
   };
 
 const registerUser = async(req, res) => { 

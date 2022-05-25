@@ -38,4 +38,8 @@ router.use("/register", registerUser)
 const userExist = require("./userExist");
 router.use("/oneUser" , userExist)
 
+//|> /oneUser
+const getEvolution = require("./routeEvolutions");
+router.use("/evolutions" , getEvolution)
+
 module.exports = router;
