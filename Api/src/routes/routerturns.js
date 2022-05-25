@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 const { request } = require('express');
 //|> CONTROLLER
-const { getTurns, getTurnsid } = require('../controllers/GetTurn');
+const { getTurns, getTurnsid, getTurnsidP } = require('../controllers/GetTurn');
 
 //|> RUTE
 
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.get('/search', async (req, res) => {
   const { UserId } = req.query;
-  return res.json(await getTurnsid(UserId));
+  return res.json(await getTurnsidP(UserId));
 });
 
 router.get('/:id', async (req, res) => {
