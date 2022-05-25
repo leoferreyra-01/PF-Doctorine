@@ -21,21 +21,22 @@ const {
 
 async function getHistoryClinic() {
   const hcAll = await ClinicalHistory.findAll({
-    include: [Patient],
+    include: [Patient, Study],
   });
-  // let res = await hcAll.map(hc => hc);
+
   return hcAll;
 }
 async function getHistoryClinicId(id) {
   const hcid = await ClinicalHistory.findByPk(id, {
     where: { ID: id },
-    include: [Patient],
+    include: [Patient, Study],
   });
   return hcid;
 }
 async function getHistoryClinicPId(id) {
   const hcid = await ClinicalHistory.findOne({
     where: { PatientID: id },
+    include: [Patient, Study],
   });
   return hcid;
 }
