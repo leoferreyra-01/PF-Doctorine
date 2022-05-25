@@ -59,19 +59,15 @@ module.exports = {
     CreateTreatment.setClinic(ClinicID);
   },
   putTreatment: async function (infoUpdateTreatment) {
-    const { id, newPrice } = infoUpdateTreatment;
+    const { ID, newPrice } = infoUpdateTreatment;
 
-    const TreatmentById = await Treatment.findByPk(id);
+    const TreatmentById = await Treatment.findByPk(ID);
     if (!TreatmentById) {
       //* Crea un error si no existe  el tratamiento en la DB
       throw new Error('There are no Treatment with that id!');
     }
 
-    const updateTreatment = await Treatment.update({
-      where: {
-        price: newPrice,
-      },
-    });
+    const updateTreatment = await TreatmentById.update({ price: newPrice });
     return updateTreatment;
   },
   deleteTreatment: async function (id) {
