@@ -101,6 +101,9 @@ Medic.belongsTo(Clinic);
 Patient.hasOne(ClinicalHistory);
 ClinicalHistory.belongsTo(Patient);
 
+ClinicalHistory.hasMany(Study);
+Study.belongsTo(ClinicalHistory);
+
 Patient.hasMany(Study);
 Study.belongsTo(Patient);
 

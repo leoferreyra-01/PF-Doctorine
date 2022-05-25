@@ -32,8 +32,9 @@ router.get('/:id', async (req, res) => {
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
+const { postClinicalHistory } = require('../controllers/PostHistoryClinic');
 
-router.post('/', async (req, res) => {});
+router.post('/', postClinicalHistory);
 
 //#endregion
 
