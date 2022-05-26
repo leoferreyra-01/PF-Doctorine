@@ -6,6 +6,7 @@ export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
 export const GET_TURNS = 'GET_TURNS';
 export const GET_ALL_PATIENTS = 'GET_ALL_PATIENTS';
+export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 //login
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -190,5 +191,18 @@ export function home(selectedHome) {
   return {
     type: ENTER_HOME,
     payload: selectedHome,
+  };
+}
+
+export function getClinicalHistory(id) {
+  return function (dispatch) {
+    return axios
+      .get(`http://localhost:3001/clinicalhistories/${id}`)
+      .then(res => dispatch({ type: GET_CLINICAL_HISTORY, payload: res.data }))
+      .catch(error => {
+        if (error.response.status === 404)
+          return alert(error.response.data.msg);
+        alert(error.message);
+      });
   };
 }

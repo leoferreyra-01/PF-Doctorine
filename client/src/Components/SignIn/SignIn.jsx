@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "./Logo/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import service from "../../services/login";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
@@ -36,7 +36,7 @@ function SignUp() {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const User = useSelector((state) => state.user);
   const navigate = useNavigate();
 

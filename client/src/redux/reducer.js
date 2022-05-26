@@ -4,6 +4,7 @@ import {
   CLEAR,
   GET_TURNS,
   GET_ALL_PATIENTS,
+  GET_CLINICAL_HISTORY,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -26,6 +27,8 @@ const initialState = {
   allUsers: [],
   success: [],
   auth: false,
+  ///////////
+  clinicalHistory: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -127,6 +130,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         homeToShow: action.payload,
+      };
+    case GET_CLINICAL_HISTORY:
+      return {
+        ...state,
+        clinicalHistory: action.payload,
       };
     default:
       return { ...state };

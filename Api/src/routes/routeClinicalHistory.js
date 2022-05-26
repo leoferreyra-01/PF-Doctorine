@@ -17,7 +17,7 @@ const {
 } = require('../controllers/GetHistoryClinics');
 
 router.get('/search', async (req, res) => {
-  return res.json(await getHistoryClinicId((ID = req.query.id)));
+  return res.json(await getHistoryClinicPId((id = req.query.id)));
 });
 
 router.get('/:id', async (req, res) => {
@@ -25,10 +25,6 @@ router.get('/:id', async (req, res) => {
   return res.json(await getHistoryClinicId(id));
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  return res.json(await getHistoryClinicPId(id));
-});
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
