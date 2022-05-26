@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClinicalHistory } from '../../../../../../redux/actions.js';
+import { getClinicalHistory, clear } from '../../../../../../redux/actions.js';
 import { useParams } from 'react-router-dom';
 import GridWrapper from '../../../../../../sharedComponents/GridWrapper/GridWrapper.jsx';
 
