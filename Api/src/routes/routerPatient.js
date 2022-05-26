@@ -2,10 +2,10 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const { getMedic } = require('../controllers/getMedic');
-const { postMedic } = require('../controllers/postMedic');
-const { putMedic } = require('../controllers/putMedic');
-const { deleteMedic } = require('../controllers/deleteMedic');
+const { getPatient } = require('../controllers/getPatient');
+const { postPatient } = require('../controllers/postPatient');
+const { putPatient } = require('../controllers/putPatient');
+const { deletePatient } = require('../controllers/deletePatient');
 
 //|> RUTE
 
@@ -13,7 +13,7 @@ const { deleteMedic } = require('../controllers/deleteMedic');
 
 router.get('/', async (req, res) => {
   try {
-    res.status(200).json(await getMedic());
+    res.status(200).json(await getPatient());
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -24,7 +24,7 @@ router.get('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    res.status(200).json(await getMedic(ID));
+    res.status(200).json(await getPatient(ID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -36,12 +36,12 @@ router.get('/:ID', async (req, res) => {
 //#region <>-------------------- POST --------------------<>
 
 router.post('/', async (req, res) => {
-  const { infoUser, infoMedic, ClinicID } = req.body;
+  const { infoUser, infoPatient } = req.body;
 
   try {
-    await postMedic(infoUser, infoMedic, ClinicID);
+    await postPatient(infoUser, infoPatient);
 
-    res.status(200).send('Medic created.');
+    res.status(200).send('Patient created.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -54,12 +54,12 @@ router.post('/', async (req, res) => {
 
 router.put('/:ID', async (req, res) => {
   const { ID } = req.params;
-  const { infoUser, infoMedic, ClinicID } = req.body;
+  const { infoUser, infoPatient } = req.body;
 
   try {
-    await putMedic(ID, infoUser, infoMedic, ClinicID);
+    await putPatient(ID, infoUser, infoPatient);
 
-    res.status(200).send('Medic modified');
+    res.status(200).send('Patient modified.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -74,8 +74,8 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    deleteMedic(ID);
-    res.status(200).send('Medic deleted.');
+    deletePatient(ID);
+    res.status(200).send('Patient deleted.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);

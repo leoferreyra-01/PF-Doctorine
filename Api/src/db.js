@@ -1,5 +1,4 @@
 require('dotenv').config();
-//holis c:
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
@@ -104,13 +103,16 @@ ClinicalHistory.belongsTo(Patient);
 ClinicalHistory.hasMany(Study);
 Study.belongsTo(ClinicalHistory);
 
+Patient.hasMany(Study);
+Study.belongsTo(Patient);
+
 Clinic.hasMany(Treatment);
 Treatment.belongsTo(Clinic);
 
 // EVOLUTION
 
-ClinicalHistory.hasMany(Evolution);
-Evolution.belongsTo(ClinicalHistory);
+Patient.hasMany(Evolution);
+Evolution.belongsTo(Patient);
 
 Medic.hasOne(Evolution);
 Evolution.belongsTo(Medic);

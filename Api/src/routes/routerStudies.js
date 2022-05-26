@@ -2,21 +2,29 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const {} = require('../controllers');
+const {
+  getStudies,
+  getStudiesId,
+  getStudiesIdP,
+} = require('../controllers/getStudies');
+const { postStudy } = require('../controllers/PostStudy');
 
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
 
 router.get('/', async (req, res) => {
-  // get...(){}
+  return res.json(await getStudies());
 });
+router.get('/search', getStudiesIdP);
+
+router.get('/:id', getStudiesId);
 
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', async (req, res) => {});
+router.post('/', postStudy);
 
 //#endregion
 
