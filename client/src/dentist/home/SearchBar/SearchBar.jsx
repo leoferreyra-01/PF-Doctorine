@@ -15,7 +15,7 @@ export default function SearchBar({ placeholder, searchBarWidth }) {
   };
   const handleSubmit = () => {
     if (searched) {
-      dispatch(getPatientDni(searched.toLowerCase()));
+      dispatch(getPatientDni(searched));
     } else {
       alert(
         'El campo de busqueda esta vacio, por favor ingrese el dni del paciente a buscar'

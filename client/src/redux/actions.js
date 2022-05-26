@@ -30,18 +30,22 @@ export function getPatient(id) {
 }
 
 export function getPatientDni(dni) {
-  return async function (dispatch) {
-    try {
-      const patient = (
-        await axios.get(`http://localhost:3001/patients?document=${dni}`)
-      ).data;
-      dispatch({ type: GET_PATIENT_DNI, payload: patient });
-    } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
-    }
-  };
+  return { type: GET_PATIENT_DNI, payload: dni };
 }
+
+//export function getPatientDni(dni) {
+// return async function (dispatch) { //Forma de buscar en el back
+//   try {
+//     const patient = (
+//       await axios.get(`http://localhost:3001/patients?document=${dni}`)
+//     ).data;
+//     dispatch({ type: GET_PATIENT_DNI, payload: patient });
+//   } catch (error) {
+//     if (error.response.status === 404) return alert(error.response.data.msg);
+//     alert(error.message);
+//   }
+// };
+//}
 
 export function getAllPatients() {
   return function (dispatch) {

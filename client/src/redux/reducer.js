@@ -40,12 +40,20 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_PATIENT_DNI:
+      let searchedPatient = state.allPatients.filter(
+        patient => patient.document === action.payload * 1
+      );
+      if (searchedPatient.length === 0) searchedPatient = 'Patient Not Found';
       return {
         ...state,
-        searchedPatient: Array.isArray(action.payload)
-          ? [...action.payload]
-          : [action.payload],
+        searchedPatient: searchedPatient,
       };
+    // return { //Forma de guardar con respecto a peticiones del back
+    //   ...state,
+    //   searchedPatient: Array.isArray(action.payload)
+    //     ? [...action.payload]
+    //     : [action.payload],
+    // };
 
     case GET_ALL_PATIENTS:
       return {
