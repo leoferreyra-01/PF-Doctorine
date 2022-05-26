@@ -177,8 +177,8 @@ export function getTurns(){};
 
 export function getClinicalHistory(id){
   return function(dispatch){
-    return axios.get(`/clinicalhistories/${id}`)
-              .then(res => console.log(res))  //dispatch({ type: GET_CLINICAL_HISTORY, payload: res })
+    return axios.get(`http://localhost:3001/clinicalhistories/${id}`)
+              .then(res => dispatch({ type: GET_CLINICAL_HISTORY, payload: res.data }))  
               .catch(error => {
                 if (error.response.status === 404) return alert(error.response.data.msg)
                 alert(error.message)

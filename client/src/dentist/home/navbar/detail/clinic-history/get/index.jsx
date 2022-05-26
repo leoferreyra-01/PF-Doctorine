@@ -6,11 +6,21 @@ import { useParams } from 'react-router-dom';
 export default function ClinicalHistory(){
     
     const { id } = useParams();
-    console.log(id)
+    
     const dispatch = useDispatch();
 
     const { clinicalHistory } = useSelector(state => state)
-    console.log('SE MONTO EL COMP',clinicalHistory)
+    const toRender = [];
+    for(const property in clinicalHistory){
+        toRender.push(`${property}: ${clinicalHistory[property]}`)
+    }
+
+    const studies = toRender.pop();
+    const patient = toRender.pop();
+    const patientID = toRender.pop();
+    
+    console.log('clinicalHistory',clinicalHistory)
+    console.log('toRender', toRender)
 
     useEffect(() => {
         dispatch(getClinicalHistory(id))
@@ -20,7 +30,10 @@ export default function ClinicalHistory(){
         <>
             
             { clinicalHistory ? 
-                <h1>SIIII</h1> 
+                <div>
+                    {toRender.map(property => property)}
+                </div>
+                 
                 : <div>
                     <img src='https://giphy.com/gifs/odonto-odontocompany-company-9uIvZGLhJ0MntnhcWy/fullscreen' alt='loading'/>
                 </div>
