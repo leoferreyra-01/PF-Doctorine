@@ -6,8 +6,10 @@ const {
   getEvolution,
   getEvolutionID,
   getEvolutionPatient,
-} = require('../controllers/getEvolution');
-const { postEvolution } = require('../controllers/postEvolution');
+} = require('../controllers/controllerEvolutions/getEvolution');
+const {
+  postEvolution,
+} = require('../controllers/controllerEvolutions/postEvolution');
 
 //|> RUTE
 

@@ -1,4 +1,4 @@
-const { Evolution } = require('../db');
+const { Evolution } = require('../../db');
 
 async function getEvolution() {
   const evo = await Evolution.findAll();

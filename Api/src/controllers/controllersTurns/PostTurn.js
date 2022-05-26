@@ -18,6 +18,10 @@ async function postTurns(req, res) {
       return res
         .status(400)
         .send({ error: 'Incomplete data or there is a patient not found' });
+    if (!medic)
+      return res
+        .status(400)
+        .send({ error: 'Incomplete data or there is a medioc not found' });
     if (!time)
       return res
         .status(400)

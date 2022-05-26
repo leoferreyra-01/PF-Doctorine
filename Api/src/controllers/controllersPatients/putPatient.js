@@ -15,36 +15,30 @@ const {
   Study,
   Evolution,
   sequelize,
-} = require('../db');
+} = require('../../db');
 
 //|> CONTROLLER
 
-async function putMedic(MedicID, infoUser, infoMedic, ClinicID) {
-  await Medic.update(
-    {
-      ...infoMedic,
-      ClinicID,
-    },
-    {
-      where: {
-        ID: MedicID,
-      },
-    }
-  );
-
-  const getMedic = await Medic.findAll({
+async function putPatient(PatientID, infoUser, infoPatient) {
+  await Patient.update(infoPatient, {
     where: {
-      ID: MedicID,
+      ID: PatientID,
+    },
+  });
+
+  const getPatient = await Patient.findAll({
+    where: {
+      ID: PatientID,
     },
   });
 
   await User.update(infoUser, {
     where: {
-      ID: getMedic[0].dataValues.UserID,
+      ID: getPatient[0].dataValues.UserID,
     },
   });
 }
 
 module.exports = {
-  putMedic,
+  putPatient,
 };
