@@ -1,6 +1,6 @@
 import {
   GET_PATIENT,
-  GET_PATIENT_NAME,
+  GET_PATIENT_DNI,
   CLEAR,
   GET_TURNS,
   GET_ALL_PATIENTS,
@@ -36,7 +36,7 @@ export default function rootReducer(state = initialState, action) {
         patient: action.payload,
       };
 
-    case GET_PATIENT_NAME:
+    case GET_PATIENT_DNI:
       return {
         ...state,
         searchedPatient: Array.isArray(action.payload)

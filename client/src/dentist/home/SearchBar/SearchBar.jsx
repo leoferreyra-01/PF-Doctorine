@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPatientName } from '../../../redux/actions';
+import { getPatientDni } from '../../../redux/actions';
 import SearchIcon from '@mui/icons-material/Search';
 import Input from '@mui/material/Input';
 import Box from '@mui/material/Box';
@@ -15,10 +15,10 @@ export default function SearchBar({ placeholder, searchBarWidth }) {
   };
   const handleSubmit = () => {
     if (searched) {
-      dispatch(getPatientName(searched.toLowerCase()));
+      dispatch(getPatientDni(searched.toLowerCase()));
     } else {
       alert(
-        'El campo de busqueda esta vacio, por favor ingrese el nombre del paciente a buscar'
+        'El campo de busqueda esta vacio, por favor ingrese el dni del paciente a buscar'
       );
     }
     setSearched('');
