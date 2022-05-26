@@ -85,4 +85,40 @@ module.exports = {
 
     const CreateNewClinic = await Clinic.create(newClinic);
   },
+  putClinic: async function (infoClinic) {
+    const {
+      ID,
+      name,
+      street,
+      number,
+      city,
+      postalcode,
+      telephone,
+      email,
+      officeHours,
+      imgLogo,
+    } = infoClinic; // req.body
+
+    const clinicById = await Clinic.findByPk(ID);
+
+    if (!clinicById) {
+      //* Crea un error si no existe  la clinica en la DB
+      throw new Error('There is no clinic with that ID!');
+    }
+    let infoClinicUpdate = {
+      name /* : name.toLowerCase() */,
+      street,
+      number,
+      city,
+      postalcode,
+      telephone,
+      email,
+      officeHours,
+      imgLogo,
+    };
+
+    const updateClinic = await clinicById.update(infoClinicUpdate);
+
+    return updateClinic;
+  },
 };

@@ -6,6 +6,7 @@ const {
   getAllClinics,
   getClinicById,
   createClinic,
+  putClinic,
 } = require('../controllers/controllerClinics/clinic');
 
 //|> RUTE
@@ -42,6 +43,23 @@ router.post('/', async (req, res) => {
     res.status(201).json({ msg: 'successfully created clinic' });
   } catch (error) {
     res.status(404).json({ error: error.message });
+  }
+});
+
+//#endregion
+
+//#endregion
+
+//#region <>-------------------- PUT --------------------<>
+
+router.put('/', async (req, res) => {
+  try {
+    await putClinic(req.body);
+
+    res.status(201).send({ msg: 'successfully modified clinic.' });
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ error: error.message });
   }
 });
 
