@@ -14,8 +14,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-  const { UserId } = req.query;
-  return res.json(await getTurnsidP(UserId));
+  const { id } = req.query;
+  return res.json(await getTurnsidP(id));
 });
 
 router.get('/:id', async (req, res) => {
