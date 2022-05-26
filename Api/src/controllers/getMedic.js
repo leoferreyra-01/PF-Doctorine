@@ -19,21 +19,19 @@ const {
 //|> CONTROLLER
 
 async function getMedic(MedicID = null) {
-  let find = {
-    include: [User, Clinic],
-  };
+  if (MedicID) {
+    const findMedic = await Medic.findByPk(MedicID);
 
-  if (MedicID)
-    find = {
+    return User.findByPk(findMedic.dataValues.UserID, {
+      include: [Medic],
+    });
+  } else
+    return User.findAll({
       where: {
-        ID: MedicID,
+        userType: 'Medic',
       },
-      include: [User, Clinic],
-    };
-
-  const medic = Medic.findAll(find);
-
-  return medic;
+      include: [Medic],
+    });
 }
 
 module.exports = {

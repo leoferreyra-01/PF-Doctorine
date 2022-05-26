@@ -2,9 +2,11 @@
 const router = require('express').Router();
 
 //|> CONTROLLER
-const { getEvolution } = require('../controllers/getEvolution');
-const { getEvolutionID } = require('../controllers/getEvolution');
-const { getEvolutionPatient } = require('../controllers/getEvolution');
+const {
+  getEvolution,
+  getEvolutionID,
+  getEvolutionPatient,
+} = require('../controllers/getEvolution');
 const { postEvolution } = require('../controllers/postEvolution');
 
 //|> RUTE

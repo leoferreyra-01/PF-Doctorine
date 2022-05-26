@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const { getPatient } = require('../controllers/getPatient');
+const { getPatients, getPatientById } = require('../controllers/getPatient');
 const { postPatient } = require('../controllers/postPatient');
 const { putPatient } = require('../controllers/putPatient');
 const { deletePatient } = require('../controllers/deletePatient');
@@ -13,7 +13,7 @@ const { deletePatient } = require('../controllers/deletePatient');
 
 router.get('/', async (req, res) => {
   try {
-    res.status(200).json(await getPatient());
+    res.status(200).json(await getPatients(req.query));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -24,7 +24,7 @@ router.get('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    res.status(200).json(await getPatient(ID));
+    res.status(200).json(await getPatientById(ID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
