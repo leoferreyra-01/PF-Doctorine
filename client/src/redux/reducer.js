@@ -56,7 +56,6 @@ export default function rootReducer(state = initialState, action) {
     case CLEAR:
       return {
         ...state,
-        allPatients: [],
         patient: [],
         searchedPatient: [],
       };

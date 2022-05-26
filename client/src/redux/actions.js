@@ -35,7 +35,7 @@ export function getPatientDni(dni) {
       const patient = (
         await axios.get(`http://localhost:3001/patients?document=${dni}`)
       ).data;
-      dispatch({ type: GET_PATIENT_NAME, payload: patient });
+      dispatch({ type: GET_PATIENT_DNI, payload: patient });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);

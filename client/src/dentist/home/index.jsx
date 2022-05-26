@@ -17,9 +17,9 @@ export default function Home() {
   return (
     <Grid container>
       {/* BOTON TEMPORAL */}
-      <Link to="/clinical-history">
+      {/* <Link to="/clinical-history">
         <button>VER HC</button>
-      </Link>
+      </Link> */}
 
       <NavBar />
       <Header title={title} />

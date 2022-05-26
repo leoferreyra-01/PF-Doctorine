@@ -8,13 +8,8 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function PatientCard({
-  UserID = -1,
-  name,
-  lastName,
-  imageProfile,
-}) {
-  if (UserID === -1) {
+export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
+  if (ID === -1) {
     return (
       <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
@@ -49,7 +44,7 @@ export default function PatientCard({
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
-        <NavLink to={`/home/${UserID}`} style={{ textDecoration: 'none' }}>
+        <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
           <CardMedia
             component="img"
             alt={name}

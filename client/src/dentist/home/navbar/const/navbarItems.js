@@ -3,13 +3,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PaymentsIcon from '@mui/icons-material/Payments';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainNavbarItems = [
   {
     id: 0,
     icon: <HomeIcon />,
     label: 'Home',
-    route: '/',
+    route: '/home',
   },
   {
     id: 1,
@@ -30,5 +31,11 @@ export const mainNavbarItems = [
     icon: <PaymentsIcon />,
     label: 'Budget',
     route: 'budget',
+  },
+  {
+    id: 4,
+    icon: <AssignmentIcon />,
+    label: 'Show HC',
+    route: 'clinical-history/1',
   },
 ];
