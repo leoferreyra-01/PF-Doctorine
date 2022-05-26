@@ -52,7 +52,7 @@ export default function Header({ title }) {
       <Box sx={headerStyles.topRow}>
         <Typography sx={headerStyles.link}>Go to docs</Typography>
         <NotificationBell iconColor="white" />
-        <Avatar src="https://abctech.news/wp-content/webp-express/webp-images/uploads/2022/01/arceus-in-pokemon-legends-E0yzI-2-1.jpg.webp" />
+        <Avatar src="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png" />
       </Box>
       <Box sx={headerStyles.middleRow}>
         <Typography variant="h1" color="white">

@@ -8,6 +8,7 @@ import RegisterPatient from './dentist/home/navbar/register patient/';
 import Calendar from './dentist/home/calendar';
 import Budget from './dentist/home/budget';
 import PatientHome from './patient/home';
+import SearchComponent from './dentist/home/SearchComponent/SearchComponent';
 ////LOGIN
 import SignUp from './Components/SignUp/SignUp.jsx';
 //import SignIn from './Components/SignIn/SignIn.jsx';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/newPassword" element={<NewPassword />} />
         {homeToShow === 'medic' ? (
           <Route path="/home" element={<Home />}>
+            <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
