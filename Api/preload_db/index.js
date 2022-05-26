@@ -27,6 +27,7 @@ async function preload_db() {
   const patients = 20;
   for (let n = 1; n <= patients; n++) {
     addUserPatient(n);
+    addClinicalHistory(n);
     addEvolution(n);
     addStudy(n);
     addTurn(n);
@@ -132,14 +133,13 @@ async function addUserPatient(n) {
 
   const infoPatient = {
     medicalService: 'Sancor Salud - Plan: ' + n,
-    showClinicalHistory: false,
+    showClinicalHistory: Math.random() < 0.5 ? false : true,
     tutor: null,
   };
 
   const newPatient = await Patient.create(infoPatient);
 
   newPatient.createUser(infoUser);
-  // newPatient.createClinicalHistory(); // all default
 }
 
 async function addTeeths() {
@@ -252,6 +252,59 @@ async function addEvolution(n) {
   newEvolution.setMedic(1);
   newEvolution.setTreatment('0201');
   newEvolution.setTooth(11);
+}
+
+async function addClinicalHistory(n) {
+  const infoClinicalHistory = {
+    // BACKGROUND
+    b_smoker: Math.random() < 0.9 ? false : true,
+    b_useDrugs: Math.random() < 0.9 ? false : true,
+    b_pregnant: Math.random() < 0.9 ? false : true,
+    b_takeMedicine: Math.random() < 0.9 ? false : true,
+    b_sufferedFromIllness: Math.random() < 0.9 ? false : true,
+    b_alergicToMedicine: Math.random() < 0.9 ? false : true,
+    b_normalWoundHealing: Math.random() < 0.9 ? false : true,
+    b_other: Math.random() < 0.9 ? null : '"A new illness!"',
+    // INFECTION, CARDIOVASCULAR
+    ic_anginaPectoris: Math.random() < 0.9 ? false : true,
+    ic_myocardialInfarction: Math.random() < 0.9 ? false : true,
+    ic_hypertension: Math.random() < 0.9 ? false : true,
+    ic_vascularAffections: Math.random() < 0.9 ? false : true,
+    ic_other: Math.random() < 0.9 ? null : '"A new illness!"',
+    // INFECTION, HEMATOLOGICAL
+    ih_anemia: Math.random() < 0.9 ? false : true,
+    ih_leukemia: Math.random() < 0.9 ? false : true,
+    ih_haemophilia: Math.random() < 0.9 ? false : true,
+    ih_alterationWhiteSerie: Math.random() < 0.9 ? false : true,
+    ih_other: Math.random() < 0.9 ? null : '"A new illness!"',
+    // INFECTION, RESPIRATORY
+    ir_asthma: Math.random() < 0.9 ? false : true,
+    ir_pulmonaryEdema: Math.random() < 0.9 ? false : true,
+    ir_ephysemia: Math.random() < 0.9 ? false : true,
+    ir_tuberculosis: Math.random() < 0.9 ? false : true,
+    ir_chronicBronchitis: Math.random() < 0.9 ? false : true,
+    ir_other: Math.random() < 0.9 ? null : '"A new illness!"',
+    // INFECTION, GASTROINTESTINAL
+    ig_ulcer: Math.random() < 0.9 ? false : true,
+    ig_hepatitis: Math.random() < 0.9 ? false : true,
+    ig_cirrohsis: Math.random() < 0.9 ? false : true,
+    ig_other: Math.random() < 0.9 ? null : '"A new illness!"',
+    // INFECTION, NERVOUS
+    in_epilepsy: Math.random() < 0.9 ? false : true,
+    in_useOfTranquilizers: Math.random() < 0.9 ? false : true,
+    in_seizures: Math.random() < 0.9 ? false : true,
+    in_other: Math.random() < 0.9 ? null : '"A new illness!"',
+    // INFECTION, BONES
+    ib_osteoporosis: Math.random() < 0.9 ? false : true,
+    ib_paget: Math.random() < 0.9 ? false : true,
+    ib_rickets: Math.random() < 0.9 ? false : true,
+    ib_osteomalacia: Math.random() < 0.9 ? false : true,
+    ib_other: Math.random() < 0.9 ? null : '"A new illness!"',
+  };
+
+  const newClinicalHistory = await ClinicalHistory.create(infoClinicalHistory);
+
+  newClinicalHistory.setPatient(n);
 }
 
 module.exports = {
