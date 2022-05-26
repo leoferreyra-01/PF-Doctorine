@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getPatientName } from '../../../redux/actions';
 import SearchIcon from '@mui/icons-material/Search';
 import Input from '@mui/material/Input';
 import Box from '@mui/material/Box';
@@ -6,12 +8,14 @@ import CommonButton from '../../../sharedComponents/CommonButton/CommonButton';
 
 export default function SearchBar({ placeholder, searchBarWidth }) {
   const [searched, setSearched] = useState('');
+  const dispatch = useDispatch();
   const handleOnChange = e => {
     console.log(e.target.value);
     setSearched(e.target.value);
   };
   const handleSubmit = () => {
     if (searched) {
+      dispatch(getPatientName(searched.toLowerCase()));
     } else {
       alert(
         'El campo de busqueda esta vacio, por favor ingrese el nombre del paciente a buscar'

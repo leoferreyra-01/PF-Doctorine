@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { clear } from '../../../redux/actions';
 import Box from '@mui/material/Box';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
@@ -21,17 +23,34 @@ const cardHeaderStyles = {
 };
 
 export default function SearchComponent() {
+  const searchedPatient = useSelector(state => state.searchedPatient);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => dispatch(clear());
+  }, []);
   return (
     <GridWrapper>
       <h3>Componente Inicial</h3>
       <Box sx={cardHeaderStyles.wrapper}>
         <SearchBar placeholder="Buscar paciente.." searchBarWidth="720px" />
       </Box>
-      <PatientCard
-        name="Vacio de momento"
-        lastName="Nada de nada"
-        imageProfile="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
-      />
+      {searchedPatient.length ? (
+        searchedPatient.map(patient => (
+          <PatientCard
+            key={patient.User.ID}
+            UserID={patient.User.ID}
+            name={patient.User.name}
+            lastName={patient.User.lastName}
+            imageProfile={patient.User.imageProfile}
+          />
+        ))
+      ) : (
+        <PatientCard
+          name="Alfonso de Prueba"
+          lastName="Nada de nada"
+          imageProfile="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
+        />
+      )}
     </GridWrapper>
   );
 }

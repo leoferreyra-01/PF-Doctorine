@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast'; //Esto tambien del login
 export const GET_PATIENT = 'GET_PATIENT';
+export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
 export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
 export const GET_TURNS = 'GET_TURNS';
@@ -27,14 +28,29 @@ export function getPatient(id) {
   };
 }
 
+export function getPatientName(name) {
+  return async function (dispatch) {
+    try {
+      const patient = (await axios.get(`http://localhost:3001/patients/${2}`))
+        .data;
+      dispatch({ type: GET_PATIENT_NAME, payload: patient });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
+  };
+}
+
 export function getAllPatients() {
   return function (dispatch) {
-    // return axios.get(`http://localhost:3001/allPatients`)
-    //     .then(res => dispatch({ type: GET_ALL_PATIENTS, payload: res.data }))
-    //     .catch(error => {
-    //         if (error.response.status === 404) return alert(error.response.data.msg)
-    //         alert(error.message)
-    //     })
+    return axios
+      .get(`http://localhost:3001/patients`)
+      .then(res => dispatch({ type: GET_ALL_PATIENTS, payload: res.data }))
+      .catch(error => {
+        if (error.response.status === 404)
+          return alert(error.response.data.msg);
+        alert(error.message);
+      });
   };
 }
 

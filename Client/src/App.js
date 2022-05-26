@@ -9,6 +9,7 @@ import Calendar from './dentist/home/calendar';
 import Budget from './dentist/home/budget';
 import PatientHome from './patient/home';
 import SearchComponent from './dentist/home/SearchComponent/SearchComponent';
+import PatientDetails from './sharedComponents/PatientDetails/PatientDetails';
 ////LOGIN
 import SignUp from './Components/SignUp/SignUp.jsx';
 //import SignIn from './Components/SignIn/SignIn.jsx';
@@ -33,6 +34,7 @@ function App() {
             <Route path="calendar" element={<Calendar />} />
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
+            <Route path="/home/:patientID" element={<PatientDetails />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />} />

@@ -1,5 +1,6 @@
 import {
   GET_PATIENT,
+  GET_PATIENT_NAME,
   CLEAR,
   GET_TURNS,
   GET_ALL_PATIENTS,
@@ -16,6 +17,7 @@ import {
 
 const initialState = {
   allPatients: [],
+  searchedPatient: [],
   patient: [],
   unavailableTurns: [],
   homeToShow: 'login',
@@ -34,17 +36,26 @@ export default function rootReducer(state = initialState, action) {
         patient: action.payload,
       };
 
-    // case GET_ALL_PATIENTS:
-    //     return {
-    //         ...state,
-    //         allPatients: [...allPatients, ...action.payload]
-    //     };
+    case GET_PATIENT_NAME:
+      return {
+        ...state,
+        searchedPatient: Array.isArray(action.payload)
+          ? [...action.payload]
+          : [action.payload],
+      };
+
+    case GET_ALL_PATIENTS:
+      return {
+        ...state,
+        allPatients: [...state.allPatients, ...action.payload],
+      };
 
     case CLEAR:
       return {
         ...state,
         allPatients: [],
         patient: [],
+        searchedPatient: [],
       };
 
     case GET_TURNS:
