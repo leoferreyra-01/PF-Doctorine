@@ -37,12 +37,33 @@ module.exports = sequelize => {
         is: /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/,
       },
     },
+    fullName: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.name} ${this.lastName}`;
+      },
+      set(value) {
+        throw new Error('Do not try to set the `fullName` value!');
+      },
+    },
     birth: {
       type: DataTypes.DATEONLY,
       alllownull: false,
       validate: {
         // Date (yyyy-MM-dd)
         is: /^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$/,
+      },
+    },
+    age: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const birth = new Date(this.birth);
+        const today = new Date();
+        let difference = today.getTime() - birth.getTime();
+        return Math.ceil(difference / (1000 * 3600 * 24 * 365));
+      },
+      set(value) {
+        throw new Error('Do not try to set the `age` value!');
       },
     },
     telephone: {
