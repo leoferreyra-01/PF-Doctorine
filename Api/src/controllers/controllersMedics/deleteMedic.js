@@ -20,15 +20,14 @@ const {
 //|> CONTROLLER
 
 async function deleteMedic(MedicID) {
-  const getMedic = await Medic.findAll({
-    where: {
-      ID: MedicID,
-    },
-  });
+  const findMedic = await Medic.findByPk(MedicID);
+
+  if (!findMedic)
+    throw new Error(`There is no Medic with "MedicID=${MedicID}".`);
 
   await User.destroy({
     where: {
-      ID: getMedic[0].dataValues.UserID,
+      ID: findMedic.dataValues.UserID,
     },
   });
 
@@ -37,6 +36,8 @@ async function deleteMedic(MedicID) {
       ID: MedicID,
     },
   });
+
+  return 'Medic deleted.';
 }
 
 module.exports = {

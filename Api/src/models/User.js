@@ -28,10 +28,10 @@ module.exports = sequelize => {
       alllownull: false,
     },
     telephone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     cellphone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     street: {
       type: DataTypes.STRING,

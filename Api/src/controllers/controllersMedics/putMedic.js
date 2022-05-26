@@ -43,6 +43,8 @@ async function putMedic(MedicID, infoUser, infoMedic, ClinicID) {
       ID: getMedic[0].dataValues.UserID,
     },
   });
+
+  return 'Medic modified.';
 }
 
 module.exports = {
