@@ -18,17 +18,33 @@ const {
 
 //|> CONTROLLER
 
-async function getPatient(PatientID = null) {
-  if (PatientID)
-    return Patient.findByPk(PatientID, {
-      include: [User],
+async function getPatients(query = null) {
+  if (query)
+    return User.findAll({
+      where: {
+        ...query,
+        userType: 'Patient',
+      },
+      include: [Patient],
     });
   else
-    return Patient.findAll({
-      include: [User],
+    return User.findAll({
+      where: {
+        userType: 'Patient',
+      },
+      include: [Patient],
     });
 }
 
+async function getPatientById(PatientID = null) {
+  const findPatient = await Patient.findByPk(PatientID);
+
+  return User.findByPk(findPatient.dataValues.UserID, {
+    include: [Patient],
+  });
+}
+
 module.exports = {
-  getPatient,
+  getPatients,
+  getPatientById,
 };
