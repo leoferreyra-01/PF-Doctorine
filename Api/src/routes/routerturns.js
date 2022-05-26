@@ -3,7 +3,11 @@ const router = require('express').Router();
 
 const { request } = require('express');
 //|> CONTROLLER
-const { getTurns, getTurnsid, getTurnsidP } = require('../controllers/GetTurn');
+const {
+  getTurns,
+  getTurnsid,
+  getTurnsidP,
+} = require('../controllers/controllersTurns/GetTurn');
 
 //|> RUTE
 
@@ -14,8 +18,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-  const { UserId } = req.query;
-  return res.json(await getTurnsidP(UserId));
+  const { id } = req.query;
+  return res.json(await getTurnsidP(id));
 });
 
 router.get('/:id', async (req, res) => {
@@ -26,20 +30,20 @@ router.get('/:id', async (req, res) => {
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
-const { postTurns } = require('../controllers/PostTurn');
+const { postTurns } = require('../controllers/controllersTurns/PostTurn');
 
 router.post('/', postTurns);
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
-const { updateTurns } = require('../controllers/UpdateTurn');
+const { updateTurns } = require('../controllers/controllersTurns/UpdateTurn');
 router.put('/update/:id', updateTurns);
 
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
-const { deleteTurns } = require('../controllers/DeleteTurn');
+const { deleteTurns } = require('../controllers/controllersTurns/DeleteTurn');
 
 router.delete('/delete/:id', deleteTurns);
 

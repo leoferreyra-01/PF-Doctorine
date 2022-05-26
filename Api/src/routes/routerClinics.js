@@ -6,7 +6,7 @@ const {
   getAllClinics,
   getClinicById,
   createClinic,
-} = require('../controllers/clinic');
+} = require('../controllers/controllerClinics/clinic');
 
 //|> RUTE
 

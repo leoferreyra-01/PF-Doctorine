@@ -14,7 +14,7 @@ const {
   Teeth,
   Study,
   Evolution,
-} = require('../db');
+} = require('../../db');
 
 //|> CONTROLLER
 
