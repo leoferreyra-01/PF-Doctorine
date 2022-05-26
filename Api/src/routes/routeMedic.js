@@ -39,9 +39,7 @@ router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    await postMedic(infoUser, infoMedic, ClinicID);
-
-    res.status(200).send('Medic created.');
+    res.status(200).send(await postMedic(infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);

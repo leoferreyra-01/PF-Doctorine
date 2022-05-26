@@ -24,6 +24,8 @@ async function postMedic(infoUser, infoMedic, ClinicID) {
 
   newMedic.createUser(infoUser);
   newMedic.setClinic(ClinicID);
+
+  return 'Medic created.';
 }
 
 module.exports = {
