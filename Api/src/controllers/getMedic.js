@@ -19,21 +19,14 @@ const {
 //|> CONTROLLER
 
 async function getMedic(MedicID = null) {
-  let find = {
-    include: [User, Clinic],
-  };
-
   if (MedicID)
-    find = {
-      where: {
-        ID: MedicID,
-      },
+    return Medic.findByPk(MedicID, {
       include: [User, Clinic],
-    };
-
-  const medic = Medic.findAll(find);
-
-  return medic;
+    });
+  else
+    return Medic.findAll({
+      include: [User, Clinic],
+    });
 }
 
 module.exports = {
