@@ -2,10 +2,10 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const { getMedic } = require('../controllers/getMedic');
-const { postMedic } = require('../controllers/postMedic');
-const { putMedic } = require('../controllers/putMedic');
-const { deleteMedic } = require('../controllers/deleteMedic');
+const { getMedic } = require('../controllers/controllersMedics/getMedic');
+const { postMedic } = require('../controllers/controllersMedics/postMedic');
+const { putMedic } = require('../controllers/controllersMedics/putMedic');
+const { deleteMedic } = require('../controllers/controllersMedics/deleteMedic');
 
 //|> RUTE
 
@@ -39,7 +39,9 @@ router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    res.status(200).send(await postMedic(infoUser, infoMedic, ClinicID));
+    await postMedic(infoUser, infoMedic, ClinicID);
+
+    res.status(200).send('Medic created.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -55,7 +57,9 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    res.status(200).send(await putMedic(ID, infoUser, infoMedic, ClinicID));
+    await putMedic(ID, infoUser, infoMedic, ClinicID);
+
+    res.status(200).send('Medic modified');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -70,7 +74,8 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    res.status(200).send(await deleteMedic(ID));
+    deleteMedic(ID);
+    res.status(200).send('Medic deleted.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);

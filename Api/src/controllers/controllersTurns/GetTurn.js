@@ -2,7 +2,7 @@
 
 //|> SEQUELIZE
 const { Op } = require('sequelize');
-const { Medic, Patient, Turn } = require('../db');
+const { Medic, Patient, Turn } = require('../../db');
 
 //|> CONTROLLER
 

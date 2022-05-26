@@ -8,7 +8,7 @@ const {
   getBudgetByPatient,
   createBudget,
   putBudget,
-} = require('../controllers/budgets');
+} = require('../controllers/controllerBudgets/budgets');
 
 //|> RUTE
 

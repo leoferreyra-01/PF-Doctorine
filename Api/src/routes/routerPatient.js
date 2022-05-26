@@ -2,10 +2,17 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const { getPatients, getPatientById } = require('../controllers/getPatient');
-const { postPatient } = require('../controllers/postPatient');
-const { putPatient } = require('../controllers/putPatient');
-const { deletePatient } = require('../controllers/deletePatient');
+const {
+  getPatients,
+  getPatientById,
+} = require('../controllers/controllersPatients/getPatient');
+const {
+  postPatient,
+} = require('../controllers/controllersPatients/postPatient');
+const { putPatient } = require('../controllers/controllersPatients/putPatient');
+const {
+  deletePatient,
+} = require('../controllers/controllersPatients/deletePatient');
 
 //|> RUTE
 
@@ -39,7 +46,9 @@ router.post('/', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    res.status(200).send(await postPatient(infoUser, infoPatient));
+    await postPatient(infoUser, infoPatient);
+
+    res.status(200).send('Patient created.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -55,7 +64,9 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    res.status(200).send(await putPatient(ID, infoUser, infoPatient));
+    await putPatient(ID, infoUser, infoPatient);
+
+    res.status(200).send('Patient modified.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -70,7 +81,8 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    res.status(200).send(await deletePatient(ID));
+    deletePatient(ID);
+    res.status(200).send('Patient deleted.');
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
