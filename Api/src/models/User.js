@@ -54,7 +54,10 @@ module.exports = sequelize => {
     },
     cellphone: {
       type: DataTypes.STRING,
-      validate: {},
+      validate: {
+        // see https://regexr.com/39t6d for number formats.
+        is: /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/g,
+      },
     },
     street: {
       type: DataTypes.STRING,
