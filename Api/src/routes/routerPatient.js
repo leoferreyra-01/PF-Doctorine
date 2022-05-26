@@ -39,9 +39,7 @@ router.post('/', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    await postPatient(infoUser, infoPatient);
-
-    res.status(200).send('Patient created.');
+    res.status(200).send(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -57,9 +55,7 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    await putPatient(ID, infoUser, infoPatient);
-
-    res.status(200).send('Patient modified.');
+    res.status(200).send(await putPatient(ID, infoUser, infoPatient));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);

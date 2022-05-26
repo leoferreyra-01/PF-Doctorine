@@ -23,6 +23,8 @@ async function postPatient(infoUser, infoPatient) {
   const newPatient = await Patient.create(infoPatient);
 
   newPatient.createUser(infoUser);
+
+  return 'Patient created.';
 }
 
 module.exports = {

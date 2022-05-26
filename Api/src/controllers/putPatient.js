@@ -37,6 +37,8 @@ async function putPatient(PatientID, infoUser, infoPatient) {
       ID: getPatient[0].dataValues.UserID,
     },
   });
+
+  return 'Patient modified.';
 }
 
 module.exports = {
