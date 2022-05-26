@@ -15,6 +15,7 @@ import SignUp from './Components/SignUp/SignUp.jsx';
 //import SignIn from './Components/SignIn/SignIn.jsx';
 import PasswordReset from './Components/PasswordReset/PasswordReset.jsx';
 import NewPassword from './Components/NewPassword/NewPassword';
+import ClinicalHistory from './dentist/home/navbar/detail/clinic-history/get';
 
 function App() {
   console.log('renderice app');
@@ -35,6 +36,7 @@ function App() {
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
             <Route path="/home/:patientID" element={<PatientDetails />} />
+            <Route path="/clinical-history/:id" element={<ClinicalHistory />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />} />
