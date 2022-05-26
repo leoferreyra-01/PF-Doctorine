@@ -22,6 +22,9 @@ async function getMedic(MedicID = null) {
   if (MedicID) {
     const findMedic = await Medic.findByPk(MedicID);
 
+    if (!findMedic)
+      throw new Error(`There is no Medic with "MedicID=${MedicID}".`);
+
     return User.findByPk(findMedic.dataValues.UserID, {
       include: [Medic],
     });
