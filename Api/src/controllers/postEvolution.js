@@ -1,25 +1,23 @@
-const { Medic, Patient, Evolution } = require('../db');
+const { Evolution } = require('../db');
 
 async function postEvolution({
   date,
   observations,
   TreatmentID,
-  toothID,
-  medic,
-  patient,
+  ToothID,
+  MedicID,
+  PatientID,
 }) {
   let createEvolution = await Evolution.create({
     date,
     observations,
     TreatmentID,
-    toothID,
+    ToothID,
   });
-  let addMedics = await Medic.findOne({
-    where: { ID: medic },
-  });
-  let addPatients = await Patient.findOne({ where: { ID: patient } });
-  await createEvolution.setMedic(addMedics);
-  await createEvolution.setPatient(addPatients);
+
+  await createEvolution.setMedic(MedicID);
+  await createEvolution.setPatient(PatientID);
+
   return createEvolution;
 }
 
