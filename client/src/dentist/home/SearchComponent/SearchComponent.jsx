@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clear } from '../../../redux/actions';
+import { clear, getAllPatients } from '../../../redux/actions';
 import Box from '@mui/material/Box';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
@@ -24,8 +24,11 @@ const cardHeaderStyles = {
 
 export default function SearchComponent() {
   const searchedPatient = useSelector(state => state.searchedPatient);
+  const allPatients = useSelector(state => state.allPatients);
+  const filledPatients = !!allPatients.length;
   const dispatch = useDispatch();
   useEffect(() => {
+    if (!filledPatients) dispatch(getAllPatients());
     return () => dispatch(clear());
   }, []);
   return (
@@ -50,6 +53,19 @@ export default function SearchComponent() {
           lastName="Nada de nada"
           imageProfile="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
         />
+      )}
+      {filledPatients ? (
+        allPatients.map(patient => (
+          <PatientCard
+            key={patient.User.ID}
+            UserID={patient.User.ID}
+            name={patient.User.name}
+            lastName={patient.User.lastName}
+            imageProfile={patient.User.imageProfile}
+          />
+        ))
+      ) : (
+        <h2>Cargando Usuarios...</h2>
       )}
     </GridWrapper>
   );

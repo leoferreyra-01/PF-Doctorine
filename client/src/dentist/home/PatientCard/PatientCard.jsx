@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -49,7 +49,7 @@ export default function PatientCard({
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
-        <Link to={`/home/${UserID}`}>
+        <NavLink to={`/home/${UserID}`} style={{ textDecoration: 'none' }}>
           <CardMedia
             component="img"
             alt={name}
@@ -73,7 +73,7 @@ export default function PatientCard({
             <Button size="small">Share</Button>
             <Button size="small">Learn More</Button>
           </CardActions>
-        </Link>
+        </NavLink>
       </CardActionArea>
     </Card>
   );
