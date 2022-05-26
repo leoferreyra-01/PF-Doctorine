@@ -2,7 +2,7 @@
 
 //|> SEQUELIZE
 
-const { Patient, Turn } = require('../db');
+const { Patient, Turn } = require('../../db');
 
 //|> CONTROLLER
 

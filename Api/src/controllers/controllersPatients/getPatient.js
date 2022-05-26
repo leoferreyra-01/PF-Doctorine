@@ -14,30 +14,29 @@ const {
   Teeth,
   Study,
   Evolution,
-} = require('../db');
+} = require('../../db');
 
 //|> CONTROLLER
 
-async function getPatients(query = null) {
-  if (query)
-    return User.findAll({
-      where: {
-        ...query,
-        userType: 'Patient',
-      },
-      include: [Patient],
-    });
-  else
-    return User.findAll({
-      where: {
-        userType: 'Patient',
-      },
-      include: [Patient],
-    });
+async function getPatients(query = {}) {
+  const findPatients = await User.findAll({
+    where: {
+      ...query,
+      userType: 'Patient',
+    },
+    include: [Patient],
+  });
+
+  if (!findPatients.length) throw new Error(`No patients found.`);
+
+  return findPatients;
 }
 
 async function getPatientById(PatientID = null) {
   const findPatient = await Patient.findByPk(PatientID);
+
+  if (!findPatient)
+    throw new Error(`There is no Patient with "PatientID=${PatientID}".`);
 
   return User.findByPk(findPatient.dataValues.UserID, {
     include: [Patient],

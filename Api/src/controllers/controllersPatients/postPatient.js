@@ -15,17 +15,18 @@ const {
   Study,
   Evolution,
   sequelize,
-} = require('../db');
+} = require('../../db');
 
 //|> CONTROLLER
 
-async function postMedic(infoUser, infoMedic, ClinicID) {
-  const newMedic = await Medic.create(infoMedic);
+async function postPatient(infoUser, infoPatient) {
+  const newPatient = await Patient.create(infoPatient);
 
-  newMedic.createUser(infoUser);
-  newMedic.setClinic(ClinicID);
+  newPatient.createUser(infoUser);
+
+  return 'Patient created.';
 }
 
 module.exports = {
-  postMedic,
+  postPatient,
 };
