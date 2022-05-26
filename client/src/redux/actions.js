@@ -175,12 +175,13 @@ export function userDelete(id) {
 
 export function getTurns(){};
 
-export function getClinicalHistory(ID){
-  return async function(dispatch){
-    const clinicalHistory = await axios.get(`/clinicalhistories/${ID}`)
-    return dispatch({
-      type: GET_CLINICAL_HISTORY,
-      payload: clinicalHistory.data
-    })
+export function getClinicalHistory(id){
+  return function(dispatch){
+    return axios.get(`/clinicalhistories/${id}`)
+              .then(res => console.log(res))  //dispatch({ type: GET_CLINICAL_HISTORY, payload: res })
+              .catch(error => {
+                if (error.response.status === 404) return alert(error.response.data.msg)
+                alert(error.message)
+            })
   } 
 };

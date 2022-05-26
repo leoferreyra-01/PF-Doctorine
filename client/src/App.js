@@ -17,12 +17,12 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/home" render={() => <Home />} />
-        <Route path="/createPatient" render={() => <RegisterPatient />} />
-        <Route path="/home/calendar" render={() => <Calendar />} />
-        <Route path="/home/budget" render={() => <Budget />} />
-        <Route path="/patient-home" render={() => <PatientHome />} />
-        <Route path='/clinical-history' render={()=> <ClinicalHistory/>}/>
+        <Route path="/home" element={ <Home />} />
+        <Route path="/createPatient" element={ <RegisterPatient />} />
+        <Route path="/home/calendar" element={ <Calendar />} />
+        <Route path="/home/budget" element={ <Budget />} />
+        <Route path="/patient-home" element={ <PatientHome />} />
+        <Route path='/clinical-history/:id' element={<ClinicalHistory/>}/>
         {/* RUTAS LOGIN */}
         <Route path="/" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />

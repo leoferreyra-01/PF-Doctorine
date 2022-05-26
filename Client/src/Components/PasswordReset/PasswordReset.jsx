@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "./Logo/logo.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { postPasswordReset } from "../../redux/actions";
@@ -22,11 +22,11 @@ function PasswordReset() {
   const [input, setInput] = useState({
     username: "",
   });
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.user);
+  //const User = useSelector((state) => state.user);
 
 
   const handleInputChange = function (e) {
