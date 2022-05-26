@@ -77,7 +77,7 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    res.status(200).send(deletePatient(ID));
+    res.status(200).send(await deletePatient(ID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
