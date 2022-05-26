@@ -4,6 +4,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export const mainNavbarItems = [
   {
@@ -40,8 +41,8 @@ export const mainNavbarItems = [
   },
   {
     id: 5,
-    icon: <AssignmentIcon />,
-    label: 'create hc',
+    icon: <AddBoxIcon />,
+    label: 'Create HC',
     route: 'create-clinical-history',
   },
 ];

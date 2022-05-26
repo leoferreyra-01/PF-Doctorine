@@ -23,7 +23,7 @@ export default function RegisterPatient() {
     data.userType = 'Patient';
     console.log(data);
     alert('Sera redireccionado para crear la historia clinica del paciente');
-    navigate('ruta-a-cambiar');
+    navigate('create-clinical-history');
   };
 
   return (
