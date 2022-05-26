@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
+//import logo from "./Logo/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import S from "./SingUp.module.css"
+//import S from "./SingUp.module.css"
 
 export function validate(input) {
   let errors = {};
@@ -221,7 +221,7 @@ const SignUpDivContainer = styled.div`
     background-position: center;
   }
 `;
-
+// eslint-disable-next-line
 const ImgSignUp = styled.div`
   margin-top: -2.5rem;
   display: flex;

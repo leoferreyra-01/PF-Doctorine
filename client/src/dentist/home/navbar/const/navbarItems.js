@@ -38,4 +38,10 @@ export const mainNavbarItems = [
     label: 'Show HC',
     route: 'clinical-history/1',
   },
+  {
+    id: 5,
+    icon: <AssignmentIcon />,
+    label: 'create hc',
+    route: 'create-clinical-history',
+  },
 ];
