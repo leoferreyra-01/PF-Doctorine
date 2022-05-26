@@ -39,6 +39,9 @@ async function getPatients(query = null) {
 async function getPatientById(PatientID = null) {
   const findPatient = await Patient.findByPk(PatientID);
 
+  if (!findPatient)
+    throw new Error(`There is no Patient with "PatientID=${PatientID}".`);
+
   return User.findByPk(findPatient.dataValues.UserID, {
     include: [Patient],
   });
