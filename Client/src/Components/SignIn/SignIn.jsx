@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import S from "./SingIn.module.css"
-
+import S from "./SingIn.module.css";
 
 export function validate(input) {
   let errors = {};
@@ -36,7 +35,6 @@ function SignUp() {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const dispatch = useDispatch();
   const User = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -64,8 +62,13 @@ function SignUp() {
       window.localStorage.setItem("loggedToken", JSON.stringify(user));
       service.setToken(user.token);
       if (user.token) {
-        toast.success(`Bienvenido al Home ${user.name}`);
-        navigate("/");
+        if (user.userType === "Patient") {
+          toast.success(`Bienvenido al Home ${user.name}`);
+          navigate("/home");
+        }else{
+          toast.success(`Bienvenido al Home Dr. ${user.name}`);
+          navigate("/SignUp");
+        }
       }
       console.log(user);
     } catch (e) {
@@ -97,21 +100,21 @@ function SignUp() {
         document: 0,
         name: "User",
         lastName: "",
-        birth: 0
+        birth: 0,
       });
       if (userRegister.data.hasOwnProperty("success")) {
-         setTimeout(async() => {
-           const user = await axios.post("http://localhost:3001/login", {
-             email: respuesta.profileObj.email,
-             password: respuesta.profileObj.googleId,
-           });
-           window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
-           service.setToken(user.data.token);
-           if (user.data.token) {
-             toast.success(`Bienvenido al Home ${user.data.name}`);
-             navigate("/");
-           }
-         }, 3000);
+        setTimeout(async () => {
+          const user = await axios.post("http://localhost:3001/login", {
+            email: respuesta.profileObj.email,
+            password: respuesta.profileObj.googleId,
+          });
+          window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
+          service.setToken(user.data.token);
+          if (user.data.token) {
+            toast.success(`Bienvenido al Home ${user.data.name}`);
+            navigate("/");
+          }
+        }, 3000);
       }
     }
   };
@@ -122,7 +125,7 @@ function SignUp() {
       <SignUpDivContainer>
         <ImgSignUp>
           <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px"/>
+            <img className={S.img} src={logo} alt="logo" width="250px" />
           </Link>
         </ImgSignUp>
 
@@ -150,7 +153,7 @@ function SignUp() {
             />
             {errors.password && <p className="error">{errors.password}</p>}
             <button>Acceder</button>
-            <hr className="linea"/>
+            <hr className="linea" />
             <GoogleLogin
               clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
               buttonText="Acceder con Google"
@@ -161,7 +164,11 @@ function SignUp() {
               style={{ color: "black important!" }}
             />
             <div className="OR" style={{ position: "relative", top: "-1rem" }}>
-              <Link className="link-to-signup" id="olv-ct" to={"/PasswordReset"}>
+              <Link
+                className="link-to-signup"
+                id="olv-ct"
+                to={"/PasswordReset"}
+              >
                 ¿Olvidaste tu contraseña?
               </Link>
 
@@ -177,7 +184,6 @@ function SignUp() {
 }
 
 export default SignUp;
-
 
 const SignUpDivContainer = styled.div`
   position: relative;
@@ -216,9 +222,9 @@ const SignUpDivContainer = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    .img-black{
+    .img-black {
       width: 250px;
-      margin-bottom: 100px
+      margin-bottom: 100px;
     }
   }
 `;
@@ -297,7 +303,7 @@ const SignUpContainer = styled.div`
   span {
     color: black;
   }
-  .linea{ 
+  .linea {
     width: 15rem;
   }
   h1 {
@@ -333,19 +339,19 @@ const SignUpContainer = styled.div`
     input {
       width: 180px;
     }
-    .OR{ 
-      display: flex; 
+    .OR {
+      display: flex;
       flex-direction: column;
-      #register{
+      #register {
         right: 3rem;
       }
     }
   }
   @media (max-width: 375px) {
-    .OR{ 
-      display: flex; 
+    .OR {
+      display: flex;
       flex-direction: column;
-      #register{
+      #register {
         right: 3rem;
       }
     }
@@ -357,27 +363,27 @@ const SignUpContainer = styled.div`
     input {
       width: 130px;
     }
-    .OR{ 
-      display: flex; 
+    .OR {
+      display: flex;
       flex-direction: column;
-      #register{
+      #register {
         right: 2rem;
       }
-      #olv-ct{ 
+      #olv-ct {
         text-align: center;
         position: relative;
         right: -0.4rem;
       }
     }
-    .Google-button{
+    .Google-button {
       width: 8.5rem;
       height: 4rem;
       font-size: 10px;
     }
-    .input-usuario{
+    .input-usuario {
       text-align: center;
     }
-    .linea{
+    .linea {
       width: 8.3rem;
     }
   }
