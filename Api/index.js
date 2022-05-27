@@ -23,7 +23,7 @@
 //             .~?JJ?7!!!!!7?J?~.
 //                 .:^~~!~~^:.
 //
-//|+|~~~~~~~~~~~~~~~DOCTORINE~~~~~~~~~~~~~~~~~~~~~
+//|+|~~~~~~~~~~~~~~~DOCTORINE~~~~~~~~~~~~~~~~~~~~~~
 
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');

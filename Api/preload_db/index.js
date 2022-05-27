@@ -140,6 +140,7 @@ async function addUserPatient(n) {
   const newPatient = await Patient.create(infoPatient);
 
   newPatient.createUser(infoUser);
+  newPatient.createClinicalHistory(); // all default
 }
 
 async function addTeeths() {

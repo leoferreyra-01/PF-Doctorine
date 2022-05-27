@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const patientSchema = yup.object({
+export const registerPatientSchema = yup.object({
   name: yup.string().required('Campo requerido'),
   lastName: yup.string().required('Campo requerido'),
   document: yup
