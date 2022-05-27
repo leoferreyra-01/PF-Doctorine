@@ -1,4 +1,6 @@
 'use strict';
+//|> SEQUELIZE
+const { User } = require('../../db');
 
 function validateInfoUser(
   ruteType = 'POST',
@@ -26,8 +28,17 @@ function validateInfoUser(
       throw new Error('"userType" must be "Medic" or "Patient".');
   }
 
-  //|> document: allowNull: FALSE, INTEGER.
-  if ((document && ruteType === 'PUT') || ruteType === 'POST') {
+  //|> document: allowNull: FALSE, INTEGER, length:8, unique.
+  const userByDocument = User.findOne({ where: { document } });
+  if (userByDocument && ruteType === 'POST')
+    throw new Error('The document number already exists.');
+  if (userByDocument && ruteType === 'PUT' && document)
+    throw new Error('The document number cant be edited.');
+
+  if (document && ruteType === 'POST') {
+    if (`${document}`.length !== 8)
+      throw new Error('The document number length must be 8 numbers');
+
     if (!(typeof document === 'number'))
       throw new Error('"document" must be a number.');
   }
@@ -139,7 +150,9 @@ function validateInfoUser(
       throw new Error('"postalCode" must be a number.');
   }
 
-  //|> email: allowNull: FALSE, STRING.
+  //|> email: allowNull: FALSE, STRING, unique.
+  const userByEmail = User.findOne({ where: { email } });
+  if (userByEmail && email) throw new Error('The email already exists.');
   if ((email && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
