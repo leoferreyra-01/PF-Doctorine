@@ -2,7 +2,7 @@
 //|> SEQUELIZE
 const { User } = require('../../db');
 
-function validateInfoUser(
+async function validateInfoUser(
   ruteType = 'POST',
   {
     // infoUser
@@ -29,7 +29,8 @@ function validateInfoUser(
   }
 
   //|> document: allowNull: FALSE, INTEGER, length:8, unique.
-  const userByDocument = User.findOne({ where: { document } });
+  const userByDocument = await User.findOne({ where: { document } });
+  console.log(userByDocument);
   if (userByDocument && ruteType === 'POST')
     throw new Error('The document number already exists.');
   if (userByDocument && ruteType === 'PUT' && document)
@@ -151,7 +152,7 @@ function validateInfoUser(
   }
 
   //|> email: allowNull: FALSE, STRING, unique.
-  const userByEmail = User.findOne({ where: { email } });
+  const userByEmail = await User.findOne({ where: { email } });
   if (userByEmail && email) throw new Error('The email already exists.');
   if ((email && ruteType === 'PUT') || ruteType === 'POST') {
     if (
@@ -188,6 +189,8 @@ function validateInfoUser(
     )
       throw new Error('"imageProfile" must be a valid URL.');
   }
+
+  return true;
 }
 
 module.exports = {

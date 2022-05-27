@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    validateInfoUser('POST', infoUser);
+    await validateInfoUser('POST', infoUser);
     res.status(200).send(await postMedic(infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
@@ -58,7 +58,7 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    validateInfoUser('PUT', infoUser);
+    await validateInfoUser('PUT', infoUser);
     res.status(200).send(await putMedic(ID, infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
