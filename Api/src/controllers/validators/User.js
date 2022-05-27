@@ -1,6 +1,4 @@
 'use strict';
-//|> SEQUELIZE
-const { User } = require('../../db');
 
 function validateInfoUser(
   ruteType = 'POST',
