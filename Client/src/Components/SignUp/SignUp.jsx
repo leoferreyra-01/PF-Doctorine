@@ -50,7 +50,17 @@ export function validate(input) {
     medic.isMedic = "true";
     console.log(medic.isMedic);
   }
-  return (errors, medic);
+  if (!input.obraSocial) {
+    errors.obraSocial = "Obra Social is required";
+  } else if (!/^[0-9]+$/.test(input.obraSocial)) {
+    errors.obraSocial = "Obra Social is invalid";
+  }
+  if (!input.matricula) {
+    errors.matricula = "Matricula is required";
+  } else if (!/^[0-9]+$/.test(input.matricula)) {
+    errors.matricula = "Matricula is invalid";
+  }
+  return errors;
 }
 
 function SignUp() {
@@ -61,6 +71,8 @@ function SignUp() {
     document: "",
     birth: "",
     password: "",
+    matricula: "",
+    obraSocial:"",
     passwordConfirm: "",
     userType: "Patient",
   });
@@ -95,7 +107,7 @@ function SignUp() {
     if (Object.keys(errors).length > 0) {
       return toast.error("Debes rellenar todos los campos de forma correcta.");
     } else {
-      if(input.isMedic === false){
+      if(medic === false){
         axios
         .post("http://localhost:3001/register", {
           email: input.email,
@@ -218,22 +230,24 @@ function SignUp() {
             <label>N° Obra social</label>
             <input
               onChange={handleInputChange}
-              value={input.birth}
+              value={input.obraSocial}
               placeholder="Obra social"
               type="text"
-              name="birth"
+              name="obraSocial"
             />
+            {errors.obraSocial && <p className="error">{errors.obraSocial}</p>}
             </>
             ):(
               <>
               <label>Matricula</label>
               <input
                 onChange={handleInputChange}
-                value={input.birth}
+                value={input.matricula}
                 placeholder="Matricula"
                 type="text"
-                name="birth"
+                name="matricula"
               />
+            {errors.matricula && <p className="error">{errors.matricula}</p>}
               </>
             )}
 
@@ -256,7 +270,7 @@ const SignUpDivContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 135vh;
+  height: 148vh;
   width: 100%;
   background-color: grey;
   object-fit: fill;
