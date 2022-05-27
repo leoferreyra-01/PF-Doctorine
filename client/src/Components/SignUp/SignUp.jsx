@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import logo from "./Logo/Logo.jpg";
+import logo from "./Logo/logo.jpg";
 import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -8,7 +8,7 @@ import S from "./SingUp.module.css";
 
 export function validate(input) {
   let errors = {};
-  let medic = {}
+  let medic = {};
   if (!input.email) {
     errors.username = "Username is required";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
@@ -50,15 +50,19 @@ export function validate(input) {
     medic.isMedic = "true";
     console.log(medic.isMedic);
   }
-  if (!input.obraSocial) {
-    errors.obraSocial = "Obra Social is required";
-  } else if (!/^[0-9]+$/.test(input.obraSocial)) {
-    errors.obraSocial = "Obra Social is invalid";
+  if (medic === false) {
+    if (!input.obraSocial) {
+      errors.obraSocial = "Obra Social is required";
+    } else if (!/^[0-9]+$/.test(input.obraSocial)) {
+      errors.obraSocial = "Obra Social is invalid";
+    }
   }
-  if (!input.matricula) {
-    errors.matricula = "Matricula is required";
-  } else if (!/^[0-9]+$/.test(input.matricula)) {
-    errors.matricula = "Matricula is invalid";
+  if (medic === true) {
+    if (!input.matricula) {
+      errors.matricula = "Matricula is required";
+    } else if (!/^[0-9]+$/.test(input.matricula)) {
+      errors.matricula = "Matricula is invalid";
+    }
   }
   return errors;
 }
@@ -72,13 +76,13 @@ function SignUp() {
     birth: "",
     password: "",
     matricula: "",
-    obraSocial:"",
+    obraSocial: "",
     passwordConfirm: "",
     userType: "Patient",
   });
   const navigate = useNavigate();
 
-  const [medic, setMedic] = useState(false)
+  const [medic, setMedic] = useState(false);
 
   const [errors, setErrors] = useState({});
   const handleInputChange = function (e) {
@@ -95,56 +99,57 @@ function SignUp() {
   };
 
   function toggleOn() {
-    if(medic===true){
-      setMedic(false)
-    }else{setMedic(true);}
-      
-      console.log(medic);
+    if (medic === true) {
+      setMedic(false);
+    } else {
+      setMedic(true);
+    }
+
+    console.log(medic);
   }
-  
+
   const register = (e) => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
       return toast.error("Debes rellenar todos los campos de forma correcta.");
     } else {
-      if(medic === false){
+      if (medic === false) {
         axios
-        .post("http://localhost:3001/register", {
-          email: input.email,
-          password: input.password,
-          userType: "Patient",
-          document: input.document,
-          name: input.name,
-          lastName: input.lastName,
-          birth: input.birth,
-        })
-        .then((response) => {
-          toast.success(response.data.success);
-          navigate("/");
-        })
-        .catch(() => {
-          return toast.error("Este usuario ya ha sido creado.");
-        });
-      }else{
+          .post("http://localhost:3001/login/register", {
+            email: input.email,
+            password: input.password,
+            userType: "Patient",
+            document: input.document,
+            name: input.name,
+            lastName: input.lastName,
+            birth: input.birth,
+          })
+          .then((response) => {
+            toast.success(response.data.success);
+            navigate("/");
+          })
+          .catch(() => {
+            return toast.error("Este usuario ya ha sido creado.");
+          });
+      } else {
         axios
-        .post("http://localhost:3001/register", {
-          email: input.email,
-          password: input.password,
-          userType: "Medic",
-          document: input.document,
-          name: input.name,
-          lastName: input.lastName,
-          birth: input.birth,
-        })
-        .then((response) => {
-          toast.success(response.data.success);
-          navigate("/");
-        })
-        .catch(() => {
-          return toast.error("Este usuario ya ha sido creado.");
-        });
+          .post("http://localhost:3001/login/register", {
+            email: input.email,
+            password: input.password,
+            userType: "Medic",
+            document: input.document,
+            name: input.name,
+            lastName: input.lastName,
+            birth: input.birth,
+          })
+          .then((response) => {
+            toast.success(response.data.success);
+            navigate("/");
+          })
+          .catch(() => {
+            return toast.error("Este usuario ya ha sido creado.");
+          });
       }
-      
     }
   };
 
@@ -155,7 +160,7 @@ function SignUp() {
           <input type="checkbox" onClick={toggleOn} />
           <div class="slide round">Medico</div>
         </label>
-        
+
         <Toaster position="top-center" reverseOrder={false} />
         <SignUpContainer>
           <form onSubmit={register}>
@@ -225,29 +230,33 @@ function SignUp() {
             />
             {errors.birth && <p className="error">{errors.birth}</p>}
 
-            {medic===false?(
+            {medic === false ? (
               <>
-            <label>N° Obra social</label>
-            <input
-              onChange={handleInputChange}
-              value={input.obraSocial}
-              placeholder="Obra social"
-              type="text"
-              name="obraSocial"
-            />
-            {errors.obraSocial && <p className="error">{errors.obraSocial}</p>}
-            </>
-            ):(
+                <label>N° Obra social</label>
+                <input
+                  onChange={handleInputChange}
+                  value={input.obraSocial}
+                  placeholder="Obra social"
+                  type="text"
+                  name="obraSocial"
+                />
+                {errors.obraSocial && (
+                  <p className="error">{errors.obraSocial}</p>
+                )}
+              </>
+            ) : (
               <>
-              <label>Matricula</label>
-              <input
-                onChange={handleInputChange}
-                value={input.matricula}
-                placeholder="Matricula"
-                type="text"
-                name="matricula"
-              />
-            {errors.matricula && <p className="error">{errors.matricula}</p>}
+                <label>Matricula</label>
+                <input
+                  onChange={handleInputChange}
+                  value={input.matricula}
+                  placeholder="Matricula"
+                  type="text"
+                  name="matricula"
+                />
+                {errors.matricula && (
+                  <p className="error">{errors.matricula}</p>
+                )}
               </>
             )}
 

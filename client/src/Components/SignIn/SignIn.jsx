@@ -8,6 +8,7 @@ import GoogleLogin from "react-google-login";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import S from "./SingIn.module.css";
+import { home } from "../../redux/actions";
 
 export function validate(input) {
   let errors = {};
@@ -32,6 +33,8 @@ function SignUp() {
     password: "",
   });
 
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
@@ -51,6 +54,8 @@ function SignUp() {
     );
   };
 
+  let select = "medic";
+
   const handleSumbit = async (e) => {
     try {
       e.preventDefault();
@@ -65,9 +70,10 @@ function SignUp() {
         if (user.userType === "Patient") {
           toast.success(`Bienvenido al Home ${user.name}`);
           navigate("/home");
-        }else{
+        } else {
           toast.success(`Bienvenido al Home Dr. ${user.name}`);
-          navigate("/SignUp");
+          dispatch(home(select));
+          navigate("/home");
         }
       }
       console.log(user);
@@ -77,7 +83,7 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async (respuesta) => {
-    const register = await axios.post("http://localhost:3001/oneUser", {
+    const register = await axios.post("http://localhost:3001/login/oneUser", {
       email: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
@@ -93,15 +99,18 @@ function SignUp() {
         navigate("/");
       }
     } else {
-      const userRegister = await axios.post("http://localhost:3001/register", {
-        email: respuesta.profileObj.email,
-        password: respuesta.profileObj.googleId,
-        userType: "Patient",
-        document: 0,
-        name: "User",
-        lastName: "",
-        birth: 0,
-      });
+      const userRegister = await axios.post(
+        "http://localhost:3001/login/register",
+        {
+          email: respuesta.profileObj.email,
+          password: respuesta.profileObj.googleId,
+          userType: "Patient",
+          document: 0,
+          name: "User",
+          lastName: "",
+          birth: 0,
+        }
+      );
       if (userRegister.data.hasOwnProperty("success")) {
         setTimeout(async () => {
           const user = await axios.post("http://localhost:3001/login", {

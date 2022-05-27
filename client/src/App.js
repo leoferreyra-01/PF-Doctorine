@@ -12,7 +12,7 @@ import SearchComponent from './dentist/home/SearchComponent/SearchComponent';
 import PatientDetails from './sharedComponents/PatientDetails/PatientDetails';
 ////LOGIN
 import SignUp from './Components/SignUp/SignUp.jsx';
-//import SignIn from './Components/SignIn/SignIn.jsx';
+import SignIn from './Components/SignIn/SignIn.jsx';
 import PasswordReset from './Components/PasswordReset/PasswordReset.jsx';
 import NewPassword from './Components/NewPassword/NewPassword';
 import ClinicalHistory from './dentist/home/navbar/detail/clinic-history/get';
@@ -25,9 +25,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/" element={<LandingPage />} />
+        {/* <Route exact path="/" element={<LandingPage />} /> */}
         {/* RUTAS LOGIN */}
-        {/* <Route path="/" element={<SignIn />} /> */}
+        <Route path="/" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
