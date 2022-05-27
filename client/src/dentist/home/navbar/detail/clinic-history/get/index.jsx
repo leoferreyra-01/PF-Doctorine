@@ -33,6 +33,10 @@ export default function ClinicalHistory() {
 
   useEffect(() => {
     dispatch(getClinicalHistory(id));
+
+    return () =>{
+      dispatch(clear());
+    }
   }, [dispatch, id]);
 
   return (
