@@ -16,14 +16,16 @@ import SignUp from './Components/SignUp/SignUp.jsx';
 import PasswordReset from './Components/PasswordReset/PasswordReset.jsx';
 import NewPassword from './Components/NewPassword/NewPassword';
 import ClinicalHistory from './dentist/home/navbar/detail/clinic-history/get';
+import RegisterClinicalHistory from './dentist/home/navbar/detail/clinic-history/create/Create.jsx';
 
 function App() {
-  console.log('renderice app');
+  //console.log('renderice app');
   const homeToShow = useSelector(state => state.homeToShow);
+  
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route exact path="/" element={<LandingPage />} />
         {/* RUTAS LOGIN */}
         {/* <Route path="/" element={<SignIn />} /> */}
         <Route path="/SignUp" element={<SignUp />} />
@@ -35,8 +37,9 @@ function App() {
             <Route path="calendar" element={<Calendar />} />
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
-            <Route path="/home/:patientID" element={<PatientDetails />} />
+            <Route path=":patientID" element={<PatientDetails />} />
             <Route path="clinical-history/:id" element={<ClinicalHistory />} />
+            <Route path="create-clinical-history" element={<RegisterClinicalHistory/>} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />} />
@@ -45,7 +48,5 @@ function App() {
     </div>
   );
 }
-
-// path Home: del odontologo
 
 export default App;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "./Logo/logo.jpg";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { postPasswordReset } from "../../redux/actions";
 import S from "./PasswordReset.module.css"
@@ -241,7 +241,7 @@ const SignUpContainer = styled.div`
     }
   }
 `;
-
+// eslint-disable-next-line
 const AuthDiv = styled.div`
   margin-top: -6.5rem;
   display: flex;
