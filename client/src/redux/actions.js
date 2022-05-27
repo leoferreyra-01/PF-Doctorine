@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast'; //Esto tambien del login
 export const GET_PATIENT = 'GET_PATIENT';
+export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
@@ -30,6 +31,20 @@ export function getPatient(id) {
     //         alert(error.message)
     //     })
     console.log('ACTION');
+  };
+}
+
+export function postPatient(patient) {
+  return async function (dispatch) {
+    try {
+      const okMessage = (
+        await axios.post('http://localhost:3001/patients,patient', patient)
+      ).data;
+      return dispatch({ type: POST_PATIENT, payload: patient });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
   };
 }
 

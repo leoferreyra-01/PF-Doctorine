@@ -1,5 +1,6 @@
 import {
   GET_PATIENT,
+  POST_PATIENT,
   GET_PATIENT_DNI,
   GET_EVOLUTIONS,
   GET_STUDIES,
@@ -25,7 +26,7 @@ const initialState = {
   evolutions: [],
   studies: [],
   unavailableTurns: [],
-  homeToShow: 'login',
+  homeToShow: 'patient',
   //////LOGIN
   user: {},
   allUsers: [],
@@ -63,6 +64,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPatients: [...state.allPatients, ...action.payload],
+      };
+
+    case POST_PATIENT:
+      return {
+        ...state,
+        allPatients: [...state.allPatients, action.payload],
       };
 
     case CLEAR:

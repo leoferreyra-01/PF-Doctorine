@@ -4,8 +4,9 @@ export const registerPatientSchema = yup.object({
   name: yup.string().required('Campo requerido'),
   lastName: yup.string().required('Campo requerido'),
   document: yup
-    .number()
-    .max(99999999, 'dni invalido')
+    .string()
+    .min(7, 'dni invalido')
+    .max(8, 'dni invalido')
     .required('Campo requerido'), //deberia poner un min y un max, consulta a los chicos esto
   email: yup
     .string()
@@ -13,7 +14,7 @@ export const registerPatientSchema = yup.object({
     .required('Campo requerido'),
   street: yup.string().required('Campo requerido'),
   city: yup.string().required('Campo requerido'),
-  postalCode: yup.number().positive().integer().required('Campo requerido'),
-  //birthDate: yup.string().required('Campo requerido'),
-  cellphone: yup.number().required('Campo requerido'),
+  postalCode: yup.string().required('Campo requerido'),
+  birthDate: yup.date().required('Campo requerido'),
+  cellphone: yup.string().required('Campo requerido'),
 });
