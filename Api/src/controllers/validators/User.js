@@ -29,11 +29,12 @@ async function validateInfoUser(
   }
 
   //|> document: allowNull: FALSE, INTEGER, length:8, unique.
-  const userByDocument = await User.findOne({ where: { document } });
-  console.log(userByDocument);
+  const userByDocument = document
+    ? await User.findOne({ where: { document } })
+    : null;
   if (userByDocument && ruteType === 'POST')
     throw new Error('The document number already exists.');
-  if (userByDocument && ruteType === 'PUT' && document)
+  if (userByDocument && ruteType === 'PUT')
     throw new Error('The document number cant be edited.');
 
   if (document && ruteType === 'POST') {
@@ -152,8 +153,8 @@ async function validateInfoUser(
   }
 
   //|> email: allowNull: FALSE, STRING, unique.
-  const userByEmail = await User.findOne({ where: { email } });
-  if (userByEmail && email) throw new Error('The email already exists.');
+  const userByEmail = email ? await User.findOne({ where: { email } }) : null;
+  if (userByEmail) throw new Error('The email already exists.');
   if ((email && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(

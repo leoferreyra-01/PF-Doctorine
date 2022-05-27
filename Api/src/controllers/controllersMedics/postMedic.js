@@ -22,10 +22,13 @@ const {
 async function postMedic(infoUser, infoMedic, ClinicID) {
   const newMedic = await Medic.create(infoMedic);
 
-  newMedic.createUser(infoUser);
-  newMedic.setClinic(ClinicID);
+  await newMedic.createUser(infoUser);
+  await newMedic.setClinic(ClinicID);
 
-  return 'Medic created.';
+  return User.findOne({
+    where: { document: infoUser.document },
+    include: [Medic],
+  });
 }
 
 module.exports = {
