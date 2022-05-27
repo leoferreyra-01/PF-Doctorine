@@ -46,6 +46,7 @@ router.post('/', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
+    validateInfoUser(infoUser);
     res.status(200).send(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.log(error);
