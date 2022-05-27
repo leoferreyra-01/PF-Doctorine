@@ -7,6 +7,8 @@ const { postMedic } = require('../controllers/controllersMedics/postMedic');
 const { putMedic } = require('../controllers/controllersMedics/putMedic');
 const { deleteMedic } = require('../controllers/controllersMedics/deleteMedic');
 
+const { validateInfoUser } = require('../controllers/validators/User');
+
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
@@ -39,9 +41,8 @@ router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    await postMedic(infoUser, infoMedic, ClinicID);
-
-    res.status(200).send('Medic created.');
+    validateInfoUser('POST', infoUser);
+    res.status(200).send(await postMedic(infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -57,9 +58,8 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    await putMedic(ID, infoUser, infoMedic, ClinicID);
-
-    res.status(200).send('Medic modified');
+    validateInfoUser('PUT', infoUser);
+    res.status(200).send(await putMedic(ID, infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -74,8 +74,7 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    deleteMedic(ID);
-    res.status(200).send('Medic deleted.');
+    res.status(200).send(await deleteMedic(ID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
