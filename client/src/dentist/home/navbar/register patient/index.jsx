@@ -23,7 +23,7 @@ export default function RegisterPatient() {
     data.userType = 'Patient';
     console.log(data);
     alert('Sera redireccionado para crear la historia clinica del paciente');
-    navigate('create-clinical-history');
+    navigate('/home/create-clinical-history');
   };
 
   return (
@@ -106,7 +106,6 @@ export default function RegisterPatient() {
             type="date"
             fullWidth
             variant="filled"
-            margin="dense"
             {...register('birthDate')}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>

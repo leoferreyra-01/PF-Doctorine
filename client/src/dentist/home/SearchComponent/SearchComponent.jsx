@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clear, getAllPatients } from '../../../redux/actions';
+import { clear, getAllPatients, getPatientDni } from '../../../redux/actions';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
@@ -38,7 +38,11 @@ export default function SearchComponent() {
       <GridWrapper>
         <h3>Componente Inicial</h3>
         <Box sx={cardHeaderStyles.wrapper}>
-          <SearchBar placeholder="Buscar paciente.." searchBarWidth="720px" />
+          <SearchBar
+            placeholder="Buscar paciente.."
+            searchBarWidth="720px"
+            onClick={getPatientDni}
+          />
         </Box>
         <Alert
           onClose={() => dispatch(clear())}
@@ -69,7 +73,11 @@ export default function SearchComponent() {
     <GridWrapper>
       <h3>Componente Inicial</h3>
       <Box sx={cardHeaderStyles.wrapper}>
-        <SearchBar placeholder="Buscar paciente.." searchBarWidth="720px" />
+        <SearchBar
+          placeholder="Buscar paciente.."
+          searchBarWidth="720px"
+          onClick={getPatientDni}
+        />
       </Box>
       {searchedPatient.length ? (
         searchedPatient.map(patient => (
