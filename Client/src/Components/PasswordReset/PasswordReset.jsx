@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
@@ -60,11 +59,6 @@ function PasswordReset() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
-        <ImgSignUp>
-          <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px" />
-          </Link>
-        </ImgSignUp>
 
         <SignUpContainer>
           <form onSubmit={handleSumbit}>

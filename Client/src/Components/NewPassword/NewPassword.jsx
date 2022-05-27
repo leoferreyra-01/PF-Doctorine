@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postNewPassword } from "../../redux/actions";
@@ -77,11 +77,6 @@ function NewPassword() {
     <>
       <SignUpDivContainer>
         <Toaster position="top-center" reverseOrder={false} />
-        <ImgSignUp>
-          <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px" />
-          </Link>
-        </ImgSignUp>
 
         <SignUpContainer>
           <form onSubmit={register}>

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import logo from "./Logo/Logo.jpg";
+import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import S from "./SingUp.module.css"
+import S from "./SingUp.module.css";
 
 export function validate(input) {
   let errors = {};
@@ -49,13 +49,14 @@ export function validate(input) {
 function SignUp() {
   const [input, setInput] = useState({
     email: "",
-    name:"",
-    lastName:"",
-    document:"",
-    birth:"",
+    name: "",
+    isMedic: false,
+    lastName: "",
+    document: "",
+    birth: "",
     password: "",
     passwordConfirm: "",
-    userType: "Patient"
+    userType: "Patient",
   });
   const navigate = useNavigate();
 
@@ -72,13 +73,25 @@ function SignUp() {
       })
     );
   };
+  function toggleOn() {
+    if (input.isMedic === true) {
+      input.isMedic = false;
+    } else {
+      input.isMedic = true;
+    }
 
+    {
+      console.log(input.isMedic);
+    }
+  }
+  
   const register = (e) => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
       return toast.error("Debes rellenar todos los campos de forma correcta.");
     } else {
-      axios
+      if(input.isMedic === false){
+        axios
         .post("http://localhost:3001/register", {
           email: input.email,
           password: input.password,
@@ -86,7 +99,7 @@ function SignUp() {
           document: input.document,
           name: input.name,
           lastName: input.lastName,
-          birth: input.birth
+          birth: input.birth,
         })
         .then((response) => {
           toast.success(response.data.success);
@@ -95,14 +108,37 @@ function SignUp() {
         .catch(() => {
           return toast.error("Este usuario ya ha sido creado.");
         });
+      }else{
+        axios
+        .post("http://localhost:3001/register", {
+          email: input.email,
+          password: input.password,
+          userType: "Medic",
+          document: input.document,
+          name: input.name,
+          lastName: input.lastName,
+          birth: input.birth,
+        })
+        .then((response) => {
+          toast.success(response.data.success);
+          navigate("/");
+        })
+        .catch(() => {
+          return toast.error("Este usuario ya ha sido creado.");
+        });
+      }
+      
     }
   };
 
   return (
     <>
       <SignUpDivContainer>
+        <label class="switchBtn">
+          <input type="checkbox" onChange={toggleOn} />
+          <div class="slide round">Medic</div>
+        </label>
         <Toaster position="top-center" reverseOrder={false} />
-
         <SignUpContainer>
           <form onSubmit={register}>
             <label>Email</label>
@@ -173,7 +209,6 @@ function SignUp() {
             <button type="submit">Registrarme</button>
           </form>
         </SignUpContainer>
-
         <Link to="/">
           <button className="back_signUp">VOLVER</button>
         </Link>
@@ -197,6 +232,59 @@ const SignUpDivContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  .switchBtn {
+    position: relative;
+    display: inline-block;
+    width: 110px;
+    height: 34px;
+    left: 13%;
+  }
+  .switchBtn input {
+    display: none;
+  }
+  .slide {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    padding: 8px;
+    color: #fff;
+  }
+  .slide:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 78px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+  input:checked + .slide {
+    background-color: #8ce196;
+    padding-left: 40px;
+  }
+  input:focus + .slide {
+    box-shadow: 0 0 1px #01aeed;
+  }
+  input:checked + .slide:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    left: -20px;
+  }
+  .slide.round {
+    border-radius: 34px;
+  }
+  .slide.round:before {
+    border-radius: 50%;
+  }
   .back_signUp {
     margin: 0.2rem;
     padding: 0.5rem;
