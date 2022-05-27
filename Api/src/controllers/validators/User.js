@@ -1,4 +1,6 @@
 'use strict';
+//|> SEQUELIZE
+const { User } = require('../../db');
 
 function validateInfoUser(
   ruteType = 'POST',
@@ -26,7 +28,8 @@ function validateInfoUser(
       throw new Error('"userType" must be "Medic" or "Patient".');
   }
 
-  //|> document: allowNull: FALSE, INTEGER.
+  //|> document: allowNull: FALSE, INTEGER, unique. -TODO-(unique)
+  //|*| findOne(DNI) y rechazar si se repite.
   if ((document && ruteType === 'PUT') || ruteType === 'POST') {
     if (!(typeof document === 'number'))
       throw new Error('"document" must be a number.');
@@ -139,7 +142,8 @@ function validateInfoUser(
       throw new Error('"postalCode" must be a number.');
   }
 
-  //|> email: allowNull: FALSE, STRING.
+  //|> email: allowNull: FALSE, STRING, unique.  -TODO-(unique)
+  //|*| findOne(email) y rechazar si se repite.
   if ((email && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
