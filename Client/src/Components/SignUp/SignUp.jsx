@@ -8,6 +8,7 @@ import S from "./SingUp.module.css";
 
 export function validate(input) {
   let errors = {};
+  let medic = {}
   if (!input.email) {
     errors.username = "Username is required";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
@@ -42,15 +43,20 @@ export function validate(input) {
   if (!input.birth) {
     errors.birth = "Birth is required";
   }
-
-  return errors;
+  if (medic.isMedic === "true") {
+    medic.isMedic = "false";
+    console.log(medic.isMedic);
+  } else {
+    medic.isMedic = "true";
+    console.log(medic.isMedic);
+  }
+  return (errors, medic);
 }
 
 function SignUp() {
   const [input, setInput] = useState({
     email: "",
     name: "",
-    isMedic: false,
     lastName: "",
     document: "",
     birth: "",
@@ -59,6 +65,8 @@ function SignUp() {
     userType: "Patient",
   });
   const navigate = useNavigate();
+
+  const [medic, setMedic] = useState(false)
 
   const [errors, setErrors] = useState({});
   const handleInputChange = function (e) {
@@ -73,16 +81,13 @@ function SignUp() {
       })
     );
   };
-  function toggleOn() {
-    if (input.isMedic === true) {
-      input.isMedic = false;
-    } else {
-      input.isMedic = true;
-    }
 
-    {
-      console.log(input.isMedic);
-    }
+  function toggleOn() {
+    if(medic===true){
+      setMedic(false)
+    }else{setMedic(true);}
+      
+      console.log(medic);
   }
   
   const register = (e) => {
@@ -135,9 +140,10 @@ function SignUp() {
     <>
       <SignUpDivContainer>
         <label class="switchBtn">
-          <input type="checkbox" onChange={toggleOn} />
-          <div class="slide round">Medic</div>
+          <input type="checkbox" onClick={toggleOn} />
+          <div class="slide round">Medico</div>
         </label>
+        
         <Toaster position="top-center" reverseOrder={false} />
         <SignUpContainer>
           <form onSubmit={register}>
@@ -206,6 +212,31 @@ function SignUp() {
               name="birth"
             />
             {errors.birth && <p className="error">{errors.birth}</p>}
+
+            {medic===false?(
+              <>
+            <label>N° Obra social</label>
+            <input
+              onChange={handleInputChange}
+              value={input.birth}
+              placeholder="Obra social"
+              type="text"
+              name="birth"
+            />
+            </>
+            ):(
+              <>
+              <label>Matricula</label>
+              <input
+                onChange={handleInputChange}
+                value={input.birth}
+                placeholder="Matricula"
+                type="text"
+                name="birth"
+              />
+              </>
+            )}
+
             <button type="submit">Registrarme</button>
           </form>
         </SignUpContainer>
