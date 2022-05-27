@@ -14,24 +14,32 @@ const {
   Teeth,
   Study,
   Evolution,
-} = require('../db');
+} = require('../../db');
 
 //|> CONTROLLER
 
 async function getMedic(MedicID = null) {
   if (MedicID) {
-    const findMedic = await Medic.findByPk(MedicID);
+    const findMedics = await Medic.findByPk(MedicID);
 
-    return User.findByPk(findMedic.dataValues.UserID, {
+    if (!findMedics)
+      throw new Error(`There is no Medic with "MedicID=${MedicID}".`);
+
+    return User.findByPk(findMedics.dataValues.UserID, {
       include: [Medic],
     });
-  } else
-    return User.findAll({
+  } else {
+    const findMedic = await User.findAll({
       where: {
         userType: 'Medic',
       },
       include: [Medic],
     });
+
+    if (!findMedic.length) throw new Error(`No medics found.`);
+
+    return findMedic;
+  }
 }
 
 module.exports = {

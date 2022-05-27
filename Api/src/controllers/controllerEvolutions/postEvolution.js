@@ -1,4 +1,4 @@
-const { Medic, Patient, Evolution } = require('../db');
+const { Medic, Patient, Evolution } = require('../../db');
 
 async function postEvolution({
   date,

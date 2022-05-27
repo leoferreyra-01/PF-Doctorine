@@ -2,10 +2,10 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const { getMedic } = require('../controllers/getMedic');
-const { postMedic } = require('../controllers/postMedic');
-const { putMedic } = require('../controllers/putMedic');
-const { deleteMedic } = require('../controllers/deleteMedic');
+const { getMedic } = require('../controllers/controllersMedics/getMedic');
+const { postMedic } = require('../controllers/controllersMedics/postMedic');
+const { putMedic } = require('../controllers/controllersMedics/putMedic');
+const { deleteMedic } = require('../controllers/controllersMedics/deleteMedic');
 
 //|> RUTE
 
