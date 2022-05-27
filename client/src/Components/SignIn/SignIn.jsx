@@ -71,7 +71,7 @@ function SignUp() {
           toast.success(`Bienvenido al Home ${user.name}`);
           navigate("/home");
         } else {
-          toast.success(`Bienvenido al Home Dr. ${user.name}`);
+          toast.success(`Bienvenido al Home Dr. ${user.name[0]}. ${user.lastName}`);
           dispatch(home(select));
           navigate("/home");
         }
