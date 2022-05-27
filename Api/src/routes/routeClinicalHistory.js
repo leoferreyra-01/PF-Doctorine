@@ -2,7 +2,9 @@
 const router = require('express').Router();
 
 //|> CONTROLLERS
-const { getHistoryClinic } = require('../controllers/GetHistoryClinics');
+const {
+  getHistoryClinic,
+} = require('../controllers/controllersHistoryClinics/GetHistoryClinics');
 
 //|> RUTE
 
@@ -14,10 +16,10 @@ router.get('/', async (req, res) => {
 const {
   getHistoryClinicId,
   getHistoryClinicPId,
-} = require('../controllers/GetHistoryClinics');
+} = require('../controllers/controllersHistoryClinics/GetHistoryClinics');
 
 router.get('/search', async (req, res) => {
-  return res.json(await getHistoryClinicId((ID = req.query.id)));
+  return res.json(await getHistoryClinicPId((id = req.query.id)));
 });
 
 router.get('/:id', async (req, res) => {
@@ -25,14 +27,12 @@ router.get('/:id', async (req, res) => {
   return res.json(await getHistoryClinicId(id));
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  return res.json(await getHistoryClinicPId(id));
-});
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
-const { postClinicalHistory } = require('../controllers/PostHistoryClinic');
+const {
+  postClinicalHistory,
+} = require('../controllers/controllersHistoryClinics/PostHistoryClinic');
 
 router.post('/', postClinicalHistory);
 

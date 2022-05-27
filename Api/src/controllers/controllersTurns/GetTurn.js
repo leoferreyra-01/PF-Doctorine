@@ -2,7 +2,7 @@
 
 //|> SEQUELIZE
 const { Op } = require('sequelize');
-const { Medic, Patient, Turn } = require('../db');
+const { Medic, Patient, Turn } = require('../../db');
 
 //|> CONTROLLER
 
@@ -15,23 +15,26 @@ async function getTurns() {
 
   return res;
 }
+
 async function getTurnsid(UserId) {
   const searchid = await Turn.findByPk(UserId, {
     where: { ID: UserId },
     include: [Patient, Medic],
   });
-  const resp = {
-    ID: searchid.ID,
-    date: searchid.date,
-    time: searchid.time,
-    duration: searchid.duration,
-    description: searchid.description,
-    Patient: searchid.Patient,
-    Medic: searchid.Medic,
-  };
-  return resp;
+
+  return searchid;
+}
+
+async function getTurnsidP(UserId) {
+  const searchid = await Turn.findAll({
+    where: { PatientID: UserId },
+    include: [Medic],
+  });
+
+  return searchid;
 }
 module.exports = {
   getTurns,
   getTurnsid,
+  getTurnsidP,
 };

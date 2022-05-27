@@ -6,8 +6,8 @@ const {
   getStudies,
   getStudiesId,
   getStudiesIdP,
-} = require('../controllers/getStudies');
-const { postStudy } = require('../controllers/PostStudy');
+} = require('../controllers/controllersStudies/getStudies');
+const { postStudy } = require('../controllers/controllersStudies/PostStudy');
 
 //|> RUTE
 

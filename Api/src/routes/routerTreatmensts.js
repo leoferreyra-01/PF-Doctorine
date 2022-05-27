@@ -8,7 +8,7 @@ const {
   createTreatment,
   putTreatment,
   deleteTreatment,
-} = require('../controllers/treatmenst');
+} = require('../controllers/controllerTreatments/treatmenst');
 
 //|> RUTE
 
