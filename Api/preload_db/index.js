@@ -137,7 +137,8 @@ async function addUserPatient(n) {
     postalCode: 4200,
     email: 'pacientedeprueba' + n + '@dalequeva.com',
     password: 'Aa123456',
-    imageProfile: null,
+    imageProfile:
+      'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png',
   };
 
   const infoPatient = {
