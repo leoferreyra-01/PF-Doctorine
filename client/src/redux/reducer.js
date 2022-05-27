@@ -1,6 +1,8 @@
 import {
   GET_PATIENT,
   GET_PATIENT_DNI,
+  GET_EVOLUTIONS,
+  GET_STUDIES,
   CLEAR,
   GET_TURNS,
   GET_ALL_PATIENTS,
@@ -19,7 +21,9 @@ import {
 const initialState = {
   allPatients: [],
   searchedPatient: [],
-  patient: [],
+  patient: {},
+  evolutions: [],
+  studies: [],
   unavailableTurns: [],
   homeToShow: 'login',
   //////LOGIN
@@ -40,12 +44,20 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_PATIENT_DNI:
+      let searchedPatient = state.allPatients.filter(
+        patient => patient.document === action.payload * 1
+      );
+      if (searchedPatient.length === 0) searchedPatient = 'Patient Not Found';
       return {
         ...state,
-        searchedPatient: Array.isArray(action.payload)
-          ? [...action.payload]
-          : [action.payload],
+        searchedPatient: searchedPatient,
       };
+    // return { //Forma de guardar con respecto a peticiones del back
+    //   ...state,
+    //   searchedPatient: Array.isArray(action.payload)
+    //     ? [...action.payload]
+    //     : [action.payload],
+    // };
 
     case GET_ALL_PATIENTS:
       return {
@@ -56,15 +68,33 @@ export default function rootReducer(state = initialState, action) {
     case CLEAR:
       return {
         ...state,
-        patient: [],
+        patient: {},
         unavailableTurns: [],
         clinicalHistory: {},
+        evolutions: [],
+        studies: [],
       };
 
     case GET_TURNS:
       return {
         ...state,
         unavailableTurns: [...state.unavailableTurns, ...action.payload],
+      };
+
+    case GET_EVOLUTIONS:
+      return {
+        ...state,
+        evolutions: Array.isArray(action.payload)
+          ? [...action.payload]
+          : [action.payload],
+      };
+
+    case GET_STUDIES:
+      return {
+        ...state,
+        studies: Array.isArray(action.payload)
+          ? [...action.payload]
+          : [action.payload],
       };
 
     //////LOGIN

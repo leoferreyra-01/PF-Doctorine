@@ -25,6 +25,13 @@ export const dashboardTheme = createTheme({
         },
       },
     },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          marginLeft: '10px',
+        },
+      },
+    },
     MuiSvgIcon: {
       styleOverrides: {
         root: {
