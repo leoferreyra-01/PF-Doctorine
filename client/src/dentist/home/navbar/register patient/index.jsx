@@ -106,7 +106,7 @@ export default function RegisterPatient() {
             type="date"
             fullWidth
             variant="filled"
-            {...register('birthDate')}
+            {...register('birth')}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Enviar

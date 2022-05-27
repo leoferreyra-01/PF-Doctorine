@@ -62,7 +62,7 @@ export default function CreatePatient() {
           placeholder="Ingrese su codigo postal ..."
         />
         {errors.postalCode && <span>{errors.postalCode.message}</span>}
-        <input type="date" {...register('birthDate')} />
+        <input type="date" {...register('birth')} />
         {/*Ver como se valida este tipo de input */}
         <input
           type="text"
