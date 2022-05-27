@@ -1,10 +1,6 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
+import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 
 export default function Landing() {
-  return (
-    <Grid item xs={8}>
-      CALENDAR
-    </Grid>
-  );
+  return <GridWrapper>CALENDAR</GridWrapper>;
 }

@@ -12,7 +12,7 @@ import { navbarStyles } from './styles';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   return (
     <Drawer sx={navbarStyles.drawer} variant="permanent" anchor="left">
       <Toolbar />
@@ -22,7 +22,7 @@ export default function NavBar() {
           <ListItem
             key={item.id}
             disablePadding
-            onClick={() => history.push(item.route)}
+            onClick={() => navigate(item.route)}
           >
             <ListItemButton>
               <ListItemIcon sx={navbarStyles.icons}>{item.icon}</ListItemIcon>

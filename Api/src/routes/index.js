@@ -2,40 +2,51 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
 
-// //|> /sql
-// const SQL = require('./routeSQL');
-// router.use('/sql', SQL);
+//|> /sql
+const SQL = require('./routeSQL');
+router.use('/sql', SQL);
 
-// //|> /medics
-// const Medic = require('./routeMedic');
-// router.use('/medics', Medic);
+//|> /medics
+const Medic = require('./routeMedic');
+router.use('/medics', Medic);
 
-// //|> /turns
-// const Turns = require('./routerturns');
-// router.use('/turns', Turns);
+//|> /patients
+const Patient = require('./routerPatient');
+router.use('/patients', Patient);
 
-//|> /allUsers
-const allUsers = require("./allUsers");
-router.use("/allUsers" , allUsers);
+//|> /turns
+const Turns = require('./routerturns');
+router.use('/turns', Turns);
+
+//|> /clinicalhistories
+const ClinicalHistory = require('./routeClinicalHistory');
+router.use('/clinicalhistories', ClinicalHistory);
+module.exports = router;
+
+//|> /clinics
+const Clinics = require('./routerClinics');
+router.use('/clinics', Clinics);
+
+//|> /budgets
+const Budget = require('./routerBudgets.js');
+router.use('/budgets', Budget);
+
+//|> /treatments
+const Treatment = require('./routerTreatmensts');
+router.use('/treatments', Treatment);
+
+//|> /studies
+const Study = require('./routerStudies');
+router.use('/studies', Study);
+
+//|> /evolutions
+const getEvolution = require("./routeEvolutions");
+router.use("/evolutions" , getEvolution)
 
 //|> /login
-const loginUser = require("./loginUser")
-router.use("/login" , loginUser)
+const usersChange = require("./routesLogin/routeLogin")
+router.use("/login", usersChange)
 
-//|> /newPassword
-const newPassword = require("./newPassword")
-router.use("/newPassword", newPassword)
-
-//|> /passwordReset
-const passwordReset = require("./passwordReset")
-router.use("/passwordReset", passwordReset)
-
-//|> /register
-const registerUser = require("./registerUser")
-router.use("/register", registerUser)
-
-//|> /oneUser
-const userExist = require("./userExist");
-router.use("/oneUser" , userExist)
-
-module.exports = router;
+//|> /password
+const passwordChange = require("./routesLogin/routePassword")
+router.use("/password", passwordChange)

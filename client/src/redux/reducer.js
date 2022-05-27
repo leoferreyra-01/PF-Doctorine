@@ -1,8 +1,12 @@
 import {
   GET_PATIENT,
+  GET_PATIENT_DNI,
+  GET_EVOLUTIONS,
+  GET_STUDIES,
   CLEAR,
   GET_TURNS,
   GET_ALL_PATIENTS,
+  GET_CLINICAL_HISTORY,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -11,17 +15,24 @@ import {
   GET_USERS,
   USER_TO_ADMIN,
   DELETE_USER,
-} from "./actions";
+  ENTER_HOME,
+} from './actions';
 
 const initialState = {
   allPatients: [],
-  patient: [],
+  searchedPatient: [],
+  patient: {},
+  evolutions: [],
+  studies: [],
   unavailableTurns: [],
+  homeToShow: 'login',
   //////LOGIN
   user: {},
   allUsers: [],
   success: [],
   auth: false,
+  ///////////
+  clinicalHistory: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -32,23 +43,58 @@ export default function rootReducer(state = initialState, action) {
         patient: action.payload,
       };
 
-    // case GET_ALL_PATIENTS:
-    //     return {
-    //         ...state,
-    //         allPatients: [...allPatients, ...action.payload]
-    //     };
+    case GET_PATIENT_DNI:
+      let searchedPatient = state.allPatients.filter(
+        patient => patient.document === action.payload * 1
+      );
+      if (searchedPatient.length === 0) searchedPatient = 'Patient Not Found';
+      return {
+        ...state,
+        searchedPatient: searchedPatient,
+      };
+    // return { //Forma de guardar con respecto a peticiones del back
+    //   ...state,
+    //   searchedPatient: Array.isArray(action.payload)
+    //     ? [...action.payload]
+    //     : [action.payload],
+    // };
+
+    case GET_ALL_PATIENTS:
+      return {
+        ...state,
+        allPatients: [...state.allPatients, ...action.payload],
+      };
 
     case CLEAR:
       return {
         ...state,
-        allPatients: [],
-        patient: [],
+        patient: {},
+        unavailableTurns: [],
+        clinicalHistory: {},
+        evolutions: [],
+        studies: [],
       };
 
     case GET_TURNS:
       return {
         ...state,
         unavailableTurns: [...state.unavailableTurns, ...action.payload],
+      };
+
+    case GET_EVOLUTIONS:
+      return {
+        ...state,
+        evolutions: Array.isArray(action.payload)
+          ? [...action.payload]
+          : [action.payload],
+      };
+
+    case GET_STUDIES:
+      return {
+        ...state,
+        studies: Array.isArray(action.payload)
+          ? [...action.payload]
+          : [action.payload],
       };
 
     //////LOGIN
@@ -69,7 +115,7 @@ export default function rootReducer(state = initialState, action) {
     case LOGIN_USER: {
       return {
         ...state,
-        user: JSON.parse(localStorage.getItem("loggedToken")),
+        user: JSON.parse(localStorage.getItem('loggedToken')),
       };
     }
 
@@ -79,16 +125,16 @@ export default function rootReducer(state = initialState, action) {
         allUsers: action.payload,
       };
     }
-    case "POST_PASSWORD_RESET":
+    case 'POST_PASSWORD_RESET':
       return {
         ...state,
       };
-    case "POST_NEW_PASSWORD":
+    case 'POST_NEW_PASSWORD':
       return {
         ...state,
       };
     case USER_TO_ADMIN:
-      state.allUsers.forEach((user) => {
+      state.allUsers.forEach(user => {
         if (user.id === action.payload.id) {
           user.isAdmin = action.payload.isAdmin;
         }
@@ -107,11 +153,19 @@ export default function rootReducer(state = initialState, action) {
     case DELETE_USER:
       return {
         ...state,
-        allUsers: state.allUsers.filter(
-          (user) => user.id !== action.payload.id
-        ),
+        allUsers: state.allUsers.filter(user => user.id !== action.payload.id),
       };
     ////////
+    case ENTER_HOME:
+      return {
+        ...state,
+        homeToShow: action.payload,
+      };
+    case GET_CLINICAL_HISTORY:
+      return {
+        ...state,
+        clinicalHistory: action.payload,
+      };
     default:
       return { ...state };
   }

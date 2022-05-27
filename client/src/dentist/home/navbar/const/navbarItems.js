@@ -1,46 +1,48 @@
 import React from 'react';
-import PeopleIcon from '@mui/icons-material/People';
-import ImageIcon from '@mui/icons-material/Image';
-import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
-import DnsIcon from '@mui/icons-material/Dns';
+import HomeIcon from '@mui/icons-material/Home';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export const mainNavbarItems = [
   {
     id: 0,
-    icon: <PeopleIcon />,
-    label: 'Authentication',
-    route: '/home/authentication',
+    icon: <HomeIcon />,
+    label: 'Home',
+    route: '/home',
   },
   {
     id: 1,
-    icon: <DnsIcon />,
-    label: 'Database',
-    route: '/home/calendar',
+    icon: <CalendarTodayIcon />,
+    label: 'Calendar',
+    route: 'calendar',
   },
+
   {
     id: 2,
-    icon: <ImageIcon />,
-    label: 'Storage',
-    route: '/home/storage',
+    icon: <NoteAltIcon />,
+    label: 'Register Patient',
+    route: 'register',
   },
+
   {
     id: 3,
-    icon: <PublicIcon />,
-    label: 'Hosting',
-    route: '/home/hosting',
+    icon: <PaymentsIcon />,
+    label: 'Budget',
+    route: 'budget',
   },
   {
     id: 4,
-    icon: <SettingsEthernetIcon />,
-    label: 'Functions',
-    route: '/home/budget',
+    icon: <AssignmentIcon />,
+    label: 'Show HC',
+    route: 'clinical-history/1',
   },
   {
     id: 5,
-    icon: <SettingsInputComponentIcon />,
-    label: 'Machine learning',
-    route: '/home/machine-learning',
+    icon: <AddBoxIcon />,
+    label: 'Create HC',
+    route: 'create-clinical-history',
   },
 ];
