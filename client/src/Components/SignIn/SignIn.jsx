@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
+import logo from "./Logo/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import service from "../../services/login";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,10 @@ export function validate(input) {
     errors.password = "Password is required";
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
     errors.password = "Password is invalid";
+  }else if (input.password.length < 6) {
+    errors.password = "La contraseña debe ser mayor a 6 digitos";
+  } else if (input.password.length > 12) {
+    errors.password = "La contraseña debe ser menor a 12 digitos";
   }
   return errors;
 }
@@ -132,10 +136,10 @@ function SignUp() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
-        <ImgSignUp>
-          <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px" />
-          </Link>
+      <ImgSignUp>
+            <div className={S.card}>
+              <img className={S.img} src={logo} alt="logo" />
+            </div>
         </ImgSignUp>
 
         <SignUpContainer>

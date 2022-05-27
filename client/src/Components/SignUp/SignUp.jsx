@@ -10,14 +10,18 @@ export function validate(input) {
   let errors = {};
   let medic = {};
   if (!input.email) {
-    errors.username = "Username is required";
+    errors.username = "El email faltante";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.username = "Username is invalid";
+    errors.username = "El email invalido";
   }
   if (!input.password) {
     errors.password = "Password is required";
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
-    errors.password = "Password is invalid";
+    errors.password = "La contraseña es invalida";
+  } else if (input.password.length < 6) {
+    errors.password = "La contraseña debe ser mayor a 6 digitos";
+  } else if (input.password.length > 12) {
+    errors.password = "La contraseña debe ser menor a 12 digitos";
   }
 
   if (!input.passwordConfirm) {
@@ -26,42 +30,37 @@ export function validate(input) {
     errors.passwordConfirm = "Las contraseñas no coinciden";
   }
   if (!input.name) {
-    errors.name = "Name is required";
+    errors.name = "El nombre es requerido";
   } else if (!/^[a-zA-Z\s]/.test(input.name)) {
-    errors.name = "Name is invalid";
+    errors.name = "El nombre es invalido";
   }
   if (!input.lastName) {
-    errors.lastName = "Last Name is required";
+    errors.lastName = "El apellido es requerido";
   } else if (!/^[a-zA-Z\s]/.test(input.lastName)) {
-    errors.lastName = "Last Name is invalid";
+    errors.lastName = "El apellido es invalido";
   }
   if (!input.document) {
-    errors.document = "Document is required";
+    errors.document = "El documento es requerido";
   } else if (!/^[0-9]+$/.test(input.document)) {
-    errors.document = "Document is invalid";
+    errors.document = "El documento es invalido";
+  } else if (input.document.length < 7) {
+    errors.document = "El documento es invalido";
   }
   if (!input.birth) {
-    errors.birth = "Birth is required";
-  }
-  if (medic.isMedic === "true") {
-    medic.isMedic = "false";
-    console.log(medic.isMedic);
-  } else {
-    medic.isMedic = "true";
-    console.log(medic.isMedic);
+    errors.birth = "Año de nacimiento es requerido";
   }
   if (medic === false) {
     if (!input.obraSocial) {
-      errors.obraSocial = "Obra Social is required";
+      errors.obraSocial = "La obra social es requerida";
     } else if (!/^[0-9]+$/.test(input.obraSocial)) {
-      errors.obraSocial = "Obra Social is invalid";
+      errors.obraSocial = "La obra social es invalida";
     }
   }
   if (medic === true) {
     if (!input.matricula) {
-      errors.matricula = "Matricula is required";
+      errors.matricula = "La matricula es requerida";
     } else if (!/^[0-9]+$/.test(input.matricula)) {
-      errors.matricula = "Matricula is invalid";
+      errors.matricula = "La matricula es invalida";
     }
   }
   return errors;
