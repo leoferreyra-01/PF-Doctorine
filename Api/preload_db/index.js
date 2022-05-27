@@ -7,7 +7,7 @@ const {
   Turn,
   Budget,
   Clinic,
-  ClinicalHistory, // Patient.createClinicalHistory(...)
+  ClinicalHistory,
   Treatment,
   Teeth,
   Study,
