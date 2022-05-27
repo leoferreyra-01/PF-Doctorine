@@ -58,6 +58,7 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
+    validateInfoUser(infoUser);
     res.status(200).send(await putMedic(ID, infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
