@@ -44,8 +44,8 @@ export default function RegisterClinicalHistory() {
         "Osteomalacia": {value: 'no', obs: null},
         "Other": {value: 'no', obs: null},
     });
+//ESTO LO ESCRIBI PARA MERGEAR DE NUEVO PORQUE NO SE SUBIO UN CARAJO GG
 
-    
     const arrayToMap = [];
     for (let property in newHC) {
         arrayToMap.push(property);
