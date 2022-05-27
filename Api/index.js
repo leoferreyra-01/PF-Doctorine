@@ -33,18 +33,15 @@ const { preload_db } = require('./preload_db/');
 // Prueba Deploy
 
 const syncConfig = { force: true }; // -FIX-
+const PORT = parseInt(process.env.PORT);
 
 conn.sync(syncConfig).then(() => {
-  server.listen(process.env.PORT, async () => {
+  server.listen(PORT, async () => {
     // eslint-disable-line no-console
     console.log('°');
     console.log('°');
     console.log('°');
-    console.log(
-      '<>----------[ Listening at',
-      process.env.PORT,
-      ']----------<>'
-    );
+    console.log('<>----------[ Listening at', PORT, ']----------<>');
     console.log('-');
     console.log('Sync Config: ', syncConfig);
     console.log('-');
