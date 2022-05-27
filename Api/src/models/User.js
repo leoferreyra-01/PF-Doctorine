@@ -128,7 +128,8 @@ module.exports = sequelize => {
     },
     imageProfile: {
       type: DataTypes.STRING,
-      defaultValue: null,
+      defaultValue:
+        'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png', //temporal
       validate: {
         isUrl: true,
       },
