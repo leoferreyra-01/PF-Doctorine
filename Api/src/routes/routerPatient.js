@@ -14,6 +14,8 @@ const {
   deletePatient,
 } = require('../controllers/controllersPatients/deletePatient');
 
+const { validateInfoUser } = require('../controllers/validators/User');
+
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
@@ -46,7 +48,7 @@ router.post('/', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    validateInfoUser(infoUser);
+    validateInfoUser('POST', infoUser);
     res.status(200).send(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.log(error);
@@ -63,7 +65,7 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    validateInfoUser(infoUser);
+    validateInfoUser('PUT', infoUser);
     res.status(200).send(await putPatient(ID, infoUser, infoPatient));
   } catch (error) {
     console.log(error);

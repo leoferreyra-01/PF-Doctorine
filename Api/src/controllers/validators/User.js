@@ -1,58 +1,79 @@
 'use strict';
+//|> SEQUELIZE
+const { User } = require('../../db');
 
-function validateInfoUser({
-  // infoUser
-  userType,
-  document,
-  name,
-  lastName,
-  birth,
-  telephone,
-  cellphone,
-  street,
-  number,
-  city,
-  postalCode,
-  email,
-  password,
-  imageProfile,
-}) {
-  if (!(userType === 'Medic' || userType === 'Patient'))
-    throw new Error('"userType" must be "Medic" or "Patient".');
+function validateInfoUser(
+  ruteType = 'POST',
+  {
+    // infoUser
+    userType,
+    document,
+    name,
+    lastName,
+    birth,
+    telephone,
+    cellphone,
+    street,
+    number,
+    city,
+    postalCode,
+    email,
+    password,
+    imageProfile,
+  }
+) {
+  //|> userType: allowNull: FALSE, default:Patient.
+  if ((userType && ruteType === 'PUT') || ruteType === 'POST') {
+    if (!(userType === 'Medic' || userType === 'Patient'))
+      throw new Error('"userType" must be "Medic" or "Patient".');
+  }
 
-  if (!(typeof document === 'number'))
-    throw new Error('"document" must be a number.');
+  //|> document: allowNull: FALSE, INTEGER.
+  if ((document && ruteType === 'PUT') || ruteType === 'POST') {
+    if (!(typeof document === 'number'))
+      throw new Error('"document" must be a number.');
+  }
 
-  if (
-    !(
-      typeof name === 'string' &&
-      /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
-        name
+  //|> name: allowNull: FALSE, STRING.
+  if ((name && ruteType === 'PUT') || ruteType === 'POST') {
+    if (
+      !(
+        typeof name === 'string' &&
+        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+          name
+        )
       )
     )
-  )
-    throw new Error('"name" must be a valid name.');
+      throw new Error('"name" must be a valid name.');
+  }
 
-  if (
-    !(
-      typeof lastName === 'string' &&
-      /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
-        lastName
+  //|> lastName: allowNull: FALSE, STRING.
+  if ((lastName && ruteType === 'PUT') || ruteType === 'POST') {
+    if (
+      !(
+        typeof lastName === 'string' &&
+        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+          lastName
+        )
       )
     )
-  )
-    throw new Error('"lastName" must be a valid last name.');
+      throw new Error('"lastName" must be a valid last name.');
+  }
 
-  if (
-    !(
-      typeof birth === 'string' &&
-      /^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$/.test(
-        birth
+  //|> birth: allowNull: FALSE, STRING.
+  if ((userType && ruteType === 'PUT') || ruteType === 'POST') {
+    if (
+      !(
+        typeof birth === 'string' &&
+        /^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$/.test(
+          birth
+        )
       )
     )
-  )
-    throw new Error('"birth" must be a date (yyyy-MM-dd).');
+      throw new Error('"birth" must be a date (yyyy-MM-dd).');
+  }
 
+  //|> telephone: allowNull: TRUE, INTEGER.
   if (telephone) {
     if (
       !(
@@ -67,6 +88,7 @@ function validateInfoUser({
       );
   }
 
+  //|> cellphone: allowNull: TRUE, INTEGER.
   if (cellphone) {
     if (
       !(
@@ -81,6 +103,7 @@ function validateInfoUser({
       );
   }
 
+  //|> street: allowNull: TRUE, STRING.
   if (street) {
     if (
       !(
@@ -93,11 +116,13 @@ function validateInfoUser({
       throw new Error('"street" must be a valid street name.');
   }
 
+  //|> number: allowNull: TRUE, INTEGER.
   if (number) {
     if (!(typeof number === 'number'))
       throw new Error('"number" must be a street number.');
   }
 
+  //|> city: allowNull: TRUE, STRING.
   if (city) {
     if (
       !(
@@ -110,29 +135,37 @@ function validateInfoUser({
       throw new Error('"city" must be a valid city name.');
   }
 
+  //|> postalCode: allowNull: TRUE, INTEGER.
   if (postalCode) {
     if (!(typeof postalCode === 'number'))
       throw new Error('"postalCode" must be a number.');
   }
 
-  if (
-    !(
-      typeof email === 'string' &&
-      /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi.test(email)
+  //|> email: allowNull: FALSE, STRING.
+  if ((email && ruteType === 'PUT') || ruteType === 'POST') {
+    if (
+      !(
+        typeof email === 'string' &&
+        /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi.test(email)
+      )
     )
-  )
-    throw new Error('"email" must be a valid email.');
+      throw new Error('"email" must be a valid email.');
+  }
 
-  if (
-    !(
-      typeof password === 'string' &&
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(password)
+  //|> password: allowNull: FALSE, STRING.
+  if ((password && ruteType === 'PUT') || ruteType === 'POST') {
+    if (
+      !(
+        typeof password === 'string' &&
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(password)
+      )
     )
-  )
-    throw new Error(
-      '"password" must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.'
-    );
+      throw new Error(
+        '"password" must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.'
+      );
+  }
 
+  //|> imageProfile: allowNull: TRUE, STRING.
   if (imageProfile) {
     if (
       !(

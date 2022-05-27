@@ -9,6 +9,7 @@ module.exports = sequelize => {
     },
     userType: {
       type: DataTypes.ENUM('Medic', 'Patient'),
+      defaultValue: 'Patient',
       allowNull: false,
     },
     document: {
@@ -20,7 +21,7 @@ module.exports = sequelize => {
       },
     },
     name: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -29,7 +30,7 @@ module.exports = sequelize => {
       },
     },
     lastName: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
