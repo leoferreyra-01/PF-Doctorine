@@ -7,6 +7,8 @@ const { postMedic } = require('../controllers/controllersMedics/postMedic');
 const { putMedic } = require('../controllers/controllersMedics/putMedic');
 const { deleteMedic } = require('../controllers/controllersMedics/deleteMedic');
 
+const { validateInfoUser } = require('../controllers/validators/User');
+
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
@@ -39,6 +41,7 @@ router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
+    validateInfoUser(infoUser);
     res.status(200).send(await postMedic(infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
