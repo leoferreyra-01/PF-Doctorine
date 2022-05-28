@@ -14,9 +14,7 @@ const {
   deletePatient,
 } = require('../controllers/controllersPatients/deletePatient');
 
-const { validateInfoUser } = require('../controllers/validators/User');
-const { validateInfoPatient } = require('../controllers/validators/Patient');
-const { validateModelID } = require('../controllers/validators/ModelID');
+const validate = require('../controllers/validators');
 
 //|> RUTE
 
@@ -35,7 +33,7 @@ router.get('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    await validateModelID('Patient', ID);
+    await validate.ModelID('Patient', ID);
     res.status(200).json(await getPatientById(ID));
   } catch (error) {
     console.log(error);
@@ -51,8 +49,8 @@ router.post('/', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    await validateInfoUser('POST', infoUser);
-    await validateInfoPatient('POST', infoPatient);
+    await validate.InfoUser('POST', infoUser);
+    await validate.InfoPatient('POST', infoPatient);
     res.status(200).json(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.log(error);
@@ -69,9 +67,9 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    await validateInfoUser('PUT', infoUser);
-    await validateInfoPatient('PUT', infoPatient);
-    await validateModelID('Patient', ID);
+    await validate.InfoUser('PUT', infoUser);
+    await validate.InfoPatient('PUT', infoPatient);
+    await validate.ModelID('Patient', ID);
     res.status(200).json(await putPatient(ID, infoUser, infoPatient));
   } catch (error) {
     console.log(error);
@@ -87,7 +85,7 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
-    await validateModelID('Patient', ID);
+    await validate.ModelID('Patient', ID);
     res.status(200).send(await deletePatient(ID));
   } catch (error) {
     console.log(error);
