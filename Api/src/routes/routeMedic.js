@@ -9,6 +9,7 @@ const { deleteMedic } = require('../controllers/controllersMedics/deleteMedic');
 
 const { validateInfoUser } = require('../controllers/validators/User');
 const { validateInfoMedic } = require('../controllers/validators/Medic');
+const { validateModelID } = require('../controllers/validators/ModelID');
 
 //|> RUTE
 
@@ -27,6 +28,7 @@ router.get('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
+    await validateModelID('Medic', ID);
     res.status(200).json(await getMedic(ID));
   } catch (error) {
     console.log(error);
@@ -62,6 +64,8 @@ router.put('/:ID', async (req, res) => {
   try {
     await validateInfoUser('PUT', infoUser);
     await validateInfoMedic('PUT', infoMedic);
+    await validateModelID('Medic', ID);
+    await validateModelID('Clinic', ClinicID);
     res.status(200).json(await putMedic(ID, infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
@@ -77,6 +81,7 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
+    await validateModelID('Medic', ID);
     res.status(200).send(await deleteMedic(ID));
   } catch (error) {
     console.log(error);
