@@ -22,9 +22,12 @@ const {
 async function postPatient(infoUser, infoPatient) {
   const newPatient = await Patient.create(infoPatient);
 
-  newPatient.createUser(infoUser);
+  await newPatient.createUser(infoUser);
 
-  return 'Patient created.';
+  return User.findOne({
+    where: { document: infoUser.document },
+    include: [Patient],
+  });
 }
 
 module.exports = {

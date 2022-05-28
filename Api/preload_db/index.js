@@ -37,7 +37,16 @@ async function preload_db() {
     }
   }
 
-  console.log(`<>----- PRELOAD x${patients} SUCCESSFULL-----<>`);
+  const infoPreload = {
+    Clinics: `1 example.`,
+    Medics: `1 example.`,
+    Teeth: `Complete.`,
+    Treatments: '3/12 categories.',
+    Patients: `${patients} examples.`,
+  };
+
+  console.log(`<>----- PRELOAD SUCCESSFULL-----<>`);
+  console.log(infoPreload);
   console.log(`-`);
 }
 

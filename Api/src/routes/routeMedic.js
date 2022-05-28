@@ -41,8 +41,8 @@ router.post('/', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    validateInfoUser('POST', infoUser);
-    res.status(200).send(await postMedic(infoUser, infoMedic, ClinicID));
+    await validateInfoUser('POST', infoUser);
+    res.status(200).json(await postMedic(infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -58,8 +58,8 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoMedic, ClinicID } = req.body;
 
   try {
-    validateInfoUser('PUT', infoUser);
-    res.status(200).send(await putMedic(ID, infoUser, infoMedic, ClinicID));
+    await validateInfoUser('PUT', infoUser);
+    res.status(200).json(await putMedic(ID, infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);

@@ -25,7 +25,8 @@ router.get('/', async (req, res) => {
   } catch (e) {
     res.json({
       error: 'ERR_GET_EVO_G',
-      description: 'There was an error getting the Evolutions: ' + e.message,
+      description: 'There was an error getting the Evolutions',
+      message: e.message
     });
   }
 });
@@ -37,7 +38,8 @@ router.get('/:id', async (req, res) => {
   } catch (e) {
     res.json({
       error: 'ERR_GET_EVO_ID',
-      description: 'There was an error getting the Evolution: ' + e.message,
+      description: 'There was an error getting the Evolution',
+      message: e.message
     });
   }
 });
@@ -52,7 +54,8 @@ router.post('/', async (req, res) => {
   } catch (e) {
     res.json({
       error: 'ERR_CRT_EVO',
-      description: 'The was a problem creating the Evolution: ' + e.message,
+      description: 'The was a problem creating the Evolution',
+      message: e.message
     });
   }
 });
