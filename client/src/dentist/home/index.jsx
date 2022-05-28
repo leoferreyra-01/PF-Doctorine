@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation, Link } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from './navbar';
 import Grid from '@mui/material/Grid';
 import Header from './Header/Header';
@@ -15,15 +15,10 @@ export default function Home() {
   }, [location]);
 
   return (
-    <div>
-      {/* BOTON TEMPORAL */}
-      {/* <Link to="/clinical-history">
-        <button>VER HC</button>
-      </Link> */}
-
+    <Grid container>
       <NavBar />
       <Header title={title} />
       <Outlet />
-    </div>
+    </Grid>
   );
 }
