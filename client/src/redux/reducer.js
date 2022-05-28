@@ -34,7 +34,7 @@ const initialState = {
   success: [],
   auth: false,
   ///////////
-  clinicalHistory: {},
+  clinicalHistory: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -179,7 +179,7 @@ export default function rootReducer(state = initialState, action) {
     case POST_CLINICAL_HISTORY:
       return{
         ...state,
-        clinicalHistory: action.payload,
+        clinicalHistory: [...state.clinicalHistory, ...action.payload],
       }
 
     default:
