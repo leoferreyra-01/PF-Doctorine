@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-//import logo from "./Logo/logo.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import logo from "./Logo/logo.jpg";
+import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-//import S from "./SingUp.module.css"
+import S from "./SingUp.module.css";
 
 export function validate(input) {
   let errors = {};
+  let medic = {};
   if (!input.email) {
-    errors.username = "Username is required";
+    errors.username = "El email faltante";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.username = "Username is invalid";
+    errors.username = "El email invalido";
   }
   if (!input.password) {
     errors.password = "Password is required";
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
-    errors.password = "Password is invalid";
+    errors.password = "La contraseña es invalida";
+  } else if (input.password.length < 6) {
+    errors.password = "La contraseña debe ser mayor a 6 digitos";
+  } else if (input.password.length > 12) {
+    errors.password = "La contraseña debe ser menor a 12 digitos";
   }
 
   if (!input.passwordConfirm) {
@@ -25,39 +30,58 @@ export function validate(input) {
     errors.passwordConfirm = "Las contraseñas no coinciden";
   }
   if (!input.name) {
-    errors.name = "Name is required";
+    errors.name = "El nombre es requerido";
   } else if (!/^[a-zA-Z\s]/.test(input.name)) {
-    errors.name = "Name is invalid";
+    errors.name = "El nombre es invalido";
   }
   if (!input.lastName) {
-    errors.lastName = "Last Name is required";
+    errors.lastName = "El apellido es requerido";
   } else if (!/^[a-zA-Z\s]/.test(input.lastName)) {
-    errors.lastName = "Last Name is invalid";
+    errors.lastName = "El apellido es invalido";
   }
   if (!input.document) {
-    errors.document = "Document is required";
+    errors.document = "El documento es requerido";
   } else if (!/^[0-9]+$/.test(input.document)) {
-    errors.document = "Document is invalid";
+    errors.document = "El documento es invalido";
+  } else if (input.document.length < 7) {
+    errors.document = "El documento es invalido";
   }
   if (!input.birth) {
-    errors.birth = "Birth is required";
+    errors.birth = "Año de nacimiento es requerido";
   }
-
+  if (medic === false) {
+    if (!input.obraSocial) {
+      errors.obraSocial = "La obra social es requerida";
+    } else if (!/^[0-9]+$/.test(input.obraSocial)) {
+      errors.obraSocial = "La obra social es invalida";
+    }
+  }
+  if (medic === true) {
+    if (!input.matricula) {
+      errors.matricula = "La matricula es requerida";
+    } else if (!/^[0-9]+$/.test(input.matricula)) {
+      errors.matricula = "La matricula es invalida";
+    }
+  }
   return errors;
 }
 
 function SignUp() {
   const [input, setInput] = useState({
     email: "",
-    name:"",
-    lastName:"",
-    document:"",
-    birth:"",
+    name: "",
+    lastName: "",
+    document: "",
+    birth: "",
     password: "",
+    matricula: "",
+    obraSocial: "",
     passwordConfirm: "",
-    userType: "Patient"
+    userType: "Patient",
   });
   const navigate = useNavigate();
+
+  const [medic, setMedic] = useState(false);
 
   const [errors, setErrors] = useState({});
   const handleInputChange = function (e) {
@@ -73,36 +97,70 @@ function SignUp() {
     );
   };
 
+  function toggleOn() {
+    if (medic === true) {
+      setMedic(false);
+    } else {
+      setMedic(true);
+    }
+
+    console.log(medic);
+  }
+
   const register = (e) => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
       return toast.error("Debes rellenar todos los campos de forma correcta.");
     } else {
-      axios
-        .post("http://localhost:3001/register", {
-          email: input.email,
-          password: input.password,
-          userType: "Patient",
-          document: input.document,
-          name: input.name,
-          lastName: input.lastName,
-          birth: input.birth
-        })
-        .then((response) => {
-          toast.success(response.data.success);
-          navigate("/");
-        })
-        .catch(() => {
-          return toast.error("Este usuario ya ha sido creado.");
-        });
+      if (medic === false) {
+        axios
+          .post("http://localhost:3001/login/register", {
+            email: input.email,
+            password: input.password,
+            userType: "Patient",
+            document: input.document,
+            name: input.name,
+            lastName: input.lastName,
+            birth: input.birth,
+          })
+          .then((response) => {
+            toast.success(response.data.success);
+            navigate("/");
+          })
+          .catch(() => {
+            return toast.error("Este usuario ya ha sido creado.");
+          });
+      } else {
+        axios
+          .post("http://localhost:3001/login/register", {
+            email: input.email,
+            password: input.password,
+            userType: "Medic",
+            document: input.document,
+            name: input.name,
+            lastName: input.lastName,
+            birth: input.birth,
+          })
+          .then((response) => {
+            toast.success(response.data.success);
+            navigate("/");
+          })
+          .catch(() => {
+            return toast.error("Este usuario ya ha sido creado.");
+          });
+      }
     }
   };
 
   return (
     <>
       <SignUpDivContainer>
-        <Toaster position="top-center" reverseOrder={false} />
+        <label class="switchBtn">
+          <input type="checkbox" onClick={toggleOn} />
+          <div class="slide round">Medico</div>
+        </label>
 
+        <Toaster position="top-center" reverseOrder={false} />
         <SignUpContainer>
           <form onSubmit={register}>
             <label>Email</label>
@@ -170,10 +228,40 @@ function SignUp() {
               name="birth"
             />
             {errors.birth && <p className="error">{errors.birth}</p>}
+
+            {medic === false ? (
+              <>
+                <label>N° Obra social</label>
+                <input
+                  onChange={handleInputChange}
+                  value={input.obraSocial}
+                  placeholder="Obra social"
+                  type="text"
+                  name="obraSocial"
+                />
+                {errors.obraSocial && (
+                  <p className="error">{errors.obraSocial}</p>
+                )}
+              </>
+            ) : (
+              <>
+                <label>Matricula</label>
+                <input
+                  onChange={handleInputChange}
+                  value={input.matricula}
+                  placeholder="Matricula"
+                  type="text"
+                  name="matricula"
+                />
+                {errors.matricula && (
+                  <p className="error">{errors.matricula}</p>
+                )}
+              </>
+            )}
+
             <button type="submit">Registrarme</button>
           </form>
         </SignUpContainer>
-
         <Link to="/">
           <button className="back_signUp">VOLVER</button>
         </Link>
@@ -190,13 +278,66 @@ const SignUpDivContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 135vh;
+  height: 148vh;
   width: 100%;
-  background-color: grey;
+  background-color: #07182E;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  .switchBtn {
+    position: relative;
+    display: inline-block;
+    width: 110px;
+    height: 34px;
+    left: 13%;
+  }
+  .switchBtn input {
+    display: none;
+  }
+  .slide {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    padding: 8px;
+    color: #fff;
+  }
+  .slide:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 78px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+  input:checked + .slide {
+    background-color: #8ce196;
+    padding-left: 40px;
+  }
+  input:focus + .slide {
+    box-shadow: 0 0 1px #01aeed;
+  }
+  input:checked + .slide:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    left: -20px;
+  }
+  .slide.round {
+    border-radius: 34px;
+  }
+  .slide.round:before {
+    border-radius: 50%;
+  }
   .back_signUp {
     margin: 0.2rem;
     padding: 0.5rem;
@@ -221,7 +362,7 @@ const SignUpDivContainer = styled.div`
     background-position: center;
   }
 `;
-// eslint-disable-next-line
+
 const ImgSignUp = styled.div`
   margin-top: -2.5rem;
   display: flex;
@@ -254,7 +395,9 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a9c;
+    background-color: rgb(0, 131, 182);
+    box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+             -15px -15px 30px rgba(255, 255, 255, 0.135);
     -webkit-backdrop-filter: blur(7px);
     width: 32rem;
     height: auto;

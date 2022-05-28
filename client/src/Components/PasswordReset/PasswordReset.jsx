@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { postPasswordReset } from "../../redux/actions";
 import S from "./PasswordReset.module.css"
@@ -22,11 +21,11 @@ function PasswordReset() {
   const [input, setInput] = useState({
     username: "",
   });
-  //const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  //const User = useSelector((state) => state.user);
+  const User = useSelector((state) => state.user);
 
 
   const handleInputChange = function (e) {
@@ -60,11 +59,6 @@ function PasswordReset() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
-        <ImgSignUp>
-          <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px" />
-          </Link>
-        </ImgSignUp>
 
         <SignUpContainer>
           <form onSubmit={handleSumbit}>
@@ -99,7 +93,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: grey;
+  background-color: #07182E;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -163,7 +157,9 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a9c;
+    background-color: rgb(0, 131, 182);
+    box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+             -15px -15px 30px rgba(255, 255, 255, 0.135);
     width: 32rem;
     height: auto;
     border-radius: 20px;
@@ -230,7 +226,7 @@ const SignUpContainer = styled.div`
     border-radius: 10px;
   }
   .error {
-    color: red;
+    color: #b70000;
   }
   @media (max-width: 455px) {
     form {
@@ -241,7 +237,7 @@ const SignUpContainer = styled.div`
     }
   }
 `;
-// eslint-disable-next-line
+
 const AuthDiv = styled.div`
   margin-top: -6.5rem;
   display: flex;
