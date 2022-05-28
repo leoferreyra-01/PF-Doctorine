@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Input from '@mui/material/Input';
-import Button from '@material-ui/core/Button';
+import s from './buton.module.css';
 import GridWrapper from '../../../../sharedComponents/GridWrapper/GridWrapper';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -34,7 +34,7 @@ export default function RegisterPatient() {
     <GridWrapper>
       <Container maxWidth="xs">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField
+          <imput
             label="name"
             fullWidth
             variant="filled"
@@ -141,9 +141,15 @@ export default function RegisterPatient() {
             variant="filled"
             {...register('birth')}
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <button
+            className={s.buton}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
             Enviar
-          </Button>
+          </button>
         </form>
       </Container>
     </GridWrapper>
