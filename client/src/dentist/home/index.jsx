@@ -3,6 +3,7 @@ import { Outlet, useLocation, Link } from 'react-router-dom';
 import NavBar from './navbar';
 import Grid from '@mui/material/Grid';
 import Header from './Header/Header';
+import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
   const [title, setTitle] = useState(null);
@@ -20,7 +21,7 @@ export default function Home() {
       {/* <Link to="/clinical-history">
         <button>VER HC</button>
       </Link> */}
-
+      <Toaster position="top-center" reverseOrder={false} />
       <NavBar />
       <Header title={title} />
       <Outlet />
