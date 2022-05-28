@@ -7,7 +7,6 @@ const allUsers = async(req, res) => {
         console.log(e);
       }
 }  
-User
 
 module.exports = { 
     allUsers
