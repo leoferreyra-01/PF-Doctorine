@@ -67,6 +67,7 @@ function SignUp() {
         toast.error("Debes completar correctamente los campos.");
       }
       const user = await service.login(input);
+      console.log(user)
       setUser(user);
       window.localStorage.setItem("loggedToken", JSON.stringify(user));
       service.setToken(user.token);

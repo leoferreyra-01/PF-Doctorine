@@ -6,19 +6,19 @@ var NODEMAILER = require("nodemailer");
 const loginUser = async(req , res) => { 
     try { 
         const { email, password } = req.body; 
-        // console.log(req.body)
+        console.log(req.body)
         const user = await User.findOne({ where: { email: email } });
-        // console.log(user)
+        console.log(user)
     
         if (!user) {
-          return res.status(400).json({ error: "invalid user or password" });
+          return res.status(400).json({ error: "A" });
         }
         
-        const passwordCorrect =
-          user === null ? false : await bcrypt.compare(password, user.password);
+        // const passwordCorrect =
+        //   user === null ? false : await bcrypt.compare(password, user.password);
     
-        if (!(user && passwordCorrect)) {
-          return res.status(401).json({ error: "invalid user or password" });
+        if (!(user && password)) {
+          return res.status(401).json({ error: "E" });
         }
     
         const userForToken = {
