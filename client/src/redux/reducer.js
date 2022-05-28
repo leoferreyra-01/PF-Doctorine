@@ -8,6 +8,7 @@ import {
   GET_TURNS,
   GET_ALL_PATIENTS,
   GET_CLINICAL_HISTORY,
+  POST_CLINICAL_HISTORY,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -168,11 +169,19 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         homeToShow: action.payload,
       };
+
     case GET_CLINICAL_HISTORY:
       return {
         ...state,
         clinicalHistory: action.payload,
       };
+
+    case POST_CLINICAL_HISTORY:
+      return{
+        ...state,
+        clinicalHistory: action.payload,
+      }
+
     default:
       return { ...state };
   }
