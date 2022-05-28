@@ -16,12 +16,12 @@ export const patientSchema = yup.object({
     .required('Campo requerido'),
   street: yup.string().required('Campo requerido'),
   city: yup.string().required('Campo requerido'),
-  postalCode: yup.string().required('Campo requerido'),
+  postalCode: yup.number().positive().integer().required('Campo requerido'),
   birth: yup.date().required('Campo requerido'),
   cellphone: yup.string().min(9).required('Campo requerido'),
   password: yup
     .string()
-    .min(5, 'La contraseña debe tener minimo 5 caracteres')
+    .min(8, 'La contraseña debe tener minimo 8 caracteres')
     .required('Campo requerido'),
   confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
 });

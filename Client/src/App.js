@@ -21,7 +21,7 @@ import RegisterClinicalHistory from './dentist/home/navbar/detail/clinic-history
 function App() {
   //console.log('renderice app');
   const homeToShow = useSelector(state => state.homeToShow);
-  
+
   return (
     <div className="App">
       <Routes>
@@ -39,7 +39,10 @@ function App() {
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
             <Route path="clinical-history/:id" element={<ClinicalHistory />} />
-            <Route path="create-clinical-history" element={<RegisterClinicalHistory/>} />
+            <Route
+              path="create-clinical-history"
+              element={<RegisterClinicalHistory />}
+            />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />} />

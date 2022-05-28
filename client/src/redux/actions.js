@@ -13,7 +13,8 @@ export const GET_TURNS = 'GET_TURNS';
 export const GET_ALL_PATIENTS = 'GET_ALL_PATIENTS';
 export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
-export const GET_CLINICAL_HISTORY_FOR_CREATE = 'GET_CLINICAL_HISTORY_FOR_CREATE';
+export const GET_CLINICAL_HISTORY_FOR_CREATE =
+  'GET_CLINICAL_HISTORY_FOR_CREATE';
 //login
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -39,10 +40,10 @@ export function getPatient(id) {
 export function postPatient(patient) {
   return async function (dispatch) {
     try {
-      const okMessage = (
-        await axios.post('http://localhost:3001/patients,patient', patient)
+      const patientWithId = (
+        await axios.post('http://localhost:3001/patients', patient)
       ).data;
-      return dispatch({ type: POST_PATIENT, payload: patient });
+      return dispatch({ type: POST_PATIENT, payload: patientWithId });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -262,12 +263,15 @@ export function getStudies(patientID) {
   };
 }
 
-export function postClinicalHistory(payload){
+export function postClinicalHistory(payload) {
   return async function () {
     try {
-        return await axios.post('http://localhost:3001/clinicalhistories', payload);
+      return await axios.post(
+        'http://localhost:3001/clinicalhistories',
+        payload
+      );
     } catch (error) {
-        console.log(error);
-    };
+      console.log(error);
+    }
   };
 }

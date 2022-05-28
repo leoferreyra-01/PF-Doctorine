@@ -55,8 +55,8 @@ export default function SearchComponent() {
         {filledPatients ? (
           allPatients.map(patient => (
             <PatientCard
-              key={patient.ID}
-              ID={patient.ID}
+              key={patient.Patient.ID}
+              ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
               imageProfile={patient.imageProfile}
@@ -81,8 +81,8 @@ export default function SearchComponent() {
       {searchedPatient.length ? (
         searchedPatient.map(patient => (
           <PatientCard
-            key={patient.ID}
-            ID={patient.ID}
+            key={patient.Patient.ID}
+            ID={patient.Patient.ID}
             name={patient.name}
             lastName={patient.lastName}
             imageProfile={patient.imageProfile}
@@ -98,8 +98,8 @@ export default function SearchComponent() {
       {filledPatients ? (
         allPatients.map(patient => (
           <PatientCard
-            key={patient.ID}
-            ID={patient.ID}
+            key={patient.Patient.ID}
+            ID={patient.Patient.ID}
             name={patient.name}
             lastName={patient.lastName}
             imageProfile={patient.imageProfile}
