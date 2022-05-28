@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Input from '@mui/material/Input';
 import Box from '@mui/material/Box';
 import CommonButton from '../../../sharedComponents/CommonButton/CommonButton';
-
+import s from './btn.module.css';
 export default function SearchBar({ placeholder, searchBarWidth }) {
   const [searched, setSearched] = useState('');
   const dispatch = useDispatch();
@@ -25,21 +25,25 @@ export default function SearchBar({ placeholder, searchBarWidth }) {
   };
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <SearchIcon sx={{ marginRight: '10px' }} />
-      <Input
-        placeholder={placeholder}
-        onChange={handleOnChange}
-        sx={{
-          width: searchBarWidth,
-          color: 'rgba(0, 0, 0, 0.6)',
-          fontSize: '1.1rem',
-        }}
-        disableUnderline
-      />
-      <CommonButton variant="contained" onClick={handleSubmit} size="large">
-        Buscar
-      </CommonButton>
-    </Box>
+    <div>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <SearchIcon sx={{ marginRight: '10px' }} />
+        <Input
+          placeholder={placeholder}
+          onChange={handleOnChange}
+          sx={{
+            width: searchBarWidth,
+            color: 'rgba(0, 0, 0, 0.6)',
+            fontSize: '1.1rem',
+          }}
+          disableUnderline
+        />
+        <div className={s.boton}>
+          <CommonButton variant="contained" onClick={handleSubmit} size="large">
+            Buscar
+          </CommonButton>
+        </div>
+      </Box>
+    </div>
   );
 }

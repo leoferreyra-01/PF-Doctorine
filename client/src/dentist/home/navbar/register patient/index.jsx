@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Input from '@mui/material/Input';
@@ -9,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { registerPatientSchema } from './registerPatientSchema';
 
 export default function RegisterPatient() {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -20,6 +22,8 @@ export default function RegisterPatient() {
     data.password = data.document;
     data.userType = 'Patient';
     console.log(data);
+    alert('Sera redireccionado para crear la historia clinica del paciente');
+    navigate('/home/create-clinical-history');
   };
 
   return (
@@ -102,7 +106,6 @@ export default function RegisterPatient() {
             type="date"
             fullWidth
             variant="filled"
-            margin="dense"
             {...register('birthDate')}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>
