@@ -7,7 +7,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
-import s from './search.module.css';
+
 const cardHeaderStyles = {
   wrapper: {
     display: 'flex',
@@ -17,6 +17,7 @@ const cardHeaderStyles = {
     paddingRight: '20px',
     height: '65px',
     backgroundColor: '#f5f5f5',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     marginBottom: '20px',
   },
   addUserButton: {
@@ -55,8 +56,8 @@ export default function SearchComponent() {
         {filledPatients ? (
           allPatients.map(patient => (
             <PatientCard
-              key={patient.ID}
-              ID={patient.ID}
+              key={patient.Patient.ID}
+              ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
               imageProfile={patient.imageProfile}
@@ -71,6 +72,7 @@ export default function SearchComponent() {
 
   return (
     <GridWrapper>
+      <h3>Componente Inicial</h3>
       <Box sx={cardHeaderStyles.wrapper}>
         <SearchBar
           placeholder="Buscar paciente.."
@@ -81,8 +83,8 @@ export default function SearchComponent() {
       {searchedPatient.length ? (
         searchedPatient.map(patient => (
           <PatientCard
-            key={patient.ID}
-            ID={patient.ID}
+            key={patient.Patient.ID}
+            ID={patient.Patient.ID}
             name={patient.name}
             lastName={patient.lastName}
             imageProfile={patient.imageProfile}
@@ -98,8 +100,8 @@ export default function SearchComponent() {
       {filledPatients ? (
         allPatients.map(patient => (
           <PatientCard
-            key={patient.ID}
-            ID={patient.ID}
+            key={patient.Patient.ID}
+            ID={patient.Patient.ID}
             name={patient.name}
             lastName={patient.lastName}
             imageProfile={patient.imageProfile}

@@ -1,5 +1,6 @@
 import {
   GET_PATIENT,
+  POST_PATIENT,
   GET_PATIENT_DNI,
   GET_EVOLUTIONS,
   GET_STUDIES,
@@ -7,6 +8,7 @@ import {
   GET_TURNS,
   GET_ALL_PATIENTS,
   GET_CLINICAL_HISTORY,
+  POST_CLINICAL_HISTORY,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -25,14 +27,14 @@ const initialState = {
   evolutions: [],
   studies: [],
   unavailableTurns: [],
-  homeToShow: 'login',
+  homeToShow: 'patient',
   //////LOGIN
   user: {},
   allUsers: [],
   success: [],
   auth: false,
   ///////////
-  clinicalHistory: {},
+  clinicalHistory: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -63,6 +65,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPatients: [...state.allPatients, ...action.payload],
+      };
+
+    case POST_PATIENT:
+      return {
+        ...state,
+        allPatients: [...state.allPatients, action.payload],
       };
 
     case CLEAR:
@@ -161,11 +169,19 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         homeToShow: action.payload,
       };
+
     case GET_CLINICAL_HISTORY:
       return {
         ...state,
         clinicalHistory: action.payload,
       };
+
+    case POST_CLINICAL_HISTORY:
+      return{
+        ...state,
+        clinicalHistory: [...state.clinicalHistory, ...action.payload],
+      }
+
     default:
       return { ...state };
   }

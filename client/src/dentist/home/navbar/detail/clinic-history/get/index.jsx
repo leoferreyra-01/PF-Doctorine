@@ -4,6 +4,7 @@ import { getClinicalHistory, clear } from '../../../../../../redux/actions.js';
 import { useParams } from 'react-router-dom';
 import GridWrapper from '../../../../../../sharedComponents/GridWrapper/GridWrapper.jsx';
 
+
 export default function ClinicalHistory() {
   const { id } = useParams();
 
@@ -12,48 +13,77 @@ export default function ClinicalHistory() {
   const { clinicalHistory } = useSelector(state => state);
 
   const studies = clinicalHistory.Studies;
-  console.log('studies', studies);
   const patient = clinicalHistory.Patient;  //datos a renderizar en el header
-  console.log('patient', patient);
   const patientID = clinicalHistory.PatientID;
-  console.log('patientID', patientID);
+
 
   const toRender = [];
   for (const property in clinicalHistory) {
     toRender.push(`${property}: ${clinicalHistory[property]}`);  //${clinicalHistory[property]}
   }
 
+  toRender.pop();    //de aca saco las tres cosas que guarde arriba
+  toRender.pop();    //como studies, patient y patient ID
   toRender.pop();
-  toRender.pop();
-  toRender.pop();
-  toRender.shift();
+  toRender.shift();  //Y de aca saco el ID para que no se renderice
 
-  console.log('clinicalHistory', clinicalHistory);
-  console.log('toRender', toRender);
 
+  const toRenderParsed = toRender.map(property => {
+    
+
+    if (property.charAt(0) === 'b' && property.charAt(1) === '_') {
+      return property.substring(2).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+    }
+
+    if (property.charAt(0) === 'i') {
+      if (property.charAt(1) === 'c' && property.charAt(2) === '_') {
+        return property.substring(3).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+      }
+      if (property.charAt(1) === 'h' && property.charAt(2) === '_') {
+        return property.substring(3).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+      }
+      if (property.charAt(1) === 'r' && property.charAt(2) === '_') {
+        return property.substring(3).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+      }
+      if (property.charAt(1) === 'g' && property.charAt(2) === '_') {
+        return property.substring(3).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+      }
+      if (property.charAt(1) === 'n' && property.charAt(2) === '_') {
+        return property.substring(3).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+      }
+      if (property.charAt(1) === 'b' && property.charAt(2) === '_') {
+        return property.substring(3).replace(/([A-Z])/g, " $1").replace(/^./, function(str){ return str.toUpperCase(); }).toUpperCase()
+      }
+    }
+  })
+
+console.log(toRenderParsed)
   useEffect(() => {
     dispatch(getClinicalHistory(id));
+
+    return () => {
+      dispatch(clear());
+    }
   }, [dispatch, id]);
 
   return (
     // cuando este el update deberia tener un boton aca que muestre el formulario de actualizacion
     <GridWrapper>
       {clinicalHistory ? (
-        <>
-        {/* <div>
-          {patient}
-        </div> */}
 
-        <div>{toRender.map(property => (
-          <div key={id}>
-          {property}
-          </div>
-        ))}</div>
+        <div >
+          
+            {toRenderParsed.map(property => (
+              <div key={id}>
+                {property}
+              </div>
+            ))}
+          
 
           <div>
             {studies ? studies.map(study => study) : 'No studies have been done yet.'}
           </div>
-        </>
+        </div>
       ) : (
         <div>
           <img
