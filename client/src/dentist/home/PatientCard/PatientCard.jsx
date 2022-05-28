@@ -54,35 +54,37 @@ export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
     <div className={s.conteiner}>
       <Card className={s.cardc}>
         <CardActionArea>
-          {/* <CardMedia
+          <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
+            {/* <CardMedia
           component="img"
           alt={name}
           height="140"
           image={imageProfile}
         /> */}
-          <CardContent className={s.card}>
-            <div className={s.name}>
-              <Typography gutterBottom variant="h8" component="div">
-                {name.charAt(0).toUpperCase() +
-                  name.slice(1) +
-                  ' ' +
-                  lastName.charAt(0).toUpperCase() +
-                  lastName.slice(1)}
-              </Typography>
-            </div>
+            <CardContent className={s.card}>
+              <div className={s.name}>
+                <Typography gutterBottom variant="h8" component="div">
+                  {name.charAt(0).toUpperCase() +
+                    name.slice(1) +
+                    ' ' +
+                    lastName.charAt(0).toUpperCase() +
+                    lastName.slice(1)}
+                </Typography>
+              </div>
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              marginLeft="50px"
-            >
-              Direccion : china DNI: 45468523
-            </Typography>
-          </CardContent>
-          <CardActions className={s.cardactions}>
-            <Button size="small">Ver Historia Clinica</Button>
-            <Button size="small">Ver Estudios</Button>
-          </CardActions>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                marginLeft="50px"
+              >
+                Direccion : china DNI: 45468523
+              </Typography>
+            </CardContent>
+            <CardActions className={s.cardactions}>
+              <Button size="small">Ver Historia Clinica</Button>
+              <Button size="small">Ver Estudios</Button>
+            </CardActions>
+          </NavLink>
         </CardActionArea>
       </Card>
     </div>
