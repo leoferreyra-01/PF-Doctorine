@@ -4,11 +4,11 @@ import NavBar from './navbar';
 import Grid from '@mui/material/Grid';
 import Header from './Header/Header';
 import { Toaster } from 'react-hot-toast';
-
+import Loader from './Loader/loader';
 export default function Home() {
   const [title, setTitle] = useState(null);
   const location = useLocation();
-
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     let parsedTitle = location.pathname.replace(/\W/g, ' ');
     if (parsedTitle.length > 5) parsedTitle = parsedTitle.slice(5);
@@ -17,14 +17,20 @@ export default function Home() {
 
   return (
     <div>
-      {/* BOTON TEMPORAL */}
-      {/* <Link to="/clinical-history">
+      {loader === true ? (
+        <Loader setLoader={setLoader} />
+      ) : (
+        <div>
+          {/* BOTON TEMPORAL */}
+          {/* <Link to="/clinical-history">
         <button>VER HC</button>
       </Link> */}
-      <Toaster position="top-center" reverseOrder={false} />
-      <NavBar />
-      <Header title={title} />
-      <Outlet />
+          <Toaster position="top-center" reverseOrder={false} />
+          <NavBar />
+          <Header title={title} />
+          <Outlet />
+        </div>
+      )}
     </div>
   );
 }

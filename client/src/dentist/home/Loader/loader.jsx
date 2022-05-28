@@ -4,7 +4,7 @@ export default function Loader({ setLoader }) {
   {
     setTimeout(() => {
       setLoader(false);
-    }, 1600);
+    }, 2000);
   }
   return (
     <div className={s.container}>
