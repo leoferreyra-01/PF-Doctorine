@@ -206,7 +206,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: grey;
+  background-color: #07182E;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -225,7 +225,7 @@ const SignUpDivContainer = styled.div`
   .back_signUp:hover {
     cursor: pointer;
     color: white;
-    background: #8893b1b5;
+    background: #009ce5;;
     border-radius: 10px;
   }
   @media (max-width: 540px) {
@@ -273,7 +273,9 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a9c;
+    background-color: rgb(0, 131, 182);
+    box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+             -15px -15px 30px rgba(255, 255, 255, 0.135);
     width: 32rem;
     height: auto;
     border-radius: 20px;
