@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(await getPatients(req.query));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -37,7 +37,7 @@ router.get('/:ID', async (req, res) => {
     res.status(200).json(await getPatientById(ID));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
     res.status(200).json(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
@@ -73,7 +73,7 @@ router.put('/:ID', async (req, res) => {
     res.status(200).json(await putPatient(ID, infoUser, infoPatient));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
@@ -89,7 +89,7 @@ router.delete('/:ID', async (req, res) => {
     res.status(200).send(await deletePatient(ID));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
