@@ -8,6 +8,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import s from './card.module.css';
+
 export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
   if (ID === -1) {
     return (
@@ -15,11 +16,11 @@ export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
         <Card className={s.cardc}>
           <CardActionArea>
             {/* <CardMedia
-              component="img"
-              alt={name}
-              height="140"
-              image={imageProfile}
-            /> */}
+            component="img"
+            alt={name}
+            height="140"
+            image={imageProfile}
+          /> */}
             <CardContent className={s.card}>
               <div className={s.name}>
                 <Typography gutterBottom variant="h8" component="div">
@@ -55,19 +56,22 @@ export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
         <CardActionArea>
           <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
             {/* <CardMedia
-              component="img"
-              alt={name}
-              height="140"
-              image={imageProfile}
-            /> */}
+          component="img"
+          alt={name}
+          height="140"
+          image={imageProfile}
+        /> */}
             <CardContent className={s.card}>
-              <Typography gutterBottom variant="h8" component="div">
-                {name.charAt(0).toUpperCase() +
-                  name.slice(1) +
-                  ' ' +
-                  lastName.charAt(0).toUpperCase() +
-                  lastName.slice(1)}
-              </Typography>
+              <div className={s.name}>
+                <Typography gutterBottom variant="h8" component="div">
+                  {name.charAt(0).toUpperCase() +
+                    name.slice(1) +
+                    ' ' +
+                    lastName.charAt(0).toUpperCase() +
+                    lastName.slice(1)}
+                </Typography>
+              </div>
+
               <Typography
                 variant="body2"
                 color="text.secondary"
