@@ -1,3 +1,13 @@
-.img{
-    margin-bottom: 80px;
+.img {
+  margin-bottom: 80px;
+}
+.check {
+  height: 10px;
+  width: 10px;
+  margin-left: 21%;
+
+  z-index: 20;
+}
+.pa {
+  margin-right: 35px;
 }

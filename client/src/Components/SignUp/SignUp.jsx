@@ -1,66 +1,66 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
-import { Link, useInRouterContext, useNavigate } from "react-router-dom";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
-import S from "./SingUp.module.css";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import logo from './Logo/logo.jpg';
+import { Link, useInRouterContext, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import S from './SingUp.module.css';
 
 export function validate(input) {
   let errors = {};
   let medic = {};
   if (!input.email) {
-    errors.username = "El email faltante";
+    errors.username = 'El email faltante';
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.username = "El email invalido";
+    errors.username = 'El email invalido';
   }
   if (!input.password) {
-    errors.password = "Password is required";
+    errors.password = 'Password is required';
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
-    errors.password = "La contraseña es invalida";
+    errors.password = 'La contraseña es invalida';
   } else if (input.password.length < 6) {
-    errors.password = "La contraseña debe ser mayor a 6 digitos";
+    errors.password = 'La contraseña debe ser mayor a 6 digitos';
   } else if (input.password.length > 12) {
-    errors.password = "La contraseña debe ser menor a 12 digitos";
+    errors.password = 'La contraseña debe ser menor a 12 digitos';
   }
 
   if (!input.passwordConfirm) {
-    errors.passwordConfirm = "Debes confirmar tu contraseña";
+    errors.passwordConfirm = 'Debes confirmar tu contraseña';
   } else if (input.password !== input.passwordConfirm) {
-    errors.passwordConfirm = "Las contraseñas no coinciden";
+    errors.passwordConfirm = 'Las contraseñas no coinciden';
   }
   if (!input.name) {
-    errors.name = "El nombre es requerido";
+    errors.name = 'El nombre es requerido';
   } else if (!/^[a-zA-Z\s]/.test(input.name)) {
-    errors.name = "El nombre es invalido";
+    errors.name = 'El nombre es invalido';
   }
   if (!input.lastName) {
-    errors.lastName = "El apellido es requerido";
+    errors.lastName = 'El apellido es requerido';
   } else if (!/^[a-zA-Z\s]/.test(input.lastName)) {
-    errors.lastName = "El apellido es invalido";
+    errors.lastName = 'El apellido es invalido';
   }
   if (!input.document) {
-    errors.document = "El documento es requerido";
+    errors.document = 'El documento es requerido';
   } else if (!/^[0-9]+$/.test(input.document)) {
-    errors.document = "El documento es invalido";
+    errors.document = 'El documento es invalido';
   } else if (input.document.length < 7) {
-    errors.document = "El documento es invalido";
+    errors.document = 'El documento es invalido';
   }
   if (!input.birth) {
-    errors.birth = "Año de nacimiento es requerido";
+    errors.birth = 'Año de nacimiento es requerido';
   }
   if (medic === false) {
     if (!input.obraSocial) {
-      errors.obraSocial = "La obra social es requerida";
+      errors.obraSocial = 'La obra social es requerida';
     } else if (!/^[0-9]+$/.test(input.obraSocial)) {
-      errors.obraSocial = "La obra social es invalida";
+      errors.obraSocial = 'La obra social es invalida';
     }
   }
   if (medic === true) {
     if (!input.matricula) {
-      errors.matricula = "La matricula es requerida";
+      errors.matricula = 'La matricula es requerida';
     } else if (!/^[0-9]+$/.test(input.matricula)) {
-      errors.matricula = "La matricula es invalida";
+      errors.matricula = 'La matricula es invalida';
     }
   }
   return errors;
@@ -68,16 +68,16 @@ export function validate(input) {
 
 function SignUp() {
   const [input, setInput] = useState({
-    email: "",
-    name: "",
-    lastName: "",
-    document: "",
-    birth: "",
-    password: "",
-    matricula: "",
-    obraSocial: "",
-    passwordConfirm: "",
-    userType: "Patient",
+    email: '',
+    name: '',
+    lastName: '',
+    document: '',
+    birth: '',
+    password: '',
+    matricula: '',
+    obraSocial: '',
+    passwordConfirm: '',
+    userType: 'Patient',
   });
   const navigate = useNavigate();
 
@@ -107,46 +107,46 @@ function SignUp() {
     console.log(medic);
   }
 
-  const register = (e) => {
+  const register = e => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
-      return toast.error("Debes rellenar todos los campos de forma correcta.");
+      return toast.error('Debes rellenar todos los campos de forma correcta.');
     } else {
       if (medic === false) {
         axios
-          .post("http://localhost:3001/login/register", {
+          .post('http://localhost:3001/login/register', {
             email: input.email,
             password: input.password,
-            userType: "Patient",
+            userType: 'Patient',
             document: input.document,
             name: input.name,
             lastName: input.lastName,
             birth: input.birth,
           })
-          .then((response) => {
+          .then(response => {
             toast.success(response.data.success);
-            navigate("/");
+            navigate('/');
           })
           .catch(() => {
-            return toast.error("Este usuario ya ha sido creado.");
+            return toast.error('Este usuario ya ha sido creado.');
           });
       } else {
         axios
-          .post("http://localhost:3001/login/register", {
+          .post('http://localhost:3001/login/register', {
             email: input.email,
             password: input.password,
-            userType: "Medic",
+            userType: 'Medic',
             document: input.document,
             name: input.name,
             lastName: input.lastName,
             birth: input.birth,
           })
-          .then((response) => {
+          .then(response => {
             toast.success(response.data.success);
-            navigate("/");
+            navigate('/');
           })
           .catch(() => {
-            return toast.error("Este usuario ya ha sido creado.");
+            return toast.error('Este usuario ya ha sido creado.');
           });
       }
     }
@@ -155,10 +155,20 @@ function SignUp() {
   return (
     <>
       <SignUpDivContainer>
-        <label class="switchBtn">
-          <input type="checkbox" onClick={toggleOn} />
-          <div class="slide round">Medico</div>
-        </label>
+        <div className={S.check}>
+          <label class="switchBtn">
+            <input type="checkbox" onClick={toggleOn} />
+            {medic === false ? (
+              <div class="slide round">
+                <p className={S.pa}> Patient </p>
+              </div>
+            ) : (
+              <div class="slide round">
+                <p>Medic</p>{' '}
+              </div>
+            )}
+          </label>
+        </div>
 
         <Toaster position="top-center" reverseOrder={false} />
         <SignUpContainer>
@@ -280,40 +290,42 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 148vh;
   width: 100%;
-  background-color: #07182E;
+  background-color: #07182e;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   .switchBtn {
+    margin-top: -20px;
     position: relative;
-    display: inline-block;
-    width: 110px;
+    display: flex;
+    justify-content: left;
+    width: 170px;
     height: 34px;
-    left: 13%;
   }
   .switchBtn input {
     display: none;
   }
   .slide {
-    position: absolute;
+    justify-content: space-around;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
+    width: 100px;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #219ed8;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-    padding: 8px;
+    padding: 7px;
     color: #fff;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 70px;
   }
   .slide:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 26px;
     width: 26px;
-    left: 78px;
+    left: 72px;
     bottom: 4px;
     background-color: white;
     -webkit-transition: 0.4s;
@@ -380,8 +392,8 @@ const SignUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   * {
-    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-    font-family: "Poppins", sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    font-family: 'Poppins', sans-serif;
   }
   label {
     padding-top: 10px;
@@ -397,7 +409,7 @@ const SignUpContainer = styled.div`
     align-items: center;
     background-color: rgb(0, 131, 182);
     box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
-             -15px -15px 30px rgba(255, 255, 255, 0.135);
+      -15px -15px 30px rgba(255, 255, 255, 0.135);
     -webkit-backdrop-filter: blur(7px);
     width: 32rem;
     height: auto;

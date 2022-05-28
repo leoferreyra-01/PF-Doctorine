@@ -14,7 +14,7 @@ const {
   deletePatient,
 } = require('../controllers/controllersPatients/deletePatient');
 
-const { validateInfoUser } = require('../controllers/validators/User');
+const validate = require('../controllers/validators');
 
 //|> RUTE
 
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(await getPatients(req.query));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -33,10 +33,11 @@ router.get('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
+    await validate.ModelID('Patient', ID);
     res.status(200).json(await getPatientById(ID));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
@@ -48,11 +49,12 @@ router.post('/', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    await validateInfoUser('POST', infoUser);
+    await validate.InfoUser('POST', infoUser);
+    await validate.InfoPatient('POST', infoPatient);
     res.status(200).json(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
@@ -65,11 +67,13 @@ router.put('/:ID', async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
   try {
-    await validateInfoUser('PUT', infoUser);
+    await validate.InfoUser('PUT', infoUser);
+    await validate.InfoPatient('PUT', infoPatient);
+    await validate.ModelID('Patient', ID);
     res.status(200).json(await putPatient(ID, infoUser, infoPatient));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 
@@ -81,10 +85,11 @@ router.delete('/:ID', async (req, res) => {
   const { ID } = req.params;
 
   try {
+    await validate.ModelID('Patient', ID);
     res.status(200).send(await deletePatient(ID));
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message);
+    res.status(400).json({ Error: error.message });
   }
 });
 

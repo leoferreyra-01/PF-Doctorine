@@ -37,7 +37,7 @@ export default function SearchBar({ placeholder, searchBarWidth, onClick }) {
           }}
           disableUnderline
         />
-        <div>
+        <div className={s.boton}>
           <CommonButton variant="contained" onClick={handleSubmit} size="large">
             Buscar
           </CommonButton>
