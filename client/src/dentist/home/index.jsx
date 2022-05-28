@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false} />
       {loader === true ? (
         <Loader setLoader={setLoader} />
       ) : (
@@ -25,7 +26,7 @@ export default function Home() {
           {/* <Link to="/clinical-history">
         <button>VER HC</button>
       </Link> */}
-          <Toaster position="top-center" reverseOrder={false} />
+          
           <NavBar />
           <Header title={title} />
           <Outlet />
