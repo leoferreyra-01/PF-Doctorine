@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  flex-direction: row;
+}
+.conteiner {
+  margin-bottom: 20px;
+}
+.cardc {
+  display: flex;
+  background-color: blue;
+  height: 50px;
+}
+
+.cardactions {
+  margin-left: 80%;
+  margin-top: -6.5%;
+}

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
-
+import s from './search.module.css';
 const cardHeaderStyles = {
   wrapper: {
     display: 'flex',
@@ -15,7 +15,7 @@ const cardHeaderStyles = {
     paddingRight: '20px',
     height: '65px',
     backgroundColor: '#f5f5f5',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    marginBottom: '20px',
   },
   addUserButton: {
     fontSize: '1.05rem',
@@ -33,7 +33,6 @@ export default function SearchComponent() {
   }, []);
   return (
     <GridWrapper>
-      <h3>Componente Inicial</h3>
       <Box sx={cardHeaderStyles.wrapper}>
         <SearchBar placeholder="Buscar paciente.." searchBarWidth="720px" />
       </Box>

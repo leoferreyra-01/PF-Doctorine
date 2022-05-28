@@ -15,7 +15,7 @@ export default function Home() {
   }, [location]);
 
   return (
-    <Grid container>
+    <div>
       {/* BOTON TEMPORAL */}
       {/* <Link to="/clinical-history">
         <button>VER HC</button>
@@ -24,6 +24,6 @@ export default function Home() {
       <NavBar />
       <Header title={title} />
       <Outlet />
-    </Grid>
+    </div>
   );
 }
