@@ -18,9 +18,9 @@ export function validate(input) {
     errors.password = "Password is required";
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
     errors.password = "La contraseña es invalida";
-  } else if (input.password.length < 6) {
+  } else if (input.password.length < 8) {
     errors.password = "La contraseña debe ser mayor a 6 digitos";
-  } else if (input.password.length > 12) {
+  } else if (input.password.length > 16) {
     errors.password = "La contraseña debe ser menor a 12 digitos";
   }
 
@@ -57,9 +57,9 @@ export function validate(input) {
     }
   }
   if (medic === true) {
-    if (!input.matricula) {
+    if (!input.tuition_number) {
       errors.matricula = "La matricula es requerida";
-    } else if (!/^[0-9]+$/.test(input.matricula)) {
+    } else if (!/^[0-9]+$/.test(input.tuition_number)) {
       errors.matricula = "La matricula es invalida";
     }
   }
@@ -74,13 +74,33 @@ function SignUp() {
     document: "",
     birth: "",
     password: "",
-    matricula: "",
     obraSocial: "",
     passwordConfirm: "",
     userType: "Patient",
+
+    title: "",
+    tuition_number: "",
+    tuition_date: "",
+
+    ClinicID: 1,
   });
   const navigate = useNavigate();
 
+  const infoUser = {
+    email: input.email,
+    password: input.password,
+    name: input.name,
+    lastName: input.lastName,
+    document: parseInt(input.document),
+    birth: input.birth,
+    userType: "Medic",
+  };
+  
+  const infoMedic ={
+    title: input.title,
+    tuition_number: parseInt(input.tuition_number),
+    tuition_date: input.tuition_date
+  }
   const [medic, setMedic] = useState(false);
 
   const [errors, setErrors] = useState({});
@@ -131,15 +151,12 @@ function SignUp() {
             return toast.error("Este usuario ya ha sido creado.");
           });
       } else {
+        console.log(infoUser)
         axios
-          .post("http://localhost:3001/login/register", {
-            email: input.email,
-            password: input.password,
-            userType: "Medic",
-            document: input.document,
-            name: input.name,
-            lastName: input.lastName,
-            birth: input.birth,
+          .post("http://localhost:3001/medics", {
+            infoUser: infoUser,
+            infoMedic: infoMedic,
+            ClinicID: input.ClinicID
           })
           .then((response) => {
             toast.success(response.data.success);
@@ -245,18 +262,31 @@ function SignUp() {
               </>
             ) : (
               <>
-                <label>Matricula</label>
-                <input
-                  onChange={handleInputChange}
-                  value={input.matricula}
-                  placeholder="Matricula"
-                  type="text"
-                  name="matricula"
-                />
-                {errors.matricula && (
-                  <p className="error">{errors.matricula}</p>
-                )}
-              </>
+              <label>Titulo</label>
+              <input
+                onChange={handleInputChange}
+                value={input.title}
+                placeholder="Titulo"
+                type="text"
+                name="title"
+              />
+              <label>Matricula</label>
+              <input
+                onChange={handleInputChange}
+                value={input.tuition_number}
+                placeholder="Matricula"
+                type="text"
+                name="tuition_number"
+              />
+              <label>Fecha matriculado</label>
+              <input
+                onChange={handleInputChange}
+                value={input.tuition_date}
+                placeholder="Fecha Matricula"
+                type="date"
+                name="tuition_date"
+              />
+            </>
             )}
 
             <button type="submit">Registrarme</button>
@@ -280,7 +310,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 148vh;
   width: 100%;
-  background-color: #07182E;
+  background-color: #07182e;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -397,7 +427,7 @@ const SignUpContainer = styled.div`
     align-items: center;
     background-color: rgb(0, 131, 182);
     box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
-             -15px -15px 30px rgba(255, 255, 255, 0.135);
+      -15px -15px 30px rgba(255, 255, 255, 0.135);
     -webkit-backdrop-filter: blur(7px);
     width: 32rem;
     height: auto;
