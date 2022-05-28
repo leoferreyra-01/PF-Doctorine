@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clear, getAllPatients } from '../../../redux/actions';
+import { clear, getAllPatients, getPatientDni } from '../../../redux/actions';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
-
+import s from './search.module.css';
 const cardHeaderStyles = {
   wrapper: {
     display: 'flex',
@@ -15,7 +17,7 @@ const cardHeaderStyles = {
     paddingRight: '20px',
     height: '65px',
     backgroundColor: '#f5f5f5',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    marginBottom: '20px',
   },
   addUserButton: {
     fontSize: '1.05rem',
@@ -31,17 +33,56 @@ export default function SearchComponent() {
     if (!filledPatients) dispatch(getAllPatients());
     return () => dispatch(clear());
   }, []);
+  if (searchedPatient === 'Patient Not Found') {
+    return (
+      <GridWrapper>
+        <h3>Componente Inicial</h3>
+        <Box sx={cardHeaderStyles.wrapper}>
+          <SearchBar
+            placeholder="Buscar paciente.."
+            searchBarWidth="720px"
+            onClick={getPatientDni}
+          />
+        </Box>
+        <Alert
+          onClose={() => dispatch(clear())}
+          severity="error"
+          variant="outlined"
+        >
+          <AlertTitle>Error </AlertTitle>
+          Paciente no encontrado — !
+        </Alert>
+        {filledPatients ? (
+          allPatients.map(patient => (
+            <PatientCard
+              key={patient.ID}
+              ID={patient.ID}
+              name={patient.name}
+              lastName={patient.lastName}
+              imageProfile={patient.imageProfile}
+            />
+          ))
+        ) : (
+          <h2>Cargando Usuarios...</h2>
+        )}
+      </GridWrapper>
+    );
+  }
+
   return (
     <GridWrapper>
-      <h3>Componente Inicial</h3>
       <Box sx={cardHeaderStyles.wrapper}>
-        <SearchBar placeholder="Buscar paciente.." searchBarWidth="720px" />
+        <SearchBar
+          placeholder="Buscar paciente.."
+          searchBarWidth="720px"
+          onClick={getPatientDni}
+        />
       </Box>
       {searchedPatient.length ? (
         searchedPatient.map(patient => (
           <PatientCard
-            key={patient.Patient.ID}
-            ID={patient.Patient.ID}
+            key={patient.ID}
+            ID={patient.ID}
             name={patient.name}
             lastName={patient.lastName}
             imageProfile={patient.imageProfile}
@@ -57,7 +98,7 @@ export default function SearchComponent() {
       {filledPatients ? (
         allPatients.map(patient => (
           <PatientCard
-            key={patient.Patient.ID}
+            key={patient.ID}
             ID={patient.ID}
             name={patient.name}
             lastName={patient.lastName}

@@ -23,9 +23,6 @@ export default function Header({ title }) {
       justifyContent: 'end',
       alignItems: 'center',
       marginBottom: '20px',
-      '*': {
-        marginRight: '5px',
-      },
     },
     middleRow: {
       display: 'flex',
@@ -37,6 +34,7 @@ export default function Header({ title }) {
     },
     link: {
       fontWeight: 500,
+      marginRight: '5px',
       color: 'rgba(255, 255, 255, 0.7)',
       '&:hover': {
         color: '#fff',
