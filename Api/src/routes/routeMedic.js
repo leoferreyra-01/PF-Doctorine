@@ -8,6 +8,7 @@ const { putMedic } = require('../controllers/controllersMedics/putMedic');
 const { deleteMedic } = require('../controllers/controllersMedics/deleteMedic');
 
 const { validateInfoUser } = require('../controllers/validators/User');
+const { validateInfoMedic } = require('../controllers/validators/Medic');
 
 //|> RUTE
 
@@ -42,6 +43,7 @@ router.post('/', async (req, res) => {
 
   try {
     await validateInfoUser('POST', infoUser);
+    await validateInfoMedic('POST', infoMedic);
     res.status(200).json(await postMedic(infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);
@@ -59,6 +61,7 @@ router.put('/:ID', async (req, res) => {
 
   try {
     await validateInfoUser('PUT', infoUser);
+    await validateInfoMedic('PUT', infoMedic);
     res.status(200).json(await putMedic(ID, infoUser, infoMedic, ClinicID));
   } catch (error) {
     console.log(error);

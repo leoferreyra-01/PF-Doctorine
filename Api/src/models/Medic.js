@@ -18,6 +18,7 @@ module.exports = sequelize => {
     },
     specialization: {
       type: DataTypes.STRING,
+      DefaultValue: null,
       validate: {
         notEmpty: true,
         // is name or lastname or a string with accent and apostrophes
@@ -38,6 +39,7 @@ module.exports = sequelize => {
       unique: true,
       validate: {
         isInt: true,
+        len: [4, 10],
       },
     },
   });

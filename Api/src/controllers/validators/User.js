@@ -22,13 +22,28 @@ async function validateInfoUser(
     imageProfile,
   }
 ) {
-  //|> userType: allowNull: FALSE, default:Patient.
+  //|> allowNull: FALSE
+  if (
+    ruteType === 'POST' &&
+    (!userType ||
+      !document ||
+      !name ||
+      !lastName ||
+      !birth ||
+      !email ||
+      !password)
+  )
+    throw new Error(
+      '"userType", "document", "name", "lastName", "birth", "email" and "password" are required.'
+    );
+
+  //|> userType: default:Patient.
   if ((userType && ruteType === 'PUT') || ruteType === 'POST') {
     if (!(userType === 'Medic' || userType === 'Patient'))
       throw new Error('"userType" must be "Medic" or "Patient".');
   }
 
-  //|> document: allowNull: FALSE, INTEGER, length:8, unique.
+  //|> document: INTEGER, length:8, unique.
   const userByDocument = document
     ? await User.findOne({ where: { document } })
     : null;
@@ -45,7 +60,7 @@ async function validateInfoUser(
       throw new Error('"document" must be a number.');
   }
 
-  //|> name: allowNull: FALSE, STRING.
+  //|> name: STRING.
   if ((name && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
@@ -58,7 +73,7 @@ async function validateInfoUser(
       throw new Error('"name" must be a valid name.');
   }
 
-  //|> lastName: allowNull: FALSE, STRING.
+  //|> lastName: STRING.
   if ((lastName && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
@@ -71,8 +86,8 @@ async function validateInfoUser(
       throw new Error('"lastName" must be a valid last name.');
   }
 
-  //|> birth: allowNull: FALSE, STRING.
-  if ((userType && ruteType === 'PUT') || ruteType === 'POST') {
+  //|> birth: STRING.
+  if ((birth && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
         typeof birth === 'string' &&
@@ -152,7 +167,7 @@ async function validateInfoUser(
       throw new Error('"postalCode" must be a number.');
   }
 
-  //|> email: allowNull: FALSE, STRING, unique.
+  //|> email: STRING, unique.
   const userByEmail = email ? await User.findOne({ where: { email } }) : null;
   if (userByEmail) throw new Error('The email already exists.');
   if ((email && ruteType === 'PUT') || ruteType === 'POST') {
@@ -165,7 +180,7 @@ async function validateInfoUser(
       throw new Error('"email" must be a valid email.');
   }
 
-  //|> password: allowNull: FALSE, STRING.
+  //|> password: STRING.
   if ((password && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
