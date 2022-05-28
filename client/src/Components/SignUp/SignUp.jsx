@@ -172,20 +172,10 @@ function SignUp() {
   return (
     <>
       <SignUpDivContainer>
-        <div className={S.check}>
-          <label class="switchBtn">
-            <input type="checkbox" onClick={toggleOn} />
-            {medic === false ? (
-              <div class="slide round">
-                <p className={S.pa}> Patient </p>
-              </div>
-            ) : (
-              <div class="slide round">
-                <p>Medic</p>{' '}
-              </div>
-            )}
-          </label>
-        </div>
+        <label class="switchBtn">
+          <input type="checkbox" onClick={toggleOn} />
+          <div class="slide round">Medico</div>
+        </label>
 
         <Toaster position="top-center" reverseOrder={false} />
         <SignUpContainer>
@@ -326,36 +316,34 @@ const SignUpDivContainer = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   .switchBtn {
-    margin-top: -20px;
     position: relative;
-    display: flex;
-    justify-content: left;
-    width: 170px;
+    display: inline-block;
+    width: 110px;
     height: 34px;
+    left: 13%;
   }
   .switchBtn input {
     display: none;
   }
   .slide {
-    justify-content: space-around;
+    position: absolute;
     cursor: pointer;
-    width: 100px;
+    top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
-    background-color: #219ed8;
+    background-color: #ccc;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-    padding: 7px;
+    padding: 8px;
     color: #fff;
-    display: flex;
-    justify-content: space-around;
-    margin-right: 70px;
   }
   .slide:before {
     position: absolute;
     content: '';
     height: 26px;
     width: 26px;
-    left: 72px;
+    left: 78px;
     bottom: 4px;
     background-color: white;
     -webkit-transition: 0.4s;
