@@ -18,6 +18,7 @@ module.exports = sequelize => {
       unique: true,
       validate: {
         isInt: true,
+        len: [8, 8],
       },
     },
     name: {
@@ -128,7 +129,8 @@ module.exports = sequelize => {
     },
     imageProfile: {
       type: DataTypes.STRING,
-      defaultValue: null,
+      defaultValue:
+        'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png', //temporal
       validate: {
         isUrl: true,
       },

@@ -1,6 +1,10 @@
 import axios from 'axios';
 import toast from 'react-hot-toast'; //Esto tambien del login
 export const GET_PATIENT = 'GET_PATIENT';
+export const GET_STUDIES = 'GET_STUDIES';
+//export const GET_EVOLUTION = 'GET_EVOLUTION';
+export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
+//export const GET_STUDY = 'GET_STUDY';
 export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
 export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
@@ -30,18 +34,22 @@ export function getPatient(id) {
 }
 
 export function getPatientDni(dni) {
-  return async function (dispatch) {
-    try {
-      const patient = (
-        await axios.get(`http://localhost:3001/patients?document=${dni}`)
-      ).data;
-      dispatch({ type: GET_PATIENT_DNI, payload: patient });
-    } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
-    }
-  };
+  return { type: GET_PATIENT_DNI, payload: dni };
 }
+
+//export function getPatientDni(dni) {
+// return async function (dispatch) { //Forma de buscar en el back
+//   try {
+//     const patient = (
+//       await axios.get(`http://localhost:3001/patients?document=${dni}`)
+//     ).data;
+//     dispatch({ type: GET_PATIENT_DNI, payload: patient });
+//   } catch (error) {
+//     if (error.response.status === 404) return alert(error.response.data.msg);
+//     alert(error.message);
+//   }
+// };
+//}
 
 export function getAllPatients() {
   return function (dispatch) {
@@ -204,5 +212,35 @@ export function getClinicalHistory(id) {
           return alert(error.response.data.msg);
         alert(error.message);
       });
+  };
+}
+
+export function getEvolutions(patientID) {
+  return async dispatch => {
+    try {
+      const evolution = (
+        await axios.get(
+          `http://localhost:3001/evolutions?PatientID=${patientID}`
+        )
+      ).data;
+      return dispatch({ type: GET_EVOLUTIONS, payload: evolution });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
+  };
+}
+
+export function getStudies(patientID) {
+  return async dispatch => {
+    try {
+      const study = (
+        await axios.get(`http://localhost:3001/studies/search?id=${patientID}`)
+      ).data;
+      return dispatch({ type: GET_STUDIES, payload: study });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
   };
 }

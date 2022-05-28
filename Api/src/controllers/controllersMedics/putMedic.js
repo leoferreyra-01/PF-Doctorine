@@ -32,7 +32,7 @@ async function putMedic(MedicID, infoUser, infoMedic, ClinicID) {
     }
   );
 
-  const getMedic = await Medic.findAll({
+  const getMedic = await Medic.findOne({
     where: {
       ID: MedicID,
     },
@@ -40,11 +40,14 @@ async function putMedic(MedicID, infoUser, infoMedic, ClinicID) {
 
   await User.update(infoUser, {
     where: {
-      ID: getMedic[0].dataValues.UserID,
+      ID: getMedic.dataValues.UserID,
     },
   });
 
-  return 'Medic modified.';
+  return User.findOne({
+    where: { ID: getMedic.dataValues.UserID },
+    include: [Medic],
+  });
 }
 
 module.exports = {

@@ -26,7 +26,7 @@ async function putPatient(PatientID, infoUser, infoPatient) {
     },
   });
 
-  const getPatient = await Patient.findAll({
+  const getPatient = await Patient.findOne({
     where: {
       ID: PatientID,
     },
@@ -34,11 +34,14 @@ async function putPatient(PatientID, infoUser, infoPatient) {
 
   await User.update(infoUser, {
     where: {
-      ID: getPatient[0].dataValues.UserID,
+      ID: getPatient.dataValues.UserID,
     },
   });
 
-  return 'Patient modified.';
+  return User.findOne({
+    where: { ID: getPatient.dataValues.UserID },
+    include: [Patient],
+  });
 }
 
 module.exports = {

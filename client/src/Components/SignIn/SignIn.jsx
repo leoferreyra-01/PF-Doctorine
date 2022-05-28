@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from "./Logo/logo.jpg";
+import logo from "./Logo/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import service from "../../services/login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import S from "./SingIn.module.css"
-
+import S from "./SingIn.module.css";
+import { home } from "../../redux/actions";
 
 export function validate(input) {
   let errors = {};
@@ -23,6 +23,10 @@ export function validate(input) {
     errors.password = "Password is required";
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
     errors.password = "Password is invalid";
+  }else if (input.password.length < 6) {
+    errors.password = "La contraseña debe ser mayor a 6 digitos";
+  } else if (input.password.length > 12) {
+    errors.password = "La contraseña debe ser menor a 12 digitos";
   }
   return errors;
 }
@@ -33,10 +37,11 @@ function SignUp() {
     password: "",
   });
 
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
-  //const dispatch = useDispatch();
   const User = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -53,6 +58,8 @@ function SignUp() {
     );
   };
 
+  let select = "medic";
+
   const handleSumbit = async (e) => {
     try {
       e.preventDefault();
@@ -64,8 +71,14 @@ function SignUp() {
       window.localStorage.setItem("loggedToken", JSON.stringify(user));
       service.setToken(user.token);
       if (user.token) {
-        toast.success(`Bienvenido al Home ${user.name}`);
-        navigate("/");
+        if (user.userType === "Patient") {
+          toast.success(`Bienvenido al Home ${user.name}`);
+          navigate("/home");
+        } else {
+          toast.success(`Bienvenido al Home Dr. ${user.name[0]}. ${user.lastName}`);
+          dispatch(home(select));
+          navigate("/home");
+        }
       }
       console.log(user);
     } catch (e) {
@@ -74,7 +87,7 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async (respuesta) => {
-    const register = await axios.post("http://localhost:3001/oneUser", {
+    const register = await axios.post("http://localhost:3001/login/oneUser", {
       email: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
@@ -90,28 +103,31 @@ function SignUp() {
         navigate("/");
       }
     } else {
-      const userRegister = await axios.post("http://localhost:3001/register", {
-        email: respuesta.profileObj.email,
-        password: respuesta.profileObj.googleId,
-        userType: "Patient",
-        document: 0,
-        name: "User",
-        lastName: "",
-        birth: 0
-      });
+      const userRegister = await axios.post(
+        "http://localhost:3001/login/register",
+        {
+          email: respuesta.profileObj.email,
+          password: respuesta.profileObj.googleId,
+          userType: "Patient",
+          document: 0,
+          name: "User",
+          lastName: "",
+          birth: 0,
+        }
+      );
       if (userRegister.data.hasOwnProperty("success")) {
-         setTimeout(async() => {
-           const user = await axios.post("http://localhost:3001/login", {
-             email: respuesta.profileObj.email,
-             password: respuesta.profileObj.googleId,
-           });
-           window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
-           service.setToken(user.data.token);
-           if (user.data.token) {
-             toast.success(`Bienvenido al Home ${user.data.name}`);
-             navigate("/");
-           }
-         }, 3000);
+        setTimeout(async () => {
+          const user = await axios.post("http://localhost:3001/login", {
+            email: respuesta.profileObj.email,
+            password: respuesta.profileObj.googleId,
+          });
+          window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
+          service.setToken(user.data.token);
+          if (user.data.token) {
+            toast.success(`Bienvenido al Home ${user.data.name}`);
+            navigate("/");
+          }
+        }, 3000);
       }
     }
   };
@@ -120,10 +136,10 @@ function SignUp() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
-        <ImgSignUp>
-          <Link to="/">
-            <img className={S.img} src={logo} alt="logo" width="250px"/>
-          </Link>
+      <ImgSignUp>
+            <div className={S.card}>
+              <img className={S.img} src={logo} alt="logo" />
+            </div>
         </ImgSignUp>
 
         <SignUpContainer>
@@ -150,7 +166,7 @@ function SignUp() {
             />
             {errors.password && <p className="error">{errors.password}</p>}
             <button>Acceder</button>
-            <hr className="linea"/>
+            <hr className="linea" />
             <GoogleLogin
               clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
               buttonText="Acceder con Google"
@@ -161,7 +177,11 @@ function SignUp() {
               style={{ color: "black important!" }}
             />
             <div className="OR" style={{ position: "relative", top: "-1rem" }}>
-              <Link className="link-to-signup" id="olv-ct" to={"/PasswordReset"}>
+              <Link
+                className="link-to-signup"
+                id="olv-ct"
+                to={"/PasswordReset"}
+              >
                 ¿Olvidaste tu contraseña?
               </Link>
 
@@ -178,7 +198,6 @@ function SignUp() {
 
 export default SignUp;
 
-
 const SignUpDivContainer = styled.div`
   position: relative;
   display: flex;
@@ -187,7 +206,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: grey;
+  background-color: #07182E;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -206,7 +225,7 @@ const SignUpDivContainer = styled.div`
   .back_signUp:hover {
     cursor: pointer;
     color: white;
-    background: #8893b1b5;
+    background: #009ce5;;
     border-radius: 10px;
   }
   @media (max-width: 540px) {
@@ -216,9 +235,9 @@ const SignUpDivContainer = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    .img-black{
+    .img-black {
       width: 250px;
-      margin-bottom: 100px
+      margin-bottom: 100px;
     }
   }
 `;
@@ -254,7 +273,9 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a9c;
+    background-color: rgb(0, 131, 182);
+    box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+             -15px -15px 30px rgba(255, 255, 255, 0.135);
     width: 32rem;
     height: auto;
     border-radius: 20px;
@@ -297,7 +318,7 @@ const SignUpContainer = styled.div`
   span {
     color: black;
   }
-  .linea{ 
+  .linea {
     width: 15rem;
   }
   h1 {
@@ -333,19 +354,19 @@ const SignUpContainer = styled.div`
     input {
       width: 180px;
     }
-    .OR{ 
-      display: flex; 
+    .OR {
+      display: flex;
       flex-direction: column;
-      #register{
+      #register {
         right: 3rem;
       }
     }
   }
   @media (max-width: 375px) {
-    .OR{ 
-      display: flex; 
+    .OR {
+      display: flex;
       flex-direction: column;
-      #register{
+      #register {
         right: 3rem;
       }
     }
@@ -357,27 +378,27 @@ const SignUpContainer = styled.div`
     input {
       width: 130px;
     }
-    .OR{ 
-      display: flex; 
+    .OR {
+      display: flex;
       flex-direction: column;
-      #register{
+      #register {
         right: 2rem;
       }
-      #olv-ct{ 
+      #olv-ct {
         text-align: center;
         position: relative;
         right: -0.4rem;
       }
     }
-    .Google-button{
+    .Google-button {
       width: 8.5rem;
       height: 4rem;
       font-size: 10px;
     }
-    .input-usuario{
+    .input-usuario {
       text-align: center;
     }
-    .linea{
+    .linea {
       width: 8.3rem;
     }
   }

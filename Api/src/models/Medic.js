@@ -26,7 +26,7 @@ module.exports = sequelize => {
     },
     tuition_date: {
       type: DataTypes.DATEONLY,
-      alllownull: false,
+      allowNull: false,
       validate: {
         // Date (yyyy-MM-dd)
         is: /^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$/,
@@ -34,7 +34,7 @@ module.exports = sequelize => {
     },
     tuition_number: {
       type: DataTypes.INTEGER,
-      alllownull: false,
+      allowNull: false,
       unique: true,
       validate: {
         isInt: true,
