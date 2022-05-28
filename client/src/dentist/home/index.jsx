@@ -22,10 +22,6 @@ export default function Home() {
         <Loader setLoader={setLoader} />
       ) : (
         <div>
-          {/* BOTON TEMPORAL */}
-          {/* <Link to="/clinical-history">
-        <button>VER HC</button>
-      </Link> */}
           
           <NavBar />
           <Header title={title} />
