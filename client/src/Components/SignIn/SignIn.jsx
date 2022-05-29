@@ -12,7 +12,6 @@ import { home } from "../../redux/actions";
 
 export function validate(input) {
   let errors = {};
-  console.log(errors);
 
   if (!input.email) {
     errors.username = "Username is required";

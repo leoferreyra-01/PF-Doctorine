@@ -77,6 +77,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         patient: {},
+        searchedPatient: [],
         unavailableTurns: [],
         clinicalHistory: {},
         evolutions: [],
@@ -177,10 +178,10 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case POST_CLINICAL_HISTORY:
-      return{
+      return {
         ...state,
         clinicalHistory: [...state.clinicalHistory, ...action.payload],
-      }
+      };
 
     default:
       return { ...state };
