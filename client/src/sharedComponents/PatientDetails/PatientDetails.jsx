@@ -50,14 +50,18 @@ export default function PatientDetails() {
     <GridWrapper>
       <Box sx={cardHeaderStyles.wrapper}>
         <SearchBar
-          placeholder="Buscar evoluciones o estudios.."
-          searchBarWidth="720px"
+          placeholder='Buscar evoluciones o estudios..'
+          searchBarWidth='720px'
           onClick={detailsSearch}
         />
       </Box>
       {filledStudies ? (
         studies.map(p => (
-          <Study studyType={p.studyType} description={p.description} />
+          <Study
+            key={p.ID}
+            studyType={p.studyType}
+            description={p.description}
+          />
         ))
       ) : (
         <h3>Cargando los Estudios del paciente...</h3>
@@ -65,6 +69,7 @@ export default function PatientDetails() {
       {filledEvolutions ? (
         evolutions.map(p => (
           <Evolution
+            key={p.ID}
             date={p.date}
             observations={p.observations}
             MedicID={p.MedicID}

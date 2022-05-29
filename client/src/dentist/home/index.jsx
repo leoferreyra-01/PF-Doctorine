@@ -17,12 +17,20 @@ export default function Home() {
 
   return (
     <div>
-      <Toaster position="top-center" reverseOrder={false} />
       {loader === true ? (
         <Loader setLoader={setLoader} />
       ) : (
         <div>
-          
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{ className: '', duration: 7000 }}
+          />
+          {/* BOTON TEMPORAL */}
+          {/* <Link to="/clinical-history">
+        <button>VER HC</button>
+      </Link> */}
+
           <NavBar />
           <Header title={title} />
           <Outlet />

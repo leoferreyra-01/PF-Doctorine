@@ -123,8 +123,6 @@ function SignUp() {
     } else {
       setMedic(true);
     }
-
-    console.log(medic);
   }
 
   const register = e => {
@@ -173,7 +171,7 @@ function SignUp() {
     <>
       <SignUpDivContainer>
         <div className={S.check}>
-          <label class="switchBtn">
+          <label className="switchBtn">
             <input type="checkbox" onClick={toggleOn} />
             {medic === false ? (
               <div class="slide round">
