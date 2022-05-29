@@ -21,16 +21,16 @@ const loginUser = async(req , res) => {
           return res.status(401).json({ error: "E" });
         }
     
-        const userForToken = {
-          ID: user.ID,
-          email: user.email,
-        };
+        // const userForToken = {
+        //   ID: user.ID,
+        //   email: user.email,
+        // };
     
-        const token = jwt.sign(userForToken, process.env.SECRET);
+        // const token = jwt.sign(userForToken, process.env.SECRET);
     
         res.send({
           email: user.email,
-          token,
+          // token,
           userType: user.userType,
           name: user.name,
           lastName: user.lastName,
