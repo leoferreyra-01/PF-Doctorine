@@ -143,6 +143,7 @@ module.exports = sequelize => {
             'imageProfile',
             'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png'
           );
+        else this.setDataValue('imageProfile', value);
       },
       validate: {
         isUrl: true,
