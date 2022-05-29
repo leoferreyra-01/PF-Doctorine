@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = sequelize => {
   sequelize.define('User', {
@@ -123,8 +124,8 @@ module.exports = sequelize => {
       set(value) {
         const name = this.name;
         const document = this.document;
-
         if (!value) this.setDataValue('password', name + document);
+        else this.setDataValue('password', value);
       },
       validate: {
         notEmpty: true,

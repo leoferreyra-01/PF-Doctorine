@@ -177,7 +177,7 @@ async function validateInfoUser(
   }
 
   //|> password: STRING.
-  if (password && ruteType === 'PUT') {
+  if ((password && ruteType === 'PUT') || (password && ruteType === 'POST')) {
     if (
       !(
         typeof password === 'string' &&
