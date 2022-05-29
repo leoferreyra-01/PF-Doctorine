@@ -80,7 +80,7 @@ export default function SearchComponent() {
           onClick={getPatientDni}
         />
       </Box>
-      {searchedPatient.length ? (
+      {/* {searchedPatient.length ? (
         searchedPatient.map(patient => (
           <PatientCard
             key={patient.Patient.ID}
@@ -96,7 +96,7 @@ export default function SearchComponent() {
           lastName="Nada de nada"
           imageProfile="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
         />
-      )}
+      )} */}
       {filledPatients ? (
         allPatients.map(patient => (
           <PatientCard

@@ -14,36 +14,37 @@ export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
     return (
       <div className={s.conteiner}>
         <Card className={s.cardc}>
-          {/* <CardActionArea> */}
-          {/* <CardMedia
+          <CardActionArea>
+            {/* <CardMedia
             component="img"
             alt={name}
             height="140"
             image={imageProfile}
           /> */}
-          <CardContent className={s.card}>
-            <div className={s.name}>
-              <Typography gutterBottom variant='h8' component='div'>
-                {name.charAt(0).toUpperCase() +
-                  name.slice(1) +
-                  ' ' +
-                  lastName.charAt(0).toUpperCase() +
-                  lastName.slice(1)}
-              </Typography>
-            </div>
+            <CardContent className={s.card}>
+              <div className={s.name}>
+                <Typography gutterBottom variant="h8" component="div">
+                  {name.charAt(0).toUpperCase() +
+                    name.slice(1) +
+                    ' ' +
+                    lastName.charAt(0).toUpperCase() +
+                    lastName.slice(1)}
+                </Typography>
+              </div>
 
-            <Typography
-              variant='body2'
-              color='text.secondary'
-              marginLeft='50px'>
-              Direccion : china DNI: 45468523
-            </Typography>
-          </CardContent>
-          {/* <CardActions className={s.cardactions}> */}
-          <Button size='small' sx={{left: '48%'}}>Ver Historia Clinica</Button>
-          <Button size='small' sx={{left: '48%'}}>Ver Estudios</Button>
-          {/* </CardActions> */}
-          {/* </CardActionArea> */}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                marginLeft="50px"
+              >
+                Direccion : china DNI: 45468523
+              </Typography>
+            </CardContent>
+            <CardActions className={s.cardactions}>
+              <Button size="small">Ver Historia Clinica</Button>
+              <Button size="small">Ver Estudios</Button>
+            </CardActions>
+          </CardActionArea>
         </Card>
       </div>
     );
@@ -52,38 +53,42 @@ export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
   return (
     <div className={s.conteiner}>
       <Card className={s.cardc}>
-        {/* <CardActionArea> */}
-        <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
-          {/* <CardMedia
+        <CardActionArea>
+          <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
+            {/* <CardMedia
           component="img"
           alt={name}
           height="140"
           image={imageProfile}
         /> */}
-          <CardContent className={s.card}>
-            <div className={s.name}>
-              <Typography gutterBottom variant='h8' component='div'>
-                {name.charAt(0).toUpperCase() +
-                  name.slice(1) +
-                  ' ' +
-                  lastName.charAt(0).toUpperCase() +
-                  lastName.slice(1)}
-              </Typography>
-            </div>
+            <CardContent className={s.card}>
+              <div className={s.name}>
+                <Typography gutterBottom variant="h8" component="div">
+                  {name.charAt(0).toUpperCase() +
+                    name.slice(1) +
+                    ' ' +
+                    lastName.charAt(0).toUpperCase() +
+                    lastName.slice(1)}
+                </Typography>
+              </div>
 
-            <Typography
-              variant='body2'
-              color='text.secondary'
-              marginLeft='50px'>
-              Direccion : china DNI: 45468523
-            </Typography>
-          </CardContent>
-        </NavLink>
-        {/* <CardActions className={s.cardactions}> */}
-        <Button size='small' sx={{left: '55%'}}>Ver Historia Clinica</Button>
-        <Button size='small' sx={{left: '55%'}}>Ver Estudios</Button>
-        {/* </CardActions> */}
-        {/* </CardActionArea> */}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                marginLeft="50px"
+              >
+                Direccion : china DNI: 45468523
+              </Typography>
+            </CardContent>
+          </NavLink>
+
+          <CardActions className={s.cardactions}>
+            <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
+              <Button size="small">Ver Historia Clinica</Button>
+              <Button size="small">Ver Estudios</Button>
+            </NavLink>
+          </CardActions>
+        </CardActionArea>
       </Card>
     </div>
   );
