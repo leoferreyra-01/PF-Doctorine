@@ -9,7 +9,7 @@ require('./db')
 
 const server = express();
 
-server.name = 'API';
+server.name = 'APINOS';
 
 server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
