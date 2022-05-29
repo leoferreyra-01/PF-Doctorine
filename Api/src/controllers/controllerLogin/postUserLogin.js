@@ -7,7 +7,7 @@ const loginUser = async(req , res) => {
     try { 
         const { email, password } = req.body; 
         console.log(req.body)
-        const user = await User.findOne({ where: { email: email } });
+        const user = await User.findAll({ where: { email: email } });
         console.log(user)
     
         if (!user) {
