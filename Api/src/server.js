@@ -9,7 +9,7 @@ const server = express();
 server.name = 'APINOS';
 
 var corsOptions = {
-  origin: 'https://doctorine-dep.herokuapp.com',
+  origin: 'https://doctorine.vercel.app',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 server.use(cors(corsOptions));
