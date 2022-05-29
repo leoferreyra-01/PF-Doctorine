@@ -10,6 +10,11 @@ import { dashboardTheme } from './sharedComponents/theme/dashboardTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
+
+axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <React.StrictMode>

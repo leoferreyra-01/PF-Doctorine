@@ -59,7 +59,7 @@ function NewPassword() {
       dispatch(postNewPassword(input));
       navigate("/");
       axios
-        .post("http://localhost:3001/newPassword", {
+        .post("/newPassword", {
           password: input.password,
         })
         .then((response) => {

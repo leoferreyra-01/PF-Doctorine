@@ -34,7 +34,7 @@ export default function RegisterPatient() {
     <GridWrapper>
       <Container maxWidth="xs">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <imput
+          <TextField
             label="name"
             fullWidth
             variant="filled"

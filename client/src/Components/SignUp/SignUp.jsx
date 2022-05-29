@@ -132,7 +132,7 @@ function SignUp() {
     } else {
       if (medic === false) {
         axios
-          .post('http://localhost:3001/login/register', {
+          .post('/login/register', {
             email: input.email,
             password: input.password,
             userType: 'Patient',
@@ -151,7 +151,7 @@ function SignUp() {
       } else {
         // console.log(infoUser);
         axios
-          .post('http://localhost:3001/medics', {
+          .post('/medics', {
             infoUser: infoUser,
             infoMedic: infoMedic,
             ClinicID: input.ClinicID,
