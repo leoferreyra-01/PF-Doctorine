@@ -8,7 +8,12 @@ require('./db.js');
 const server = express();
 server.name = 'APINOS';
 
-server.use(cors());
+var corsOptions = {
+  origin: 'https://pf-indefinido.vercel.app',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+server.use(cors(corsOptions));
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
