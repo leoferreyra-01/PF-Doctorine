@@ -167,7 +167,7 @@ function SignUp() {
             {errors.password && <p className="error">{errors.password}</p>}
             <button type='submit'>Acceder</button>
             <hr className="linea" />
-            <GoogleLogin
+            {/* <GoogleLogin
               clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
               buttonText="Acceder con Google"
               onSuccess={respuestaGoogle}
@@ -175,7 +175,7 @@ function SignUp() {
               cookiePolicy={"single_host_origin"}
               className="Google-button"
               style={{ color: "black important!" }}
-            />
+            /> */}
             <div className="OR" style={{ position: "relative", top: "-1rem" }}>
               <Link
                 className="link-to-signup"
