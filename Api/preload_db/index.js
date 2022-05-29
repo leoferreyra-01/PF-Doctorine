@@ -165,6 +165,18 @@ async function addTeeths() {
       });
     }
   }
+
+  for (let zone = 5; zone <= 8; zone++) {
+    for (let position = 1; position <= 8; position++) {
+      let ID = parseInt(`${zone}` + `${position}`);
+
+      Teeth.create({
+        ID,
+        zone,
+        position,
+      });
+    }
+  }
 }
 
 async function addTreatments() {
