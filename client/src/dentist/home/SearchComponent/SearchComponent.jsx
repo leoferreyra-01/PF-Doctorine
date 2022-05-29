@@ -57,7 +57,7 @@ export default function SearchComponent() {
           allPatients.map(patient => (
             <PatientCard
               key={patient.Patient.ID}
-              ID={patient.ID}
+              ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
               imageProfile={patient.imageProfile}
@@ -101,7 +101,7 @@ export default function SearchComponent() {
         allPatients.map(patient => (
           <PatientCard
             key={patient.Patient.ID}
-            ID={patient.ID}
+            ID={patient.Patient.ID}
             name={patient.name}
             lastName={patient.lastName}
             imageProfile={patient.imageProfile}

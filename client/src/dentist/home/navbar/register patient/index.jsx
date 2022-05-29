@@ -1,16 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { postPatient } from '../../../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Input from '@mui/material/Input';
-import Button from '@material-ui/core/Button';
+import s from './buton.module.css';
 import GridWrapper from '../../../../sharedComponents/GridWrapper/GridWrapper';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerPatientSchema } from './registerPatientSchema';
+import sendPatientHelper from './sendPatientHelper';
 
 export default function RegisterPatient() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -19,10 +23,10 @@ export default function RegisterPatient() {
     resolver: yupResolver(registerPatientSchema),
   });
   const onSubmit = data => {
-    data.password = data.document;
-    data.userType = 'Patient';
-    console.log(data);
+    const patientReady = sendPatientHelper(data);
+    console.log(patientReady);
     alert('Sera redireccionado para crear la historia clinica del paciente');
+    dispatch(postPatient(patientReady));
     navigate('/home/create-clinical-history');
   };
 
@@ -30,7 +34,7 @@ export default function RegisterPatient() {
     <GridWrapper>
       <Container maxWidth="xs">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField
+          <imput
             label="name"
             fullWidth
             variant="filled"
@@ -76,6 +80,15 @@ export default function RegisterPatient() {
             helperText={errors.street ? errors.street.message : null}
           />
           <TextField
+            label="number"
+            fullWidth
+            variant="filled"
+            margin="normal"
+            {...register('number')}
+            error={!!errors.number}
+            helperText={errors.number ? errors.number.message : null}
+          />
+          <TextField
             label="city"
             fullWidth
             variant="filled"
@@ -102,15 +115,41 @@ export default function RegisterPatient() {
             error={!!errors.cellphone}
             helperText={errors.cellphone ? errors.cellphone.message : null}
           />
+          <TextField
+            label="telephone"
+            fullWidth
+            variant="filled"
+            margin="normal"
+            {...register('telephone')}
+            error={!!errors.telephone}
+            helperText={errors.telephone ? errors.telephone.message : null}
+          />
+          <TextField
+            label="medicalService"
+            fullWidth
+            variant="filled"
+            margin="normal"
+            {...register('medicalService')}
+            error={!!errors.medicalService}
+            helperText={
+              errors.medicalService ? errors.medicalService.message : null
+            }
+          />
           <Input
             type="date"
             fullWidth
             variant="filled"
-            {...register('birthDate')}
+            {...register('birth')}
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <button
+            className={s.buton}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
             Enviar
-          </Button>
+          </button>
         </form>
       </Container>
     </GridWrapper>

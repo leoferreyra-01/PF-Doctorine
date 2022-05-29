@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, Link } from 'react-router-dom';
 import NavBar from './navbar';
 import Grid from '@mui/material/Grid';
 import Header from './Header/Header';
-import Loader from '../home/Loader/loader';
+import { Toaster } from 'react-hot-toast';
+import Loader from './Loader/loader';
 export default function Home() {
   const [title, setTitle] = useState(null);
   const location = useLocation();
@@ -19,11 +20,21 @@ export default function Home() {
       {loader === true ? (
         <Loader setLoader={setLoader} />
       ) : (
-        <Grid container>
+        <div>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{ className: '', duration: 7000 }}
+          />
+          {/* BOTON TEMPORAL */}
+          {/* <Link to="/clinical-history">
+        <button>VER HC</button>
+      </Link> */}
+
           <NavBar />
           <Header title={title} />
           <Outlet />
-        </Grid>
+        </div>
       )}
     </div>
   );

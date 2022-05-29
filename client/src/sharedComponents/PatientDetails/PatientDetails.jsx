@@ -9,9 +9,25 @@ import {
 } from '../../redux/actions';
 import SearchBar from '../../dentist/home/SearchBar/SearchBar';
 import GridWrapper from '../GridWrapper/GridWrapper';
+import Box from '@mui/material/Box';
 import Evolution from '../Evolution/Evolution';
 import Study from '../Study/Study';
-
+const cardHeaderStyles = {
+  wrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    height: '65px',
+    backgroundColor: '#f5f5f5',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    marginBottom: '20px',
+  },
+  addUserButton: {
+    fontSize: '1.05rem',
+  },
+};
 export default function PatientDetails() {
   let { patientID } = useParams();
   const dispatch = useDispatch();
@@ -32,12 +48,13 @@ export default function PatientDetails() {
   const detailsSearch = () => console.log('hola');
   return (
     <GridWrapper>
-      <h3>Work in Progress</h3>
-      <SearchBar
-        placeholder="Buscar evoluciones o estudios.."
-        searchBarWidth="720px"
-        onClick={detailsSearch}
-      />
+      <Box sx={cardHeaderStyles.wrapper}>
+        <SearchBar
+          placeholder="Buscar evoluciones o estudios.."
+          searchBarWidth="720px"
+          onClick={detailsSearch}
+        />
+      </Box>
       {filledStudies ? (
         studies.map(p => (
           <Study studyType={p.studyType} description={p.description} />

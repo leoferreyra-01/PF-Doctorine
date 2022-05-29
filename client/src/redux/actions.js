@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast'; //Esto tambien del login
 export const GET_PATIENT = 'GET_PATIENT';
+export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
@@ -11,6 +12,9 @@ export const POST_TURN = 'POST_TURN';
 export const GET_TURNS = 'GET_TURNS';
 export const GET_ALL_PATIENTS = 'GET_ALL_PATIENTS';
 export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
+export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
+export const GET_CLINICAL_HISTORY_FOR_CREATE =
+  'GET_CLINICAL_HISTORY_FOR_CREATE';
 //login
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -30,6 +34,20 @@ export function getPatient(id) {
     //         alert(error.message)
     //     })
     console.log('ACTION');
+  };
+}
+
+export function postPatient(patient) {
+  return async function (dispatch) {
+    try {
+      const patientWithId = (
+        await axios.post('http://localhost:3001/patients', patient)
+      ).data;
+      return dispatch({ type: POST_PATIENT, payload: patientWithId });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
   };
 }
 
@@ -241,6 +259,19 @@ export function getStudies(patientID) {
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
+    }
+  };
+}
+
+export function postClinicalHistory(payload) {
+  return async function () {
+    try {
+      return await axios.post(
+        'http://localhost:3001/clinicalhistories',
+        payload
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 }
