@@ -29,13 +29,13 @@ const loginUser = async(req , res) => {
         const token = jwt.sign(userForToken, process.env.SECRET);
     
         return res.send({
-          email: user.dataValues.email,
+          email: user.email,
           token,
-          userType: user.dataValues.userType,
-          name: user.dataValues.name,
-          lastName: user.dataValues.lastName,
-          document: user.dataValues.document,
-          birth: user.dataValues.birth,
+          userType: user.userType,
+          name: user.name,
+          lastName: user.lastName,
+          document: user.document,
+          birth: user.birth,
         });
       } catch (err) {
         console.log(err);
