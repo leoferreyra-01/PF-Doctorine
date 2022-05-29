@@ -84,7 +84,7 @@ const registerUser = async(req, res) => {
             });
           });
           res.json({ success: "Usuario creado correctamente"});
-          registerMail(email);
+          // registerMail(email);
         } else {
           res
             .status(401)
