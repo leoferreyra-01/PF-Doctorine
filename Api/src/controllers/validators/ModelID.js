@@ -2,12 +2,23 @@
 //|> SEQUELIZE
 const { sequelize } = require('../../db');
 
-async function validateModelID(model, id) {
-  const findByID = await sequelize.models[model].findByPk(id);
+async function validateModelID(model, id, ids = []) {
+  if (!ids.length)
+    ids = (await sequelize.models[model].findAll()).map(
+      model => model.dataValues.ID
+    );
 
-  if (!findByID) return new Error(`"${model}ID: ${id}" does not exist.`);
+  //|> VALIDATIONS
+  let validation = true;
+  const Errors = {};
 
-  return true;
+  //|> ID exist
+  if (!ids.includes(parseInt(id))) Errors.ID = `ID ${id} does not exist.`;
+
+  //|> RESULTS
+  if (Object.keys(Errors).length) validation = false;
+
+  return [validation, Errors];
 }
 
 module.exports = { validateModelID };
