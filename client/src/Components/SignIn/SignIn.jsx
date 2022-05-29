@@ -66,7 +66,7 @@ function SignUp() {
         toast.error("Debes completar correctamente los campos.");
       }
       const user = await service.login(input);
-      console.log(user)
+      // console.log(user)
       setUser(user);
       window.localStorage.setItem("loggedToken", JSON.stringify(user));
       service.setToken(user.token);
@@ -80,7 +80,7 @@ function SignUp() {
           navigate("/home");
         }
       }
-      console.log(user);
+      // console.log(user);
     } catch (e) {
       console.log(e);
       toast.error("Contraseña o usuario incorrecto.");

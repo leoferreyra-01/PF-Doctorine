@@ -149,7 +149,7 @@ function SignUp() {
             return toast.error('Este usuario ya ha sido creado.');
           });
       } else {
-        console.log(infoUser);
+        // console.log(infoUser);
         axios
           .post('http://localhost:3001/medics', {
             infoUser: infoUser,
@@ -174,11 +174,11 @@ function SignUp() {
           <label className="switchBtn">
             <input type="checkbox" onClick={toggleOn} />
             {medic === false ? (
-              <div class="slide round">
+              <div className="slide round">
                 <p className={S.pa}> Patient </p>
               </div>
             ) : (
-              <div class="slide round">
+              <div className="slide round">
                 <p>Medic</p>
               </div>
             )}
