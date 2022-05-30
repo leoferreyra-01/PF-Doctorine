@@ -1,23 +1,17 @@
 'use strict';
 
 //|> SEQUELIZE
-const { Turn, Clinic } = require('../../db');
+const { Turn, Medic, Clinic } = require('../../db');
 
-async function validateTurnCollisions(
-  ruteType = 'POST',
-  infoTurn,
-  Turns = [],
-  officeHours = []
-) {
+async function validateTurnCollisions(infoTurn, Turns = [], officeHours = []) {
   //|> PRELOADS
   if (!Turns.length)
     Turns = (await Turn.findAll()).map(turn => turn.dataValues);
 
   if (!officeHours.length) {
-    // const getMedic
-    // const ClinicID
-    // const getClinic
-    // officeHours =
+    const getMedic = (await Medic.findByPk(infoTurn.MedicID)).dataValues;
+    const getClinic = (await Clinic.findByPk(getMedic.ClinicID)).dataValues;
+    officeHours = JSON.parse(getClinic.officeHours);
   }
 
   //|> ERRORS
@@ -25,6 +19,13 @@ async function validateTurnCollisions(
   const Errors = {};
 
   //|> VALIDATIONS
+  if (!validateTurn(infoTurn, Turns, officeHours)) validation = false;
+
+  if (!validateTurnInOfficeHours(infoTurn, officeHours))
+    Errors.officeHours = 'The turn is out of office hours.';
+
+  if (!validateTurnBetweenTurnsInADAy(infoTurn, Turns))
+    Errors.time = 'The turn time and duration collide with another turn.';
 
   //|> RESULTS
   if (Object.keys(Errors).length) validation = false;

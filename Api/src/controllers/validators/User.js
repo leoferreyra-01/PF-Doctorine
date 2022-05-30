@@ -23,10 +23,11 @@ async function validateInfoUser(
   },
   Users = []
 ) {
+  //|> PRELOADS
   if (!Users.length)
     Users = (await User.findAll()).map(user => user.dataValues);
 
-  //|> VALIDATIONS
+  //|> ERRORS
   let validation = true;
   const Errors = {};
 
