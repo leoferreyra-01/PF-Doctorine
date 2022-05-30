@@ -33,16 +33,10 @@ async function validateInfoUser(
   //|> allowNull: FALSE
   if (
     ruteType === 'POST' &&
-    (!userType ||
-      !document ||
-      !name ||
-      !lastName ||
-      !birth ||
-      !email ||
-      !password)
+    (!userType || !document || !name || !lastName || !birth || !email)
   )
     Errors.fieldsRequired =
-      '{userType, document, name, lastName, birth, email, password} are required.';
+      '{userType, document, name, lastName, birth, email,} are required.';
 
   //|> userType: default:Patient.
   if ((userType && ruteType === 'PUT') || ruteType === 'POST') {
@@ -183,7 +177,7 @@ async function validateInfoUser(
   }
 
   //|> password: STRING.
-  if ((password && ruteType === 'PUT') || ruteType === 'POST') {
+  if ((password && ruteType === 'PUT') || (password && ruteType === 'POST')) {
     if (
       !(
         typeof password === 'string' &&
