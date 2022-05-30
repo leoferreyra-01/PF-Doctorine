@@ -40,9 +40,7 @@ export function getPatient(id) {
 export function postPatient(patient) {
   return async function (dispatch) {
     try {
-      const patientWithId = (
-        await axios.post('/patients', patient)
-      ).data;
+      const patientWithId = (await axios.post('/patients', patient)).data;
       return dispatch({ type: POST_PATIENT, payload: patientWithId });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -226,11 +224,7 @@ export function getClinicalHistory(id) {
 export function getEvolutions(patientID) {
   return async dispatch => {
     try {
-      const evolution = (
-        await axios.get(
-          `/evolutions?PatientID=${patientID}`
-        )
-      ).data;
+      const evolution = (await axios.get(`/evolutions/${patientID}`)).data;
       return dispatch({ type: GET_EVOLUTIONS, payload: evolution });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -242,9 +236,7 @@ export function getEvolutions(patientID) {
 export function getStudies(patientID) {
   return async dispatch => {
     try {
-      const study = (
-        await axios.get(`/studies/search?id=${patientID}`)
-      ).data;
+      const study = (await axios.get(`/studies/search?id=${patientID}`)).data;
       return dispatch({ type: GET_STUDIES, payload: study });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -256,10 +248,7 @@ export function getStudies(patientID) {
 export function postClinicalHistory(payload) {
   return async function () {
     try {
-      return await axios.post(
-        '/clinicalhistories',
-        payload
-      );
+      return await axios.post('/clinicalhistories', payload);
     } catch (error) {
       console.log(error);
     }
