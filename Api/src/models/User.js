@@ -122,10 +122,13 @@ module.exports = sequelize => {
     password: {
       type: DataTypes.STRING,
       set(value) {
-        const name = this.name;
-        const document = this.document;
-        if (!value) this.setDataValue('password', name + document);
-        else this.setDataValue('password', value);
+        const nameDocument = this.name + this.document;
+
+        const hashValue = bcrypt.hashSync(value, 10);
+        const hashNameDocument = bcrypt.hashSync(nameDocument, 10);
+
+        if (value) this.setDataValue('password', hashValue);
+        else this.setDataValue('password', hashNameDocument);
       },
       validate: {
         notEmpty: true,
