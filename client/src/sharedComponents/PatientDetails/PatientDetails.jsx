@@ -7,6 +7,7 @@ import {
   getPatient,
   clear,
 } from '../../redux/actions';
+import ClinicalHistory from '../../dentist/home/navbar/detail/clinic-history/get';
 import SearchBar from '../../dentist/home/SearchBar/SearchBar';
 import GridWrapper from '../GridWrapper/GridWrapper';
 import Box from '@mui/material/Box';
@@ -50,8 +51,8 @@ export default function PatientDetails() {
     <GridWrapper>
       <Box sx={cardHeaderStyles.wrapper}>
         <SearchBar
-          placeholder='Buscar evoluciones o estudios..'
-          searchBarWidth='720px'
+          placeholder="Buscar evoluciones o estudios.."
+          searchBarWidth="720px"
           onClick={detailsSearch}
         />
       </Box>
@@ -78,6 +79,7 @@ export default function PatientDetails() {
       ) : (
         <h3>Cargando la evolucion del paciente...</h3>
       )}
+      <ClinicalHistory id={patientID} />
     </GridWrapper>
   );
 }
