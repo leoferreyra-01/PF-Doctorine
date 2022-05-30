@@ -41,6 +41,8 @@ async function preload_db() {
       await updateBudget(n);
     }
   }
+  await addTurn(1);
+
   console.log('Patients: ', patients);
 
   console.log(`-`);
@@ -205,9 +207,9 @@ async function addTurn(n) {
     time: 9.5 + n,
     duration: 1,
     description: 'Turno ' + n,
-    MedicID: 1, // required for TurnCollisions validation.
+    MedicID: 1, // -NOTE- required for TurnCollisions validation.
   };
-  //#region Turn Validation
+
   const [validation1, infoTurn_Errors] = await validate.TurnCollisions(
     infoTurn
   );
@@ -216,17 +218,15 @@ async function addTurn(n) {
 
   try {
     if (!validation1) throw new Error(`Turn collision error`);
+
+    const newTurn = await Turn.create(infoTurn);
+
+    newTurn.setMedic(1);
+    newTurn.setPatient(n);
   } catch (error) {
     // console.log(error);
-    // console.log(Errors);
+    // console.log(Errors); // -FIX-
   }
-
-  //#endregion
-
-  const newTurn = await Turn.create(infoTurn);
-
-  newTurn.setMedic(1);
-  newTurn.setPatient(n);
 }
 
 async function addBudget(n) {
