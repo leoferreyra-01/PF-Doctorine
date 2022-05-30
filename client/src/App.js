@@ -12,22 +12,21 @@ import SearchComponent from './dentist/home/SearchComponent/SearchComponent';
 import PatientDetails from './sharedComponents/PatientDetails/PatientDetails';
 ////LOGIN
 import SignUp from './Components/SignUp/SignUp.jsx';
-import SignIn from './Components/SignIn/SignIn.jsx';
+//import SignIn from './Components/SignIn/SignIn.jsx';
 import PasswordReset from './Components/PasswordReset/PasswordReset.jsx';
 import NewPassword from './Components/NewPassword/NewPassword';
 import ClinicalHistory from './dentist/home/navbar/detail/clinic-history/get';
-import RegisterClinicalHistory from './dentist/home/navbar/detail/clinic-history/create/Create.jsx';
+import RegisterDoctor from './dentist/home/navbar/RegisterDoctor/RegisterDoctor';
 
 function App() {
-  //console.log('renderice app');
+  console.log('renderice app');
   const homeToShow = useSelector(state => state.homeToShow);
-
   return (
     <div className="App">
       <Routes>
-        {/* <Route exact path="/" element={<LandingPage />} /> */}
+        <Route path="/" element={<LandingPage />} />
         {/* RUTAS LOGIN */}
-        <Route path="/" element={<SignIn />} />
+        {/* <Route path="/" element={<SignIn />} /> */}
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
@@ -37,11 +36,9 @@ function App() {
             <Route path="calendar" element={<Calendar />} />
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
-            <Route path=":patientID" element={<PatientDetails />} />
-            <Route
-              path="create-clinical-history"
-              element={<RegisterClinicalHistory />}
-            />
+            <Route path="/home/:patientID" element={<PatientDetails />} />
+            <Route path="clinical-history/:id" element={<ClinicalHistory />} />
+            <Route path="Doctor" element={<RegisterDoctor />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />} />
@@ -50,5 +47,7 @@ function App() {
     </div>
   );
 }
+
+// path Home: del odontologo
 
 export default App;
