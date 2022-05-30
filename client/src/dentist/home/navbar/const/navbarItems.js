@@ -4,6 +4,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainNavbarItems = [
   {
