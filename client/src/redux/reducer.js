@@ -22,7 +22,7 @@ import {
 
 const initialState = {
   allPatients: [],
-  newPatientId: '',
+  newPatientId: 20,
   searchedPatient: [],
   patient: {},
   evolutions: [],
@@ -83,7 +83,7 @@ export default function rootReducer(state = initialState, action) {
         unavailableTurns: [],
         clinicalHistory: {},
         evolutions: [],
-        newPatientId: '',
+
         studies: [],
       };
 
