@@ -13,10 +13,11 @@ async function validateInfoMedic(
   },
   Medics = []
 ) {
+  //|> PRELOADS
   if (!Medics.length)
     Medics = (await Medic.findAll()).map(medic => medic.dataValues);
 
-  //|> VALIDATIONS
+  //|> ERRORS
   let validation = true;
   const Errors = {};
 
