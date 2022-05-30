@@ -211,7 +211,7 @@ export function home(selectedHome) {
 export function getClinicalHistory(id) {
   return function (dispatch) {
     return axios
-      .get(`/clinicalhistories/${id}`)
+      .get(`/clinicalhistories/search?id=${id}`)
       .then(res => dispatch({ type: GET_CLINICAL_HISTORY, payload: res.data }))
       .catch(error => {
         if (error.response.status === 404)
