@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = sequelize => {
   sequelize.define('User', {
@@ -120,7 +121,12 @@ module.exports = sequelize => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      set(value) {
+        const name = this.name;
+        const document = this.document;
+        if (!value) this.setDataValue('password', name + document);
+        else this.setDataValue('password', value);
+      },
       validate: {
         notEmpty: true,
         // At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters
@@ -131,6 +137,14 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       defaultValue:
         'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png', //temporal
+      set(value) {
+        if (!this.getDataValue('imageProfile'))
+          this.setDataValue(
+            'imageProfile',
+            'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png'
+          );
+        else this.setDataValue('imageProfile', value);
+      },
       validate: {
         isUrl: true,
       },

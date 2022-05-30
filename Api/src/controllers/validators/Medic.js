@@ -27,7 +27,7 @@ async function validateInfoMedic(
 
   //|> title: STRING, notEmpty
   if ((title && ruteType === 'PUT') || ruteType === 'POST') {
-    if (!title.length) Errors.tile = 'Can not be an empty string.';
+    if (!title) Errors.title = 'Can not be an empty string.';
     if (
       !(
         typeof title === 'string' &&

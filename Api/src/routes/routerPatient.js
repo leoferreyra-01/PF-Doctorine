@@ -84,11 +84,11 @@ router.put('/:ID', async (req, res) => {
 
   const [validation1, PatientID_Errors] = await validate.ModelID('Patient', ID);
   const [validation2, infoUser_Errors] = await validate.InfoUser(
-    'POST',
+    'PUT',
     infoUser
   );
   const [validation3, infoPatient_Errors] = await validate.InfoPatient(
-    'POST',
+    'PUT',
     infoPatient
   );
   const Errors = { PatientID_Errors, infoUser_Errors, infoPatient_Errors };

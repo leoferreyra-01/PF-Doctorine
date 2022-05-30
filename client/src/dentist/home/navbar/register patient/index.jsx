@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postPatient } from '../../../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
@@ -27,7 +27,8 @@ export default function RegisterPatient() {
     console.log(patientReady);
     alert('Sera redireccionado para crear la historia clinica del paciente');
     dispatch(postPatient(patientReady));
-    navigate('/home/create-clinical-history');
+
+    navigate('/home/create-clinical-history/');
   };
 
   return (
