@@ -165,7 +165,7 @@ function SignUp() {
               className="input-usuario"
             />
             {errors.password && <p className="error">{errors.password}</p>}
-            <button>Acceder</button>
+            <button type='submit'>Acceder</button>
             <hr className="linea" />
             <GoogleLogin
               clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
