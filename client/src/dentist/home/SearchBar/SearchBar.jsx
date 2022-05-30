@@ -12,6 +12,11 @@ export default function SearchBar({ placeholder, searchBarWidth, onClick }) {
     console.log(e.target.value);
     setSearched(e.target.value);
   };
+  function handleenter(e) {
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  }
   const handleSubmit = () => {
     if (searched) {
       dispatch(onClick(searched));
@@ -30,6 +35,7 @@ export default function SearchBar({ placeholder, searchBarWidth, onClick }) {
         <Input
           placeholder={placeholder}
           onChange={handleOnChange}
+          onKeyPress={handleenter}
           sx={{
             width: searchBarWidth,
             color: 'rgba(0, 0, 0, 0.6)',
