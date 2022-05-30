@@ -4,7 +4,7 @@ async function validateInfoPatient(
   ruteType = 'POST',
   { medicalService, showClinicalHistory, tutor }
 ) {
-  //|> VALIDATIONS
+  //|> ERRORS
   let validation = true;
   const Errors = {};
 

@@ -3,12 +3,13 @@
 const { sequelize } = require('../../db');
 
 async function validateModelID(model, id, ids = []) {
+  //|> PRELOADS
   if (!ids.length)
     ids = (await sequelize.models[model].findAll()).map(
       model => model.dataValues.ID
     );
 
-  //|> VALIDATIONS
+  //|> ERRORS
   let validation = true;
   const Errors = {};
 

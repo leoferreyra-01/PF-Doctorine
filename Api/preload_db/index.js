@@ -14,39 +14,39 @@ const {
   Evolution,
 } = require('../src/db');
 
+const validate = require('../src/controllers/validators');
+
 const { treatments } = require('./treatmentsList');
 
 async function preload_db() {
+  console.log(`<>----- PRELOADING -----<>`);
+  console.log(`-`);
+
   //|> Basic info.
-  addClinic();
-  addUserMedic();
-  addTeeths();
-  addTreatments();
+  await addClinic();
+  await addUserMedic();
+  await addTeeths();
+  await addTreatments();
 
   //|> User-Patients pre-gen-examples
   const patients = 20;
   for (let n = 1; n <= patients; n++) {
-    addUserPatient(n);
-    addClinicalHistory(n);
-    addEvolution(n);
-    addStudy(n);
-    addTurn(n);
-    addBudget(n);
+    await addUserPatient(n);
+    await addClinicalHistory(n);
+    await addEvolution(n);
+    await addStudy(n);
+    await addTurn(n);
+    await addBudget(n);
     if (n % 2 === 0) {
-      updateBudget(n);
+      await updateBudget(n);
     }
   }
+  await addTurn(1);
 
-  const infoPreload = {
-    Clinics: `1 example.`,
-    Medics: `1 example.`,
-    Teeth: `Complete.`,
-    Treatments: '3/12 categories.',
-    Patients: `${patients} examples.`,
-  };
+  console.log('Patients: ', patients);
 
+  console.log(`-`);
   console.log(`<>----- PRELOAD SUCCESSFULL-----<>`);
-  console.log(infoPreload);
   console.log(`-`);
 }
 
@@ -89,6 +89,8 @@ async function addClinic() {
   };
 
   Clinic.create(infoClinic);
+
+  console.log('Clinic: ', infoClinic.name);
 }
 
 async function addUserMedic() {
@@ -120,6 +122,9 @@ async function addUserMedic() {
 
   newMedic.createUser(infoUser);
   newMedic.setClinic(1);
+
+  console.log('UserMedic-email: ', infoUser.email);
+  console.log('UserMedic-password: ', infoUser.password);
 }
 
 async function addUserPatient(n) {
@@ -177,6 +182,8 @@ async function addTeeths() {
       });
     }
   }
+
+  console.log('Teeth: ', 'Preload complete.');
 }
 
 async function addTreatments() {
@@ -190,6 +197,8 @@ async function addTreatments() {
 
     newTreatment.setClinic(1);
   });
+
+  console.log('Treatments: ', 'Preload complete.');
 }
 
 async function addTurn(n) {
@@ -198,12 +207,26 @@ async function addTurn(n) {
     time: 9.5 + n,
     duration: 1,
     description: 'Turno ' + n,
+    MedicID: 1, // -NOTE- required for TurnCollisions validation.
   };
 
-  const newTurn = await Turn.create(infoTurn);
+  const [validation1, infoTurn_Errors] = await validate.TurnCollisions(
+    infoTurn
+  );
 
-  newTurn.setMedic(1);
-  newTurn.setPatient(n);
+  const Errors = [infoTurn_Errors];
+
+  try {
+    if (!validation1) throw new Error(`Turn collision error`);
+
+    const newTurn = await Turn.create(infoTurn);
+
+    newTurn.setMedic(1);
+    newTurn.setPatient(n);
+  } catch (error) {
+    // console.log(error);
+    // console.log(Errors); // -FIX-
+  }
 }
 
 async function addBudget(n) {
