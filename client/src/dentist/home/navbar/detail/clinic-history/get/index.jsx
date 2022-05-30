@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClinicalHistory, clear } from '../../../../../../redux/actions.js';
 import GridWrapper from '../../../../../../sharedComponents/GridWrapper/GridWrapper.jsx';
-
+import s from './hc.module.css';
 export default function ClinicalHistory({ id }) {
   const dispatch = useDispatch();
 
@@ -104,9 +104,11 @@ export default function ClinicalHistory({ id }) {
     // cuando este el update deberia tener un boton aca que muestre el formulario de actualizacion
     <GridWrapper>
       {clinicalHistory ? (
-        <div>
+        <div className={s.hc}>
           {toRenderParsed.map(property => (
-            <div key={id}>{property}</div>
+            <div className={s.studies} key={id}>
+              {property}
+            </div>
           ))}
 
           <div>

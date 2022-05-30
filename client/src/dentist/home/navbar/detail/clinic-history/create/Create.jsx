@@ -42,7 +42,7 @@ export default function RegisterClinicalHistory() {
     Rickets: { value: false, obs: null },
     Osteomalacia: { value: false, obs: null },
     Other: { value: false, obs: null }, // son varios other
-    patient: Id,
+    patient: 21,
   });
   console.log(newHC.patient);
   const arrayToMap = [];
