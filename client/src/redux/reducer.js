@@ -22,7 +22,7 @@ import {
 
 const initialState = {
   allPatients: [],
-  newPatientId: 20,
+  newPatientId: 0,
   searchedPatient: [],
   patient: {},
   evolutions: [],
