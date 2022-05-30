@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'; // Corregir, agregar los botones adentro del card
 import Typography from '@mui/material/Typography';
 import s from './card.module.css';
 
@@ -80,11 +80,14 @@ export default function PatientCard({ ID = -1, name, lastName, imageProfile }) {
                 Direccion : china DNI: 45468523
               </Typography>
             </CardContent>
-            <CardActions className={s.cardactions}>
+          </NavLink>
+
+          <CardActions className={s.cardactions}>
+            <NavLink to={`/home/${ID}`} style={{ textDecoration: 'none' }}>
               <Button size="small">Ver Historia Clinica</Button>
               <Button size="small">Ver Estudios</Button>
-            </CardActions>
-          </NavLink>
+            </NavLink>
+          </CardActions>
         </CardActionArea>
       </Card>
     </div>

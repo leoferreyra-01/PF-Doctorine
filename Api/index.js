@@ -30,7 +30,6 @@ const { conn } = require('./src/db.js');
 const { preload_db } = require('./preload_db/');
 
 // Syncing all the models at once
-// Prueba Deploy
 
 const syncConfig = { force: true }; // -FIX-
 const PORT = parseInt(process.env.PORT);

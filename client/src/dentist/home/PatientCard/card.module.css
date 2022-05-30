@@ -12,6 +12,9 @@
 }
 
 .cardactions {
+  display: flex;
+  flex-direction: column;
+
   margin-left: 80%;
-  margin-top: -6.5%;
+  margin-top: -7.9%;
 }

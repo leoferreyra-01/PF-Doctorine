@@ -7,7 +7,8 @@ import AlertTitle from '@mui/material/AlertTitle';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
-
+import { Link } from 'react-router-dom';
+import s from './search.module.css';
 const cardHeaderStyles = {
   wrapper: {
     display: 'flex',
@@ -29,15 +30,16 @@ export default function SearchComponent() {
   const searchedPatient = useSelector(state => state.searchedPatient);
   const allPatients = useSelector(state => state.allPatients);
   const filledPatients = !!allPatients.length;
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (!filledPatients) dispatch(getAllPatients());
     return () => dispatch(clear());
   }, []);
+
   if (searchedPatient === 'Patient Not Found') {
     return (
       <GridWrapper>
-        <h3>Componente Inicial</h3>
         <Box sx={cardHeaderStyles.wrapper}>
           <SearchBar
             placeholder="Buscar paciente.."
@@ -52,9 +54,26 @@ export default function SearchComponent() {
         >
           <AlertTitle>Error </AlertTitle>
           Paciente no encontrado — !
+          <Link to="./register">
+            {' '}
+            <button className={s.buton}>Crear paciente?</button>
+          </Link>
         </Alert>
-        {filledPatients ? (
-          allPatients.map(patient => (
+      </GridWrapper>
+    );
+  }
+
+  return (
+    <GridWrapper>
+      <Box sx={cardHeaderStyles.wrapper}>
+        <SearchBar
+          placeholder="Buscar paciente.."
+          searchBarWidth="720px"
+          onClick={getPatientDni}
+        />
+      </Box>
+      {searchedPatient.length
+        ? searchedPatient.map(patient => (
             <PatientCard
               key={patient.Patient.ID}
               ID={patient.Patient.ID}
@@ -63,53 +82,15 @@ export default function SearchComponent() {
               imageProfile={patient.imageProfile}
             />
           ))
-        ) : (
-          <h2>Cargando Usuarios...</h2>
-        )}
-      </GridWrapper>
-    );
-  }
-
-  return (
-    <GridWrapper>
-      <h3>Componente Inicial</h3>
-      <Box sx={cardHeaderStyles.wrapper}>
-        <SearchBar
-          placeholder="Buscar paciente.."
-          searchBarWidth="720px"
-          onClick={getPatientDni}
-        />
-      </Box>
-      {searchedPatient.length ? (
-        searchedPatient.map(patient => (
-          <PatientCard
-            key={patient.Patient.ID}
-            ID={patient.Patient.ID}
-            name={patient.name}
-            lastName={patient.lastName}
-            imageProfile={patient.imageProfile}
-          />
-        ))
-      ) : (
-        <PatientCard
-          name="Alfonso de Prueba"
-          lastName="Nada de nada"
-          imageProfile="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
-        />
-      )}
-      {filledPatients ? (
-        allPatients.map(patient => (
-          <PatientCard
-            key={patient.Patient.ID}
-            ID={patient.Patient.ID}
-            name={patient.name}
-            lastName={patient.lastName}
-            imageProfile={patient.imageProfile}
-          />
-        ))
-      ) : (
-        <h2>Cargando Usuarios...</h2>
-      )}
+        : allPatients.map(patient => (
+            <PatientCard
+              key={patient.Patient.ID}
+              ID={patient.Patient.ID}
+              name={patient.name}
+              lastName={patient.lastName}
+              imageProfile={patient.imageProfile}
+            />
+          ))}
     </GridWrapper>
   );
 }

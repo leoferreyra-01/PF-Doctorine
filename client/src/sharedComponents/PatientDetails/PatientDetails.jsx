@@ -7,6 +7,7 @@ import {
   getPatient,
   clear,
 } from '../../redux/actions';
+import ClinicalHistory from '../../dentist/home/navbar/detail/clinic-history/get';
 import SearchBar from '../../dentist/home/SearchBar/SearchBar';
 import GridWrapper from '../GridWrapper/GridWrapper';
 import Box from '@mui/material/Box';
@@ -57,7 +58,11 @@ export default function PatientDetails() {
       </Box>
       {filledStudies ? (
         studies.map(p => (
-          <Study studyType={p.studyType} description={p.description} />
+          <Study
+            key={p.ID}
+            studyType={p.studyType}
+            description={p.description}
+          />
         ))
       ) : (
         <h3>Cargando los Estudios del paciente...</h3>
@@ -65,6 +70,7 @@ export default function PatientDetails() {
       {filledEvolutions ? (
         evolutions.map(p => (
           <Evolution
+            key={p.ID}
             date={p.date}
             observations={p.observations}
             MedicID={p.MedicID}
@@ -73,6 +79,7 @@ export default function PatientDetails() {
       ) : (
         <h3>Cargando la evolucion del paciente...</h3>
       )}
+      <ClinicalHistory id={patientID} />
     </GridWrapper>
   );
 }

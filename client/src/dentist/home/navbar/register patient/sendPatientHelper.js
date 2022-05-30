@@ -4,23 +4,20 @@ export default function sendPatientHelper(data) {
   const y = data.birth.getFullYear();
   const dateOfBirth =
     '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+  const { medicalService, tutor, birth, ...restOfData } = data;
   const fixedData = {
     infoUser: {
-      password: data.document + data.name,
+      ...restOfData,
+      // password: data.document + data.name,
       userType: 'Patient',
       imageProfile: null,
       birth: dateOfBirth,
     },
     infoPatient: {
-      medicalService: data.medicalService,
+      medicalService,
       showClinicalHistory: false,
-      tutor: data.tutor ? data.tutor : null,
+      tutor: tutor ? tutor : null,
     },
   };
-  for (let prop in data) {
-    if (prop !== 'medicalService' && prop !== 'tutor' && prop !== 'birth') {
-      fixedData.infoUser[prop] = data[prop];
-    }
-  }
   return fixedData;
 }

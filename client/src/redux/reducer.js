@@ -22,6 +22,7 @@ import {
 
 const initialState = {
   allPatients: [],
+  newPatientId: 0,
   searchedPatient: [],
   patient: {},
   evolutions: [],
@@ -71,15 +72,18 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPatients: [...state.allPatients, action.payload],
+        newPatientId: action.payload.Patient.ID,
       };
 
     case CLEAR:
       return {
         ...state,
         patient: {},
+        searchedPatient: [],
         unavailableTurns: [],
         clinicalHistory: {},
         evolutions: [],
+
         studies: [],
       };
 
@@ -177,10 +181,10 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case POST_CLINICAL_HISTORY:
-      return{
+      return {
         ...state,
         clinicalHistory: [...state.clinicalHistory, ...action.payload],
-      }
+      };
 
     default:
       return { ...state };

@@ -38,7 +38,6 @@ function App() {
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
-            <Route path="clinical-history/:id" element={<ClinicalHistory />} />
             <Route
               path="create-clinical-history"
               element={<RegisterClinicalHistory />}
