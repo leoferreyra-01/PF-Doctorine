@@ -27,7 +27,7 @@ export const ENTER_HOME = 'ENTER_HOME';
 
 export function getPatient(id) {
   return function (dispatch) {
-    // return axios.get(`http://localhost:3001/recipes/?id=${id}`)
+    // return axios.get(`/recipes/?id=${id}`)
     //     .then(res => dispatch({ type: GET_PATIENT, payload: res.data }))
     //     .catch(error => {
     //         if (error.response.status === 404) return alert(error.response.data.msg)
@@ -40,9 +40,7 @@ export function getPatient(id) {
 export function postPatient(patient) {
   return async function (dispatch) {
     try {
-      const patientWithId = (
-        await axios.post('http://localhost:3001/patients', patient)
-      ).data;
+      const patientWithId = (await axios.post('/patients', patient)).data;
       return dispatch({ type: POST_PATIENT, payload: patientWithId });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -59,7 +57,7 @@ export function getPatientDni(dni) {
 // return async function (dispatch) { //Forma de buscar en el back
 //   try {
 //     const patient = (
-//       await axios.get(`http://localhost:3001/patients?document=${dni}`)
+//       await axios.get(`/patients?document=${dni}`)
 //     ).data;
 //     dispatch({ type: GET_PATIENT_DNI, payload: patient });
 //   } catch (error) {
@@ -72,7 +70,7 @@ export function getPatientDni(dni) {
 export function getAllPatients() {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/patients`)
+      .get(`/patients`)
       .then(res => dispatch({ type: GET_ALL_PATIENTS, payload: res.data }))
       .catch(error => {
         if (error.response.status === 404)
@@ -90,7 +88,7 @@ export function clear() {
 
 export function postTurn(payload) {
   return async function () {
-    return axios.post(`http://localhost:3001/turn`, payload).catch(error => {
+    return axios.post(`/turn`, payload).catch(error => {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
     });
@@ -98,31 +96,21 @@ export function postTurn(payload) {
 }
 
 //LOGIN
-export function userDelete(id) {
-  return async function (dispatch) {
-    await fetch('https://back-mode-parfum.herokuapp.com/deleteUser', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(id),
-    });
-    dispatch({
-      type: DELETE_USER,
-      payload: id,
-    });
-  };
-}
-
-export function userToAdmin(id) {
-  return async function (dispatch) {
-    let json = await axios.post('/userToAdmin', id);
-    return dispatch({
-      type: USER_TO_ADMIN,
-      payload: json.data,
-    });
-  };
-}
+// export function userDelete(id) {
+//   return async function (dispatch) {
+//     await fetch('https://back-mode-parfum.herokuapp.com/deleteUser', { // Hay que actualizar el link del axios.
+//       method: 'DELETE',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(id),
+//     });
+//     dispatch({
+//       type: DELETE_USER,
+//       payload: id,
+//     });
+//   };
+// }
 
 export function getSuccess(payload) {
   return async function (dispatch) {
@@ -158,12 +146,12 @@ export function loginUser(payload) {
   };
 }
 
-export function logOut() {
-  return { type: LOGOUT_USER };
-}
-export function login() {
-  return { type: LOGIN_USER };
-}
+// export function logOut() {
+//   return { type: LOGOUT_USER };
+// }
+// export function login() {
+//   return { type: LOGIN_USER };
+// }
 
 export function postPasswordReset(payload) {
   return async function (dispatch) {
@@ -223,7 +211,7 @@ export function home(selectedHome) {
 export function getClinicalHistory(id) {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/clinicalhistories/${id}`)
+      .get(`/clinicalhistories/${id}`)
       .then(res => dispatch({ type: GET_CLINICAL_HISTORY, payload: res.data }))
       .catch(error => {
         if (error.response.status === 404)
@@ -236,11 +224,7 @@ export function getClinicalHistory(id) {
 export function getEvolutions(patientID) {
   return async dispatch => {
     try {
-      const evolution = (
-        await axios.get(
-          `http://localhost:3001/evolutions?PatientID=${patientID}`
-        )
-      ).data;
+      const evolution = (await axios.get(`/evolutions/${patientID}`)).data;
       return dispatch({ type: GET_EVOLUTIONS, payload: evolution });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -252,9 +236,7 @@ export function getEvolutions(patientID) {
 export function getStudies(patientID) {
   return async dispatch => {
     try {
-      const study = (
-        await axios.get(`http://localhost:3001/studies/search?id=${patientID}`)
-      ).data;
+      const study = (await axios.get(`/studies/search?id=${patientID}`)).data;
       return dispatch({ type: GET_STUDIES, payload: study });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -266,10 +248,7 @@ export function getStudies(patientID) {
 export function postClinicalHistory(payload) {
   return async function () {
     try {
-      return await axios.post(
-        'http://localhost:3001/clinicalhistories',
-        payload
-      );
+      return await axios.post('/clinicalhistories', payload);
     } catch (error) {
       console.log(error);
     }

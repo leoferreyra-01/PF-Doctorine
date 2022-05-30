@@ -22,10 +22,17 @@ module.exports = {
   getAllTreatments: async function () {
     const allTreatments = await Treatment.findAll();
 
+    if (!allTreatments.length) throw new Error('no added treatments!');
+
     return allTreatments;
   },
   getTreatmentById: async function (id) {
     const TreatmentById = await Treatment.findByPk(id);
+
+    if (!TreatmentById) {
+      throw new Error('there is no treatment with that ID!');
+    }
+
     return TreatmentById;
   },
 

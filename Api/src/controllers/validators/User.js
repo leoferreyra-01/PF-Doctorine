@@ -20,44 +20,44 @@ async function validateInfoUser(
     email,
     password,
     imageProfile,
-  }
+  },
+  Users = []
 ) {
+  if (!Users.length)
+    Users = (await User.findAll()).map(user => user.dataValues);
+
+  //|> VALIDATIONS
+  let validation = true;
+  const Errors = {};
+
   //|> allowNull: FALSE
   if (
     ruteType === 'POST' &&
-    (!userType ||
-      !document ||
-      !name ||
-      !lastName ||
-      !birth ||
-      !email ||
-      !password)
+    (!userType || !document || !name || !lastName || !birth || !email)
   )
-    throw new Error(
-      '"userType", "document", "name", "lastName", "birth", "email" and "password" are required.'
-    );
+    Errors.fieldsRequired =
+      '{userType, document, name, lastName, birth, email,} are required.';
 
   //|> userType: default:Patient.
   if ((userType && ruteType === 'PUT') || ruteType === 'POST') {
     if (!(userType === 'Medic' || userType === 'Patient'))
-      throw new Error('"userType" must be "Medic" or "Patient".');
+      Errors.userType = "Must be 'Medic' or 'Patient'.";
   }
 
   //|> document: INTEGER, length:8, unique.
   const userByDocument = document
-    ? await User.findOne({ where: { document } })
+    ? Users.find(user => user.document === document)
     : null;
   if (userByDocument && ruteType === 'POST')
-    throw new Error('The document number already exists.');
+    Errors.document = 'The number already exists.';
   if (userByDocument && ruteType === 'PUT')
-    throw new Error('The document number cant be edited.');
+    Errors.document = 'The number cant be edited.';
 
   if (document && ruteType === 'POST') {
     if (`${document}`.length !== 8)
-      throw new Error('The document number length must be 8 numbers');
+      Errors.document = 'The number length must be 8 numbers';
 
-    if (!(typeof document === 'number'))
-      throw new Error('"document" must be a number.');
+    if (!(typeof document === 'number')) Errors.document4 = 'Must be a number.';
   }
 
   //|> name: STRING.
@@ -65,12 +65,12 @@ async function validateInfoUser(
     if (
       !(
         typeof name === 'string' &&
-        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+        /[^0-9\.\,\\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
           name
         )
       )
     )
-      throw new Error('"name" must be a valid name.');
+      Errors.name = 'Must be a valid only-text.';
   }
 
   //|> lastName: STRING.
@@ -78,12 +78,12 @@ async function validateInfoUser(
     if (
       !(
         typeof lastName === 'string' &&
-        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+        /[^0-9\.\,\\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
           lastName
         )
       )
     )
-      throw new Error('"lastName" must be a valid last name.');
+      Errors.lastName = 'Must be a valid only-text.';
   }
 
   //|> birth: STRING.
@@ -96,7 +96,7 @@ async function validateInfoUser(
         )
       )
     )
-      throw new Error('"birth" must be a date (yyyy-MM-dd).');
+      Errors.birth = 'Must be a date (yyyy-MM-dd).';
   }
 
   //|> telephone: allowNull: TRUE, INTEGER.
@@ -109,9 +109,7 @@ async function validateInfoUser(
         )
       )
     )
-      throw new Error(
-        '"telephone" must be a valid format of telephone number.'
-      );
+      Errors.telephone = 'Must be a valid string-format of telephone number.';
   }
 
   //|> cellphone: allowNull: TRUE, INTEGER.
@@ -124,9 +122,7 @@ async function validateInfoUser(
         )
       )
     )
-      throw new Error(
-        '"cellphone" must be a valid format of cellphone number.'
-      );
+      Errors.cellphone = 'Must be a valid string-format of cellphone number.';
   }
 
   //|> street: allowNull: TRUE, STRING.
@@ -134,18 +130,18 @@ async function validateInfoUser(
     if (
       !(
         typeof street === 'string' &&
-        /[^\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+        /[^\.\,\\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
           street
         )
       )
     )
-      throw new Error('"street" must be a valid street name.');
+      Errors.street = 'Must be a valid street name.';
   }
 
   //|> number: allowNull: TRUE, INTEGER.
   if (number) {
     if (!(typeof number === 'number'))
-      throw new Error('"number" must be a street number.');
+      Errors.number = 'Must be a street number.';
   }
 
   //|> city: allowNull: TRUE, STRING.
@@ -153,23 +149,23 @@ async function validateInfoUser(
     if (
       !(
         typeof city === 'string' &&
-        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+        /[^0-9\.\,\\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
           city
         )
       )
     )
-      throw new Error('"city" must be a valid city name.');
+      Errors.city = 'Must be a valid city name.';
   }
 
   //|> postalCode: allowNull: TRUE, INTEGER.
   if (postalCode) {
     if (!(typeof postalCode === 'number'))
-      throw new Error('"postalCode" must be a number.');
+      Errors.postalCode = 'Must be a number.';
   }
 
   //|> email: STRING, unique.
-  const userByEmail = email ? await User.findOne({ where: { email } }) : null;
-  if (userByEmail) throw new Error('The email already exists.');
+  const userByEmail = email ? Users.find(user => user.email === email) : null;
+  if (userByEmail) Errors.email = 'The email already exists.';
   if ((email && ruteType === 'PUT') || ruteType === 'POST') {
     if (
       !(
@@ -177,20 +173,19 @@ async function validateInfoUser(
         /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi.test(email)
       )
     )
-      throw new Error('"email" must be a valid email.');
+      Errors.email = 'Must be a valid email-format.';
   }
 
   //|> password: STRING.
-  if ((password && ruteType === 'PUT') || ruteType === 'POST') {
+  if ((password && ruteType === 'PUT') || (password && ruteType === 'POST')) {
     if (
       !(
         typeof password === 'string' &&
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(password)
       )
     )
-      throw new Error(
-        '"password" must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.'
-      );
+      Errors.password =
+        'Must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.';
   }
 
   //|> imageProfile: allowNull: TRUE, STRING.
@@ -203,10 +198,13 @@ async function validateInfoUser(
         )
       )
     )
-      throw new Error('"imageProfile" must be a valid URL.');
+      Errors.imageProfile = 'Must be a valid URL.';
   }
 
-  return true;
+  //|> RESULTS
+  if (Object.keys(Errors).length) validation = false;
+
+  return [validation, Errors];
 }
 
 module.exports = {

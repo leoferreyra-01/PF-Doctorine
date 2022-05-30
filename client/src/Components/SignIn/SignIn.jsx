@@ -12,7 +12,6 @@ import { home } from "../../redux/actions";
 
 export function validate(input) {
   let errors = {};
-  console.log(errors);
 
   if (!input.email) {
     errors.username = "Username is required";
@@ -67,7 +66,7 @@ function SignUp() {
         toast.error("Debes completar correctamente los campos.");
       }
       const user = await service.login(input);
-      console.log(user)
+      // console.log(user)
       setUser(user);
       window.localStorage.setItem("loggedToken", JSON.stringify(user));
       service.setToken(user.token);
@@ -81,19 +80,19 @@ function SignUp() {
           navigate("/home");
         }
       }
-      console.log(user);
+      // console.log(user);
     } catch (e) {
       console.log(e);
       toast.error("Contraseña o usuario incorrecto.");
     }
   };
   const respuestaGoogle = async (respuesta) => {
-    const register = await axios.post("http://localhost:3001/login/oneUser", {
+    const register = await axios.post("/login/oneUser", {
       email: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
     if (register.data.hasOwnProperty("success")) {
-      const user = await axios.post("http://localhost:3001/login", {
+      const user = await axios.post("/login", {
         email: respuesta.profileObj.email,
         password: respuesta.profileObj.googleId,
       });
@@ -105,7 +104,7 @@ function SignUp() {
       }
     } else {
       const userRegister = await axios.post(
-        "http://localhost:3001/login/register",
+        "/login/register",
         {
           email: respuesta.profileObj.email,
           password: respuesta.profileObj.googleId,
@@ -118,7 +117,7 @@ function SignUp() {
       );
       if (userRegister.data.hasOwnProperty("success")) {
         setTimeout(async () => {
-          const user = await axios.post("http://localhost:3001/login", {
+          const user = await axios.post("/login", {
             email: respuesta.profileObj.email,
             password: respuesta.profileObj.googleId,
           });

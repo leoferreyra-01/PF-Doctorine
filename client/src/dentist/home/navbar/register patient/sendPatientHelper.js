@@ -8,7 +8,7 @@ export default function sendPatientHelper(data) {
   const fixedData = {
     infoUser: {
       ...restOfData,
-      password: data.document + data.name,
+      // password: data.document + data.name,
       userType: 'Patient',
       imageProfile: null,
       birth: dateOfBirth,

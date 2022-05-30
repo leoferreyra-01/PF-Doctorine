@@ -10,41 +10,48 @@ async function validateInfoMedic(
     specialization,
     tuition_date,
     tuition_number,
-  }
+  },
+  Medics = []
 ) {
+  if (!Medics.length)
+    Medics = (await Medic.findAll()).map(medic => medic.dataValues);
+
+  //|> VALIDATIONS
+  let validation = true;
+  const Errors = {};
+
   //|> allowNull:FALSE
   if (ruteType === 'POST' && (!title || !tuition_date || !tuition_number))
-    throw new Error(
-      '"title", "tuition_date" and "tuition_number" are required.'
-    );
+    Errors.fieldsRequired =
+      '{title, tuition_date, tuition_number} are required.';
 
   //|> title: STRING, notEmpty
   if ((title && ruteType === 'PUT') || ruteType === 'POST') {
-    if (!title.length) throw new Error('"title" cannot be an empty string.');
+    if (!title) Errors.title = 'Can not be an empty string.';
     if (
       !(
         typeof title === 'string' &&
-        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+        /[^0-9\.\,\\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
           title
         )
       )
     )
-      throw new Error('"title" must be a valid text.');
+      Errors.title = 'Must be a valid only-text format.';
   }
 
   //|> specialization: STRING, notEmpty
   if (specialization) {
     if (!specialization.length)
-      throw new Error('"specialization" cannot be an empty string');
+      Errors.specialization = 'Can not be an empty string';
     if (
       !(
         typeof specialization === 'string' &&
-        /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
+        /[^0-9\.\,\\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/.test(
           specialization
         )
       )
     )
-      throw new Error('"specialization" must be a valid text.');
+      Errors.specialization = 'Must be a valid text.';
   }
 
   //|> tuition_date: DATE(yyyy-mm-dd),
@@ -57,29 +64,31 @@ async function validateInfoMedic(
         )
       )
     )
-      throw new Error('"tuition_date" must be a date (yyyy-mm-dd).');
+      Errors.tuition_date = 'Must be a date (yyyy-mm-dd).';
   }
 
   //|> tuition_number: INTEGER, unique
   const medicByTuition = tuition_number
-    ? await Medic.findOne({ where: { tuition_number } })
+    ? Medics.find(medic => medic.tuition_number === tuition_number)
     : null;
   if (medicByTuition && ruteType === 'POST')
-    throw new Error('The "tuition_number" already exists.');
+    Errors.tuition_number = 'The {tuition_number} already exists.';
   if (tuition_number && ruteType === 'PUT')
-    throw new Error('The "tuition_number" cant be edited.');
+    Errors.tuition_number = 'The {tuition_number} cant be edited.';
 
   if (tuition_number && ruteType === 'POST') {
     if (`${tuition_number}`.length < 4)
-      throw new Error(
-        'The tuition_number number length must have more than 4 numbers'
-      );
+      Errors.tuition_number =
+        'The {tuition_number} number length must have more than 4 numbers';
 
     if (!(typeof tuition_number === 'number'))
-      throw new Error('"tuition_number" must be a number.');
+      Errors.tuition_number = 'Must be a number.';
   }
 
-  return true;
+  //|> RESULTS
+  if (Object.keys(Errors).length) validation = false;
+
+  return [validation, Errors];
 }
 
 module.exports = {
