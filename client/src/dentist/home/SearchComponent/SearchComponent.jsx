@@ -7,7 +7,8 @@ import AlertTitle from '@mui/material/AlertTitle';
 import GridWrapper from '../../../sharedComponents/GridWrapper/GridWrapper';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
-
+import { Link } from 'react-router-dom';
+import s from './search.module.css';
 const cardHeaderStyles = {
   wrapper: {
     display: 'flex',
@@ -53,6 +54,10 @@ export default function SearchComponent() {
         >
           <AlertTitle>Error </AlertTitle>
           Paciente no encontrado — !
+          <Link to="./register">
+            {' '}
+            <button className={s.buton}>Crear paciente?</button>
+          </Link>
         </Alert>
       </GridWrapper>
     );
