@@ -89,7 +89,7 @@ async function postClinicalHistory(req, res) {
   });
 
   let addPatients = await Patient.findOne({
-    where: { ID: patient },
+    where: { ID: parseInt(patient) },
   });
 
   await createHistoryClinic.setPatient(addPatients);
