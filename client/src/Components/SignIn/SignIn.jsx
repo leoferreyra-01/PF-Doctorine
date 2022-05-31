@@ -1,39 +1,40 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import logo from "./Logo/logo.png";
-import { Link, useNavigate } from "react-router-dom";
-import service from "../../services/login";
-import { useDispatch, useSelector } from "react-redux";
-import GoogleLogin from "react-google-login";
-import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
-import S from "./SingIn.module.css";
-import { home } from "../../redux/actions";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import logo from './Logo/logo.png';
+import { Link, useNavigate } from 'react-router-dom';
+import service from '../services/login';
+import { useDispatch, useSelector } from 'react-redux';
+import GoogleLogin from 'react-google-login';
+import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
+import S from './SingIn.module.css';
+import { home } from '../../redux/actions';
 
 export function validate(input) {
   let errors = {};
+  console.log(errors);
 
   if (!input.email) {
-    errors.username = "Username is required";
+    errors.username = 'Username is required';
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.username = "Username is invalid";
+    errors.username = 'Username is invalid';
   }
   if (!input.password) {
-    errors.password = "Password is required";
+    errors.password = 'Password is required';
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
-    errors.password = "Password is invalid";
-  }else if (input.password.length < 6) {
-    errors.password = "La contraseña debe ser mayor a 6 digitos";
+    errors.password = 'Password is invalid';
+  } else if (input.password.length < 6) {
+    errors.password = 'La contraseña debe ser mayor a 6 digitos';
   } else if (input.password.length > 12) {
-    errors.password = "La contraseña debe ser menor a 12 digitos";
+    errors.password = 'La contraseña debe ser menor a 12 digitos';
   }
   return errors;
 }
 
 function SignUp() {
   const [input, setInput] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ function SignUp() {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const User = useSelector((state) => state.user);
+  const User = useSelector(state => state.user);
   const navigate = useNavigate();
 
   const handleInputChange = function (e) {
@@ -57,75 +58,77 @@ function SignUp() {
     );
   };
 
-  let select = "medic";
+  let select = 'medic';
 
-  const handleSumbit = async (e) => {
+  const handleSumbit = async e => {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        toast.error("Debes completar correctamente los campos.");
+        toast.error('Debes completar correctamente los campos.');
       }
       const user = await service.login(input);
-      // console.log(user)
+      console.log(user);
       setUser(user);
-      window.localStorage.setItem("loggedToken", JSON.stringify(user));
+      window.localStorage.setItem('loggedToken', JSON.stringify(user));
       service.setToken(user.token);
       if (user.token) {
-        if (user.userType === "Patient") {
+        if (user.userType === 'Patient') {
           toast.success(`Bienvenido al Home ${user.name}`);
-          navigate("/home");
+          navigate('/home');
         } else {
-          toast.success(`Bienvenido al Home Dr. ${user.name[0]}. ${user.lastName}`);
+          toast.success(
+            `Bienvenido al Home Dr. ${user.name[0]}. ${user.lastName}`
+          );
           dispatch(home(select));
-          navigate("/home");
+          navigate('/home');
         }
       }
-      // console.log(user);
+      console.log(user);
     } catch (e) {
       console.log(e);
-      toast.error("Contraseña o usuario incorrecto.");
+      toast.error('Contraseña o usuario incorrecto.');
     }
   };
-  const respuestaGoogle = async (respuesta) => {
-    const register = await axios.post("/login/oneUser", {
+  const respuestaGoogle = async respuesta => {
+    const register = await axios.post('http://localhost:3001/login/oneUser', {
       email: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
-    if (register.data.hasOwnProperty("success")) {
-      const user = await axios.post("/login", {
+    if (register.data.hasOwnProperty('success')) {
+      const user = await axios.post('http://localhost:3001/login', {
         email: respuesta.profileObj.email,
         password: respuesta.profileObj.googleId,
       });
-      window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
+      window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
       service.setToken(user.data.token);
       if (user.data.token) {
         toast.success(`Bienvenido  ${user.data.name}`);
-        navigate("/");
+        navigate('/');
       }
     } else {
       const userRegister = await axios.post(
-        "/login/register",
+        'http://localhost:3001/login/register',
         {
           email: respuesta.profileObj.email,
           password: respuesta.profileObj.googleId,
-          userType: "Patient",
+          userType: 'Patient',
           document: 0,
-          name: "User",
-          lastName: "",
+          name: 'User',
+          lastName: '',
           birth: 0,
         }
       );
-      if (userRegister.data.hasOwnProperty("success")) {
+      if (userRegister.data.hasOwnProperty('success')) {
         setTimeout(async () => {
-          const user = await axios.post("/login", {
+          const user = await axios.post('http://localhost:3001/login', {
             email: respuesta.profileObj.email,
             password: respuesta.profileObj.googleId,
           });
-          window.localStorage.setItem("loggedToken", JSON.stringify(user.data));
+          window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
           service.setToken(user.data.token);
           if (user.data.token) {
             toast.success(`Bienvenido al Home ${user.data.name}`);
-            navigate("/");
+            navigate('/');
           }
         }, 3000);
       }
@@ -136,10 +139,10 @@ function SignUp() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
-      <ImgSignUp>
-            <div className={S.card}>
-              <img className={S.img} src={logo} alt="logo" />
-            </div>
+        <ImgSignUp>
+          <div className={S.card}>
+            <img className={S.img} src={logo} alt="logo" />
+          </div>
         </ImgSignUp>
 
         <SignUpContainer>
@@ -165,27 +168,27 @@ function SignUp() {
               className="input-usuario"
             />
             {errors.password && <p className="error">{errors.password}</p>}
-            <button type='submit'>Acceder</button>
+            <button>Acceder</button>
             <hr className="linea" />
             <GoogleLogin
               clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
               buttonText="Acceder con Google"
               onSuccess={respuestaGoogle}
-              onFailure={() => console.log("fail")}
-              cookiePolicy={"single_host_origin"}
+              onFailure={() => console.log('fail')}
+              cookiePolicy={'single_host_origin'}
               className="Google-button"
-              style={{ color: "black important!" }}
+              style={{ color: 'black important!' }}
             />
-            <div className="OR" style={{ position: "relative", top: "-1rem" }}>
+            <div className="OR" style={{ position: 'relative', top: '-1rem' }}>
               <Link
                 className="link-to-signup"
                 id="olv-ct"
-                to={"/PasswordReset"}
+                to={'/PasswordReset'}
               >
                 ¿Olvidaste tu contraseña?
               </Link>
 
-              <Link className="link-to-signup" id="register" to={"/SignUp"}>
+              <Link className="link-to-signup" id="register" to={'/SignUp'}>
                 REGISTRARME
               </Link>
             </div>
@@ -206,7 +209,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: #07182E;
+  background-color: #07182e;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -225,7 +228,7 @@ const SignUpDivContainer = styled.div`
   .back_signUp:hover {
     cursor: pointer;
     color: white;
-    background: #009ce5;;
+    background: #009ce5;
     border-radius: 10px;
   }
   @media (max-width: 540px) {
@@ -259,8 +262,8 @@ const SignUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   * {
-    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-    font-family: "Poppins", sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    font-family: 'Poppins', sans-serif;
   }
   label {
     padding-top: 10px;
@@ -275,7 +278,7 @@ const SignUpContainer = styled.div`
     align-items: center;
     background-color: rgb(0, 131, 182);
     box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
-             -15px -15px 30px rgba(255, 255, 255, 0.135);
+      -15px -15px 30px rgba(255, 255, 255, 0.135);
     width: 32rem;
     height: auto;
     border-radius: 20px;

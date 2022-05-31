@@ -1,5 +1,6 @@
 import axios from 'axios';
 import toast from 'react-hot-toast'; //Esto tambien del login
+export const ENTER_HOME = 'ENTER_HOME';
 export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
@@ -15,6 +16,7 @@ export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
 export const GET_CLINICAL_HISTORY_FOR_CREATE =
   'GET_CLINICAL_HISTORY_FOR_CREATE';
+export const POST_CLINIC = 'POST_CLINIC';
 //login
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -23,7 +25,6 @@ export const GET_USERS = 'GET_USERS';
 export const USER_TO_ADMIN = 'USER_TO_ADMIN';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_SUCCESS = 'GET_SUCCESS';
-export const ENTER_HOME = 'ENTER_HOME';
 
 export function getPatient(id) {
   return function (dispatch) {
@@ -249,6 +250,16 @@ export function postClinicalHistory(payload) {
   return async function () {
     try {
       return await axios.post('/clinicalhistories', payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postClinic(clinic) {
+  return async function () {
+    try {
+      return await axios.post('/Clinics', clinic);
     } catch (error) {
       console.log(error);
     }
