@@ -97,7 +97,7 @@ export default function ClinicalHistory({ id }) {
     return () => {
       dispatch(clear());
     };
-  }, [dispatch, id]);
+  }, [dispatch, id]); //]
 
   return (
     // cuando este el update deberia tener un boton aca que muestre el formulario de actualizacion
