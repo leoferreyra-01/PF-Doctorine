@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postClinicalHistory, clear } from '../../../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import fixhc from './fixhc';
+import Swal from 'sweetalert2';
+
 export default function RegisterClinicalHistory() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,12 +76,23 @@ export default function RegisterClinicalHistory() {
 
   let handleSubmit = e => {
     e.preventDefault();
+    Swal.fire({
+      title: arrayToMap,
 
-    let response = window.confirm(
-      'Are you sure you finished? This cannot be changed later'
-    );
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
+    }).then(result => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success');
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info');
+      }
+    });
 
-    if (response === true) {
+    if (Swal === true) {
       const fixedhc = fixhc(newHC);
       console.log(fixedhc);
       dispatch(postClinicalHistory(fixedhc));
