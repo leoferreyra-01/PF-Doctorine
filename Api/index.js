@@ -42,7 +42,7 @@ conn.sync(syncConfig).then(() => {
     console.log('°');
     console.log('<>----------[ Listening at', PORT, ']----------<>');
     console.log('-');
-    console.log('Sync Config: ', syncConfig);
+    console.log('\x1b[31m%s\x1b[0m', 'Sync Config: ', syncConfig);
     console.log('-');
 
     if (syncConfig.force === true) await preload_db();

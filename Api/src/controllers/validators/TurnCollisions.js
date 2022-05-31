@@ -3,10 +3,24 @@
 //|> SEQUELIZE
 const { Turn, Medic, Clinic } = require('../../db');
 
-async function validateTurnCollisions(infoTurn, Turns = [], officeHours = []) {
+// based on controllersTurns/ PostTurn/GetTurn
+async function validateTurnCollisions(
+  infoTurn,
+  TurnID = null, // for update options.
+  Turns = [], // for Frontend redux-store
+  officeHours = [] // for Frontend redux-store
+) {
   //|> PRELOADS
   if (!Turns.length)
     Turns = (await Turn.findAll()).map(turn => turn.dataValues);
+
+  if (TurnID) {
+    const oldInfoTurn = (await Turn.findByPk(TurnID)).dataValues;
+    infoTurn = {
+      ...oldInfoTurn,
+      ...infoTurn,
+    };
+  }
 
   if (!officeHours.length) {
     const getMedic = (await Medic.findByPk(infoTurn.MedicID)).dataValues;

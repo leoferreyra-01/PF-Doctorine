@@ -19,7 +19,7 @@ const validate = require('../src/controllers/validators');
 const { treatments } = require('./treatmentsList');
 
 async function preload_db() {
-  console.log(`<>----- PRELOADING -----<>`);
+  console.log('\x1b[33m%s\x1b[0m', '<>----- PRELOADING -----<>');
   console.log(`-`);
 
   //|> Basic info.
@@ -41,12 +41,13 @@ async function preload_db() {
       await updateBudget(n);
     }
   }
-  await addTurn(1);
+  // await addTurn(1);
+  await updateTurn(1, 9);
 
-  console.log('Patients: ', patients);
+  console.log('\x1b[34m%s\x1b[0m', 'Patients: ', patients);
 
   console.log(`-`);
-  console.log(`<>----- PRELOAD SUCCESSFULL-----<>`);
+  console.log('\x1b[32m%s\x1b[0m', `<>----- PRELOAD SUCCESSFULL-----<>`);
   console.log(`-`);
 }
 
@@ -90,7 +91,7 @@ async function addClinic() {
 
   Clinic.create(infoClinic);
 
-  console.log('Clinic: ', infoClinic.name);
+  console.log('\x1b[34m%s\x1b[0m', 'Clinic: ', infoClinic.name);
 }
 
 async function addUserMedic() {
@@ -123,8 +124,8 @@ async function addUserMedic() {
   newMedic.createUser(infoUser);
   newMedic.setClinic(1);
 
-  console.log('UserMedic-email: ', infoUser.email);
-  console.log('UserMedic-password: ', infoUser.password);
+  console.log('\x1b[36m%s\x1b[0m', 'UserMedic-email: ', infoUser.email);
+  console.log('\x1b[36m%s\x1b[0m', 'UserMedic-password: ', infoUser.password);
 }
 
 async function addUserPatient(n) {
@@ -172,7 +173,7 @@ async function addTeeths() {
   }
 
   for (let zone = 5; zone <= 8; zone++) {
-    for (let position = 1; position <= 8; position++) {
+    for (let position = 1; position <= 5; position++) {
       let ID = parseInt(`${zone}` + `${position}`);
 
       Teeth.create({
@@ -183,7 +184,7 @@ async function addTeeths() {
     }
   }
 
-  console.log('Teeth: ', 'Preload complete.');
+  console.log('\x1b[34m%s\x1b[0m', 'Teeth: ', 4 * 8 + 4 * 5);
 }
 
 async function addTreatments() {
@@ -198,15 +199,19 @@ async function addTreatments() {
     newTreatment.setClinic(1);
   });
 
-  console.log('Treatments: ', 'Preload complete.');
+  console.log('\x1b[34m%s\x1b[0m', 'Treatments: ', treatments.length);
 }
 
 async function addTurn(n) {
+  const randomDay = Math.ceil(Math.random() * 5);
+  const randomHour = Math.ceil(Math.random() * 14);
+  const randomDuration = Math.ceil(Math.random() * 1) / 2;
+
   const infoTurn = {
-    date: '2022-06-17',
-    time: 9.5 + n,
-    duration: 1,
-    description: 'Turno ' + n,
+    date: '2022-05-' + (26 + randomDay),
+    time: 8 + randomHour,
+    duration: randomDuration,
+    description: 'Iteration n° ' + n,
     MedicID: 1, // -NOTE- required for TurnCollisions validation.
   };
 
@@ -223,6 +228,32 @@ async function addTurn(n) {
 
     newTurn.setMedic(1);
     newTurn.setPatient(n);
+  } catch (error) {
+    // console.log(error);
+    // console.log(Errors); // -FIX-
+  }
+}
+
+async function updateTurn(TurnID, time) {
+  const infoTurn = {
+    time,
+  };
+
+  const [validation1, infoTurn_Errors] = await validate.TurnCollisions(
+    infoTurn,
+    TurnID
+  );
+
+  const Errors = [infoTurn_Errors];
+
+  try {
+    if (!validation1) throw new Error(`Turn collision error`);
+
+    await Turn.update(infoTurn, {
+      where: {
+        ID: TurnID,
+      },
+    });
   } catch (error) {
     // console.log(error);
     // console.log(Errors); // -FIX-
