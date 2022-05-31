@@ -121,118 +121,138 @@ function validacionClinics(infoClinic) {
 //|> CONTROLLER
 
 module.exports = {
-  getAllClinics: async function () {
-    const allClinics = await Clinic.findAll();
-
-    if (!allClinics.length) {
-      throw new Error('No clinics added!');
+  getAllClinics: async function (req, res) {
+    try {
+      const allClinics = await Clinic.findAll();
+      if (!allClinics.length) {
+        throw new Error('No clinics added!');
+      }
+      return res.status(200).json(allClinics);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-    return allClinics;
   },
-  getClinicById: async function (id) {
-    const clinicById = await Clinic.findByPk(id);
+  getClinicById: async function (req, res) {
+    try {
+      const id = req.params.id;
+      const clinicById = await Clinic.findByPk(id);
 
-    if (!clinicById) {
-      throw new Error('There is no clinic with that ID!');
+      if (!clinicById) {
+        throw new Error('There is no clinic with that ID!');
+      }
+
+      res.status(200).json(clinicById);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-    return clinicById;
   },
-  createClinic: async function (infoClinic) {
-    const {
-      name,
-      street,
-      number,
-      city,
-      postalcode,
-      telephone,
-      email,
-      officeHours,
-      imgLogo,
-    } = infoClinic; // req.body
+  createClinic: async function (req, res) {
+    try {
+      const {
+        name,
+        street,
+        number,
+        city,
+        postalcode,
+        telephone,
+        email,
+        officeHours,
+        imgLogo,
+      } = req.body;
 
-    if (
-      !name ||
-      !street ||
-      !number ||
-      !city ||
-      !postalcode ||
-      !telephone ||
-      !email ||
-      !officeHours
-    ) {
-      //*crea un error si no existe datos obligatorios
-      throw new Error('mandatory data is missing to create the clinic!');
+      if (
+        !name ||
+        !street ||
+        !number ||
+        !city ||
+        !postalcode ||
+        !telephone ||
+        !email ||
+        !officeHours
+      ) {
+        //*crea un error si no existe datos obligatorios
+        throw new Error('mandatory data is missing to create the clinic!');
+      }
+
+      //* buscamos en el DB si existe una Clinica con ese nombre
+      const clinicDB = await Clinic.findOne({
+        where: {
+          name: name,
+          /* .toLowerCase() */
+        },
+      });
+
+      if (clinicDB) {
+        //* Crea un error si existe  una Clinica con ese nombre en el DB
+        throw new Error(
+          'There is already a clinic with that name, please choose another name!'
+        );
+      }
+      //* VALIDACION DE DATOS
+      /*  validacionClinics(req.body); */
+      //*se crea la nueva clinica
+      let newClinic = {
+        name /* : name.toLowerCase() */,
+        street,
+        number,
+        city,
+        postalcode,
+        telephone,
+        email,
+        officeHours, // falta validacion para los horarios
+        imgLogo,
+      };
+
+      const CreateNewClinic = await Clinic.create(newClinic);
+
+      res.status(201).json({ msg: 'successfully created clinic' });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
     }
-
-    //* buscamos en el DB si existe una Clinica con ese nombre
-    const clinicDB = await Clinic.findOne({
-      where: {
-        name: name,
-        /* .toLowerCase() */
-      },
-    });
-
-    if (clinicDB) {
-      //* Crea un error si existe  una Clinica con ese nombre en el DB
-      throw new Error(
-        'There is already a clinic with that name, please choose another name!'
-      );
-    }
-    //* VALIDACION DE DATOS
-    validacionClinics(infoClinic);
-    //*se crea la nueva clinica
-    let newClinic = {
-      name /* : name.toLowerCase() */,
-      street,
-      number,
-      city,
-      postalcode,
-      telephone,
-      email,
-      officeHours, // falta validacion para los horarios
-      imgLogo,
-    };
-
-    const CreateNewClinic = await Clinic.create(newClinic);
   },
-  putClinic: async function (infoClinic) {
-    const {
-      ID,
-      name,
-      street,
-      number,
-      city,
-      postalcode,
-      telephone,
-      email,
-      officeHours,
-      imgLogo,
-    } = infoClinic; // req.body
+  putClinic: async function (req, res) {
+    try {
+      const {
+        ID,
+        name,
+        street,
+        number,
+        city,
+        postalcode,
+        telephone,
+        email,
+        officeHours,
+        imgLogo,
+      } = req.body;
 
-    const clinicById = await Clinic.findByPk(ID);
+      const clinicById = await Clinic.findByPk(ID);
 
-    if (!clinicById) {
-      //* Crea un error si no existe  la clinica en la DB
-      throw new Error('There is no clinic with that ID!');
+      if (!clinicById) {
+        //* Crea un error si no existe  la clinica en la DB
+        throw new Error('There is no clinic with that ID!');
+      }
+
+      //* VALIDACION DE DATOS
+      validacionClinics(req.body);
+
+      let infoClinicUpdate = {
+        name /* : name.toLowerCase() */,
+        street,
+        number,
+        city,
+        postalcode,
+        telephone,
+        email,
+        officeHours,
+        imgLogo,
+      };
+
+      const updateClinic = await clinicById.update(infoClinicUpdate);
+
+      res.status(201).send({ msg: 'successfully modified clinic.' });
+    } catch (error) {
+      console.log(error);
+      res.status(404).send({ error: error.message });
     }
-
-    //* VALIDACION DE DATOS
-    validacionClinics(infoClinic);
-
-    let infoClinicUpdate = {
-      name /* : name.toLowerCase() */,
-      street,
-      number,
-      city,
-      postalcode,
-      telephone,
-      email,
-      officeHours,
-      imgLogo,
-    };
-
-    const updateClinic = await clinicById.update(infoClinicUpdate);
-
-    return updateClinic;
   },
 };
