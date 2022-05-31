@@ -15,6 +15,7 @@ import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import NewPassword from './Components/NewPassword/NewPassword';
 import PasswordReset from './Components/PasswordReset/PasswordReset';
+import AddEvolution from './views/dentist/AddEvolution/AddEvolution'
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="budget" element={<Budget />} />
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
+            <Route path="/home/addEvolution/:patientID" element={<AddEvolution />} />
             <Route
               path="create-clinical-history"
               element={<RegisterClinicalHistory />}

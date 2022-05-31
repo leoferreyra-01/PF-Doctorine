@@ -10,8 +10,10 @@ export default function Home() {
   const [title, setTitle] = useState(null);
   const location = useLocation();
   const [loader, setLoader] = useState(true);
+  
   useEffect(() => {
     let parsedTitle = location.pathname.replace(/\W/g, ' ');
+    if (parsedTitle.length > 18) parsedTitle = parsedTitle.slice(18);
     if (parsedTitle.length > 5) parsedTitle = parsedTitle.slice(5);
     setTitle(parsedTitle);
   }, [location]);

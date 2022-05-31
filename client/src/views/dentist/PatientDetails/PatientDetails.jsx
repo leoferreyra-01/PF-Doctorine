@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import s from './PatientDetails.module.css';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getStudies,
@@ -37,7 +37,9 @@ export default function PatientDetails() {
         placeholder="Buscar evoluciones o estudios.."
         onClick={detailsSearch}
       />
-
+      <Link to={`/home/addEvolution/${patientID}`}>
+        <button className={s.btn}>Add Evolution</button>
+      </Link>
       {filledStudies ? (
         studies.map(p => (
           <Study

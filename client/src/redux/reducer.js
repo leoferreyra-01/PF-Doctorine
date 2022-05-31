@@ -8,6 +8,8 @@ import {
   GET_TURNS,
   GET_ALL_PATIENTS,
   GET_CLINICAL_HISTORY,
+  GET_TREATMENTS,
+  GET_MEDICS,
   POST_CLINICAL_HISTORY,
   /////LOGIN
   LOGIN_USER,
@@ -18,17 +20,19 @@ import {
   USER_TO_ADMIN,
   DELETE_USER,
   ENTER_HOME,
-} from './actions';
+} from "./actions";
 
 const initialState = {
   allPatients: [],
   newPatientId: 0,
   searchedPatient: [],
   patient: {},
+  medics: [],
   evolutions: [],
   studies: [],
   unavailableTurns: [],
-  homeToShow: 'patient',
+  homeToShow: "patient",
+  treatments: [],
   //////LOGIN
   user: {},
   allUsers: [],
@@ -48,9 +52,9 @@ export default function rootReducer(state = initialState, action) {
 
     case GET_PATIENT_DNI:
       let searchedPatient = state.allPatients.filter(
-        patient => patient.document === action.payload * 1
+        (patient) => patient.document === action.payload * 1
       );
-      if (searchedPatient.length === 0) searchedPatient = 'Patient Not Found';
+      if (searchedPatient.length === 0) searchedPatient = "Patient Not Found";
       return {
         ...state,
         searchedPatient: searchedPatient,
@@ -127,7 +131,7 @@ export default function rootReducer(state = initialState, action) {
     case LOGIN_USER: {
       return {
         ...state,
-        user: JSON.parse(localStorage.getItem('loggedToken')),
+        user: JSON.parse(localStorage.getItem("loggedToken")),
       };
     }
 
@@ -137,16 +141,16 @@ export default function rootReducer(state = initialState, action) {
         allUsers: action.payload,
       };
     }
-    case 'POST_PASSWORD_RESET':
+    case "POST_PASSWORD_RESET":
       return {
         ...state,
       };
-    case 'POST_NEW_PASSWORD':
+    case "POST_NEW_PASSWORD":
       return {
         ...state,
       };
     case USER_TO_ADMIN:
-      state.allUsers.forEach(user => {
+      state.allUsers.forEach((user) => {
         if (user.id === action.payload.id) {
           user.isAdmin = action.payload.isAdmin;
         }
@@ -165,7 +169,9 @@ export default function rootReducer(state = initialState, action) {
     case DELETE_USER:
       return {
         ...state,
-        allUsers: state.allUsers.filter(user => user.id !== action.payload.id),
+        allUsers: state.allUsers.filter(
+          (user) => user.id !== action.payload.id
+        ),
       };
     ////////
     case ENTER_HOME:
@@ -184,6 +190,18 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         clinicalHistory: [...state.clinicalHistory, ...action.payload],
+      };
+
+    case GET_TREATMENTS:
+      return {
+        ...state,
+        treatments: action.payload,
+      };
+
+    case GET_MEDICS:
+      return {
+        ...state,
+        medics: action.payload,
       };
 
     default:

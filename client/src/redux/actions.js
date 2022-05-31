@@ -17,6 +17,7 @@ export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
 export const GET_CLINICAL_HISTORY_FOR_CREATE =
   'GET_CLINICAL_HISTORY_FOR_CREATE';
 export const POST_CLINIC = 'POST_CLINIC';
+export const GET_MEDICS = 'GET_MEDICS';
 //login
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -25,6 +26,7 @@ export const GET_USERS = 'GET_USERS';
 export const USER_TO_ADMIN = 'USER_TO_ADMIN';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_SUCCESS = 'GET_SUCCESS';
+export const GET_TREATMENTS = 'GET_TREATMENTS';
 
 export function getPatient(id) {
   return function (dispatch) {
@@ -264,4 +266,28 @@ export function postClinic(clinic) {
       console.log(error);
     }
   };
+}
+
+export function getTreatments(){
+  return async function(dispatch){
+    try{
+      const treatments = (await axios.get('/treatments')).data
+      return dispatch({type: GET_TREATMENTS, payload: treatments});
+    } catch (e){  
+      console.log(e);
+      alert(e.responde.data.error)
+    }
+  }
+}
+
+export function getMedics(){
+  return async function(dispatch){
+    try{
+      const medics = (await axios.get('/medics')).data
+      return dispatch({type : GET_MEDICS, payload : medics})
+    }catch (e) {
+      console.log(e)
+      alert(e.responde.data.error)
+    }
+  }
 }
