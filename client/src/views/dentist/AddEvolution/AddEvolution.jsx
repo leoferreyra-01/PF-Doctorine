@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelect } from "@mui/base";
 import { useDispatch, useSelector } from "react-redux";
 import { getMedics, getTreatments } from "../../../redux/actions";
+import S from './AddEvolution.module.css'
 
 export function validate(input) {}
 
@@ -16,7 +17,7 @@ function addEvolution() {
   const dispatch = useDispatch();
 
   const [data, setData] = useState({
-    Observations: "",
+    observations: "",
     medico: [],
     fecha: "",
     tratamiento: [],
@@ -52,6 +53,17 @@ function addEvolution() {
     });
   }
 
+  function handleSubmit(){
+    axios('http://localhost:3001/login/register',{
+        date: data.fecha,
+        observation: data.observations,
+        MedicID: data.medico,
+        TreatmentID: data.tratamiento,
+        PatientID: patientID,
+        toothID: "",
+    })
+  }
+
   useEffect(() => {
     dispatch(getTreatments());
     dispatch(getMedics());
@@ -60,12 +72,9 @@ function addEvolution() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-
-      <form>
-        {/* {errors.passwordConfirm && (
-              <p className="error">{errors.passwordConfirm}</p>
-            )} */}
-        <label>Observations</label>
+    <div className={S.content}>
+      <form className={S.form}>
+        <label className={S.label}>Observations</label>
         <input
           value={data.sintomas}
           placeholder="Observations"
@@ -73,42 +82,45 @@ function addEvolution() {
           name="Observations"
         />
 
-        <label>Date</label>
+        <label className={S.label}>Date</label>
         <input
           value={data.fecha}
           placeholder="Observations"
           type="date"
           name="Observations"
         />
-
-        <select onChange={(e) => handleSelectMedic(e)} name="treatments">
-          <option hidden value="">
+        <label className={S.label}>Medic</label>
+        <select onChange={(e) => handleSelectMedic(e)} name="treatments" className={S.casillas}>
+          <option hidden value="" >
             Select Medic
           </option>
           {medicos &&
             medicos.map((medicos) => (
               <option
                 value={medicos.fullName}
+                className={S.casillas}
               >{`${medicos.fullName}`}</option>
             ))}
         </select>
 
-        <select onChange={(e) => handleSelect(e)} name="medic">
-          <option hidden value="">
+        <label className={S.label}>Treatment</label>
+        <select onChange={(e) => handleSelect(e)} name="medic" className={S.casillas2}>
+          <option hidden value="" >
             Select Treatment
           </option>
           {tratamientos &&
             tratamientos.map((tratemientos) => (
               <option
                 value={tratemientos.ID}
+                className={S.casillas}
               >{`${tratemientos.description}(${tratemientos.treatmentType})`}</option>
             ))}
         </select>
         {data.tratamiento.length > 0 && (
-          <div>
+          <div className={S.traetment}>
             <h4>Selected Treatments</h4>
             <hr />
-            <ul>
+            <ul >
               {data.tratamiento.map((t) => {
                 let treat = tratamientos.map((tr) =>
                 tr.ID === t ? tr.description : null
@@ -127,8 +139,9 @@ function addEvolution() {
           </div>
         )}
 
-        <button type="submit">Add Evolution</button>
+        <button type="submit" className={S.btn}>Add Evolution</button>
       </form>
+      </div>
     </>
   );
 }

@@ -21,7 +21,6 @@ router.use('/turns', Turns);
 //|> /clinicalhistories
 const ClinicalHistory = require('./routeClinicalHistory');
 router.use('/clinicalhistories', ClinicalHistory);
-module.exports = router;
 
 //|> /clinics
 const Clinics = require('./routerClinics');
@@ -50,3 +49,5 @@ router.use("/login", usersChange)
 //|> /password
 const passwordChange = require("./routesLogin/routePassword")
 router.use("/password", passwordChange)
+
+module.exports = router;
