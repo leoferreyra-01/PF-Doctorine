@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
 export default function RegisterClinicalHistory() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const Id = useSelector(state => state.newPatientId);
-  console.log(Id);
+  const newPatientId = useSelector(state => state.newPatientId);
+  console.log('antes del state', newPatientId);
   let [newHC, setNewHC] = useState({
     Smoker: { value: false, obs: null },
     'Use drugs': { value: false, obs: null },
@@ -43,9 +43,9 @@ export default function RegisterClinicalHistory() {
     Rickets: { value: false, obs: null },
     Osteomalacia: { value: false, obs: null },
     Other: { value: false, obs: null }, // son varios other
-    patient: Id,
+    patient: newPatientId,
   });
-  console.log(newHC.patient);
+  console.log('asignado al state', newHC.patient);
   const arrayToMap = [];
   for (let property in newHC) {
     arrayToMap.push(property);
@@ -128,7 +128,7 @@ export default function RegisterClinicalHistory() {
         Rickets: { value: false, obs: null },
         Osteomalacia: { value: false, obs: null },
         Other: { value: false, obs: null },
-        patient: Id,
+        patient: newPatientId,
       });
       navigate(`/home/${Id}`);
     } else return false;
