@@ -11,10 +11,10 @@ import PatientHome from './views/patient/home';
 import RegisterPatient from './views/dentist/RegisterPatient';
 import Calendar from './views/dentist/calendar';
 import Budget from './views/dentist/budget';
-import SignIn from './Components/SignIn/SignIn';
-import SignUp from './Components/SignUp/SignUp';
-import NewPassword from './Components/NewPassword/NewPassword';
-import PasswordReset from './Components/PasswordReset/PasswordReset';
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
+import NewPassword from './components/NewPassword/NewPassword';
+import PasswordReset from './components/PasswordReset/PasswordReset';
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
   return (
