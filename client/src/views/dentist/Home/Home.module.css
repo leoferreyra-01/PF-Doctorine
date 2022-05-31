@@ -1,0 +1,21 @@
+.home_container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    'sidebar header header header header header'
+    'sidebar content content content content content'
+    'sidebar content content content content content'
+    'sidebar content content content content content'
+    'sidebar content content content content content'
+    'sidebar content content content content content';
+}
+
+/*
+
+Azul oscuro sidebar: #101f33
+azul claro header:  #009be5
+gris claro content: #eaeff1
+*/

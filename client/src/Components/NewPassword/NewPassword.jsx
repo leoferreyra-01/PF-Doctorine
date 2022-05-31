@@ -1,38 +1,38 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { postNewPassword } from "../../redux/actions";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
-import S from "./NewPassword.module.css"
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { postNewPassword } from '../../redux/actions';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import S from './NewPassword.module.css';
 
 export function validate(input) {
   let errors = {};
   if (!input.password) {
-    errors.password = "Password is required";
+    errors.password = 'Password is required';
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
-    errors.password = "Password is invalid";
+    errors.password = 'Password is invalid';
   }
 
   if (!input.passwordConfirm) {
-    errors.passwordConfirm = "Debes confirmar tu contraseña";
+    errors.passwordConfirm = 'Debes confirmar tu contraseña';
   } else if (input.password !== input.passwordConfirm) {
-    errors.passwordConfirm = "Las contraseñas no coinciden";
+    errors.passwordConfirm = 'Las contraseñas no coinciden';
   }
   return errors;
 }
 
 function NewPassword() {
   const query = new URLSearchParams(useLocation().search);
-  const username = query.get("usuario");
+  const username = query.get('usuario');
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     username: username,
-    password: "",
-    passwordConfirm: "",
+    password: '',
+    passwordConfirm: '',
   });
   const navigate = useNavigate();
 
@@ -50,25 +50,25 @@ function NewPassword() {
     );
   };
 
-  const register = (e) => {
+  const register = e => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
-      return toast.error("Debes rellenar todos los campos de forma correcta.");
+      return toast.error('Debes rellenar todos los campos de forma correcta.');
     } else {
-      console.log("SI ENTRO");
+      console.log('SI ENTRO');
       dispatch(postNewPassword(input));
-      navigate("/");
+      navigate('/');
       axios
-        .post("/newPassword", {
+        .post('http://localhost:3001/newPassword', {
           password: input.password,
         })
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
           toast.success(response.data);
-          navigate("/");
+          navigate('/');
         })
         .catch(() => {
-          return toast.error("Este usuario ya ha sido creado.");
+          return toast.error('Este usuario ya ha sido creado.');
         });
     }
   };
@@ -169,8 +169,8 @@ const SignUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   * {
-    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-    font-family: "Poppins", sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    font-family: 'Poppins', sans-serif;
   }
   label {
     padding-top: 10px;

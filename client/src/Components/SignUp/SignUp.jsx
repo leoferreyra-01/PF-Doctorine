@@ -123,6 +123,8 @@ function SignUp() {
     } else {
       setMedic(true);
     }
+
+    console.log(medic);
   }
 
   const register = e => {
@@ -132,7 +134,7 @@ function SignUp() {
     } else {
       if (medic === false) {
         axios
-          .post('/login/register', {
+          .post('http://localhost:3001/login/register', {
             email: input.email,
             password: input.password,
             userType: 'Patient',
@@ -149,9 +151,9 @@ function SignUp() {
             return toast.error('Este usuario ya ha sido creado.');
           });
       } else {
-        // console.log(infoUser);
+        console.log(infoUser);
         axios
-          .post('/medics', {
+          .post('http://localhost:3001/medics', {
             infoUser: infoUser,
             infoMedic: infoMedic,
             ClinicID: input.ClinicID,
@@ -171,14 +173,14 @@ function SignUp() {
     <>
       <SignUpDivContainer>
         <div className={S.check}>
-          <label className="switchBtn">
+          <label class="switchBtn">
             <input type="checkbox" onClick={toggleOn} />
             {medic === false ? (
-              <div className="slide round">
+              <div class="slide round">
                 <p className={S.pa}> Patient </p>
               </div>
             ) : (
-              <div className="slide round">
+              <div class="slide round">
                 <p>Medic</p>
               </div>
             )}

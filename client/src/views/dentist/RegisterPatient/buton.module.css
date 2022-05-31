@@ -1,0 +1,63 @@
+.buton {
+  background-color: #101f33;
+  border: none;
+  padding: 10px;
+  color: aliceblue;
+  border-radius: 5px;
+  margin-top: 2%;
+  width: 20%;
+}
+
+.rp_container {
+  grid-area: content;
+  overflow-y: auto;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+
+.input_container {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.input {
+  padding: 27px 12px 10px;
+  border: none;
+  font-size: 1.6rem;
+}
+
+.danger {
+  animation: shake 300ms;
+  color: #f44336;
+  font-size: 1.6rem;
+}
+
+.input:focus-visible {
+  border: none;
+}
+
+.danger:focus-visible {
+  border: 2px solid #f44336;
+}
+/* , .danger_img, .danger_hp, .danger_atck,
+.danger_def,.danger_speed,.danger_height,.danger_weight*/
+@keyframes shake {
+  25% {
+    transform: translateX(4px);
+  }
+  50% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
