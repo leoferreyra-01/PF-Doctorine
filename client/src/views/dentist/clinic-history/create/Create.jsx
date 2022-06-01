@@ -92,7 +92,6 @@ export default function RegisterClinicalHistory() {
     setNewHC(prevState => {
       return {
         ...prevState,
-        patient: Id,
       };
     });
     console.log(newHC.patient);
