@@ -12,6 +12,7 @@ import ClinicalHistory from '../clinic-history/get';
 import SearchBar from '../SearchBar/SearchBar';
 import Evolution from '../Evolution/Evolution';
 import Study from '../Study/Study';
+import Budget from '../budget';
 
 export default function PatientDetails() {
   let { patientID } = useParams();
