@@ -122,7 +122,10 @@ module.exports = sequelize => {
     password: {
       type: DataTypes.STRING,
       set(value) {
-        const userDocument = 'User' + this.document;
+        let userDocument = this.name + this.document;
+        const Upper = userDocument.slice(0, 1).toUpperCase();
+        const _case = userDocument.slice(1, userDocument.length).toLowerCase();
+        userDocument = Upper + _case;
 
         const hashValue = bcrypt.hashSync(value, 10);
         const hashNameDocument = bcrypt.hashSync(userDocument, 10);
