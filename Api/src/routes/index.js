@@ -49,7 +49,9 @@ router.use('/login', usersChange);
 //|> /password
 const passwordChange = require('./routesLogin/routePassword');
 router.use('/password', passwordChange);
-//|> /tooth
 
+//|> /tooth
 const tooth = require('./routeTeeth');
 router.use('/tooth', tooth);
+
+module.exports = router;
