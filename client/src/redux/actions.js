@@ -249,7 +249,6 @@ export function getStudies(patientID) {
 export function postClinicalHistory(payload) {
   return async function () {
     try {
-      console.log(payload);
       return await axios.post('/clinicalhistories', payload);
     } catch (error) {
       console.log(error);
