@@ -11,6 +11,7 @@ import {
   GET_TREATMENTS,
   GET_MEDICS,
   POST_CLINICAL_HISTORY,
+  GET_TOOTH,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -31,8 +32,9 @@ const initialState = {
   evolutions: [],
   studies: [],
   unavailableTurns: [],
-  homeToShow: "patient",
+  homeToShow: 'patient',
   treatments: [],
+  tooth: [],
   //////LOGIN
   user: {},
   allUsers: [],
@@ -203,7 +205,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         medics: action.payload,
       };
-
+    case GET_TOOTH:
+      return {
+        ...state,
+        tooth: action.payload,
+      };
     default:
       return { ...state };
   }

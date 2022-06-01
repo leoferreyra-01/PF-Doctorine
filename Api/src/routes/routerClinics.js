@@ -1,6 +1,6 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
-
+const { validateClinic } = require('../validators/validatorClinic');
 //|> CONTROLLER
 const {
   getAllClinics,
@@ -14,37 +14,14 @@ const {
 //#region <>-------------------- GET --------------------<>
 // const {} = require('./controllersGET');
 
-router.get('/', async (req, res) => {
-  try {
-    let allClinics = await getAllClinics();
-    return res.status(200).json(allClinics);
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-});
+router.get('/', getAllClinics);
 
-router.get('/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-
-    let clinic = await getClinicById(id);
-    res.status(200).json(clinic);
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-});
+router.get('/:id', getClinicById);
 
 //#endregion
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', async (req, res) => {
-  try {
-    await createClinic(req.body);
-    res.status(201).json({ msg: 'successfully created clinic' });
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
-});
+router.post('/', validateClinic, createClinic);
 
 //#endregion
 
@@ -52,16 +29,7 @@ router.post('/', async (req, res) => {
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', async (req, res) => {
-  try {
-    await putClinic(req.body);
-
-    res.status(201).send({ msg: 'successfully modified clinic.' });
-  } catch (error) {
-    console.log(error);
-    res.status(404).send({ error: error.message });
-  }
-});
+router.put('/', putClinic);
 
 //#endregion
 module.exports = router;

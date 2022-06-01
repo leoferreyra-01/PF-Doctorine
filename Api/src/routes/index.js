@@ -39,15 +39,17 @@ const Study = require('./routerStudies');
 router.use('/studies', Study);
 
 //|> /evolutions
-const getEvolution = require("./routeEvolutions");
-router.use("/evolutions" , getEvolution)
+const getEvolution = require('./routeEvolutions');
+router.use('/evolutions', getEvolution);
 
 //|> /login
-const usersChange = require("./routesLogin/routeLogin")
-router.use("/login", usersChange)
+const usersChange = require('./routesLogin/routeLogin');
+router.use('/login', usersChange);
 
 //|> /password
-const passwordChange = require("./routesLogin/routePassword")
-router.use("/password", passwordChange)
+const passwordChange = require('./routesLogin/routePassword');
+router.use('/password', passwordChange);
+//|> /tooth
 
-module.exports = router;
+const tooth = require('./routeTeeth');
+router.use('/tooth', tooth);

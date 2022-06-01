@@ -40,6 +40,9 @@ export default function PatientDetails() {
       <Link to={`/home/addEvolution/${patientID}`}>
         <button className={s.btn}>Add Evolution</button>
       </Link>
+      <Link to={`/home/studies/${patientID}`}>
+        <button className={s.btn}>Add Studies</button>
+      </Link>
       {filledStudies ? (
         studies.map(p => (
           <Study
