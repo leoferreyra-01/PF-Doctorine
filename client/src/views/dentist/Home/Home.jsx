@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import SideBar from '../SideBar/SideBar';
 import { Toaster } from 'react-hot-toast';
-import Loader from '../../../components/Loader/loader';
+import Loader from '../../../Components/Loader/loader';
 
 export default function Home() {
   const [title, setTitle] = useState(null);
