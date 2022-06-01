@@ -1,4 +1,4 @@
-export default function fixhc(data) {
+export default function fixhc(data, patientID) {
   const fixedDate = {
     b_smoker: data.Smoker.value,
     b_useDrugs: data['Use drugs'].value,
@@ -37,7 +37,7 @@ export default function fixhc(data) {
     ib_rickets: data['Rickets'].value,
     ib_osteomalacia: data['Osteomalacia'].value,
     ib_other: null,
-    patient: data.patient,
+    patient: patientID,
   };
   return fixedDate;
 }

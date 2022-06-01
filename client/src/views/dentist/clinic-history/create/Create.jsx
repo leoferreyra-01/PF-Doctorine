@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
 export default function RegisterClinicalHistory() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const newPatientId = useSelector(state => state.newPatientId);
-  console.log('antes del state', newPatientId);
+  const Id = useSelector(state => state.newPatientId);
+  console.log('antes del state', Id);
   let [newHC, setNewHC] = useState({
     Smoker: { value: false, obs: null },
     'Use drugs': { value: false, obs: null },
@@ -43,9 +43,8 @@ export default function RegisterClinicalHistory() {
     Rickets: { value: false, obs: null },
     Osteomalacia: { value: false, obs: null },
     Other: { value: false, obs: null }, // son varios other
-    patient: newPatientId,
   });
-  console.log('asignado al state', newHC.patient);
+  console.log('asignado al state', Id);
   const arrayToMap = [];
   for (let property in newHC) {
     arrayToMap.push(property);
@@ -87,13 +86,18 @@ export default function RegisterClinicalHistory() {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire('Saved!', '', 'success');
+        const fixedhc = fixhc(newHC, Id);
+        console.log(fixedhc);
+        dispatch(postClinicalHistory(fixedhc));
+        navigate(`/home/${newPatientId}`);
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }
     });
 
     if (Swal === true) {
-      const fixedhc = fixhc(newHC);
+      console.log('Entre');
+      const fixedhc = fixhc(newHC, Id);
       console.log(fixedhc);
       dispatch(postClinicalHistory(fixedhc));
       setNewHC({
@@ -128,7 +132,6 @@ export default function RegisterClinicalHistory() {
         Rickets: { value: false, obs: null },
         Osteomalacia: { value: false, obs: null },
         Other: { value: false, obs: null },
-        patient: newPatientId,
       });
       navigate(`/home/${Id}`);
     } else return false;

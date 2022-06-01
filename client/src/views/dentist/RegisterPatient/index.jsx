@@ -24,8 +24,8 @@ export default function RegisterPatient() {
   const onSubmit = data => {
     const patientReady = sendPatientHelper(data);
     console.log(patientReady);
-    alert('Sera redireccionado para crear la historia clinica del paciente');
     dispatch(postPatient(patientReady));
+    alert('Sera redireccionado para crear la historia clinica del paciente');
 
     navigate('/home/create-clinical-history/');
   };
