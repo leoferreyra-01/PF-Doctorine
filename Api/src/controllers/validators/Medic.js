@@ -1,6 +1,96 @@
 'use strict';
 //|> SEQUELIZE
 const { Medic } = require('../../db');
+//|> EXPRESS-VALIDATOR
+const { check } = require('express-validator');
+const { formatName } = require('./customSanitizer.js');
+//|> VALIDATOR
+const validator = require('validator');
+
+const XvalidateInfoMedic = [
+  //|> title
+  check('infoMedic.title')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Title is required.');
+      }
+      return true;
+    })
+    .if(check('infoMedic.title').exists())
+    .custom(value => {
+      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
+      throw new Error('Name must be alphabetic.');
+    })
+    .isString()
+    .isLength({ min: 3 })
+    .withMessage('Tile must have at least 3 characters.')
+    .notEmpty()
+    .withMessage('Can not be an empty string.')
+    .customSanitizer(formatName)
+    .trim(),
+
+  //|> specialization
+  check('infoMedic.specialization')
+    .if(check('infoMedic.specialization').exists())
+    .custom(value => {
+      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
+      throw new Error('Name must be alphabetic.');
+    })
+    .isString()
+    .isLength({ min: 3 })
+    .withMessage('Tile must have at least 3 characters.')
+    .notEmpty()
+    .withMessage('Can not be an empty string.')
+    .customSanitizer(formatName)
+    .trim(),
+
+  //|> tuition_date
+  check('infoMedic.tuition_date')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Name is required.');
+      }
+      return true;
+    })
+    .if(check('infoMedic.tuition_date').exists())
+    .isDate({ format: 'YYYY-MM-DD' })
+    .withMessage('tuition_date must be a date format (YYYY-MM-DD).')
+    .trim(),
+
+  //|> tuition_number
+  check('infoMedic.tuition_number')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('tuition_number is required.');
+      }
+      return true;
+    })
+    .if(check('infoMedic.tuition_number').exists())
+    .custom((value, { req }) => {
+      if (req.method === 'PUT') {
+        throw new Error(`tuition_number ${value} cant be edited.`);
+      }
+      return true;
+    })
+    .isNumeric()
+    .withMessage('tuition_number must be numeric.')
+    .isInt({ min: 1 })
+    .notEmpty()
+    .isLength({ min: 4 })
+    .withMessage('tuition_number must have 4 or more digits.')
+    .bail()
+    .custom(async value => {
+      // PRELOADS
+      const medic = await Medic.findOne({
+        where: { tuition_number: value },
+      });
+
+      // ID exist
+      if (medic) throw new Error(`tuition_number ${value} already exists.`);
+
+      return true;
+    }),
+];
 
 async function validateInfoMedic(
   ruteType = 'POST',
@@ -94,4 +184,5 @@ async function validateInfoMedic(
 
 module.exports = {
   validateInfoMedic,
+  XvalidateInfoMedic,
 };
