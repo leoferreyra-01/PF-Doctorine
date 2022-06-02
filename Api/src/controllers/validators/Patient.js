@@ -1,36 +1,54 @@
 'use strict';
+//|> SEQUELIZE
+const { User } = require('../../db');
 //|> EXPRESS-VALIDATOR
 const { check } = require('express-validator');
 
 const XvalidateInfoPatient = [
   //|> medicalService
   check('infoPatient.medicalService', 'Must be a string.')
+    .default(undefined)
     .if(check('infoPatient.medicalService').exists())
-    .exists({
-      checkFalsy: true, // if falsy values (eg "", 0, false, null)...
-    })
     .isString()
-    .notEmpty()
+    .withMessage('Must be a string.')
     .isLength({ min: 3 })
     .withMessage('Must be at least 3 characters long.')
     .trim(),
 
   //|> showClinicalHistory
   check('infoPatient.showClinicalHistory', 'Must be a boolean.')
+    .default(undefined)
     .if(check('infoPatient.showClinicalHistory').exists())
-    .exists({
-      checkNull: true, // if null values, will not exist
-    })
-    .isBoolean()
-    .notEmpty(),
+    .isBoolean(),
 
   //|> tutor
-  check(
-    'infoPatient.tutor',
-    'Must be a number > 0, string(number) > 0, or null.'
-  )
+  check('infoPatient.tutor')
+    .default(undefined)
     .if(check('infoPatient.tutor').exists())
-    .custom(value => /^[1-9][0-9]*$/.test(value) || value === null),
+    .isNumeric()
+    .withMessage('Tutor document must be numeric.')
+    .isInt({ min: 1 })
+    .withMessage('Tutor document must be a positive integer.')
+    .isLength({ min: 8 })
+    .withMessage('Tutor document must have 8 or more digits.')
+    .trim()
+    .bail()
+    .custom(async value => {
+      // PRELOADS
+      const user = await User.findOne({
+        where: { document: value },
+      });
+
+      // ID exist
+      if (!user) throw new Error(`User document ${value} dont exists.`);
+
+      // age validation to be a tutor
+      const userAge = user.dataValues.age;
+      if (userAge < 18)
+        throw new Error(`User tutor must have at least 18 years old.`);
+
+      return true;
+    }),
 ];
 
 async function validateInfoPatient(
