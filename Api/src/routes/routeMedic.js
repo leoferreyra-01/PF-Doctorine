@@ -28,17 +28,10 @@ router.get(
   async (req, res) => {
     const { ID } = req.params;
 
-    // const [validation1, MedicID_Errors] = await validate.ModelID('Medic', ID);
-    // const Errors = { MedicID_Errors };
-
     try {
-      // if (!validation1) throw new Error('Validation failure.');
-
       res.status(200).json(await getMedic(ID));
     } catch (error) {
       console.log(error);
-      // console.log(Errors);
-      // res.status(400).json(Errors);
       res.status(400).json(error);
     }
   }
@@ -59,24 +52,10 @@ router.post(
   async (req, res) => {
     const { infoUser, infoMedic, ClinicID } = req.body;
 
-    // const [validation1, infoUser_Errors] = await validate.InfoUser(
-    //   'POST',
-    //   infoUser
-    // );
-    // const [validation2, infoMedic_Errors] = await validate.InfoMedic(
-    //   'POST',
-    //   infoMedic
-    // );
-    // const Errors = { infoUser_Errors, infoMedic_Errors };
-
     try {
-      // if (!validation1 || !validation2) throw new Error('Validation failure.');
-
       res.status(200).json(await postMedic(infoUser, infoMedic, ClinicID));
     } catch (error) {
       console.log(error);
-      // console.log(Errors);
-      // res.status(400).json(Errors);
       res.status(400).json(error);
     }
   }
@@ -99,26 +78,10 @@ router.put(
     const { ID } = req.params;
     const { infoUser, infoMedic, ClinicID } = req.body;
 
-    // const [validation1, MedicID_Errors] = await validate.ModelID('Medic', ID);
-    // const [validation2, infoUser_Errors] = await validate.InfoUser(
-    //   'PUT',
-    //   infoUser
-    // );
-    // const [validation3, infoMedic_Errors] = await validate.InfoMedic(
-    //   'PUT',
-    //   infoMedic
-    // );
-    // const Errors = { MedicID_Errors, infoUser_Errors, infoMedic_Errors };
-
     try {
-      // if (!validation1 || !validation2 || !validation3)
-      //   throw new Error('Validation failure.');
-
       res.status(200).json(await putMedic(ID, infoUser, infoMedic, ClinicID));
     } catch (error) {
       console.log(error);
-      // console.log(Errors);
-      // res.status(400).json(Errors);
       res.status(400).json(error);
     }
   }
@@ -131,17 +94,10 @@ router.put(
 router.delete('/:ID', [validate.xModelID('Medic', 'ID')], async (req, res) => {
   const { ID } = req.params;
 
-  // const [validation1, MedicID_Errors] = await validate.ModelID('Medic', ID);
-  // const Errors = { MedicID_Errors };
-
   try {
-    // if (!validation1) throw new Error('Validation failure.');
-
     res.status(200).send(await deleteMedic(ID));
   } catch (error) {
     console.log(error);
-    // console.log(Errors);
-    // res.status(400).json(Errors);
     res.status(400).json(error);
   }
 });

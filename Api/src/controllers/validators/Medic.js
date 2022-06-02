@@ -10,6 +10,7 @@ const validator = require('validator');
 const XvalidateInfoMedic = [
   //|> title
   check('infoMedic.title')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('Title is required.');
@@ -17,38 +18,30 @@ const XvalidateInfoMedic = [
       return true;
     })
     .if(check('infoMedic.title').exists())
-    .custom(value => {
-      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
-      throw new Error('Name must be alphabetic.');
-    })
-    .isString()
+    .isAlpha('es-ES', { ignore: ' _-' })
+    .withMessage('Must be a valid only-text format.')
     .isLength({ min: 3 })
     .withMessage('Tile must have at least 3 characters.')
-    .notEmpty()
-    .withMessage('Can not be an empty string.')
     .customSanitizer(formatName)
     .trim(),
 
   //|> specialization
   check('infoMedic.specialization')
+    .default(undefined)
     .if(check('infoMedic.specialization').exists())
-    .custom(value => {
-      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
-      throw new Error('Name must be alphabetic.');
-    })
-    .isString()
+    .isAlpha('es-ES', { ignore: ' _-' })
+    .withMessage('Must be a valid only-text format.')
     .isLength({ min: 3 })
     .withMessage('Tile must have at least 3 characters.')
-    .notEmpty()
-    .withMessage('Can not be an empty string.')
     .customSanitizer(formatName)
     .trim(),
 
   //|> tuition_date
   check('infoMedic.tuition_date')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
-        throw new Error('Name is required.');
+        throw new Error('tuition_date is required.');
       }
       return true;
     })
@@ -59,6 +52,7 @@ const XvalidateInfoMedic = [
 
   //|> tuition_number
   check('infoMedic.tuition_number')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('tuition_number is required.');
@@ -72,12 +66,13 @@ const XvalidateInfoMedic = [
       }
       return true;
     })
-    .isNumeric()
+    .isInt()
     .withMessage('tuition_number must be numeric.')
     .isInt({ min: 1 })
-    .notEmpty()
+    .withMessage('tuition_number must be greater than 0.')
     .isLength({ min: 4 })
     .withMessage('tuition_number must have 4 or more digits.')
+    .trim()
     .bail()
     .custom(async value => {
       // PRELOADS
