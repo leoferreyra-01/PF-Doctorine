@@ -16,6 +16,7 @@ module.exports = sequelize => {
       defaultValue: false,
     },
     tutor: {
+      // a valid User.document with age > 18.
       type: DataTypes.INTEGER,
       defaultValue: null,
     },
