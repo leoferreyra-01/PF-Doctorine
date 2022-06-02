@@ -9,9 +9,11 @@ function XvalidateResults(req, res, next) {
   } catch (error) {
     console.error(
       '\x1b[31m%s\x1b[0m',
-      'Express-validation error: ',
+      'Express-validation errors: ',
       error.mapped()
     );
+    console.log('\x1b[31m%s\x1b[0m', 'Method: ', req.method, req.baseUrl);
+
     res.status(403).json({ fail: true, err: error.mapped() });
   }
 }
