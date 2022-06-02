@@ -4,29 +4,19 @@ const { sequelize } = require('../../db');
 //|> EXPRESS-VALIDATOR
 const { check } = require('express-validator');
 
-const XvalidateModelID = [
-  check('ID')
+function XvalidateModelID(model, ModelID) {
+  return check(ModelID)
     .isNumeric()
-    .not()
-    .isEmpty()
-    .bail() // stop validation if one before fails. Prevent '.custom()' to execute.
-    .custom(async (id, { req }) => {
-      let model = '';
-      if (req.body.infoPatient) model = 'Patient';
-      if (req.body.infoMedic) model = 'Medic';
+    .notEmpty()
+    .bail()
+    .custom(async id => {
+      const modelId = await sequelize.models[model].findByPk(id);
 
-      //|> PRELOADS
-      const ids = (await sequelize.models[model].findAll()).map(
-        model => model.dataValues.ID
-      );
-
-      //|> ID exist
-      if (!ids.includes(parseInt(id)))
-        throw new Error(`ID ${id} does not exist.`);
+      if (!modelId) throw new Error(`${model} ID ${id} does not exist.`);
 
       return true;
-    }),
-];
+    });
+}
 
 async function validateModelID(model, id, ids = []) {
   //|> PRELOADS
