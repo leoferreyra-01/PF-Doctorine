@@ -2,8 +2,46 @@
 
 //|> SEQUELIZE
 const { Turn, Medic, Clinic } = require('../../db');
+//|> EXPRESS-VALIDATOR
+const { check } = require('express-validator');
 
-// based on controllersTurns/ PostTurn/GetTurn
+async function XvalidateTurnCollisions( //|!| Not Tested! ❌
+  TurnID = null // for PUT update options.
+) {
+  //|> PRELOADS
+  const Turns = (await Turn.findAll()).map(turn => turn.dataValues);
+
+  const oldInfoTurn = {};
+  if (TurnID) oldInfoTurn = (await Turn.findByPk(TurnID)).dataValues;
+
+  //|> VALIDATIONS
+  return check('infoTurn')
+    .custom(async infoTurn => {
+      const getMedic = (await Medic.findByPk(infoTurn.MedicID)).dataValues;
+      const getClinic = (await Clinic.findByPk(getMedic.ClinicID)).dataValues;
+      const officeHours = JSON.parse(getClinic.officeHours);
+
+      infoTurn = {
+        ...oldInfoTurn,
+        ...infoTurn,
+      };
+
+      if (!validateTurnInOfficeHours(infoTurn, officeHours))
+        throw new Error('The turn is out of office hours.');
+    })
+    .custom(infoTurn => {
+      infoTurn = {
+        ...oldInfoTurn,
+        ...infoTurn,
+      };
+      if (!validateTurnBetweenTurnsInADay(infoTurn, Turns))
+        throw new Error(
+          'The turn time and duration collide with another turn.'
+        );
+    });
+}
+
+// based on controllersTurns/ PostTurn/GetTurn //|*| Tested on preload_db! ✔️
 async function validateTurnCollisions(
   infoTurn,
   TurnID = null, // for update options.
@@ -38,7 +76,7 @@ async function validateTurnCollisions(
   if (!validateTurnInOfficeHours(infoTurn, officeHours))
     Errors.officeHours = 'The turn is out of office hours.';
 
-  if (!validateTurnBetweenTurnsInADAy(infoTurn, Turns))
+  if (!validateTurnBetweenTurnsInADay(infoTurn, Turns))
     Errors.time = 'The turn time and duration collide with another turn.';
 
   //|> RESULTS
@@ -62,7 +100,9 @@ function validateTurnInOfficeHours(turn, officeHours) {
 }
 
 //|> VALIDATE TURN BETWEEN TURNS IN THE SAME DAY
-function validateTurnBetweenTurnsInADAy(turn, turns) {
+function validateTurnBetweenTurnsInADay(turn, turns) {
+  turns = turns.filter(turnX => turnX.date === turn.date);
+
   for (let i = 0; i < turns.length; i++) {
     if (
       (turn.time >= turns[i].time ||
@@ -77,12 +117,10 @@ function validateTurnBetweenTurnsInADAy(turn, turns) {
 
 //|> VALIDATE TURN
 function validateTurn(turn, turns, officeHours) {
-  turns = turns.filter(turnX => turnX.date === turn.date);
-
   if (!validateTurnInOfficeHours(turn, officeHours)) return false;
-  if (!validateTurnBetweenTurnsInADAy(turn, officeHours)) return false;
+  if (!validateTurnBetweenTurnsInADay(turn, officeHours)) return false;
 
   return true;
 }
 
-module.exports = { validateTurnCollisions };
+module.exports = { validateTurnCollisions, XvalidateTurnCollisions };
