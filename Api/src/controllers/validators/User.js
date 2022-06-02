@@ -1,6 +1,235 @@
 'use strict';
 //|> SEQUELIZE
 const { User } = require('../../db');
+//|> EXPRESS-VALIDATOR
+const { check } = require('express-validator');
+const { formatName } = require('./customSanitizer.js');
+//|> VALIDATOR
+const validator = require('validator');
+
+const XvalidateInfoUser = [
+  //|> userType
+  check('infoUser.userType').customSanitizer((value, { req }) => {
+    if (req.baseUrl === '/patients') value = 'Patient';
+    if (req.baseUrl === '/medics') value = 'Medic';
+    return value;
+  }),
+
+  //|> document
+  check('infoUser.document')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Document is required.');
+      }
+      return true;
+    })
+    .if(check('infoUser.document').exists())
+    .custom((value, { req }) => {
+      if (req.method === 'PUT') {
+        throw new Error(`Document ${value} cant be edited.`);
+      }
+      return true;
+    })
+    .isNumeric()
+    .withMessage('Document must be numeric.')
+    .isInt({ min: 1 })
+    .notEmpty()
+    .isLength({ min: 8 })
+    .withMessage('Document must have 8 or more digits.')
+    .bail()
+    .custom(async value => {
+      // PRELOADS
+      const user = await User.findOne({
+        where: { document: value },
+      });
+
+      // ID exist
+      if (user) throw new Error(`Document ${value} already exists.`);
+
+      return true;
+    })
+    .trim(),
+
+  //|> name
+  check('infoUser.name')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Name is required.');
+      }
+      return true;
+    })
+    .if(check('infoUser.name').exists())
+    .custom(value => {
+      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
+      throw new Error('Name must be alphabetic.');
+    })
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage('Name must have at least 3 characters.')
+    .customSanitizer(formatName)
+    .trim(),
+
+  //|> lastName
+  check('infoUser.lastName')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Name is required.');
+      }
+      return true;
+    })
+    .if(check('infoUser.lastName').exists())
+    .custom(value => {
+      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
+      throw new Error('Name must be alphabetic.');
+    })
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage('Lastname must have at least 3 characters.')
+    .customSanitizer(formatName)
+    .trim(),
+
+  //|> birth
+  check('infoUser.birth')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Name is required.');
+      }
+      return true;
+    })
+    .if(check('infoUser.birth').exists())
+    .isDate({ format: 'YYYY-MM-DD' })
+    .withMessage('Birth must be a date format (YYYY-MM-DD).')
+    .trim(),
+
+  //|> telephone
+  check('infoUser.telephone')
+    .if(check('infoUser.telephone').exists())
+    .notEmpty()
+    .custom(value =>
+      /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/g.test(
+        value
+      )
+    )
+    .withMessage('Telephone must be a valid phone number.')
+    .trim(),
+
+  //|> cellephone
+  check('infoUser.cellphone')
+    .if(check('infoUser.cellphone').exists())
+    .notEmpty()
+    .custom(value =>
+      /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/g.test(
+        value
+      )
+    )
+    .withMessage('Cellphone must be valid cellphone number.')
+    .trim(),
+
+  //|> street
+  check('infoUser.street')
+    .if(check('infoUser.street').exists())
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage('Street must have at least 3 characters.')
+    .custom(value => {
+      if (validator.isAlphanumeric(value, 'es-ES', { ignore: ' ' }))
+        return true;
+      throw new Error('Name must be alphabetic.');
+    })
+    .customSanitizer(formatName)
+    .trim(),
+
+  //|> number
+  check('infoUser.number')
+    .if(check('infoUser.number').exists())
+    .notEmpty()
+    .isNumeric()
+    .withMessage('Number must be numeric.'),
+
+  //|> city
+  check('infoUser.city')
+    .if(check('infoUser.city').exists())
+    .custom(value => {
+      if (validator.isAlphanumeric(value, 'es-ES', { ignore: ' ' }))
+        return true;
+      throw new Error('Name must be alphabetic.');
+    })
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage('City must have at least 3 characters.')
+    .customSanitizer(formatName)
+    .trim(),
+
+  //|> postalCode
+  check('infoUser.postalCode')
+    .if(check('infoUser.postalCode').exists())
+    .isNumeric()
+    .withMessage('Postal code must be numeric.')
+    .notEmpty()
+    .isLength({ min: 4 })
+    .withMessage('Postal code must have at least 4 digits.'),
+
+  //|> email
+  check('infoUser.email')
+    .custom((value, { req }) => {
+      if (req.method === 'POST' && !value) {
+        throw new Error('Name is required.');
+      }
+      return true;
+    })
+    .if(check('infoUser.email').exists())
+    .notEmpty()
+    .isEmail()
+    .withMessage('Email must be valid.')
+    .normalizeEmail()
+    .bail()
+    .custom(async value => {
+      // PRELOADS
+      const user = await User.findOne({
+        where: { email: value },
+      });
+
+      // email exist
+      if (user) throw new Error(`Email ${value} already exists.`);
+
+      return true;
+    })
+    .trim(),
+
+  //|> password
+  check('infoUser.password')
+    .if(check('infoUser.password').exists())
+    .notEmpty()
+    .custom(value => {
+      if (
+        validator.isStrongPassword(value, {
+          minLength: 8,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 0,
+        })
+      )
+        return true;
+      throw new Error(
+        'Password must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.'
+      );
+    }),
+
+  //|> imageProfile
+  check('infoUser.imageProfile')
+    .if(check('infoUser.imageProfile').exists({ checkFalsy: true }))
+    .isURL()
+    .withMessage('Image profile must be a valid URL.')
+    .custom(value => {
+      const imgFormat = value.slice(value.length - 4);
+      if (imgFormat !== '.jpg' || imgFormat !== '.png') {
+        throw new Error('Image profile must be a valid image format.');
+      }
+      return true;
+    })
+    .trim(),
+];
 
 async function validateInfoUser(
   ruteType = 'POST',
@@ -210,4 +439,5 @@ async function validateInfoUser(
 
 module.exports = {
   validateInfoUser,
+  XvalidateInfoUser,
 };
