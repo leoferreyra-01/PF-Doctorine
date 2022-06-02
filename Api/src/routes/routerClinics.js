@@ -29,7 +29,7 @@ router.post('/', validateClinic, createClinic);
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', putClinic);
+router.put('/', validateClinic, putClinic);
 
 //#endregion
 module.exports = router;
