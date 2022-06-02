@@ -14,7 +14,7 @@ function XvalidateResults(req, res, next) {
     );
     console.log('\x1b[31m%s\x1b[0m', 'Method: ', req.method, req.baseUrl);
 
-    res.status(403).json({ fail: true, err: error.mapped() });
+    res.status(403).json([true, error.mapped()]);
   }
 }
 
