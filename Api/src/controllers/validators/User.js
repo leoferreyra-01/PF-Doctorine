@@ -17,6 +17,7 @@ const XvalidateInfoUser = [
 
   //|> document
   check('infoUser.document')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('Document is required.');
@@ -24,18 +25,13 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.document').exists())
-    .custom((value, { req }) => {
-      if (req.method === 'PUT') {
-        throw new Error(`Document ${value} cant be edited.`);
-      }
-      return true;
-    })
     .isNumeric()
     .withMessage('Document must be numeric.')
     .isInt({ min: 1 })
-    .notEmpty()
+    .withMessage('Document must be a positive integer.')
     .isLength({ min: 8 })
     .withMessage('Document must have 8 or more digits.')
+    .trim()
     .bail()
     .custom(async value => {
       // PRELOADS
@@ -47,11 +43,11 @@ const XvalidateInfoUser = [
       if (user) throw new Error(`Document ${value} already exists.`);
 
       return true;
-    })
-    .trim(),
+    }),
 
   //|> name
   check('infoUser.name')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('Name is required.');
@@ -59,11 +55,8 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.name').exists())
-    .custom(value => {
-      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
-      throw new Error('Name must be alphabetic.');
-    })
-    .notEmpty()
+    .isAlpha('es-ES', { ignore: ' _-' })
+    .withMessage('Must be a valid only-text format.')
     .isLength({ min: 3 })
     .withMessage('Name must have at least 3 characters.')
     .customSanitizer(formatName)
@@ -71,6 +64,7 @@ const XvalidateInfoUser = [
 
   //|> lastName
   check('infoUser.lastName')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('Name is required.');
@@ -78,11 +72,8 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.lastName').exists())
-    .custom(value => {
-      if (validator.isAlpha(value, 'es-ES', { ignore: ' ' })) return true;
-      throw new Error('Name must be alphabetic.');
-    })
-    .notEmpty()
+    .isAlpha('es-ES', { ignore: ' _-' })
+    .withMessage('Must be a valid only-text format.')
     .isLength({ min: 3 })
     .withMessage('Lastname must have at least 3 characters.')
     .customSanitizer(formatName)
@@ -90,6 +81,7 @@ const XvalidateInfoUser = [
 
   //|> birth
   check('infoUser.birth')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('Name is required.');
@@ -97,80 +89,75 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.birth').exists())
+    .trim()
     .isDate({ format: 'YYYY-MM-DD' })
-    .withMessage('Birth must be a date format (YYYY-MM-DD).')
-    .trim(),
+    .withMessage('Birth must be a date format (YYYY-MM-DD).'),
 
   //|> telephone
   check('infoUser.telephone')
+    .default(undefined)
     .if(check('infoUser.telephone').exists())
-    .notEmpty()
+    .trim()
     .custom(value =>
       /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/g.test(
         value
       )
     )
-    .withMessage('Telephone must be a valid phone number.')
-    .trim(),
+    .withMessage('Telephone must be a valid phone number.'),
 
   //|> cellephone
   check('infoUser.cellphone')
+    .default(undefined)
     .if(check('infoUser.cellphone').exists())
-    .notEmpty()
+    .trim()
     .custom(value =>
       /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/g.test(
         value
       )
     )
-    .withMessage('Cellphone must be valid cellphone number.')
-    .trim(),
+    .withMessage('Cellephone must be a valid phone number.'),
 
   //|> street
   check('infoUser.street')
+    .default(undefined)
     .if(check('infoUser.street').exists())
-    .notEmpty()
+    .trim()
     .isLength({ min: 3 })
     .withMessage('Street must have at least 3 characters.')
-    .custom(value => {
-      if (validator.isAlphanumeric(value, 'es-ES', { ignore: ' ' }))
-        return true;
-      throw new Error('Name must be alphabetic.');
-    })
-    .customSanitizer(formatName)
-    .trim(),
+    .isAlphanumeric('es-ES', { ignore: ' ' })
+    .withMessage('Street must be a valid text-number format.')
+    .customSanitizer(formatName),
 
   //|> number
   check('infoUser.number')
+    .default(undefined)
     .if(check('infoUser.number').exists())
-    .notEmpty()
-    .isNumeric()
-    .withMessage('Number must be numeric.'),
+    .isInt()
+    .withMessage('Number must be a positive integer.'),
 
   //|> city
   check('infoUser.city')
+    .default(undefined)
     .if(check('infoUser.city').exists())
-    .custom(value => {
-      if (validator.isAlphanumeric(value, 'es-ES', { ignore: ' ' }))
-        return true;
-      throw new Error('Name must be alphabetic.');
-    })
-    .notEmpty()
+    .trim()
     .isLength({ min: 3 })
     .withMessage('City must have at least 3 characters.')
-    .customSanitizer(formatName)
-    .trim(),
+    .isAlphanumeric('es-ES', { ignore: ' ' })
+    .withMessage('City must be a valid text-number format.')
+    .customSanitizer(formatName),
 
   //|> postalCode
   check('infoUser.postalCode')
+    .default(undefined)
     .if(check('infoUser.postalCode').exists())
-    .isNumeric()
-    .withMessage('Postal code must be numeric.')
-    .notEmpty()
+    .isInt()
+    .withMessage('PostalCode must be a positive integer.')
     .isLength({ min: 4 })
     .withMessage('Postal code must have at least 4 digits.'),
 
   //|> email
   check('infoUser.email')
+    .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
         throw new Error('Name is required.');
@@ -178,7 +165,7 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.email').exists())
-    .notEmpty()
+    .trim()
     .isEmail()
     .withMessage('Email must be valid.')
     .normalizeEmail()
@@ -193,32 +180,29 @@ const XvalidateInfoUser = [
       if (user) throw new Error(`Email ${value} already exists.`);
 
       return true;
-    })
-    .trim(),
+    }),
 
   //|> password
   check('infoUser.password')
+    .default(undefined)
     .if(check('infoUser.password').exists())
     .notEmpty()
-    .custom(value => {
-      if (
-        validator.isStrongPassword(value, {
-          minLength: 8,
-          minLowercase: 1,
-          minUppercase: 1,
-          minNumbers: 1,
-          minSymbols: 0,
-        })
-      )
-        return true;
-      throw new Error(
-        'Password must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.'
-      );
-    }),
+    .isStrongPassword({
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 0,
+    })
+    .withMessage(
+      'Password must be a valid password. At least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.'
+    ),
 
   //|> imageProfile
   check('infoUser.imageProfile')
-    .if(check('infoUser.imageProfile').exists({ checkFalsy: true }))
+    .default(undefined)
+    .if(check('infoUser.imageProfile').exists())
+    .trim()
     .isURL()
     .withMessage('Image profile must be a valid URL.')
     .custom(value => {
@@ -227,8 +211,7 @@ const XvalidateInfoUser = [
         throw new Error('Image profile must be a valid image format.');
       }
       return true;
-    })
-    .trim(),
+    }),
 ];
 
 async function validateInfoUser(
