@@ -22,6 +22,7 @@ async function XvalidateTurnCollisions( //|!| Not Tested! ❌
       const officeHours = JSON.parse(getClinic.officeHours);
 
       infoTurn = {
+        // update options.
         ...oldInfoTurn,
         ...infoTurn,
       };
@@ -31,6 +32,7 @@ async function XvalidateTurnCollisions( //|!| Not Tested! ❌
     })
     .custom(infoTurn => {
       infoTurn = {
+        // update options.
         ...oldInfoTurn,
         ...infoTurn,
       };
@@ -118,7 +120,7 @@ function validateTurnBetweenTurnsInADay(turn, turns) {
 //|> VALIDATE TURN
 function validateTurn(turn, turns, officeHours) {
   if (!validateTurnInOfficeHours(turn, officeHours)) return false;
-  if (!validateTurnBetweenTurnsInADay(turn, officeHours)) return false;
+  if (!validateTurnBetweenTurnsInADay(turn, turns)) return false;
 
   return true;
 }
