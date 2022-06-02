@@ -1,32 +1,36 @@
 'use strict';
-
+//|> EXPRESS-VALIDATOR
 const { check } = require('express-validator');
 
 const XvalidateInfoPatient = [
+  //|> medicalService
   check('infoPatient.medicalService', 'Must be a string.')
     .if(check('infoPatient.medicalService').exists())
     .exists({
       checkFalsy: true, // if falsy values (eg "", 0, false, null)...
     })
     .isString()
-    .not()
-    .isEmpty(),
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage('Must be at least 3 characters long.')
+    .trim(),
+
+  //|> showClinicalHistory
   check('infoPatient.showClinicalHistory', 'Must be a boolean.')
     .if(check('infoPatient.showClinicalHistory').exists())
     .exists({
       checkNull: true, // if null values, will not exist
     })
     .isBoolean()
-    .not()
-    .isEmpty(),
-  check('infoPatient.tutor', 'Must be a number.')
-    .if(check('infoPatient.tutor').exists()) // -FIX- mandar NULL
-    .exists({
-      checkNull: false, //|?| if null values, will not exist
-    })
-    .isNumeric()
-    .not()
-    .isEmpty(),
+    .notEmpty(),
+
+  //|> tutor
+  check(
+    'infoPatient.tutor',
+    'Must be a number > 0, string(number) > 0, or null.'
+  )
+    .if(check('infoPatient.tutor').exists())
+    .custom(value => /^[1-9][0-9]*$/.test(value) || value === null),
 ];
 
 async function validateInfoPatient(
