@@ -3,6 +3,7 @@ const { validateInfoUser, XvalidateInfoUser } = require('./User');
 const { validateInfoMedic, XvalidateInfoMedic } = require('./Medic');
 const { validateInfoPatient, XvalidateInfoPatient } = require('./Patient');
 const { validateModelID, XvalidateModelID } = require('./ModelID');
+const { XvalidateInfoTurn } = require('./Turn');
 const {
   validateTurnCollisions,
   XvalidateTurnCollisions,
@@ -23,6 +24,7 @@ const validate = {
   ModelID: validateModelID,
   xModelID: XvalidateModelID,
 
+  xInfoTurn: XvalidateInfoTurn,
   TurnCollisions: validateTurnCollisions,
   xTurnCollisions: XvalidateTurnCollisions,
 

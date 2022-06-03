@@ -7,6 +7,18 @@ const { check } = require('express-validator');
 
 //|+| Tested on routerTurns! ✔️
 const XvalidateTurnCollisions = check('medic')
+  .default(undefined)
+  .custom((value, { req }) => {
+    if (!value) {
+      throw new Error('Medic is required.');
+    }
+    return true;
+  })
+  .if(check('medic').exists())
+  .trim()
+  .isInt()
+  .withMessage('Medic must be a number.')
+
   //|> VALIDATE TURN INTO OFFICE-HOURS
   .custom(async (medic, { req }) => {
     // get infoTurn
