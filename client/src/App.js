@@ -10,7 +10,7 @@ import RegisterDoctor from './views/dentist/RegisterDoctor/RegisterDoctor';
 import PatientHome from './views/patient/home';
 import RegisterPatient from './views/dentist/RegisterPatient';
 import Calendar from './views/dentist/calendar';
-import Budget from './views/dentist/budget';
+import Budgets from './views/dentist/Budgets/Budgets';
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import NewPassword from './Components/NewPassword/NewPassword';
@@ -31,10 +31,13 @@ function App() {
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
-            <Route path="budget" element={<Budget />} />
+            <Route path="budget" element={<Budgets />} />
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
-            <Route path="/home/addEvolution/:patientID" element={<AddEvolution />} />
+            <Route
+              path="/home/addEvolution/:patientID"
+              element={<AddEvolution />}
+            />
             <Route
               path="/home/addEvolution/:patientID"
               element={<AddEvolution />}

@@ -1,8 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllBudgets } from '../../../redux/actions';
+import {
+  getAllBudgets,
+  orderBudgetsByHigherPrice,
+  orderBudgetsByLowerPrice,
+  orderBudgetsByRecentDate,
+  orderBudgetsByOlderDate,
+  orderBudgetsByNameAsc,
+  orderBudgetsByNameDes,
+  filterPendingBudgets,
+  filterCompletedBudgets,
+} from '../../../redux/actions';
 import Budget from '../budget';
 import getPatientName from '../../../helpers/getPatientName';
+import ListButtons from '../../../Components/ListButtons/ListButtons';
+import s from './Budgets.module.css';
 
 function formatDate(date) {
   const year = date.slice(0, 4);
@@ -22,14 +34,38 @@ export default function Budgets() {
   }, []);
 
   return (
-    <div>
+    <div className={s.container}>
       {filledBudgets ? (
-        <div>
-          <div>
-            <h4>Patient Name</h4>
-            <h4>Date</h4>
-            <h4>Amount</h4>
-            <h4>Payment Status</h4>
+        <div className={s.list}>
+          <div className={s.name_container}>
+            <div className={`${s.list_item} ${s.pname}`}>
+              <h4>Patient Name</h4>
+              <ListButtons
+                up={orderBudgetsByNameAsc}
+                down={orderBudgetsByNameDes}
+              />
+            </div>
+            <div className={`${s.list_item} ${s.date}`}>
+              <h4>Date</h4>
+              <ListButtons
+                up={orderBudgetsByRecentDate}
+                down={orderBudgetsByOlderDate}
+              />
+            </div>
+            <div className={`${s.list_item} ${s.amount}`}>
+              <h4>Amount</h4>
+              <ListButtons
+                up={orderBudgetsByHigherPrice}
+                down={orderBudgetsByLowerPrice}
+              />
+            </div>
+            <div className={`${s.list_item} ${s.status}`}>
+              <h4>Payment Status</h4>
+              <ListButtons
+                up={filterPendingBudgets}
+                down={filterCompletedBudgets}
+              />
+            </div>
           </div>
           {budgetsToShow.map(budget => (
             <Budget

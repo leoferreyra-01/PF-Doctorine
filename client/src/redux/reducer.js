@@ -9,6 +9,14 @@ import {
   GET_ALL_PATIENTS,
   GET_BUDGETS,
   POST_BUDGET,
+  ORDER_BUDGETS_BY_DATE_ASC,
+  ORDER_BUDGETS_BY_DATE_DES,
+  ORDER_BUDGETS_BY_PRICE_ASC,
+  ORDER_BUDGETS_BY_PRICE_DES,
+  ORDER_BUDGETS_BY_NAME_ASC,
+  ORDER_BUDGETS_BY_NAME_DES,
+  FILTER_BUDGETS_BY_COMPLETED,
+  FILTER_BUDGETS_BY_PENDING,
   GET_CLINICAL_HISTORY,
   GET_TREATMENTS,
   GET_MEDICS,
@@ -25,7 +33,17 @@ import {
   ENTER_HOME,
 } from './actions';
 
-import orderBudgetsByDate from '../helpers/orderByDate';
+import orderBudgetsByRecentDate, {
+  orderBudgetsByOlderDate,
+} from '../helpers/orderByDate';
+import {
+  orderBudgetsByHigherPrice,
+  orderBudgetsByLowerPrice,
+} from '../helpers/orderByPrice';
+import {
+  filterCompletedBudgets,
+  filterPendingBudgets,
+} from '../helpers/filterByStatus';
 
 const initialState = {
   allPatients: [],
@@ -81,17 +99,54 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_BUDGETS:
-      const orderedBudgets = orderBudgetsByDate(action.payload);
+      const orderedBudgets = orderBudgetsByRecentDate(action.payload);
       return {
         ...state,
         allBudgets: orderedBudgets,
         budgetsToShow: orderedBudgets,
       };
 
+    case ORDER_BUDGETS_BY_DATE_ASC:
+      return {
+        ...state,
+        budgetsToShow: orderBudgetsByRecentDate(state.allBudgets),
+      };
+
+    case ORDER_BUDGETS_BY_DATE_DES:
+      return {
+        ...state,
+        budgetsToShow: orderBudgetsByOlderDate(state.allBudgets),
+      };
+
+    case ORDER_BUDGETS_BY_PRICE_ASC:
+      return {
+        ...state,
+        budgetsToShow: orderBudgetsByLowerPrice(state.allBudgets),
+      };
+
+    case ORDER_BUDGETS_BY_PRICE_DES:
+      return {
+        ...state,
+        budgetsToShow: orderBudgetsByHigherPrice(state.allBudgets),
+      };
+
+    case FILTER_BUDGETS_BY_COMPLETED:
+      return {
+        ...state,
+        budgetsToShow: filterCompletedBudgets(state.allBudgets),
+      };
+
+    case FILTER_BUDGETS_BY_PENDING:
+      return {
+        ...state,
+        budgetsToShow: filterPendingBudgets(state.allBudgets),
+      };
+
     case POST_BUDGET:
       return {
         ...state,
-        allBudgets: [...state.allBudgets, ...action.payload],
+        allBudgets: [action.payload, ...state.allBudgets],
+        budgetsToShow: [action.payload, ...state.allBudgets],
       };
 
     case POST_PATIENT:

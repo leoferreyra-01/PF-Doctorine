@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.4rem;
+}
+
+.container button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
