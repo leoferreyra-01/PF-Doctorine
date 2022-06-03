@@ -14,7 +14,7 @@ async function postStudy(req, res) {
     description,
     attach,
     patient,
-    historyclinic,
+    // historyclinic,
   });
 
   let addPatients = await Patient.findOne({
@@ -22,10 +22,10 @@ async function postStudy(req, res) {
   });
   await createStudy.setPatient(addPatients);
 
-  let addHc = await ClinicalHistory.findOne({
-    where: { ID: patient },
-  });
-  await createStudy.setClinicalHistory(addHc);
+  // let addHc = await ClinicalHistory.findOne({
+  //   where: { ID: patient },
+  // });
+  // await createStudy.setClinicalHistory(addHc);
   res.send('Study Create');
   return createStudy;
 }

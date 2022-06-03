@@ -29,6 +29,10 @@ export const DELETE_USER = 'DELETE_USER';
 export const GET_SUCCESS = 'GET_SUCCESS';
 export const GET_TREATMENTS = 'GET_TREATMENTS';
 
+export function getUrlStudies(url) {
+  return { type: 'POST_URL', payload: url };
+}
+
 export function getPatient(id) {
   return function (dispatch) {
     // return axios.get(`/recipes/?id=${id}`)
@@ -92,6 +96,15 @@ export function clear() {
 export function postTurn(payload) {
   return async function () {
     return axios.post(`/turn`, payload).catch(error => {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    });
+  };
+}
+export function postStudy(payload) {
+  console.log(payload);
+  return async function () {
+    return axios.post(`/studies`, payload).catch(error => {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
     });

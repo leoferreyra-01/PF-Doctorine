@@ -49,6 +49,7 @@ export default function PatientDetails() {
             key={p.ID}
             studyType={p.studyType}
             description={p.description}
+            attach={p.attach === null ? 'No content file' : p.attach}
           />
         ))
       ) : (
