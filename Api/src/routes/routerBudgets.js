@@ -2,7 +2,7 @@
 const router = require('express').Router();
 //|> EXPRESS-VALIDATOR
 const { validateBudget } = require('../validators/validatorBudget');
-
+const validate = require('../controllers/validators');
 //|> CONTROLLER
 const {
   getAllBudgets,
@@ -14,11 +14,14 @@ const {
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
-// const {} = require('./controllersGET');
 
 router.get('/', getAllBudgets);
 
-router.get('/:id', getBudgetById);
+router.get(
+  '/:id',
+  [validate.xModelID('Budget', 'id'), validate.xResults],
+  getBudgetById
+);
 
 //#endregion
 //#region <>-------------------- POST --------------------<>
