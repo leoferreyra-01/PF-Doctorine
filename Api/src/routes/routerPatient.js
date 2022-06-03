@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(await getPatients(req.query));
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error.message });
+    res.status(404).json([true, { error: { msg: error.message } }]);
   }
 });
 
@@ -38,7 +38,7 @@ router.get(
       res.status(200).json(await getPatientById(ID));
     } catch (error) {
       console.log(error);
-      res.status(400).json(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   }
 );
@@ -57,7 +57,7 @@ router.post(
       res.status(200).json(await postPatient(infoUser, infoPatient));
     } catch (error) {
       console.log(error);
-      res.status(400).json(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   }
 );
@@ -82,7 +82,7 @@ router.put(
       res.status(200).json(await putPatient(ID, infoUser, infoPatient));
     } catch (error) {
       console.log(error);
-      res.status(400).json(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   }
 );
@@ -101,7 +101,7 @@ router.delete(
       res.status(200).send(await deletePatient(ID));
     } catch (error) {
       console.log(error);
-      res.status(400).json(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   }
 );
