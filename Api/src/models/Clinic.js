@@ -10,6 +10,7 @@ module.exports = sequelize => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     street: {
       type: DataTypes.STRING,
@@ -41,7 +42,11 @@ module.exports = sequelize => {
     },
     imgLogo: {
       type: DataTypes.STRING,
-      /* allowNull: false, */
+      defaultValue:
+        'https://img.freepik.com/vector-gratis/logo-clinica-dental-diseno-plano_23-2148125146.jpg',
+      validate: {
+        isUrl: true,
+      },
     },
   });
 };
