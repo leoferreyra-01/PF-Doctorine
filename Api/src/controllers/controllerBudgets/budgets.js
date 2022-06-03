@@ -16,26 +16,6 @@ const {
   Evolution,
 } = require('../../db');
 
-//|> VALIDACIÓN
-
-function validacionBudgets(infoBudget) {
-  const { ID, date, treatments, discount, totalPrice, paid } = infoBudget; // req.body
-
-  if (discount) {
-    if (!(typeof discount === 'number'))
-      throw new Error(`${discount} must be a number.`);
-  }
-  if (totalPrice) {
-    if (!(typeof totalPrice === 'number'))
-      throw new Error(`${totalPrice} must be a number.`);
-  }
-
-  if (paid) {
-    if (!(typeof paid === 'boolean'))
-      throw new Error(`${paid} must be a boolean.`);
-  }
-}
-
 //|> CONTROLLER
 
 module.exports = {
@@ -50,7 +30,7 @@ module.exports = {
             PatientID: PatientID,
           },
         });
-        if (!BudgetByPatient) {
+        if (BudgetByPatient.length === 0) {
           throw new Error('There is no budget with that patient!');
         }
         return res.status(200).json(BudgetByPatient);
@@ -62,7 +42,7 @@ module.exports = {
       }
       return res.status(200).json(allBudget);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json([true, { error: { msg: error.message } }]);
     }
   },
   getBudgetById: async function (req, res) {
@@ -70,34 +50,17 @@ module.exports = {
       const id = req.params.id;
 
       const BudgetById = await Budget.findByPk(id);
-      if (!BudgetById) {
-        throw new Error('There is no budget with that ID!');
-      }
 
       res.status(200).json(BudgetById);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json([true, { error: { msg: error.message } }]);
     }
   },
   createBudget: async function (req, res) {
     try {
-      const { PatientID, date, treatments, discount, totalPrice } = req.body;
-
-      const PatientDB = await Patient.findByPk(PatientID);
-      if (!PatientDB) {
-        //* Crea un error si no existe  el paciente en la DB
-        throw new Error('There are no patients with that id!');
-      }
-
-      if (!date || !treatments || !totalPrice) {
-        //*crea un error si no existe datos obligatorios
-        throw new Error('mandatory data is missing to create the budget!');
-      }
-      // Validacion de Datos.
-      validacionBudgets(req.body);
+      const { PatientID, treatments, discount, totalPrice } = req.body;
       //*se crea el nuevo presupuesto
       let newBudget = {
-        date,
         treatments,
         discount,
         totalPrice,
@@ -108,7 +71,7 @@ module.exports = {
 
       res.status(201).json({ msg: 'successfully created budget' });
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
   putBudget: async function (req, res) {
@@ -116,19 +79,12 @@ module.exports = {
       const { paid, ID } = req.body;
 
       const BudgetByPatient = await Budget.findByPk(ID);
-
-      if (!BudgetByPatient) {
-        //* Crea un error si no existe  el presupuesto  en la DB
-        throw new Error('There is no budget with that ID!');
-      }
-      // Validacion de Datos.
-      validacionBudgets(req.body);
       // actualizacion del pago
       const updatePatient = await BudgetByPatient.update({ paid: paid });
 
       res.status(201).json({ msg: 'budget paid successfully' });
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
 };

@@ -1,11 +1,12 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
-
+//|> EXPRESS-VALIDATOR
+const { validateBudget } = require('../validators/validatorBudget');
+const validate = require('../controllers/validators');
 //|> CONTROLLER
 const {
   getAllBudgets,
   getBudgetById,
-  getBudgetByPatient,
   createBudget,
   putBudget,
 } = require('../controllers/controllerBudgets/budgets');
@@ -13,21 +14,24 @@ const {
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
-// const {} = require('./controllersGET');
 
 router.get('/', getAllBudgets);
 
-router.get('/:id', getBudgetById);
+router.get(
+  '/:id',
+  [validate.xModelID('Budget', 'id'), validate.xResults],
+  getBudgetById
+);
 
 //#endregion
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', createBudget);
+router.post('/', validateBudget, createBudget);
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', putBudget);
+router.put('/', validateBudget, putBudget);
 //#endregion
 module.exports = router;

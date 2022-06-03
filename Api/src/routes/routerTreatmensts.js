@@ -1,6 +1,8 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
-
+//|> EXPRESS-VALIDATOR
+const { validateTreatments } = require('../validators/validatorTreatments');
+const validate = require('../controllers/validators');
 //|> CONTROLLER
 const {
   getAllTreatments,
@@ -13,28 +15,31 @@ const {
 //|> RUTE
 
 //#region <>-------------------- GET --------------------<>
-// const {} = require('./controllersGET');
 
 router.get('/', getAllTreatments);
 
-router.get('/:id', getTreatmentById);
+router.get(
+  '/:id',
+  [validate.xModelID('Treatment', 'id'), validate.xResults],
+  getTreatmentById
+);
 
 //#endregion
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', createTreatment);
+router.post('/', validateTreatments, createTreatment);
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', putTreatment);
+router.put('/', validateTreatments, putTreatment);
 
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
 
-router.delete('/:id', deleteTreatment);
+router.delete('/:ID', validateTreatments, deleteTreatment);
 
 //#endregion
 module.exports = router;
