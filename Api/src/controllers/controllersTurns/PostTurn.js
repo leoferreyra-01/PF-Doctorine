@@ -26,26 +26,25 @@ async function postTurns(req, res) {
       return res
         .status(400)
         .send({ error: 'incomplete data or there is an error in the time' });
-    let createTurn = await Turn.create({
+    const createTurn = await Turn.create({
       date,
       time,
       duration,
       description,
     });
-    let addMedics = await Medic.findOne({
-      where: { title: medic }, // cambiar a seleccion de medico por nombre
-    });
-    await createTurn.setMedic(addMedics);
 
-    let addPatients = await Patient.findOne({
-      where: { ID: patient },
+    // set medic and patient by id
+    await createTurn.setMedic(medic);
+    await createTurn.setPatient(patient);
+
+    const newTurn = await Turn.findByPk(createTurn.ID, {
+      include: [Medic, Patient],
     });
 
-    await createTurn.setPatient(addPatients);
-    res.send('Turn Create');
-    return createTurn;
+    res.status(200).json(newTurn);
   } catch (err) {
     console.log(err);
+    res.send(err.message);
   }
 }
 module.exports = {
