@@ -1,6 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Study({ studyType, description }) {
+export default function Study({ studyType, description, attach }) {
+  function openTab() {
+    window.open(attach);
+  }
   return (
     <div
       style={{
@@ -19,6 +23,7 @@ export default function Study({ studyType, description }) {
       <h2>
         <div>Descripcion:</div>
         {description === null ? 'No tiene descripcion' : description}
+        <button onClick={openTab}>📋</button>
       </h2>
     </div>
   );

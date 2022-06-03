@@ -2,40 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTreatments } from '../../../redux/actions';
+import { postStudy } from '../../../redux/actions';
 import S from './Study.module.css';
+import FileUpload from '../../../FileUpload/FileUpload';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 export function validate(data) {
   const errors = {};
 
-  if (!data.studies) {
-    errors.studies = 'Study is required';
+  if (!data.studyType) {
+    errors.studyType = 'Study is required';
   }
-  if (!data.observations) {
-    errors.observations = 'Observations is required';
+  if (!data.description) {
+    errors.description = 'Observations is required';
   }
-  
+
   return errors;
 }
 
 function AddStudy() {
+  const navigate = useNavigate();
   const { patientID } = useParams();
-  const studies = useSelector(state => state.studiess); //studyType, Description, attatch, clinicalHistoryId, patientId
- 
-  
+  const studies = useSelector(state => state.studies); //studyType, Description, attatch, clinicalHistoryId, patientId
+  const urlstudy = useSelector(state => state.urlstudy);
   const dispatch = useDispatch();
-
+  console.log(urlstudy);
   const [data, setData] = useState({
-    observations: '',   //description
-    //date: '',         
-    studies: [],        //studyType
-    attach: [],
-    patientId: patientID       
+    description: '',
+    //date: '',
+    studyType: '',
+    patient: patientID,
   });
+  console.log(data.attach);
   const [errors, setErrors] = useState({});
 
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
+
     setErrors(
       validate({
         ...data,
@@ -46,14 +50,13 @@ function AddStudy() {
 
   function handleSelect(e) {
     const { name, value } = e.target;
-    
-    if (data.studies.length > 0 && name === 'studies') {
+
+    if (data.studyType.length > 0 && name === 'studyType') {
       alert('Only ONE study can be selected');
-    }
-     else {
+    } else {
       setData({
         ...data,
-        [e.target.name]: [value],
+        [e.target.name]: value,
       });
       setErrors(
         validate({
@@ -64,30 +67,40 @@ function AddStudy() {
     }
   }
 
-
   function handleSubmit(e) {
     e.preventDefault(e);
     setErrors(validate(data));
     const errors = validate(data);
+    console.log(errors);
     if (Object.keys(errors).length === 0) {
-      // dispatch(postStudy(data, patientID));
+      const fixstudie = {
+        ...data,
+        attach: urlstudy,
+      };
+      dispatch(postStudy(fixstudie));
+
+      Swal.fire('Study sent correctly, correct!');
+      navigate('/home', { replace: true });
+      setData({
+        description: '',
+        //date: '',
+        studyType: '',
+        patient: patientID,
+      });
     } else {
       alert('Please fill all the fields');
     }
   }
 
-  useEffect(() => {
-    // dispatch(getTreatments());
-    
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // dispatch(getTreatments());
+  // }, [dispatch]);
 
   return (
     <div className={S.studiesContainer}>
-      <Toaster position='top-center' reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={e => handleSubmit(e)}>
-          
-
           {/* <label className={S.label}>Date</label>
           <input
             value={data.date}
@@ -99,17 +112,14 @@ function AddStudy() {
           <label className={S.label}>Study</label>
           <select
             onChange={e => handleSelect(e)}
-            name='studies'
-            className={S.casillas2}>
-            <option hidden value=''>
+            name="studyType"
+            className={S.casillas2}
+          >
+            <option hidden value="">
               Select Study
             </option>
-            <option value='laboratory'>
-              Laboratory
-            </option>
-            <option value='complementary'>
-              Complementary
-            </option>
+            <option value="laboratory">Laboratory</option>
+            <option value="complementary">Complementary</option>
             {/* {studies &&
               studies.map(st => (
                 <option
@@ -119,22 +129,19 @@ function AddStudy() {
                   }>{`${st.studies}(${st.ID})`}</option>
               ))} */}
           </select>
-          
+
           <label className={S.label}>Description</label>
           <input
-            value={data.observations}
-            placeholder='Observations...'
-            type='text'
-            name='observations'
+            value={data.description}
+            placeholder="Observations..."
+            type="text"
+            name="description"
             onChange={handleChange}
           />
 
+          <FileUpload />
 
-          <label className={S.label}>Attach document</label>
-          <input type='file' name='attach'/>    
-
-
-          <button type='submit' className={S.btn}>
+          <button type="submit" className={S.btn}>
             Add Study
           </button>
         </form>

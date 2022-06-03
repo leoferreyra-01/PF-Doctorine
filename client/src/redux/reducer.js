@@ -21,16 +21,17 @@ import {
   USER_TO_ADMIN,
   DELETE_USER,
   ENTER_HOME,
-} from "./actions";
+} from './actions';
 
 const initialState = {
   allPatients: [],
   newPatientId: 0,
+  urlstudy: '',
   searchedPatient: [],
   patient: {},
   medics: [],
   evolutions: [],
-  studies: [],
+  studies: '',
   unavailableTurns: [],
   homeToShow: 'patient',
   treatments: [],
@@ -54,9 +55,9 @@ export default function rootReducer(state = initialState, action) {
 
     case GET_PATIENT_DNI:
       let searchedPatient = state.allPatients.filter(
-        (patient) => patient.document === action.payload * 1
+        patient => patient.document === action.payload * 1
       );
-      if (searchedPatient.length === 0) searchedPatient = "Patient Not Found";
+      if (searchedPatient.length === 0) searchedPatient = 'Patient Not Found';
       return {
         ...state,
         searchedPatient: searchedPatient,
@@ -90,7 +91,7 @@ export default function rootReducer(state = initialState, action) {
         clinicalHistory: {},
         evolutions: [],
 
-        studies: [],
+        studies: '',
       };
 
     case GET_TURNS:
@@ -133,7 +134,7 @@ export default function rootReducer(state = initialState, action) {
     case LOGIN_USER: {
       return {
         ...state,
-        user: JSON.parse(localStorage.getItem("loggedToken")),
+        user: JSON.parse(localStorage.getItem('loggedToken')),
       };
     }
 
@@ -143,16 +144,16 @@ export default function rootReducer(state = initialState, action) {
         allUsers: action.payload,
       };
     }
-    case "POST_PASSWORD_RESET":
+    case 'POST_PASSWORD_RESET':
       return {
         ...state,
       };
-    case "POST_NEW_PASSWORD":
+    case 'POST_NEW_PASSWORD':
       return {
         ...state,
       };
     case USER_TO_ADMIN:
-      state.allUsers.forEach((user) => {
+      state.allUsers.forEach(user => {
         if (user.id === action.payload.id) {
           user.isAdmin = action.payload.isAdmin;
         }
@@ -171,9 +172,7 @@ export default function rootReducer(state = initialState, action) {
     case DELETE_USER:
       return {
         ...state,
-        allUsers: state.allUsers.filter(
-          (user) => user.id !== action.payload.id
-        ),
+        allUsers: state.allUsers.filter(user => user.id !== action.payload.id),
       };
     ////////
     case ENTER_HOME:
@@ -199,6 +198,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         treatments: action.payload,
       };
+    case 'POST_STUDY':
+      return {
+        ...state,
+        studies: action.payload,
+      };
 
     case GET_MEDICS:
       return {
@@ -209,6 +213,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         tooth: action.payload,
+      };
+    case 'POST_URL':
+      return {
+        ...state,
+        urlstudy: action.payload,
       };
     default:
       return { ...state };
