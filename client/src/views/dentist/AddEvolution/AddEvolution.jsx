@@ -167,7 +167,7 @@ function addEvolution() {
             onChange={e => handleSelect(e)}
             name='medico'
             className={S.casillas}>
-            <option hidden value=''>
+            <option value=''>
               Select Medic
             </option>
             {medicos &&

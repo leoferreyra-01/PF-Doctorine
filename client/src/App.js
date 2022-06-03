@@ -9,6 +9,7 @@ import PatientDetails from './views/dentist/PatientDetails/PatientDetails';
 import RegisterDoctor from './views/dentist/RegisterDoctor/RegisterDoctor';
 import PatientHome from './views/patient/home';
 import RegisterPatient from './views/dentist/RegisterPatient';
+import UpdatePatient from './views/dentist/UpdatePatient/UpdatePatient.jsx';
 import Calendar from './views/dentist/calendar';
 import Budget from './views/dentist/budget';
 import SignIn from './Components/SignIn/SignIn';
@@ -23,34 +24,34 @@ function App() {
   return (
     <div className={s.global_container}>
       <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/passwordReset" element={<PasswordReset />} />
-        <Route path="/newPassword" element={<NewPassword />} />
+        <Route path='/' element={<SignIn />} />
+        <Route path='/SignUp' element={<SignUp />} />
+        <Route path='/passwordReset' element={<PasswordReset />} />
+        <Route path='/newPassword' element={<NewPassword />} />
         {homeToShow === 'medic' ? (
-          <Route path="/home" element={<Home />}>
-            <Route path="/home/" element={<SearchComponent />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="budget" element={<Budget />} />
-            <Route path="register" element={<RegisterPatient />} />
-            <Route path=":patientID" element={<PatientDetails />} />
+          <Route path='/home' element={<Home />}>
+            <Route path='/home/' element={<SearchComponent />} />
+            <Route path='calendar' element={<Calendar />} />
+            <Route path='budget' element={<Budget />} />
+            <Route path='register' element={<RegisterPatient />} />
+            <Route path=':patientID' element={<PatientDetails />} />
             <Route
-              path="/home/addEvolution/:patientID"
+              path='/home/addEvolution/:patientID'
               element={<AddEvolution />}
             />
+            <Route path='/home/studies/:patientID' element={<AddStudy />} />
             <Route
-              path="/home/addEvolution/:patientID"
-              element={<AddEvolution />}
+              path='/home/updatePatient/:patientID'
+              element={<UpdatePatient />}
             />
-            <Route path="/home/studies/:patientID" element={<AddStudy />} />
             <Route
-              path="create-clinical-history"
+              path='create-clinical-history'
               element={<RegisterClinicalHistory />}
             />
-            <Route path="doctor" element={<RegisterDoctor />} />
+            <Route path='doctor' element={<RegisterDoctor />} />
           </Route>
         ) : (
-          <Route path="/home" element={<PatientHome />} />
+          <Route path='/home' element={<PatientHome />} />
         )}
       </Routes>
     </div>

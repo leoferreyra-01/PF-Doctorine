@@ -34,7 +34,7 @@ export default function PatientDetails() {
   return (
     <div className={s.dt_container}>
       <SearchBar
-        placeholder="Buscar evoluciones o estudios.."
+        placeholder='Buscar evoluciones o estudios..'
         onClick={detailsSearch}
       />
       <Link to={`/home/addEvolution/${patientID}`}>
@@ -42,6 +42,9 @@ export default function PatientDetails() {
       </Link>
       <Link to={`/home/studies/${patientID}`}>
         <button className={s.btn}>Add Studies</button>
+      </Link>
+      <Link to={`/home/updatePatient/${patientID}`}>
+        <button className={s.btn}>Update Patient Info</button>
       </Link>
       {filledStudies ? (
         studies.map(p => (
