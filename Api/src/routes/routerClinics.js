@@ -1,5 +1,6 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
+//|> EXPRESS-VALIDATOR
 const { validateClinic } = require('../validators/validatorClinic');
 //|> CONTROLLER
 const {
@@ -29,7 +30,7 @@ router.post('/', validateClinic, createClinic);
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', putClinic);
+router.put('/', validateClinic, putClinic);
 
 //#endregion
 module.exports = router;

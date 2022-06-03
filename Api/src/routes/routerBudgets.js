@@ -1,11 +1,12 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
+//|> EXPRESS-VALIDATOR
+const { validateBudget } = require('../validators/validatorBudget');
 
 //|> CONTROLLER
 const {
   getAllBudgets,
   getBudgetById,
-  getBudgetByPatient,
   createBudget,
   putBudget,
 } = require('../controllers/controllerBudgets/budgets');
@@ -22,12 +23,12 @@ router.get('/:id', getBudgetById);
 //#endregion
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', createBudget);
+router.post('/', validateBudget, createBudget);
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/', putBudget);
+router.put('/', validateBudget, putBudget);
 //#endregion
 module.exports = router;
