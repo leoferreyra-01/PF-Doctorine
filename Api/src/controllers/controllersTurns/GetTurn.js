@@ -16,18 +16,18 @@ async function getTurns() {
   return res;
 }
 
-async function getTurnsid(UserId) {
-  const searchid = await Turn.findByPk(UserId, {
-    where: { ID: UserId },
+async function getTurnsid(UserID) {
+  const searchid = await Turn.findByPk(UserID, {
+    where: { ID: UserID },
     include: [Patient, Medic],
   });
 
   return searchid;
 }
 
-async function getTurnsidP(UserId) {
+async function getTurnsidP(UserID) {
   const searchid = await Turn.findAll({
-    where: { PatientID: UserId },
+    where: { PatientID: UserID },
     include: [Medic],
   });
 

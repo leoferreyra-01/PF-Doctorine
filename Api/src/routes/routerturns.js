@@ -23,25 +23,25 @@ router.get(
   '/search',
   [
     // express-validator
-    validate.xModelID('Patient', 'id'),
+    validate.xModelID('Patient', 'ID'),
     validate.xResults,
   ],
   async (req, res) => {
-    const { id } = req.query;
-    return res.json(await getTurnsidP(id));
+    const { ID } = req.query;
+    return res.json(await getTurnsidP(ID));
   }
 );
 
 router.get(
-  '/:id',
+  '/:ID',
   [
     // express-validator
-    validate.xModelID('Turn', 'id'),
+    validate.xModelID('Turn', 'ID'),
     validate.xResults,
   ],
   async (req, res) => {
-    const { id } = req.params;
-    return res.json(await getTurnsid(id));
+    const { ID } = req.params;
+    return res.json(await getTurnsid(ID));
   }
 );
 
@@ -66,10 +66,10 @@ router.post(
 //#region <>-------------------- PUT --------------------<>
 const { updateTurns } = require('../controllers/controllersTurns/UpdateTurn');
 router.put(
-  '/update/:id',
+  '/update/:ID',
   [
     // express-validator
-    validate.xModelID('Turn', 'id'),
+    validate.xModelID('Turn', 'ID'),
     ...validate.xInfoTurn,
     validate.xTurnCollisions,
     validate.xResults,
@@ -83,10 +83,10 @@ router.put(
 const { deleteTurns } = require('../controllers/controllersTurns/DeleteTurn');
 
 router.delete(
-  '/delete/:id',
+  '/delete/:ID',
   [
     // express-validator
-    validate.xModelID('Turn', 'id'),
+    validate.xModelID('Turn', 'ID'),
     validate.xResults,
   ],
   deleteTurns

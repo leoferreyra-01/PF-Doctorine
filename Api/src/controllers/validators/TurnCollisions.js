@@ -6,31 +6,20 @@ const { Turn, Medic, Clinic } = require('../../db');
 const { check } = require('express-validator');
 
 //|+| Tested on routerTurns! ✔️
-const XvalidateTurnCollisions = check('medic')
-  .default(undefined)
-  .custom((value, { req }) => {
-    if (!value) {
-      throw new Error('Medic is required.');
-    }
-    return true;
-  })
-  .if(check('medic').exists())
-  .trim()
-  .isInt()
-  .withMessage('Medic must be a number.')
-
+const XvalidateTurnCollisions = check('time')
   //|> VALIDATE TURN INTO OFFICE-HOURS
-  .custom(async (medic, { req }) => {
+  .custom(async (value, { req }) => {
+    const MedicID = req.body.MedicID;
     // get infoTurn
     let infoTurn = req.body;
 
     //get oldInfoTurn
     let oldInfoTurn = {};
-    let { id } = req.params;
-    if (id) oldInfoTurn = (await Turn.findByPk(id)).dataValues;
+    let { ID } = req.params;
+    if (ID) oldInfoTurn = (await Turn.findByPk(ID)).dataValues;
 
     // get officeHours
-    let getMedic = (await Medic.findByPk(medic)).dataValues;
+    let getMedic = (await Medic.findByPk(MedicID)).dataValues;
     let getClinic = (await Clinic.findByPk(getMedic.ClinicID)).dataValues;
     let officeHours = JSON.parse(getClinic.officeHours);
 
@@ -40,14 +29,20 @@ const XvalidateTurnCollisions = check('medic')
       ...infoTurn,
     };
 
+    // console.log('ID: ', ID);
+    // console.log('infoTurn: ', infoTurn);
+    // console.log('officeHours: ', officeHours);
+
     if (!validateTurnInOfficeHours(infoTurn, officeHours))
-      throw new Error('The turn is out of office hours.');
+      throw new Error(
+        `The time (${infoTurn.time}) and duration (${infoTurn.duration}) is out of office hours.`
+      );
 
     return Promise.resolve();
   })
 
   //|> VALIDATE TURN BETWEEN TURNS IN THE SAME DAY
-  .custom(async (medic, { req }) => {
+  .custom(async (value, { req }) => {
     // get Turns
     let Turns = (await Turn.findAll()).map(turn => turn.dataValues);
 
@@ -56,8 +51,8 @@ const XvalidateTurnCollisions = check('medic')
 
     //get oldInfoTurn
     let oldInfoTurn = {};
-    let { id } = req.params;
-    if (id) oldInfoTurn = (await Turn.findByPk(id)).dataValues;
+    let { ID } = req.params;
+    if (ID) oldInfoTurn = (await Turn.findByPk(ID)).dataValues;
 
     infoTurn = {
       // update options.
@@ -118,13 +113,32 @@ async function validateTurnCollisions(
 function validateTurnInOfficeHours(turn, officeHours) {
   const turnDay = new Date(turn.date).getUTCDay();
   const officeDay = officeHours[turnDay];
-  const turnMin = turn.time;
-  const turnMax = turn.time + turn.duration;
+  const turnMin = parseInt(turn.time);
+  const turnMax = parseInt(turn.time) + parseInt(turn.duration);
+
+  // console.log('----------------------------------------');
+  // console.log(
+  //   'Office Hours: ',
+  //   [
+  //     'Sunday',
+  //     'Monday',
+  //     'Tuesday',
+  //     'Wednesday',
+  //     'Thursday',
+  //     'Friday',
+  //     'Saturday',
+  //   ][turnDay]
+  // );
+  // console.table(officeDay);
 
   for (let i = 0; i < officeDay.length; i++) {
-    if (turnMin >= officeDay[i].min && turnMax <= officeDay[i].max) return true;
+    if (turnMin >= officeDay[i].min && turnMax <= officeDay[i].max) {
+      // console.log('turnMin: ', turnMin, '||', 'turnMax: ', turnMax, '✔️');
+      return true;
+    }
   }
 
+  // console.log('turnMin: ', turnMin, '||', 'turnMax: ', turnMax, '❌');
   return false;
 }
 
@@ -132,12 +146,14 @@ function validateTurnInOfficeHours(turn, officeHours) {
 function validateTurnBetweenTurnsInADay(turn, turns) {
   turns = turns.filter(turnX => turnX.date === turn.date);
 
+  const turnMin = parseInt(turn.time);
+  const turnMax = parseInt(turn.time) + parseInt(turn.duration);
+
   for (let i = 0; i < turns.length; i++) {
-    if (
-      (turn.time >= turns[i].time ||
-        turn.time + turn.duration > turns[i].time) &&
-      turn.time < turns[i].time + turns[i].duration
-    )
+    const turnXmin = parseInt(turns[i].time);
+    const turnXmax = parseInt(turns[i].time) + parseInt(turns[i].duration);
+
+    if ((turnMin >= turnXmin || turnMax > turnXmin) && turnMin < turnXmax)
       return false;
   }
 

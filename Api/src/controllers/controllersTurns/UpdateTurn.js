@@ -7,7 +7,7 @@ const { Medic, Patient, Turn } = require('../../db');
 //|> CONTROLLER
 
 async function updateTurns(req, res) {
-  let { id } = req.params;
+  let { ID } = req.params;
   Turn.update(
     {
       time: req.body.time,
@@ -17,7 +17,7 @@ async function updateTurns(req, res) {
     },
     {
       where: {
-        ID: id,
+        ID: ID,
       },
     }
   ).then(function (result) {

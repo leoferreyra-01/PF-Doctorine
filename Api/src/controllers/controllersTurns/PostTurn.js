@@ -8,17 +8,17 @@ const { Medic, Patient, Turn } = require('../../db');
 
 async function postTurns(req, res) {
   try {
-    let { date, time, duration, description, medic, patient } = req.body;
+    let { date, time, duration, description, MedicID, PatientID } = req.body;
 
     if (!date || moment(date, 'YYYY-MM-DD', true).isValid() === false)
       return res
         .status(400)
         .send({ error: 'incomplete data or there is an error in the date' });
-    if (!patient)
+    if (!PatientID)
       return res
         .status(400)
         .send({ error: 'Incomplete data or there is a patient not found' });
-    if (!medic)
+    if (!MedicID)
       return res
         .status(400)
         .send({ error: 'Incomplete data or there is a medioc not found' });
@@ -33,9 +33,9 @@ async function postTurns(req, res) {
       description,
     });
 
-    // set medic and patient by id
-    await createTurn.setMedic(medic);
-    await createTurn.setPatient(patient);
+    // set MedicID and PatientID by id
+    await createTurn.setMedic(MedicID);
+    await createTurn.setPatient(PatientID);
 
     const newTurn = await Turn.findByPk(createTurn.ID, {
       include: [Medic, Patient],

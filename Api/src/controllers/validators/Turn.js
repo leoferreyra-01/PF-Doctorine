@@ -53,7 +53,7 @@ const XvalidateInfoTurn = [
     .trim(),
 
   //|> MEDIC
-  check('medic')
+  check('MedicID')
     .default(undefined)
     .custom((value, { req }) => {
       if (!value) {
@@ -61,13 +61,13 @@ const XvalidateInfoTurn = [
       }
       return true;
     })
-    .if(check('medic').exists())
+    .if(check('MedicID').exists())
     .trim()
     .isInt()
     .withMessage('Medic must be a number.'),
 
   //|> PATIENT
-  check('patient')
+  check('PatientID')
     .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
@@ -75,7 +75,7 @@ const XvalidateInfoTurn = [
       }
       return true;
     })
-    .if(check('patient').exists())
+    .if(check('PatientID').exists())
     .trim()
     .isInt()
     .withMessage('Patient must be a number.'),

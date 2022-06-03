@@ -7,10 +7,10 @@ const { Patient, Turn } = require('../../db');
 //|> CONTROLLER
 
 async function deleteTurns(req, res) {
-  let { id } = req.params;
+  let { ID } = req.params;
   Turn.destroy({
     where: {
-      ID: id,
+      ID: ID,
     },
   }).then(function (result) {
     res.json({
