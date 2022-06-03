@@ -1,5 +1,6 @@
 //|> EXPRESS ROUTER
 const router = require('express').Router();
+//|> EXPRESS-VALIDATOR
 const { validateClinic } = require('../validators/validatorClinic');
 //|> CONTROLLER
 const {
