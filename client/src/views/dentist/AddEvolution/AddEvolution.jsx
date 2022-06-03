@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedics, getTooth, getTreatments } from '../../../redux/actions';
 import S from './AddEvolution.module.css';
+import axios from 'axios';
 
 export function validate(data) {
-  const errors = {};
+  let errors = {};
 
   if (!data.observations) {
     errors.observations = 'Observations is required';
   }
-  if (!data.treatment) {
-    errors.treatment = 'Treatment is required';
+  if (!data.treatments || data.treatments.length === 0) {
+    errors.treatments = 'Treatment is required';
   }
-  if (!data.teeth) {
-    errors.teeth = 'Teeth is required';
+  if (!data.tooth || data.tooth.length === 0) {
+    errors.tooth = 'Teeth is required';
   }
-  if (!data.medico) {
+  if (!data.medico || data.medico.length === 0) {
     errors.medico = 'Medico is required';
   }
   if (!data.date) {
@@ -32,6 +33,7 @@ function addEvolution() {
   const medicos = useSelector(state => state.medics);
   const tooth = useSelector(state => state.tooth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     observations: '',
@@ -90,12 +92,37 @@ function addEvolution() {
     });
   }
 
-  function handleSubmit(e) {
+  function handleDeleteMedic(e) {
+    e.preventDefault();
+    setData({
+      ...data,
+      medico: data.medico.filter(m => m !== e.target.name),
+    });
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault(e);
     setErrors(validate(data));
     const errors = validate(data);
+    console.log(errors);
+    console.log(data);
     if (Object.keys(errors).length === 0) {
-      // dispatch(postEvolution(data, patientID));
+      await axios
+        .post('/evolutions', {
+          date: data.date,
+          observations: data.observations,
+          PatientID: patientID,
+          MedicID: data.medico[0],
+          TreatmentID: data.treatments[0],
+          toothID: data.tooth[0],
+        })
+        .then(response => {
+          toast.success('Se ha creado la evolucion');
+          navigate(`/home/${patientID}`);
+        })
+        .catch(() => {
+          return toast.error('Esta evolucion se ha creado.');
+        });
     } else {
       alert('Please fill all the fields');
     }
@@ -109,60 +136,92 @@ function addEvolution() {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={e => handleSubmit(e)}>
           <label className={S.label}>Observations</label>
           <input
             value={data.observations}
-            placeholder="Observations..."
-            type="text"
-            name="observations"
+            placeholder='Observations...'
+            type='text'
+            name='observations'
             onChange={handleChange}
           />
+
+          {errors.observations && (
+            <p className={S.err}>{errors.observations}</p>
+          )}
 
           <label className={S.label}>Date</label>
           <input
             value={data.date}
-            type="date"
-            name="date"
+            type='date'
+            name='date'
             onChange={handleChange}
           />
+
+          {errors.date && <p className={S.err}>{errors.date}</p>}
+
           <label className={S.label}>Medic</label>
           <select
             onChange={e => handleSelect(e)}
-            name="medico"
-            className={S.casillas}
-          >
-            <option hidden value="">
+            name='medico'
+            className={S.casillas}>
+            <option hidden value=''>
               Select Medic
             </option>
             {medicos &&
               medicos.map(medicos => (
                 <option
-                  value={medicos.fullName}
-                  className={S.casillas}
-                >{`${medicos.fullName}`}</option>
+                  value={medicos.ID}
+                  className={
+                    S.casillas
+                  }>{`${medicos.fullName}(${medicos.Medic.tuition_number})`}</option>
               ))}
           </select>
+
+          {errors.medico && <p className={S.err}>{errors.medico}</p>}
+
+          {data.medico.length > 0 && (
+            <div className={S.treatment}>
+              <h4>Selected Medic</h4>
+              <hr />
+              <ul>
+                {data.medico.map(t => {
+                  let medic = medicos.filter(me => (me.ID == t ? me : null));
+                  return (
+                    <li key={t.ID}>
+                      <button onClick={e => handleDeleteMedic(e)} name={t}>
+                        ❌
+                      </button>
+                      {`${medic[0].fullName}(${medic[0].Medic.tuition_number})`}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
 
           <label className={S.label}>Treatment</label>
           <select
             onChange={e => handleSelect(e)}
-            name="treatments"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='treatments'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Treatment
             </option>
             {treatment &&
               treatment.map(tr => (
                 <option
                   value={tr.ID}
-                  className={S.casillas}
-                >{`${tr.description}(${tr.ID})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${tr.description}(${tr.ID})`}</option>
               ))}
           </select>
+
+          {errors.treatments && <p className={S.err}>{errors.treatments}</p>}
+
           {data.treatments.length > 0 && (
             <div className={S.treatment}>
               <h4>Selected Treatment</h4>
@@ -186,20 +245,22 @@ function addEvolution() {
           <label className={S.label}>Teeth</label>
           <select
             onChange={e => handleSelect(e)}
-            name="tooth"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='tooth'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Teeth
             </option>
             {tooth &&
               tooth.map(t => (
                 <option
                   value={t.ID}
-                  className={S.casillas}
-                >{`${t.ID}(zone:${t.zone} & pos:${t.position})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${t.ID}(zone:${t.zone} & pos:${t.position})`}</option>
               ))}
           </select>
+
+          {errors.tooth && <p className={S.err}>{errors.tooth}</p>}
           {data.tooth.length > 0 && (
             <div className={S.treatment}>
               <h4>Selected Tooth</h4>
@@ -207,7 +268,6 @@ function addEvolution() {
               <ul>
                 {data.tooth.map(t => {
                   const th = tooth.filter(teeth => teeth.ID == t && teeth);
-                  console.log(th);
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTeeth(e)} name={t}>
@@ -221,7 +281,7 @@ function addEvolution() {
             </div>
           )}
 
-          <button type="submit" className={S.btn}>
+          <button type='submit' className={S.btn}>
             Add Evolution
           </button>
         </form>
