@@ -84,7 +84,7 @@ const XvalidateInfoUser = [
     .default(undefined)
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
-        throw new Error('Name is required.');
+        throw new Error('Birth is required.');
       }
       return true;
     })
