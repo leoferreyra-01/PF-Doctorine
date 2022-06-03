@@ -24,6 +24,12 @@ const XvalidateInfoUser = [
       }
       return true;
     })
+    .custom((value, { req }) => {
+      if (req.method === 'PUT' && value) {
+        throw new Error('Document cant be uppdated.');
+      }
+      return true;
+    })
     .if(check('infoUser.document').exists())
     .isNumeric()
     .withMessage('Document must be numeric.')
