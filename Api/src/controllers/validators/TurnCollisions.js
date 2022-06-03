@@ -113,8 +113,8 @@ async function validateTurnCollisions(
 function validateTurnInOfficeHours(turn, officeHours) {
   const turnDay = new Date(turn.date).getUTCDay();
   const officeDay = officeHours[turnDay];
-  const turnMin = parseInt(turn.time);
-  const turnMax = parseInt(turn.time) + parseInt(turn.duration);
+  const turnMin = parseFloat(turn.time);
+  const turnMax = parseFloat(turn.time) + parseFloat(turn.duration);
 
   // console.log('----------------------------------------');
   // console.log(
@@ -146,12 +146,12 @@ function validateTurnInOfficeHours(turn, officeHours) {
 function validateTurnBetweenTurnsInADay(turn, turns) {
   turns = turns.filter(turnX => turnX.date === turn.date);
 
-  const turnMin = parseInt(turn.time);
-  const turnMax = parseInt(turn.time) + parseInt(turn.duration);
+  const turnMin = parseFloat(turn.time);
+  const turnMax = parseFloat(turn.time) + parseFloat(turn.duration);
 
   for (let i = 0; i < turns.length; i++) {
-    const turnXmin = parseInt(turns[i].time);
-    const turnXmax = parseInt(turns[i].time) + parseInt(turns[i].duration);
+    const turnXmin = parseFloat(turns[i].time);
+    const turnXmax = parseFloat(turns[i].time) + parseFloat(turns[i].duration);
 
     if ((turnMin >= turnXmin || turnMax > turnXmin) && turnMin < turnXmax)
       return false;

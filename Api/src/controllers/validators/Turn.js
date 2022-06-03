@@ -43,8 +43,8 @@ const XvalidateInfoTurn = [
     })
     .if(check('duration').exists())
     .trim()
-    .isNumeric()
-    .withMessage('Duration must be a number.'),
+    .isFloat({ min: 0.166667 })
+    .withMessage('Duration must be a number greather than 10min.'),
 
   //|> DESCRIPTION
   check('description')
