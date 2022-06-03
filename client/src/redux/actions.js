@@ -4,6 +4,17 @@ export const ENTER_HOME = 'ENTER_HOME';
 export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
+export const GET_BUDGETS = 'GET_BUDGETS';
+export const POST_BUDGET = 'POST_BUDGET';
+export const ORDER_BUDGETS_BY_NAME_ASC = 'ORDER_BUDGETS_BY_NAME_ASC';
+export const ORDER_BUDGETS_BY_NAME_DES = 'ORDER_BUDGETS_BY_NAME_DES';
+export const ORDER_BUDGETS_BY_DATE_ASC = 'ORDER_BUDGETS_BY_DATE_ASC';
+export const ORDER_BUDGETS_BY_DATE_DES = 'ORDER_BUDGETS_BY_DATE_DES';
+export const ORDER_BUDGETS_BY_PRICE_ASC = 'ORDER_BUDGETS_BY_PRICE_ASC';
+export const ORDER_BUDGETS_BY_PRICE_DES = 'ORDER_BUDGETS_BY_PRICE_DES';
+export const FILTER_BUDGETS_BY_PENDING = 'FILTER_BUDGETS_BY_PENDING';
+export const FILTER_BUDGETS_BY_COMPLETED = 'FILTER_BUDGETS_BY_COMPLETED';
+
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
 //export const GET_STUDY = 'GET_STUDY';
@@ -84,6 +95,63 @@ export function getAllPatients() {
           return alert(error.response.data.msg);
         alert(error.message);
       });
+  };
+}
+
+export function getAllBudgets() {
+  return function (dispatch) {
+    return axios
+      .get(`/Budgets`)
+      .then(res => dispatch({ type: GET_BUDGETS, payload: res.data }))
+      .catch(error => {
+        if (error.response.status === 404)
+          return alert(error.response.data.msg);
+        alert(error.message);
+      });
+  };
+}
+
+export function orderBudgetsByHigherPrice() {
+  return { type: ORDER_BUDGETS_BY_PRICE_ASC };
+}
+
+export function orderBudgetsByLowerPrice() {
+  return { type: ORDER_BUDGETS_BY_PRICE_DES };
+}
+
+export function orderBudgetsByRecentDate() {
+  return { type: ORDER_BUDGETS_BY_DATE_ASC };
+}
+
+export function orderBudgetsByOlderDate() {
+  return { type: ORDER_BUDGETS_BY_DATE_DES };
+}
+
+export function orderBudgetsByNameAsc() {
+  return { type: ORDER_BUDGETS_BY_NAME_ASC };
+}
+
+export function orderBudgetsByNameDes() {
+  return { type: ORDER_BUDGETS_BY_NAME_DES };
+}
+
+export function filterPendingBudgets() {
+  return { type: FILTER_BUDGETS_BY_PENDING };
+}
+
+export function filterCompletedBudgets() {
+  return { type: FILTER_BUDGETS_BY_COMPLETED };
+}
+
+export function postBudget(budget) {
+  return async function (dispatch) {
+    try {
+      const budgetWithID = (await axios.post('/Budgets', budget)).data;
+      return dispatch({ type: POST_BUDGET, payload: budgetWithID });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
   };
 }
 

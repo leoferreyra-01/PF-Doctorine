@@ -1,0 +1,30 @@
+.budget {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.budget p {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+/* .pname {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.date {
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.amount {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.status {
+  margin-left: 10px;
+  margin-right: 10px;
+} */

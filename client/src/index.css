@@ -1,6 +1,7 @@
 body {
   width: 100%;
   height: 100vh;
+  line-height: 1.5;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -14,6 +15,10 @@ body {
   padding: 0;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 #root {
   width: 100%;
   height: 100%;
@@ -23,5 +28,5 @@ body {
   --primary: #2f8f9d;
   --secondary: #3bacb6;
   --primary-light: #82dbd8;
-  --secondaru-light: #b3e8e5;
+  --secondary-light: #b3e8e5;
 }

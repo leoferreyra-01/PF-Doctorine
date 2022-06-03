@@ -1,0 +1,40 @@
+.container {
+  grid-area: content;
+  overflow-y: auto;
+  padding: 60px 40px;
+  width: 100%;
+}
+
+.name_container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--primary-light);
+  padding: 10px 0;
+}
+
+.list {
+  border: 1px solid black;
+  overflow: auto;
+}
+
+/* .pname {
+  grid-area: pname;
+}
+
+.date {
+  grid-area: date;
+}
+
+.amount {
+  grid-area: amount;
+}
+
+.status {
+  grid-area: status;
+} */
+
+.list_item {
+  display: flex;
+  align-items: center;
+}
