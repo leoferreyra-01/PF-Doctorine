@@ -27,7 +27,7 @@ module.exports = {
       }
       return res.status(200).json(allClinics);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json([true, { error: { msg: error.message } }]);
     }
   },
   getClinicById: async function (req, res) {
@@ -35,13 +35,9 @@ module.exports = {
       const id = req.params.id;
       const clinicById = await Clinic.findByPk(id);
 
-      if (!clinicById) {
-        throw new Error('There is no clinic with that ID!');
-      }
-
       res.status(200).json(clinicById);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json([true, { error: { msg: error.message } }]);
     }
   },
   createClinic: async function (req, res) {
@@ -67,7 +63,7 @@ module.exports = {
         postalcode,
         telephone,
         email,
-        officeHours, // falta validacion para los horarios
+        officeHours,
         imgLogo,
       };
 
@@ -75,7 +71,7 @@ module.exports = {
 
       res.status(201).json({ msg: 'successfully created clinic' });
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
   putClinic: async function (req, res) {
@@ -112,7 +108,7 @@ module.exports = {
       res.status(201).send({ msg: 'successfully modified clinic.' });
     } catch (error) {
       console.log(error);
-      res.status(404).send({ error: error.message });
+      res.status(404).send([true, { error: { msg: error.message } }]);
     }
   },
 };

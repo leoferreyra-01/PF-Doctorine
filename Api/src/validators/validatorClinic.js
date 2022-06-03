@@ -4,20 +4,19 @@ const { Clinic } = require('../db');
 const { check } = require('express-validator');
 //|> VALIDATOR
 var validator = require('validator');
-const { validateResult } = require('../helpers/helpersClinic');
-///.withMessage()
+const {
+  XvalidateResults,
+} = require('../controllers/validators/XvalidateResults');
 const validateClinic = [
   //|> ID
   check('ID')
     .if(check('ID').exists())
     .custom(async value => {
-      //|!| aplica solo para PUT
+      // aplica solo para PUT
       const clinicById = await Clinic.findByPk(value);
-      // ID exist
       if (!clinicById) {
         throw new Error(`ID ${value} does not exist!.`);
       }
-
       return true;
     }),
   //|> name
@@ -30,29 +29,23 @@ const validateClinic = [
       return true;
     })
 
-    .if(
-      check('name').exists({
-        /* checkNull: true */
-      })
-    )
+    .if(check('name').exists())
     .isString() // verifica que no sea null, vacio, o un numero
     .isLength({ min: 3 }) // que no tenga menos de 3 caracteres
     .custom(async (value, { req }) => {
-      //|!| aplica solo para post
+      // aplica solo para POST
       if (req.method === 'POST' && value) {
         const clinicDB = await Clinic.findOne({
           where: { name: value },
         });
-
-        // name exist
         if (clinicDB)
           throw new Error(
             `Name ${value} already exists, please choose another name!.`
           );
-
         return true;
       }
-    }), //|> street
+    }),
+  //|> street
   check('street', 'Name must be alphabetic.')
     .custom((value, { req }) => {
       if (req.method === 'POST' && !value) {
@@ -132,25 +125,23 @@ const validateClinic = [
       return true;
     })
     .if(check('officeHours').exists())
-    .isJSON(), //|+| se corrigio el error
+    .isJSON(),
 
   //|> imgLogo
   check('imgLogo', 'Must be a URL.')
     .if(check('imgLogo').exists())
     .isURL()
-    .withMessage('Image profile must be a valid URL.'),
-  /*  .custom(value => {
-      //|!| revisar hay un error con el operador o || en el if
+    .withMessage('Image profile must be a valid URL.')
+    .custom(value => {
       const imgFormat = value.slice(value.length - 4);
       console.log(typeof imgFormat);
-      if (imgFormat !== '.jpg'  || imgFormat !== '.png' ) {
-        throw new Error('Image profile must be a valid image format.');
+      if (imgFormat !== '.jpg') {
+        if (imgFormat !== '.png')
+          throw new Error('Image profile must be a valid image format.');
       }
       return true;
-    }) , */
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
+    }),
+  XvalidateResults,
 ];
 
 module.exports = { validateClinic };
