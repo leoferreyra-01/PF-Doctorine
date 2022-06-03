@@ -81,7 +81,7 @@ module.exports = {
   },
   createBudget: async function (req, res) {
     try {
-      const { PatientID, date, treatments, discount, totalPrice } = req.body;
+      const { PatientID, treatments, discount, totalPrice } = req.body;
 
       const PatientDB = await Patient.findByPk(PatientID);
       if (!PatientDB) {
@@ -89,7 +89,7 @@ module.exports = {
         throw new Error('There are no patients with that id!');
       }
 
-      if (!date || !treatments || !totalPrice) {
+      if (!treatments || !totalPrice) {
         //*crea un error si no existe datos obligatorios
         throw new Error('mandatory data is missing to create the budget!');
       }
@@ -97,7 +97,6 @@ module.exports = {
       validacionBudgets(req.body);
       //*se crea el nuevo presupuesto
       let newBudget = {
-        date,
         treatments,
         discount,
         totalPrice,
