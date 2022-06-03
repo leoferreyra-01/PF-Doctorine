@@ -55,23 +55,23 @@ async function addClinic() {
   const officeHours = JSON.stringify([
     [],
     [
-      { min: 8.5, max: 12.75 },
+      { min: 9, max: 13 },
       { min: 17, max: 21 },
     ],
     [
-      { min: 8.5, max: 12.75 },
+      { min: 9, max: 13 },
       { min: 17, max: 21 },
     ],
     [
-      { min: 8.5, max: 12.75 },
+      { min: 9, max: 13 },
       { min: 17, max: 21 },
     ],
     [
-      { min: 8.5, max: 12.75 },
+      { min: 9, max: 13 },
       { min: 17, max: 21 },
     ],
     [
-      { min: 8.5, max: 12.75 },
+      { min: 9, max: 13 },
       { min: 17, max: 21 },
     ],
     [],
@@ -210,7 +210,7 @@ async function addTurn(n) {
   const infoTurn = {
     date: '2022-05-' + (26 + randomDay),
     time: 8 + randomHour,
-    duration: randomDuration,
+    duration: 1,
     description: 'Iteration n° ' + n,
     MedicID: 1, // -NOTE- required for TurnCollisions validation.
   };
