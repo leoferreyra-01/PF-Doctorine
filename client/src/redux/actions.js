@@ -4,6 +4,8 @@ export const ENTER_HOME = 'ENTER_HOME';
 export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
+export const GET_BUDGETS = 'GET_BUDGETS';
+export const POST_BUDGET = 'POST_BUDGET';
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
 //export const GET_STUDY = 'GET_STUDY';
@@ -80,6 +82,31 @@ export function getAllPatients() {
           return alert(error.response.data.msg);
         alert(error.message);
       });
+  };
+}
+
+export function getAllBudgets() {
+  return function (dispatch) {
+    return axios
+      .get(`/Budgets`)
+      .then(res => dispatch({ type: GET_BUDGETS, payload: res.data }))
+      .catch(error => {
+        if (error.response.status === 404)
+          return alert(error.response.data.msg);
+        alert(error.message);
+      });
+  };
+}
+
+export function postBudget(budget) {
+  return async function (dispatch) {
+    try {
+      const budgetWithID = (await axios.post('/Budgets', budget)).data;
+      return dispatch({ type: POST_BUDGET, payload: budgetWithID });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
   };
 }
 
