@@ -27,7 +27,7 @@ module.exports = {
 
       return res.status(200).json(allTreatments);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json([true, { error: { msg: error.message } }]);
     }
   },
   getTreatmentById: async function (req, res) {
@@ -35,38 +35,18 @@ module.exports = {
       const id = req.params.id;
       const TreatmentById = await Treatment.findByPk(id);
 
-      if (!TreatmentById) {
-        throw new Error('there is no treatment with that ID!');
-      }
-
       res.status(200).json(TreatmentById);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json([true, { error: { msg: error.message } }]);
     }
   },
 
   createTreatment: async function (req, res) {
     try {
       const { ClinicID, ID, treatmentType, description, price } = req.body;
-
-      const ClinicDB = await Clinic.findByPk(ClinicID);
-      if (!ClinicDB) {
-        //* Crea un error si no existe  la clinica en la DB
-        throw new Error('There are no clinic with that id!');
-      }
-
-      const TreatmentDB = await Treatment.findByPk(ID);
-
-      if (TreatmentDB) {
-        //* Crea un error si existe  un tratamiento con  con ese ID en el DB
-        throw new Error(
-          'There is already a treatment with that ID, please choose another name!'
-        );
-      }
-
       //*se crea el nuevo tratamiento
       let newTreatment = {
-        ID /* : name.toLowerCase() */,
+        ID,
         treatmentType,
         description,
         price,
@@ -77,42 +57,34 @@ module.exports = {
 
       res.status(201).json({ msg: 'successfully created Treatment' });
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
   putTreatment: async function (req, res) {
     try {
-      const { ID, newPrice } = req.body;
+      const { ID, price } = req.body;
       const TreatmentById = await Treatment.findByPk(ID);
-      if (!TreatmentById) {
-        //* Crea un error si no existe  el tratamiento en la DB
-        throw new Error('There are no Treatment with that id!');
-      }
-      const updateTreatment = await TreatmentById.update({ price: newPrice });
+
+      const updateTreatment = await TreatmentById.update({ price: price });
 
       res.status(201).json({ msg: 'Successfully updated treatment' });
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
   deleteTreatment: async function (req, res) {
     try {
-      const id = req.params.id;
+      const { ID } = req.params;
 
-      const TreatmentById = await Treatment.findByPk(id);
-      if (!TreatmentById) {
-        //* Crea un error si no existe  el tratamiento en la DB
-        throw new Error('There are no Treatment with that id!');
-      }
       const deleteTreatmentById = await Treatment.destroy({
         where: {
-          ID: id,
+          ID: ID,
         },
       });
 
       res.status(201).json({ msg: 'Successfully removed treatment' });
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
 };

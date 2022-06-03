@@ -4,57 +4,54 @@ const { Treatment, Clinic } = require('../db');
 const { check } = require('express-validator');
 //|> VALIDATOR
 var validator = require('validator');
-const { validateResult } = require('../helpers/helpersClinic');
+
+const {
+  XvalidateResults,
+} = require('../controllers/validators/XvalidateResults');
 
 const validateTreatments = [
   //|> ID
-  check('ID', 'Must be a string.')
+  check('ID', 'Must be a numeric.')
     .custom(value => {
       if (!value) {
         throw new Error('ID is required.');
       }
       return true;
     })
-    /*  .if(check('ID').exists())  */ // creo que no es necesario
-    /* .isString() */
-    .isNumeric() //|!| revisar
-    /* .isLength({ min: 4, max: 6 }) */
+    .if(check('ID').exists())
+    .isLength({ min: 4, max: 6 })
+    .withMessage('the ID must be between 4 and 6 characters.')
+    .isNumeric()
     .custom(async (value, { req }) => {
-      //|!| aplica solo para post
+      // aplica solo para post
       if (req.method === 'POST' && value) {
         const TreatmentDB = await Treatment.findByPk(value);
-
         if (TreatmentDB)
           throw new Error(
             `ID ${value} already exists, please choose another ID!.`
           );
-
         return true;
       }
     })
     .custom(async (value, { req }) => {
-      //|!| aplica solo para pUT Revisar
+      // aplica solo para pUT Revisar
       if (req.method === 'PUT' && value) {
         const TreatmentDB = await Treatment.findByPk(value);
-
         if (!TreatmentDB)
           throw new Error(
             `ID ${value} does not exist!, please choose another ID!.`
           );
-
         return true;
       }
     })
     .custom(async (value, { req }) => {
-      //|!| aplica solo para DELETE Revisar value que llega por parametro
+      // aplica solo para DELETE Revisar value que llega por parametro
       if (req.method === 'DELETE' && value) {
         const TreatmentDB = await Treatment.findByPk(value);
-
         if (!TreatmentDB)
           throw new Error(
             `ID ${value} does not exist!, please choose another ID!.`
           );
-
         return true;
       }
     }), //|> price
@@ -98,18 +95,14 @@ const validateTreatments = [
   check('ClinicID')
     .if(check('ClinicID').exists())
     .custom(async value => {
-      //|!| aplica solo para POST
+      // aplica solo para POST
       const clinicDB = await Clinic.findByPk(value);
-      // ID exist
       if (!clinicDB) {
         throw new Error(`ID ${value} does not exist!.`);
       }
-
       return true;
     }),
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
+  XvalidateResults,
 ];
 
 module.exports = { validateTreatments };
