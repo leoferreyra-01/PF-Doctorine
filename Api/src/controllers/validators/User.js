@@ -211,13 +211,10 @@ const XvalidateInfoUser = [
     .trim()
     .isURL()
     .withMessage('Image profile must be a valid URL.')
-    .custom(value => {
-      const imgFormat = value.slice(value.length - 4);
-      if (imgFormat !== '.jpg' || imgFormat !== '.png') {
-        throw new Error('Image profile must be a valid image format.');
-      }
-      return true;
-    }),
+    .custom(value => ['jpg', 'jpeg', 'png'].includes(value.split('.').pop()))
+    .withMessage(
+      'Image profile must be a valid image format (jpg, jpeg, png).'
+    ),
 ];
 
 async function validateInfoUser(

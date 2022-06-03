@@ -143,14 +143,6 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       defaultValue:
         'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png', //temporal
-      set(value) {
-        if (!this.getDataValue('imageProfile'))
-          this.setDataValue(
-            'imageProfile',
-            'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png'
-          );
-        else this.setDataValue('imageProfile', value);
-      },
       validate: {
         isUrl: true,
       },
