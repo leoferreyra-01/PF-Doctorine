@@ -31,13 +31,9 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.document').exists())
-    .isNumeric()
-    .withMessage('Document must be numeric.')
-    .isInt({ min: 1 })
-    .withMessage('Document must be a positive integer.')
-    .isLength({ min: 8 })
-    .withMessage('Document must have 8 or more digits.')
     .trim()
+    .isInt({ min: 1000000, max: 99999999 })
+    .withMessage('Document must be a positive integer of 7 or 8 digits.')
     .bail()
     .custom(async value => {
       // PRELOADS

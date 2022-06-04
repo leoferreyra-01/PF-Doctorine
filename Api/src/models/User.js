@@ -19,7 +19,8 @@ module.exports = sequelize => {
       unique: true,
       validate: {
         isInt: true,
-        len: [8, 8],
+        min: 1000000,
+        max: 99999999,
       },
     },
     name: {
