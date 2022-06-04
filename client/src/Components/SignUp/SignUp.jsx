@@ -10,57 +10,57 @@ export function validate(input) {
   let errors = {};
   let medic = {};
   if (!input.email) {
-    errors.username = 'El email faltante';
+    errors.username = 'Email is required';
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.username = 'El email invalido';
+    errors.username = 'Email is invalid';
   }
   if (!input.password) {
     errors.password = 'Password is required';
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
-    errors.password = 'La contraseña es invalida';
+    errors.password = 'Password is invalid';
   } else if (input.password.length < 8) {
-    errors.password = 'La contraseña debe ser mayor a 6 digitos';
+    errors.password = 'Password must be greater than 8 digits';
   } else if (input.password.length > 16) {
-    errors.password = 'La contraseña debe ser menor a 12 digitos';
+    errors.password = 'Password must be less than 16 digits';
   }
 
   if (!input.passwordConfirm) {
-    errors.passwordConfirm = 'Debes confirmar tu contraseña';
+    errors.passwordConfirm = 'Confirm password';
   } else if (input.password !== input.passwordConfirm) {
-    errors.passwordConfirm = 'Las contraseñas no coinciden';
+    errors.passwordConfirm = "Passwords don't match";
   }
   if (!input.name) {
-    errors.name = 'El nombre es requerido';
+    errors.name = 'Name is required';
   } else if (!/^[a-zA-Z\s]/.test(input.name)) {
-    errors.name = 'El nombre es invalido';
+    errors.name = 'Name is invalid';
   }
   if (!input.lastName) {
-    errors.lastName = 'El apellido es requerido';
+    errors.lastName = 'Lastname is required';
   } else if (!/^[a-zA-Z\s]/.test(input.lastName)) {
-    errors.lastName = 'El apellido es invalido';
+    errors.lastName = 'Lastname is invalid';
   }
   if (!input.document) {
-    errors.document = 'El documento es requerido';
+    errors.document = 'ID is required';
   } else if (!/^[0-9]+$/.test(input.document)) {
-    errors.document = 'El documento es invalido';
+    errors.document = 'ID is invalid';
   } else if (input.document.length < 7) {
-    errors.document = 'El documento es invalido';
+    errors.document = 'ID is invalid';
   }
   if (!input.birth) {
-    errors.birth = 'Año de nacimiento es requerido';
+    errors.birth = 'Birth date is required';
   }
   if (medic === false) {
     if (!input.obraSocial) {
-      errors.obraSocial = 'La obra social es requerida';
+      errors.obraSocial = 'Medical insurance is required'; 
     } else if (!/^[0-9]+$/.test(input.obraSocial)) {
-      errors.obraSocial = 'La obra social es invalida';
+      errors.obraSocial = 'Medical insurance is invalid';
     }
   }
   if (medic === true) {
     if (!input.tuition_number) {
-      errors.matricula = 'La matricula es requerida';
+      errors.matricula = 'Tuition number is required';
     } else if (!/^[0-9]+$/.test(input.tuition_number)) {
-      errors.matricula = 'La matricula es invalida';
+      errors.matricula = 'Tuition number is required';
     }
   }
   return errors;
@@ -130,7 +130,7 @@ function SignUp() {
   const register = e => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
-      return toast.error('Debes rellenar todos los campos de forma correcta.');
+      return toast.error('All fields must be completed correctly');
     } else {
       if (medic === false) {
         axios
@@ -148,7 +148,7 @@ function SignUp() {
             navigate('/');
           })
           .catch(() => {
-            return toast.error('Este usuario ya ha sido creado.');
+            return toast.error('This user already exists');
           });
       } else {
         console.log(infoUser);
@@ -163,7 +163,7 @@ function SignUp() {
             navigate('/');
           })
           .catch(() => {
-            return toast.error('Este usuario ya ha sido creado.');
+            return toast.error('This user already exists');
           });
       }
     }
@@ -177,7 +177,7 @@ function SignUp() {
             <input type="checkbox" onClick={toggleOn} />
             {medic === false ? (
               <div class="slide round">
-                <p className={S.pa}> Patient </p>
+                <p className={S.pa}>Patient</p>
               </div>
             ) : (
               <div class="slide round">
@@ -199,7 +199,7 @@ function SignUp() {
               name="email"
             />
             {errors.username && <p className="error">{errors.username}</p>}
-            <label>Contraseña</label>
+            <label>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
@@ -208,7 +208,7 @@ function SignUp() {
               name="password"
             />
             {errors.password && <p className="error">{errors.password}</p>}
-            <label>Confirma tu contraseña</label>
+            <label>Confirm password</label>
             <input
               onChange={handleInputChange}
               value={input.passwordConfirm}
@@ -219,38 +219,38 @@ function SignUp() {
             {errors.passwordConfirm && (
               <p className="error">{errors.passwordConfirm}</p>
             )}
-            <label>Nombre</label>
+            <label>Name</label>
             <input
               onChange={handleInputChange}
               value={input.name}
-              placeholder="Nombre"
+              placeholder="Name"
               type="text"
               name="name"
             />
             {errors.name && <p className="error">{errors.name}</p>}
-            <label>Apellido</label>
+            <label>Lastname</label>
             <input
               onChange={handleInputChange}
               value={input.lastName}
-              placeholder="Apellido"
+              placeholder="Lastname"
               type="text"
               name="lastName"
             />
             {errors.lastName && <p className="error">{errors.lastName}</p>}
-            <label>Documento</label>
+            <label>ID</label>
             <input
               onChange={handleInputChange}
               value={input.document}
-              placeholder="Documento"
+              placeholder="ID"
               type="text"
               name="document"
             />
             {errors.document && <p className="error">{errors.document}</p>}
-            <label>Fecha de nacimiento</label>
+            <label>Birth date</label>
             <input
               onChange={handleInputChange}
               value={input.birth}
-              placeholder="Email"
+              placeholder="Birth date"
               type="date"
               name="birth"
             />
@@ -258,11 +258,11 @@ function SignUp() {
 
             {medic === false ? (
               <>
-                <label>N° Obra social</label>
+                <label>N° medical insurance</label>
                 <input
                   onChange={handleInputChange}
                   value={input.obraSocial}
-                  placeholder="Obra social"
+                  placeholder="Medical insurance"
                   type="text"
                   name="obraSocial"
                 />
@@ -272,38 +272,38 @@ function SignUp() {
               </>
             ) : (
               <>
-                <label>Titulo</label>
+                <label>Title</label>
                 <input
                   onChange={handleInputChange}
                   value={input.title}
-                  placeholder="Titulo"
+                  placeholder="Title"
                   type="text"
                   name="title"
                 />
-                <label>Matricula</label>
+                <label>Tuition</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_number}
-                  placeholder="Matricula"
+                  placeholder="Tuition"
                   type="text"
                   name="tuition_number"
                 />
-                <label>Fecha matriculado</label>
+                <label>Tuition date</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_date}
-                  placeholder="Fecha Matricula"
+                  placeholder="Tuition date"
                   type="date"
                   name="tuition_date"
                 />
               </>
             )}
 
-            <button type="submit">Registrarme</button>
+            <button type="submit">Register</button>
           </form>
         </SignUpContainer>
         <Link to="/">
-          <button className="back_signUp">VOLVER</button>
+          <button className="back_signUp">Back</button>
         </Link>
       </SignUpDivContainer>
     </>

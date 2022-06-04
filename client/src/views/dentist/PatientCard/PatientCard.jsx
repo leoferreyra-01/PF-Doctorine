@@ -19,12 +19,12 @@ export default function PatientCard({ ID, name, lastName, imageProfile }) {
               lastName.slice(1)}
           </h3>
           <h3 className={`${s.title} ${s.title_dni}`}>
-            Direccion : china DNI: 45468523
+            Adress: china ID: 45468523
           </h3>
         </div>
         <div className={s.cardactions}>
-          <button className={s.btn}>Ver Historia Clinica</button>
-          <button className={s.btn}>Ver Estudios</button>
+          <button className={s.btn}>Go to clinic history</button>
+          <button className={s.btn}>Go to studies</button>
         </div>
       </NavLink>
     </div>

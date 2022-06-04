@@ -79,7 +79,7 @@ function AddStudy() {
       };
       dispatch(postStudy(fixstudie));
 
-      Swal.fire('Study sent correctly, correct!');
+      Swal.fire('Study sent correctly!');
       navigate('/home', { replace: true });
       setData({
         description: '',
@@ -88,7 +88,7 @@ function AddStudy() {
         patient: patientID,
       });
     } else {
-      alert('Please fill all the fields');
+      alert('Please complete all the fields');
     }
   }
 
@@ -133,7 +133,7 @@ function AddStudy() {
           <label className={S.label}>Description</label>
           <input
             value={data.description}
-            placeholder="Observations..."
+            placeholder="Observations"
             type="text"
             name="description"
             onChange={handleChange}

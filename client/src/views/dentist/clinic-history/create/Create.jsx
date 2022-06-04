@@ -84,7 +84,7 @@ export default function RegisterClinicalHistory() {
   }
   console.log(finalhc);
   let handleSubmit = e => {
-    const arrayToMap1 = [];
+    //const arrayToMap1 = [];
 
     // for (let property in newHC) {
     // arrayToMap1.push(finalhc);
@@ -104,7 +104,7 @@ export default function RegisterClinicalHistory() {
     }).then(result => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed === true) {
-        Swal.fire('Sent correctly, correct!');
+        Swal.fire('Sent correctly!');
 
         {
           const fixedhc = fixhc(newHC, Id);
@@ -219,7 +219,7 @@ export default function RegisterClinicalHistory() {
               <input
                 type="text"
                 name={prop}
-                placeholder="obs..."
+                placeholder="Observations"
                 onChange={handleInputChange}
               />
             </div>
