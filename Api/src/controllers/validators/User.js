@@ -266,10 +266,8 @@ async function validateInfoUser(
     Errors.document = 'The number cant be edited.';
 
   if (document && ruteType === 'POST') {
-    if (`${document}`.length !== 8)
-      Errors.document = 'The number length must be 8 numbers';
-
-    if (!(typeof document === 'number')) Errors.document4 = 'Must be a number.';
+    if (parseInt(document) < 1000000 || parseInt(document) > 99999999)
+      Errors.document = 'Document must be a positive integer of 7 or 8 digits.';
   }
 
   //|> name: STRING.
