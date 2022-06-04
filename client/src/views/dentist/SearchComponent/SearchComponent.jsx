@@ -24,17 +24,17 @@ export default function SearchComponent() {
   if (searchedPatient === 'Patient Not Found') {
     return (
       <div className={`${s.sc_container}`}>
-        <SearchBar placeholder="Buscar paciente.." onClick={getPatientDni} />
+        <SearchBar placeholder="Search Patient.." onClick={getPatientDni} />
         <div className={s.sc_container_error}>
           <div>
             <FontAwesomeIcon icon={faCircleExclamation} size="2x" />
           </div>
           <div>
             <h4>Error</h4>
-            <h4>Paciente no encontrado — !</h4>
+            <h4>Patient Not Found — !</h4>
           </div>
           <Link to="./register">
-            <button className={s.buton}>Crear paciente?</button>
+            <button className={s.buton}>Create patient?</button>
           </Link>
           <div>
             <button className={s.x_icon} onClick={() => dispatch(clear())}>
@@ -48,7 +48,10 @@ export default function SearchComponent() {
 
   return (
     <div className={s.sc_container}>
-      <SearchBar placeholder="Buscar paciente.." onClick={getPatientDni} />
+      <SearchBar
+        placeholder="Search patient by ID..."
+        onClick={getPatientDni}
+      />
 
       {searchedPatient.length
         ? searchedPatient.map(patient => (
@@ -57,7 +60,7 @@ export default function SearchComponent() {
               ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
-              imageProfile={patient.imageProfile}
+              document={patient.document}
             />
           ))
         : allPatients.map(patient => (
@@ -66,7 +69,7 @@ export default function SearchComponent() {
               ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
-              imageProfile={patient.imageProfile}
+              document={patient.document}
             />
           ))}
     </div>

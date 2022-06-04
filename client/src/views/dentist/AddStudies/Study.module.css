@@ -1,66 +1,67 @@
 .content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    left: 75%;
-  }
-  .form {
-    margin-top: 4.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    letter-spacing: 2px;
-    background-color: rgb(0, 131, 182);
-    box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
-      -15px -15px 30px rgba(255, 255, 255, 0.135);
-    -webkit-backdrop-filter: blur(7px);
-    backdrop-filter: blur(7px);
-    width: 32rem;
-  
-    border-radius: 20px;
-  }
-  .label {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .casillas{
-      border-radius: 7px;
-  }
-  .casillas2{
-      border-radius: 7px;
-      width: 28rem;
-  }
-  
-  .treatment {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .btn {
-    margin: 25px 0 25px 0;
-    background-color: #ededed;
-    padding: 5px 20px;
-    color: #414141;
-    letter-spacing: 2px;
-    text-decoration: none;
-    font-size: 15px;
-    transition: 0.1s;
-    border-radius: 5px;
-    border: none;
-    left: 70px;
-    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.568);
-  }
-  .btn:hover {
-    color: black;
-    box-shadow: 0 0 10px #9088a0, 0 0 10px #9088a0, 0 0 15px #9088a0;
-    transition: 0.8s;
-    border: none;
-    color: white;
-    background-color: #9088a0;
-    cursor: pointer;
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  left: 75%;
+}
+.form {
+  margin-top: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 2px;
+  background-color: rgb(0, 131, 182);
+  box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+    -15px -15px 30px rgba(255, 255, 255, 0.135);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  width: 32rem;
 
-.studiesContainer{
+  border-radius: 20px;
+}
+.label {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.casillas {
+  border-radius: 7px;
+}
+.casillas2 {
+  border-radius: 7px;
+  width: 28rem;
+}
+
+.treatment {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.btn {
+  margin: 25px 0 25px 0;
+  background-color: #ededed;
+  padding: 5px 20px;
+  color: #414141;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.1s;
+  border-radius: 5px;
+  border: none;
+  left: 70px;
+  box-shadow: 0 5px 10px rgba(255, 255, 255, 0.568);
+}
+.btn:hover {
+  color: black;
+  box-shadow: 0 0 10px #9088a0, 0 0 10px #9088a0, 0 0 15px #9088a0;
+  transition: 0.8s;
+  border: none;
+  color: white;
+  background-color: #9088a0;
+  cursor: pointer;
+}
+
+.studiesContainer {
   grid-area: content;
+  margin-right: 60%;
 }
