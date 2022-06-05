@@ -224,7 +224,7 @@ export default function rootReducer(state = initialState, action) {
         unavailableTurns: [],
         clinicalHistory: {},
         evolutions: [],
-        budgetsToShow: [],
+        budgetsToShow: [...state.allBudgets],
         studies: '',
       };
 

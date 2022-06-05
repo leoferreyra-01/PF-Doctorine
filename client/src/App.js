@@ -18,6 +18,7 @@ import NewPassword from './Components/NewPassword/NewPassword';
 import PasswordReset from './Components/PasswordReset/PasswordReset';
 import AddEvolution from './views/dentist/AddEvolution/AddEvolution';
 import AddStudy from './views/dentist/AddStudies/AddStudies';
+import { AddBudget } from './views/dentist/AddBudget/AddBudget';
 import FileUpload from './FileUpload/FileUpload';
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -49,6 +50,7 @@ function App() {
               element={<RegisterClinicalHistory />}
             />
             <Route path="doctor" element={<RegisterDoctor />} />
+            <Route path="addBudget" element={<AddBudget />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />} />
