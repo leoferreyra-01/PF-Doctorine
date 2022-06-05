@@ -5,6 +5,8 @@ import { Link, useInRouterContext, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import S from './SingUp.module.css';
+import { useDispatch } from 'react-redux';
+import { postMedicLogin, postPatientLogin } from '../../redux/actions';
 
 export function validate(input) {
   let errors = {};
@@ -77,14 +79,13 @@ function SignUp() {
     obraSocial: '',
     passwordConfirm: '',
     userType: 'Patient',
-
     title: '',
     tuition_number: '',
     tuition_date: '',
-
     ClinicID: 1,
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const infoUser = {
     email: input.email,
@@ -93,7 +94,6 @@ function SignUp() {
     lastName: input.lastName,
     document: parseInt(input.document),
     birth: input.birth,
-    userType: 'Medic',
   };
 
   const infoMedic = {
@@ -133,33 +133,33 @@ function SignUp() {
       return toast.error('Debes rellenar todos los campos de forma correcta.');
     } else {
       if (medic === false) {
-        axios
-          .post('http://localhost:3001/patients', {
-            infoUser: infoUser,
-            infoPatient: input.obraSocial,
-          })
-          .then(response => {
-            toast.success(response.data.success);
-            navigate('/');
-          })
-          .catch(() => {
-            return toast.error('Este usuario ya ha sido creado.');
-          });
+        try {
+          dispatch(
+            postPatientLogin({
+              infoUser: infoUser,
+              infoPatient: input.obraSocial,
+            })
+          );
+          toast.success('Registered successfully');
+          navigate('/');
+        } catch (error) {
+          return toast.error('This user is already registered');
+        }
       } else {
         console.log(infoUser);
-        axios
-          .post('http://localhost:3001/medics', {
-            infoUser: infoUser,
-            infoMedic: infoMedic,
-            ClinicID: input.ClinicID,
-          })
-          .then(response => {
-            toast.success(response.data.success);
-            navigate('/');
-          })
-          .catch(() => {
-            return toast.error('Este usuario ya ha sido creado.');
-          });
+        try {
+          dispatch(
+            postMedicLogin({
+              infoUser: infoUser,
+              infoMedic: infoMedic,
+              ClinicID: input.ClinicID,
+            })
+          );
+          toast.success('Registered successfully');
+          navigate('/');
+        } catch (error) {
+          return toast.error('This user is already registered');
+        }
       }
     }
   };
@@ -168,88 +168,88 @@ function SignUp() {
     <>
       <SignUpDivContainer>
         <div className={S.check}>
-          <label class="switchBtn">
-            <input type="checkbox" onClick={toggleOn} />
+          <label class='switchBtn'>
+            <input type='checkbox' onClick={toggleOn} />
             {medic === false ? (
-              <div class="slide round">
+              <div class='slide round'>
                 <p className={S.pa}> Patient </p>
               </div>
             ) : (
-              <div class="slide round">
+              <div class='slide round'>
                 <p>Medic</p>
               </div>
             )}
           </label>
         </div>
 
-        <Toaster position="top-center" reverseOrder={false} />
+        <Toaster position='top-center' reverseOrder={false} />
         <SignUpContainer>
           <form onSubmit={register}>
             <label>Email</label>
             <input
               onChange={handleInputChange}
               value={input.email}
-              placeholder="Email"
-              type="text"
-              name="email"
+              placeholder='Email'
+              type='text'
+              name='email'
             />
-            {errors.username && <p className="error">{errors.username}</p>}
+            {errors.username && <p className='error'>{errors.username}</p>}
             <label>Contraseña</label>
             <input
               onChange={handleInputChange}
               value={input.password}
-              placeholder="Password"
-              type="password"
-              name="password"
+              placeholder='Password'
+              type='password'
+              name='password'
             />
-            {errors.password && <p className="error">{errors.password}</p>}
+            {errors.password && <p className='error'>{errors.password}</p>}
             <label>Confirma tu contraseña</label>
             <input
               onChange={handleInputChange}
               value={input.passwordConfirm}
-              placeholder="Password"
-              type="password"
-              name="passwordConfirm"
+              placeholder='Password'
+              type='password'
+              name='passwordConfirm'
             />
             {errors.passwordConfirm && (
-              <p className="error">{errors.passwordConfirm}</p>
+              <p className='error'>{errors.passwordConfirm}</p>
             )}
             <label>Nombre</label>
             <input
               onChange={handleInputChange}
               value={input.name}
-              placeholder="Nombre"
-              type="text"
-              name="name"
+              placeholder='Nombre'
+              type='text'
+              name='name'
             />
-            {errors.name && <p className="error">{errors.name}</p>}
+            {errors.name && <p className='error'>{errors.name}</p>}
             <label>Apellido</label>
             <input
               onChange={handleInputChange}
               value={input.lastName}
-              placeholder="Apellido"
-              type="text"
-              name="lastName"
+              placeholder='Apellido'
+              type='text'
+              name='lastName'
             />
-            {errors.lastName && <p className="error">{errors.lastName}</p>}
+            {errors.lastName && <p className='error'>{errors.lastName}</p>}
             <label>Documento</label>
             <input
               onChange={handleInputChange}
               value={input.document}
-              placeholder="Documento"
-              type="text"
-              name="document"
+              placeholder='Documento'
+              type='text'
+              name='document'
             />
-            {errors.document && <p className="error">{errors.document}</p>}
+            {errors.document && <p className='error'>{errors.document}</p>}
             <label>Fecha de nacimiento</label>
             <input
               onChange={handleInputChange}
               value={input.birth}
-              placeholder="Email"
-              type="date"
-              name="birth"
+              placeholder='Email'
+              type='date'
+              name='birth'
             />
-            {errors.birth && <p className="error">{errors.birth}</p>}
+            {errors.birth && <p className='error'>{errors.birth}</p>}
 
             {medic === false ? (
               <>
@@ -257,12 +257,12 @@ function SignUp() {
                 <input
                   onChange={handleInputChange}
                   value={input.obraSocial}
-                  placeholder="Obra social"
-                  type="text"
-                  name="obraSocial"
+                  placeholder='Obra social'
+                  type='text'
+                  name='obraSocial'
                 />
                 {errors.obraSocial && (
-                  <p className="error">{errors.obraSocial}</p>
+                  <p className='error'>{errors.obraSocial}</p>
                 )}
               </>
             ) : (
@@ -271,34 +271,34 @@ function SignUp() {
                 <input
                   onChange={handleInputChange}
                   value={input.title}
-                  placeholder="Titulo"
-                  type="text"
-                  name="title"
+                  placeholder='Titulo'
+                  type='text'
+                  name='title'
                 />
                 <label>Matricula</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_number}
-                  placeholder="Matricula"
-                  type="text"
-                  name="tuition_number"
+                  placeholder='Matricula'
+                  type='text'
+                  name='tuition_number'
                 />
                 <label>Fecha matriculado</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_date}
-                  placeholder="Fecha Matricula"
-                  type="date"
-                  name="tuition_date"
+                  placeholder='Fecha Matricula'
+                  type='date'
+                  name='tuition_date'
                 />
               </>
             )}
 
-            <button type="submit">Registrarme</button>
+            <button type='submit'>Registrarme</button>
           </form>
         </SignUpContainer>
-        <Link to="/">
-          <button className="back_signUp">VOLVER</button>
+        <Link to='/'>
+          <button className='back_signUp'>VOLVER</button>
         </Link>
       </SignUpDivContainer>
     </>
