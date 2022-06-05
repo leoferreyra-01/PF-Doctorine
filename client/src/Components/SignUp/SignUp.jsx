@@ -134,7 +134,7 @@ function SignUp() {
     } else {
       if (medic === false) {
         axios
-          .post('http://localhost:3001/login/register', {
+          .post('http://localhost:3001/patients', {
             infoUser: infoUser,
             infoPatient: input.obraSocial,
           })
