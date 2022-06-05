@@ -15,20 +15,20 @@ export default bk_validate = {
   import bk_validate from './backend_validators';
 
 |> 2. Call the validator on your component.
-  bk_validate.Patient('post', patient);
+  bk_validate.Patient(patient, PatientID);
 
-  * 'post' is the ruteType. And can be 'post' or 'put'.
-  * patient: patient object = { infoUser, infoPatient }
-  * NOTE: The validator will return an array with two elements.
+  * patient: object = { infoUser, infoPatient }
+  * PatientID: default null. Is optional. Use it for PUT validations (default: POST validation).
 
 |> 3. The validator will return an array of two values.
   const [patient_fail, patient_errors] = bk_validate.Patient('post', patient);
 
   * patient_fail: boolean. If true, the validator failed.
-  * patient_errors: object. If fail is false, the errors object will be empty.
+  * patient_errors: object. If fail is false, the errors will be null.
 
 |> 4. If the validator fails, you can access the errors object. Render them on React.
-  { patient_fail ? <div>{ patient_errors.name.msg }</div> : null }
+  Example. validate the infoUser.name:
+  { patient_fail ? <div>{ patient_errors['infoUser.name'].msg }</div> : '✔️' }
 
   |*| by Alfonso.M0 🤗
 */

@@ -20,10 +20,5 @@ export default async function validatePatient(patient, PatientID = null) {
   } catch (error) {
     console.error(error);
     return error.response.data;
-
-    //  const [patient_fail, patient_errors] = error.response.data;
-    //    patient_fail: boolean. If true, the validator failed.
-    //    patient_errors: object. If fail is false, the errors object will be empty.
-    // see index.js for example
   }
 }
