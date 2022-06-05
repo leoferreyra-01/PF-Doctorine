@@ -116,7 +116,7 @@ function addEvolution() {
       try {
         dispatch(postEvolution(evolution));
         toast.success('Evolution added successfully');
-        navigate(`/home/${patientID}`);
+        navigate(`/home`);
       } catch (error) {
         toast.error('Error adding evolution');
       }

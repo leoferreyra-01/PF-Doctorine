@@ -58,7 +58,7 @@ function addEvolution() {
     try {
       dispatch(updatePatient(patientID, infoPatient, infoUser));
       toast.success('Patient updated successfully');
-      navigate(`/home/${patientID}`);
+      navigate(`/home`);
     } catch (err) {
       toast.error("This patient couldn't be updated");
     }
