@@ -1,0 +1,26 @@
+.homeContainer {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    'sidebar header header header header header'
+    'sidebar content content content content content'
+    'sidebar content content content content content'
+    'sidebar content content content content content'
+    'sidebar content content content content content'
+    'sidebar content content content content content';
+}
+
+.usuario {
+  width: '100%';
+  height: '30px';
+  margin-bottom: '30px';
+  border: 'solid black';
+  padding: '10px';
+  border-width: 'thin';
+  border-radius: '5px';
+  border-color: '#009be5';
+  margin-bottom: '12px';
+}
