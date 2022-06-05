@@ -1,8 +1,10 @@
 'use strict';
 
+import Medic from './Medic';
 import Patient from './Patient';
 
 export default bk_validate = {
+  Medic,
   Patient,
 };
 
