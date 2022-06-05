@@ -5,7 +5,7 @@ const path = require('path');
 
 //|> Doctorine API
 router.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../../src/routes/index.html'));
+  res.sendFile(path.join(__dirname, '../../public/index.html'));
 });
 
 //|> /sql
