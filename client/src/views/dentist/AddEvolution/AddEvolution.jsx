@@ -117,11 +117,11 @@ function addEvolution() {
           toothID: data.tooth[0],
         })
         .then(response => {
-          toast.success('Evolution has been created');
+          toast.success('Se ha creado la evolucion');
           navigate(`/home/${patientID}`);
         })
         .catch(() => {
-          return toast.error('This evolution has been created.');
+          return toast.error('Esta evolucion se ha creado.');
         });
     } else {
       alert('Please fill all the fields');
@@ -136,15 +136,15 @@ function addEvolution() {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={e => handleSubmit(e)}>
           <label className={S.label}>Observations</label>
           <input
             value={data.observations}
-            placeholder="Observations..."
-            type="text"
-            name="observations"
+            placeholder='Observations...'
+            type='text'
+            name='observations'
             onChange={handleChange}
           />
 
@@ -155,8 +155,8 @@ function addEvolution() {
           <label className={S.label}>Date</label>
           <input
             value={data.date}
-            type="date"
-            name="date"
+            type='date'
+            name='date'
             onChange={handleChange}
           />
 
@@ -165,16 +165,18 @@ function addEvolution() {
           <label className={S.label}>Medic</label>
           <select
             onChange={e => handleSelect(e)}
-            name="medico"
-            className={S.casillas}
-          >
-            <option value="">Select Medic</option>
+            name='medico'
+            className={S.casillas}>
+            <option value=''>
+              Select Medic
+            </option>
             {medicos &&
               medicos.map(medicos => (
                 <option
                   value={medicos.ID}
-                  className={S.casillas}
-                >{`${medicos.fullName}(${medicos.Medic.tuition_number})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${medicos.fullName}(${medicos.Medic.tuition_number})`}</option>
               ))}
           </select>
 
@@ -203,18 +205,18 @@ function addEvolution() {
           <label className={S.label}>Treatment</label>
           <select
             onChange={e => handleSelect(e)}
-            name="treatments"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='treatments'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Treatment
             </option>
             {treatment &&
               treatment.map(tr => (
                 <option
                   value={tr.ID}
-                  className={S.casillas}
-                >{`${tr.description}(${tr.ID})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${tr.description}(${tr.ID})`}</option>
               ))}
           </select>
 
@@ -243,18 +245,18 @@ function addEvolution() {
           <label className={S.label}>Teeth</label>
           <select
             onChange={e => handleSelect(e)}
-            name="tooth"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='tooth'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Teeth
             </option>
             {tooth &&
               tooth.map(t => (
                 <option
                   value={t.ID}
-                  className={S.casillas}
-                >{`${t.ID}(zone:${t.zone} & pos:${t.position})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${t.ID}(zone:${t.zone} & pos:${t.position})`}</option>
               ))}
           </select>
 
@@ -279,7 +281,7 @@ function addEvolution() {
             </div>
           )}
 
-          <button type="submit" className={S.btn}>
+          <button type='submit' className={S.btn}>
             Add Evolution
           </button>
         </form>

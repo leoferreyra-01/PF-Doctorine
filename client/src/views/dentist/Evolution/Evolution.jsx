@@ -14,13 +14,13 @@ export default function Evolution({ date, observations, MedicID }) {
       }}
     >
       <h2>
-        <div>Date:</div> {date}
+        <div>Fecha:</div> {date}
       </h2>
       <h2>
-        <div>Observations:</div> {observations}
+        <div>Observaciones:</div> {observations}
       </h2>
       <h2>
-        <div>Medic:</div> {MedicID}
+        <div>Medico:</div> {MedicID}
       </h2>
     </div>
   );

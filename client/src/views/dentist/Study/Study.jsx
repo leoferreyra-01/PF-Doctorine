@@ -10,7 +10,6 @@ export default function Study({ studyType, description, attach }) {
       style={{
         display: 'flex',
         flexDirection: 'row',
-
         justifyContent: 'space-between',
         marginBottom: '10px',
         borderWidth: '2px',
@@ -19,11 +18,11 @@ export default function Study({ studyType, description, attach }) {
       }}
     >
       <h2>
-        <div>Type of Study:</div> {studyType}
+        <div>Tipo de estudio:</div> {studyType}
       </h2>
       <h2>
-        <div>Description:</div>
-        {description === null ? 'Does not contain description' : description}
+        <div>Descripcion:</div>
+        {description === null ? 'No tiene descripcion' : description}
         <button onClick={openTab}>📋</button>
       </h2>
     </div>
