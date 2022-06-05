@@ -7,7 +7,12 @@ import {
   faXmark,
   faCircleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
-import { clear, getAllPatients, getPatientDni } from '../../../redux/actions';
+import {
+  clear,
+  getAllPatients,
+  getPatientDni,
+  getPatientName,
+} from '../../../redux/actions';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
 export default function SearchComponent() {
@@ -24,7 +29,11 @@ export default function SearchComponent() {
   if (searchedPatient === 'Patient Not Found') {
     return (
       <div className={`${s.sc_container}`}>
-        <SearchBar placeholder="Search patient" onClick={getPatientDni} />
+        <SearchBar
+          placeholder="Search Patient.."
+          handleDni={getPatientDni}
+          handleName={getPatientName}
+        />
         <div className={s.sc_container_error}>
           <div>
             <FontAwesomeIcon icon={faCircleExclamation} size="2x" />
@@ -48,7 +57,11 @@ export default function SearchComponent() {
 
   return (
     <div className={s.sc_container}>
-      <SearchBar placeholder="Search patient" onClick={getPatientDni} />
+      <SearchBar
+        placeholder="Search Patient by ID.."
+        handleDni={getPatientDni}
+        handleName={getPatientName}
+      />
 
       {searchedPatient.length
         ? searchedPatient.map(patient => (
@@ -57,7 +70,7 @@ export default function SearchComponent() {
               ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
-              imageProfile={patient.imageProfile}
+              document={patient.document}
             />
           ))
         : allPatients.map(patient => (
@@ -66,7 +79,7 @@ export default function SearchComponent() {
               ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
-              imageProfile={patient.imageProfile}
+              document={patient.document}
             />
           ))}
     </div>

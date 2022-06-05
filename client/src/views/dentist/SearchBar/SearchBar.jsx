@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import s from './SearchBar.module.css';
 
-export default function SearchBar({ placeholder, onClick }) {
+export default function SearchBar({ placeholder, handleDni, handleName }) {
   const [searched, setSearched] = useState('');
+  const [errors, setErrors] = useState('');
   const dispatch = useDispatch();
   const handleOnChange = e => {
     console.log(e.target.value);
@@ -13,8 +14,10 @@ export default function SearchBar({ placeholder, onClick }) {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    if (searched) {
-      dispatch(onClick(searched));
+    if (searched && !errors) {
+      return /^[0-9]*$/.test(searched)
+        ? dispatch(handleDni(searched))
+        : dispatch(handleName(searched));
     } else {
       alert(
         'The search field is empty, please enter the ID of the patient to search'
@@ -38,7 +41,12 @@ export default function SearchBar({ placeholder, onClick }) {
           className={s.input}
         />
       </div>
-      <input type="submit" value="Search" className={s.boton} />
+      <input
+        type="submit"
+        value="Buscar"
+        className={s.boton}
+        disabled={!!errors}
+      />
     </form>
   );
 }
