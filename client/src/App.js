@@ -24,10 +24,10 @@ function App() {
   return (
     <div className={s.global_container}>
       <Routes>
-        <Route path='/' element={<SignIn />} />
-        <Route path='/SignUp' element={<SignUp />} />
-        <Route path='/passwordReset' element={<PasswordReset />} />
-        <Route path='/newPassword' element={<NewPassword />} />
+        <Route path="/" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/newPassword" element={<NewPassword />} />
         {homeToShow === 'medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
@@ -36,22 +36,22 @@ function App() {
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
             <Route
-              path='/home/addEvolution/:patientID'
+              path="/home/addEvolution/:patientID"
               element={<AddEvolution />}
             />
-            <Route path='/home/studies/:patientID' element={<AddStudy />} />
+            <Route path="/home/studies/:patientID" element={<AddStudy />} />
             <Route
-              path='/home/updatePatient/:patientID'
+              path="/home/updatePatient/:patientID"
               element={<UpdatePatient />}
             />
             <Route
-              path='create-clinical-history'
+              path="create-clinical-history"
               element={<RegisterClinicalHistory />}
             />
-            <Route path='doctor' element={<RegisterDoctor />} />
+            <Route path="doctor" element={<RegisterDoctor />} />
           </Route>
         ) : (
-          <Route path='/home' element={<PatientHome />} />
+          <Route path="/home" element={<PatientHome />} />
         )}
       </Routes>
     </div>

@@ -2,12 +2,16 @@ import {
   GET_PATIENT,
   POST_PATIENT,
   GET_PATIENT_DNI,
+  GET_PATIENT_NAME,
   GET_EVOLUTIONS,
+  POST_EVOLUTION,
   GET_STUDIES,
   CLEAR,
   GET_TURNS,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
+  GET_BUDGETS_DNI,
+  GET_BUDGETS_NAME,
   POST_BUDGET,
   ORDER_BUDGETS_BY_DATE_ASC,
   ORDER_BUDGETS_BY_DATE_DES,
@@ -33,6 +37,8 @@ import {
   ENTER_HOME,
 } from './actions';
 
+import getAllPatientsName from '../helpers/getAllPatientsName';
+
 import orderBudgetsByRecentDate, {
   orderBudgetsByOlderDate,
 } from '../helpers/orderByDate';
@@ -44,6 +50,8 @@ import {
   filterCompletedBudgets,
   filterPendingBudgets,
 } from '../helpers/filterByStatus';
+
+import { orderByNameAsc, orderByNameDes } from '../helpers/orderByName';
 
 const initialState = {
   allPatients: [],
@@ -78,13 +86,14 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_PATIENT_DNI:
-      let searchedPatient = state.allPatients.filter(
+      let searchedPatientDNI = state.allPatients.filter(
         patient => patient.document === action.payload * 1
       );
-      if (searchedPatient.length === 0) searchedPatient = 'Patient Not Found';
+      if (searchedPatientDNI.length === 0)
+        searchedPatientDNI = 'Patient Not Found';
       return {
         ...state,
-        searchedPatient: searchedPatient,
+        searchedPatient: searchedPatientDNI,
       };
     // return { //Forma de guardar con respecto a peticiones del back
     //   ...state,
@@ -93,18 +102,68 @@ export default function rootReducer(state = initialState, action) {
     //     : [action.payload],
     // };
 
+    case GET_PATIENT_NAME:
+      let searchedPatientName = state.allPatients.filter(patient =>
+        patient.fullName.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      if (searchedPatientName.length === 0)
+        searchedPatientName = 'Patient Not Found';
+      return {
+        ...state,
+        searchedPatient: searchedPatientName,
+      };
+
     case GET_ALL_PATIENTS:
       return {
         ...state,
         allPatients: [...state.allPatients, ...action.payload],
       };
 
-    case GET_BUDGETS:
-      const orderedBudgets = orderBudgetsByRecentDate(action.payload);
+    case GET_BUDGETS_DNI:
+      let searchedBudgetsDNI = state.allBudgets.filter(
+        budget => budget.patientDocument === action.payload * 1
+      );
+      if (searchedBudgetsDNI.length === 0)
+        searchedBudgetsDNI = 'Budget Not Found';
       return {
         ...state,
-        allBudgets: orderedBudgets,
-        budgetsToShow: orderedBudgets,
+        budgetsToShow: searchedBudgetsDNI,
+      };
+
+    case GET_BUDGETS_NAME:
+      let searchedBudgetsName = state.allBudgets.filter(budget =>
+        budget.patientFullName
+          .toLowerCase()
+          .includes(action.payload.toLowerCase())
+      );
+      if (searchedBudgetsName.length === 0)
+        searchedBudgetsName = 'Budget Not Found';
+      return {
+        ...state,
+        budgetsToShow: searchedBudgetsName,
+      };
+    case GET_BUDGETS:
+      const orderedBudgets = orderBudgetsByRecentDate(action.payload);
+      const namedBudgets = getAllPatientsName(
+        orderedBudgets,
+        state.allPatients
+      );
+      return {
+        ...state,
+        allBudgets: namedBudgets,
+        budgetsToShow: namedBudgets,
+      };
+
+    case ORDER_BUDGETS_BY_NAME_ASC:
+      return {
+        ...state,
+        budgetsToShow: orderByNameAsc(state.allBudgets),
+      };
+
+    case ORDER_BUDGETS_BY_NAME_DES:
+      return {
+        ...state,
+        budgetsToShow: orderByNameDes(state.allBudgets),
       };
 
     case ORDER_BUDGETS_BY_DATE_ASC:
@@ -165,7 +224,7 @@ export default function rootReducer(state = initialState, action) {
         unavailableTurns: [],
         clinicalHistory: {},
         evolutions: [],
-
+        budgetsToShow: [],
         studies: '',
       };
 
@@ -181,6 +240,12 @@ export default function rootReducer(state = initialState, action) {
         evolutions: Array.isArray(action.payload)
           ? [...action.payload]
           : [action.payload],
+      };
+
+    case POST_EVOLUTION:
+      return {
+        ...state,
+        evolutions: [action.payload, ...state.evolutions],
       };
 
     case GET_STUDIES:
@@ -276,7 +341,7 @@ export default function rootReducer(state = initialState, action) {
     case 'POST_STUDY':
       return {
         ...state,
-        studies: action.payload,
+        studies: [action.payload, ...state.studies],
       };
 
     case GET_MEDICS:

@@ -5,6 +5,8 @@ export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
 export const GET_BUDGETS = 'GET_BUDGETS';
+export const GET_BUDGETS_DNI = 'GET_BUDGETS_DNI';
+export const GET_BUDGETS_NAME = 'GET_BUDGETS_NAME';
 export const POST_BUDGET = 'POST_BUDGET';
 export const ORDER_BUDGETS_BY_NAME_ASC = 'ORDER_BUDGETS_BY_NAME_ASC';
 export const ORDER_BUDGETS_BY_NAME_DES = 'ORDER_BUDGETS_BY_NAME_DES';
@@ -17,8 +19,10 @@ export const FILTER_BUDGETS_BY_COMPLETED = 'FILTER_BUDGETS_BY_COMPLETED';
 
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
+export const POST_EVOLUTION = 'POST_EVOLUTION';
 //export const GET_STUDY = 'GET_STUDY';
 export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
+export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
 export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
 export const GET_TURNS = 'GET_TURNS';
@@ -85,6 +89,10 @@ export function getPatientDni(dni) {
 // };
 //}
 
+export function getPatientName(name) {
+  return { type: GET_PATIENT_NAME, payload: name };
+}
+
 export function getAllPatients() {
   return function (dispatch) {
     return axios
@@ -109,6 +117,14 @@ export function getAllBudgets() {
         alert(error.message);
       });
   };
+}
+
+export function getBudgetsDni(dni) {
+  return { type: GET_BUDGETS_DNI, payload: dni };
+}
+
+export function getBudgetsName(name) {
+  return { type: GET_BUDGETS_NAME, payload: name };
 }
 
 export function orderBudgetsByHigherPrice() {
@@ -313,6 +329,20 @@ export function getEvolutions(patientID) {
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
+    }
+  };
+}
+
+export function postEvolution(evolution) {
+  return async function (dispatch) {
+    try {
+      const evolutionWithID = (await axios.post('/evolutions', evolution)).data;
+      toast.success('Se ha creado la evolucion');
+      return dispatch({ type: POST_EVOLUTION, payload: evolutionWithID });
+    } catch (error) {
+      return toast.error('Esta evolucion se ha creado.');
+      // if (error.response.status === 404) return alert(error.response.data.msg);
+      // alert(error.message);
     }
   };
 }

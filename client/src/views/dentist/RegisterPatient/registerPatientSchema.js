@@ -7,7 +7,7 @@ export const registerPatientSchema = yup.object({
     .number()
     .positive()
     .integer()
-    .min(11111111, 'dni invalido')
+    .min(1000000, 'dni invalido')
     .max(99999999, 'dni invalido')
     .required('Campo requerido'), //deberia poner un min y un max, consulta a los chicos esto
   email: yup
