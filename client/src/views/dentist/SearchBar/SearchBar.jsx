@@ -43,7 +43,7 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
       </div>
       <input
         type="submit"
-        value="Buscar"
+        value="Search"
         className={s.boton}
         disabled={!!errors}
       />
