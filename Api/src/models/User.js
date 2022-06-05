@@ -128,7 +128,6 @@ module.exports = sequelize => {
           this.setDataValue('password', hashValue);
         } else {
           const userDocument = this.name + this.document;
-
           const hashNameDocument = bcrypt.hashSync(userDocument, 10);
           this.setDataValue('password', hashNameDocument);
         }
