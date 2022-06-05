@@ -2,10 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './PatientCard.module.css';
 
-export default function PatientCard({ ID, name, lastName, imageProfile }) {
+export default function PatientCard({ ID, name, lastName, document }) {
   return (
     <div>
-      <NavLink
+      <div
         to={`/home/${ID}`}
         style={{ textDecoration: 'none', width: '100%' }}
         className={s.container}
@@ -18,15 +18,15 @@ export default function PatientCard({ ID, name, lastName, imageProfile }) {
               lastName.charAt(0).toUpperCase() +
               lastName.slice(1)}
           </h3>
-          <h3 className={`${s.title} ${s.title_dni}`}>
-            Direccion : china DNI: 45468523
-          </h3>
+          <h3 className={`${s.title} ${s.title_dni}`}>DNI: {document}</h3>
         </div>
-        <div className={s.cardactions}>
-          <button className={s.btn}>Ver Historia Clinica</button>
-          <button className={s.btn}>Ver Estudios</button>
-        </div>
-      </NavLink>
+        <NavLink to={`/home/${ID}`}>
+          <div className={s.cardactions}>
+            <button className={s.btn}>See Clinical History 📁</button>
+            <button className={s.btn}>See Studies 🩺</button>
+          </div>
+        </NavLink>
+      </div>
     </div>
   );
 }

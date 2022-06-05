@@ -42,8 +42,8 @@ export default function FileUpload() {
         snapshot => {
           const progress1 =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress1);
-          console.log('Upload is ' + progress1 + '% done');
+          setProgress(progress1 - 2);
+          console.log('Upload is ' + progress1 - 2 + '% done');
           switch (snapshot.state) {
             case 'paused':
               console.log('Upload is paused');
@@ -66,8 +66,15 @@ export default function FileUpload() {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-            Swal.fire('File available at');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'File uploaded successfully',
+              showConfirmButton: false,
+              timer: 1500,
+            });
             dispatch(getUrlStudies(downloadURL));
+            setProgress(100);
           });
         }
       );
@@ -77,9 +84,10 @@ export default function FileUpload() {
   return (
     <div>
       <form onSubmit={handleSubmit}></form>
-      <input type="file" onChange={handleOnChange} />
+
+      <input id="file1" type="file" onChange={handleOnChange} accept=".pdf" />
       <progress value={progress} max="100" />
-      <div>{parseInt(progress)} %</div>
+      <div>{parseInt(progress) === -2 ? 0 : parseInt(progress)} %</div>
     </div>
   );
 }

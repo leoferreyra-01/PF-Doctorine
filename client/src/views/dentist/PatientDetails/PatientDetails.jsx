@@ -34,7 +34,7 @@ export default function PatientDetails() {
   return (
     <div className={s.dt_container}>
       <SearchBar
-        placeholder='Buscar evoluciones o estudios..'
+        placeholder="Search for evolutions or studies.."
         onClick={detailsSearch}
       />
       <Link to={`/home/addEvolution/${patientID}`}>
@@ -56,7 +56,7 @@ export default function PatientDetails() {
           />
         ))
       ) : (
-        <h3>Cargando los Estudios del paciente...</h3>
+        <h3>Uploading patient studies...</h3>
       )}
       {filledEvolutions ? (
         evolutions.map(p => (
@@ -68,7 +68,7 @@ export default function PatientDetails() {
           />
         ))
       ) : (
-        <h3>Cargando la evolucion del paciente...</h3>
+        <h3>Uploading patient evolution...</h3>
       )}
       <ClinicalHistory id={patientID} />
     </div>

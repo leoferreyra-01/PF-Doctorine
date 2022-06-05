@@ -17,7 +17,7 @@ export default function SearchBar({ placeholder, onClick }) {
       dispatch(onClick(searched));
     } else {
       alert(
-        'El campo de busqueda esta vacio, por favor ingrese el dni del paciente a buscar'
+        'The search field is empty, please enter the ID of the patient to search'
       );
     }
     setSearched('');
@@ -38,7 +38,7 @@ export default function SearchBar({ placeholder, onClick }) {
           className={s.input}
         />
       </div>
-      <input type="submit" value="Buscar" className={s.boton} />
+      <input type="submit" value="Search" className={s.boton} />
     </form>
   );
 }
