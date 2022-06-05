@@ -5,6 +5,8 @@ export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
 export const GET_BUDGETS = 'GET_BUDGETS';
+export const GET_BUDGETS_DNI = 'GET_BUDGETS_DNI';
+export const GET_BUDGETS_NAME = 'GET_BUDGETS_NAME';
 export const POST_BUDGET = 'POST_BUDGET';
 export const ORDER_BUDGETS_BY_NAME_ASC = 'ORDER_BUDGETS_BY_NAME_ASC';
 export const ORDER_BUDGETS_BY_NAME_DES = 'ORDER_BUDGETS_BY_NAME_DES';
@@ -21,6 +23,8 @@ export const POST_PATIENT_LOGIN = 'POST_PATIENT_LOGIN';
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
 //export const GET_STUDY = 'GET_STUDY';
+export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
+export const GET_PATIENT_DNI2 = 'GET_PATIENT_DNI2';
 export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
 export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
@@ -88,6 +92,26 @@ export function getPatientDni(dni) {
 // };
 //}
 
+export function getPatientName(name) {
+  return { type: GET_PATIENT_NAME, payload: name };
+}
+
+export function getPatientDni2(dni) {
+  return async function (dispatch) {
+    try {
+      const patient = (
+        await axios.get(`/patients?document=${dni}`)
+      ).data;
+      console.log(patient)
+      dispatch({ type: GET_PATIENT_DNI2, payload: patient });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
+  };
+}
+
+
 export function getAllPatients() {
   return function (dispatch) {
     return axios
@@ -113,6 +137,15 @@ export function getAllBudgets() {
       });
   };
 }
+
+export function getBudgetsDni(dni) {
+  return { type: GET_BUDGETS_DNI, payload: dni };
+}
+
+export function getBudgetsName(name) {
+  return { type: GET_BUDGETS_NAME, payload: name };
+}
+
 
 export function orderBudgetsByHigherPrice() {
   return { type: ORDER_BUDGETS_BY_PRICE_ASC };
