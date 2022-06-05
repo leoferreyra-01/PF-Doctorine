@@ -135,13 +135,8 @@ function SignUp() {
       if (medic === false) {
         axios
           .post('http://localhost:3001/login/register', {
-            email: input.email,
-            password: input.password,
-            userType: 'Patient',
-            document: input.document,
-            name: input.name,
-            lastName: input.lastName,
-            birth: input.birth,
+            infoUser: infoUser,
+            infoPatient: input.obraSocial,
           })
           .then(response => {
             toast.success(response.data.success);
@@ -258,7 +253,7 @@ function SignUp() {
 
             {medic === false ? (
               <>
-                <label>N° Obra social</label>
+                <label>Obra social</label>
                 <input
                   onChange={handleInputChange}
                   value={input.obraSocial}
