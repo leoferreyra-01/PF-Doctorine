@@ -10,7 +10,7 @@ export function validate(data) {
   let errors = {};
 
   if (!data.observations) {
-    errors.observations = 'Observations is required';
+    errors.observations = 'Observation is required';
   }
   if (!data.treatments || data.treatments.length === 0) {
     errors.treatments = 'Treatment is required';
@@ -19,7 +19,7 @@ export function validate(data) {
     errors.tooth = 'Teeth is required';
   }
   if (!data.medico || data.medico.length === 0) {
-    errors.medico = 'Medico is required';
+    errors.medico = 'Medic is required';
   }
   if (!data.date) {
     errors.date = 'Date is required';
@@ -61,7 +61,7 @@ function addEvolution() {
     } else if (data.treatments.length > 0 && name === 'treatments') {
       alert('Only ONE treatment can be selected');
     } else if (data.tooth.length > 0 && name === 'tooth') {
-      alert('Only ONE tooth can be selected');
+      alert('Only ONE teeth can be selected');
     } else {
       setData({
         ...data,
@@ -117,11 +117,11 @@ function addEvolution() {
           toothID: data.tooth[0],
         })
         .then(response => {
-          toast.success('Se ha creado la evolucion');
+          toast.success('Evolution was created');
           navigate(`/home/${patientID}`);
         })
         .catch(() => {
-          return toast.error('Esta evolucion se ha creado.');
+          return toast.error('This evolution was created.');
         });
     } else {
       alert('Please fill all the fields');
@@ -142,7 +142,7 @@ function addEvolution() {
           <label className={S.label}>Observations</label>
           <input
             value={data.observations}
-            placeholder='Observations...'
+            placeholder='Observations'
             type='text'
             name='observations'
             onChange={handleChange}
@@ -184,7 +184,7 @@ function addEvolution() {
 
           {data.medico.length > 0 && (
             <div className={S.treatment}>
-              <h4>Selected Medic</h4>
+              <h4>Medic selected</h4>
               <hr />
               <ul>
                 {data.medico.map(t => {
@@ -224,7 +224,7 @@ function addEvolution() {
 
           {data.treatments.length > 0 && (
             <div className={S.treatment}>
-              <h4>Selected Treatment</h4>
+              <h4>Treatment selected</h4>
               <hr />
               <ul>
                 {data.treatments.map(t => {
@@ -263,7 +263,7 @@ function addEvolution() {
           {errors.tooth && <p className={S.err}>{errors.tooth}</p>}
           {data.tooth.length > 0 && (
             <div className={S.treatment}>
-              <h4>Selected Tooth</h4>
+              <h4>Teeth selected</h4>
               <hr />
               <ul>
                 {data.tooth.map(t => {

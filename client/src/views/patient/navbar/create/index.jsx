@@ -23,43 +23,43 @@ export default function CreatePatient() {
         <input
           type="text"
           {...register('name')}
-          placeholder="Ingrese su nombre ..."
+          placeholder="Enter your name"
         />
         {errors.name && <span>{errors.name.message}</span>}
         <input
           type="text"
           {...register('lastName')}
-          placeholder="Ingrese su apellido ..."
+          placeholder="Enter your lastname"
         />
         {errors.lastName && <span>{errors.lastName.message}</span>}
         <input
           type="text"
           {...register('document')}
-          placeholder="Ingrese su dni ..."
+          placeholder="Enter your ID"
         />
         {errors.document && <span>{errors.document.message}</span>}
         <input
           type="text"
           {...register('email')}
-          placeholder="Ingrese su correo electronico ..."
+          placeholder="Enter your email"
         />
         {errors.email && <span>{errors.email.message}</span>}
         <input
           type="text"
           {...register('street')}
-          placeholder="Ingrese su calle ..."
+          placeholder="Enter your street"
         />
         {errors.street && <span>{errors.street.message}</span>}
         <input
           type="text"
           {...register('city')}
-          placeholder="Ingrese su ciudad ..."
+          placeholder="Enter your city"
         />
         {errors.city && <span>{errors.city.message}</span>}
         <input
           type="text"
           {...register('postalCode')}
-          placeholder="Ingrese su codigo postal ..."
+          placeholder="Enter your postal code"
         />
         {errors.postalCode && <span>{errors.postalCode.message}</span>}
         <input type="date" {...register('birth')} />
@@ -67,23 +67,23 @@ export default function CreatePatient() {
         <input
           type="text"
           {...register('cellphone')}
-          placeholder="Ingrese su numero de telefono ..."
+          placeholder="Enter your cellphone number"
         />
         {errors.cellphone && <span>{errors.cellphone.message}</span>}
         <input
           type="password"
           {...register('password')}
-          placeholder="Ingrese su contraseña ..."
+          placeholder="Enter your password"
         />
         {errors.password && <span>{errors.password.message}</span>}
         <input
-          placeholder="confirme su contraseña..."
+          placeholder="Confirm your password"
           {...register('confirmPassword')}
         />
         {errors.confirmPassword && (
-          <span>'Las contraseñas deben coincidir'</span>
+          <span>Passwords must match</span>
         )}
-        <input type="submit" value="Enviar" />
+        <input type="submit" value="Send" />
       </form>
     </div>
   );

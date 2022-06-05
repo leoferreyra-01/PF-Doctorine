@@ -18,9 +18,9 @@ export function validate(input) {
   }
 
   if (!input.passwordConfirm) {
-    errors.passwordConfirm = 'Debes confirmar tu contraseña';
+    errors.passwordConfirm = 'Password must be confirmed';
   } else if (input.password !== input.passwordConfirm) {
-    errors.passwordConfirm = 'Las contraseñas no coinciden';
+    errors.passwordConfirm = "Passwords don't match";
   }
   return errors;
 }
@@ -53,7 +53,7 @@ function NewPassword() {
   const register = e => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
-      return toast.error('Debes rellenar todos los campos de forma correcta.');
+      return toast.error('All fields must be completed correctly');
     } else {
       console.log('SI ENTRO');
       dispatch(postNewPassword(input));
@@ -68,7 +68,7 @@ function NewPassword() {
           navigate('/');
         })
         .catch(() => {
-          return toast.error('Este usuario ya ha sido creado.');
+          return toast.error('This user already exists');
         });
     }
   };
@@ -80,7 +80,7 @@ function NewPassword() {
 
         <SignUpContainer>
           <form onSubmit={register}>
-            <label>Contraseña</label>
+            <label>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
@@ -89,7 +89,7 @@ function NewPassword() {
               name="password"
             />
             {errors.password && <p className="error">{errors.password}</p>}
-            <label>Confirma tu contraseña</label>
+            <label>Confirm password</label>
             <input
               onChange={handleInputChange}
               value={input.passwordConfirm}
@@ -100,12 +100,12 @@ function NewPassword() {
             {errors.passwordConfirm && (
               <p className="error">{errors.passwordConfirm}</p>
             )}
-            <button type="submit">Aceptar</button>
+            <button type="submit">Submit</button>
           </form>
         </SignUpContainer>
 
         <Link to="/">
-          <button className="back_signUp">INICIO</button>
+          <button className="back_signUp">Home</button>
         </Link>
       </SignUpDivContainer>
     </>

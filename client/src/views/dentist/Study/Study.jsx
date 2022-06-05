@@ -18,11 +18,11 @@ export default function Study({ studyType, description, attach }) {
       }}
     >
       <h2>
-        <div>Tipo de estudio:</div> {studyType}
+        <div>Study type:</div> {studyType}
       </h2>
       <h2>
-        <div>Descripcion:</div>
-        {description === null ? 'No tiene descripcion' : description}
+        <div>Description:</div>
+        {description === null ? 'Has no description' : description}
         <button onClick={openTab}>📋</button>
       </h2>
     </div>

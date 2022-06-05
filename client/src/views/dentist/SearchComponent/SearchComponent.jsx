@@ -24,17 +24,17 @@ export default function SearchComponent() {
   if (searchedPatient === 'Patient Not Found') {
     return (
       <div className={`${s.sc_container}`}>
-        <SearchBar placeholder="Buscar paciente.." onClick={getPatientDni} />
+        <SearchBar placeholder="Search patient" onClick={getPatientDni} />
         <div className={s.sc_container_error}>
           <div>
             <FontAwesomeIcon icon={faCircleExclamation} size="2x" />
           </div>
           <div>
             <h4>Error</h4>
-            <h4>Paciente no encontrado — !</h4>
+            <h4>Patient not found — !</h4>
           </div>
           <Link to="./register">
-            <button className={s.buton}>Crear paciente?</button>
+            <button className={s.buton}>Create patient?</button>
           </Link>
           <div>
             <button className={s.x_icon} onClick={() => dispatch(clear())}>
@@ -48,7 +48,7 @@ export default function SearchComponent() {
 
   return (
     <div className={s.sc_container}>
-      <SearchBar placeholder="Buscar paciente.." onClick={getPatientDni} />
+      <SearchBar placeholder="Search patient" onClick={getPatientDni} />
 
       {searchedPatient.length
         ? searchedPatient.map(patient => (

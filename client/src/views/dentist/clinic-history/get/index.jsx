@@ -90,7 +90,7 @@ export default function ClinicalHistory({ id }) {
     }
   });
 
-  console.log(toRenderParsed);
+  
   useEffect(() => {
     dispatch(getClinicalHistory(id));
 
