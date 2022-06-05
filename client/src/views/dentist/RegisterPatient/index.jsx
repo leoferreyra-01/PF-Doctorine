@@ -35,7 +35,7 @@ export default function RegisterPatient() {
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('name')}
             placeholder="Enter patient's name"
             className={`${s.input} ${errors.name ? `${s.danger}` : ''}`}
@@ -47,7 +47,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('lastName')}
             placeholder="Enter patient's lastname"
             className={`${s.input} ${errors.lastName ? `${s.danger}` : ''}`}
@@ -59,7 +59,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('document')}
             placeholder="Enter patient's ID"
             className={`${s.input} ${errors.document ? `${s.danger}` : ''}`}
@@ -71,7 +71,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('email')}
             placeholder="Enter patient's email"
             className={`${s.input} ${errors.email ? `${s.danger}` : ''}`}
@@ -83,7 +83,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('street')}
             placeholder="Enter patient's street"
             className={`${s.input} ${errors.street ? `${s.danger}` : ''}`}
@@ -95,7 +95,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('city')}
             placeholder="Enter patient's city"
             className={`${s.input} ${errors.city ? `${s.danger}` : ''}`}
@@ -107,7 +107,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('number')}
             placeholder="Enter patient's street number"
             className={`${s.input} ${errors.number ? `${s.danger}` : ''}`}
@@ -119,7 +119,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('postalCode')}
             placeholder="Enter patient's postal code"
             className={`${s.input} ${errors.postalCode ? `${s.danger}` : ''}`}
@@ -131,7 +131,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('cellphone')}
             placeholder="Enter patient's cellphone"
             className={`${s.input} ${errors.cellphone ? `${s.danger}` : ''}`}
@@ -143,7 +143,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('telephone')}
             placeholder="Enter patient's telephone"
             className={`${s.input} ${errors.telephone ? `${s.danger}` : ''}`}
@@ -155,7 +155,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('medicalService')}
             placeholder="Enter patient's medical service"
             className={`${s.input} ${
@@ -168,8 +168,9 @@ export default function RegisterPatient() {
         </div>
 
         <div className={s.input_container}>
+          <h3>Enter the patient's date of birth</h3>
           <input
-            type="date"
+            type='date'
             {...register('birth')}
             className={`${s.input} ${errors.birth ? `${s.danger}` : ''}`}
           />
@@ -178,7 +179,7 @@ export default function RegisterPatient() {
           )}
         </div>
         <div>
-          <button className={s.buton} type="submit">
+          <button className={s.buton} type='submit'>
             Send
           </button>
         </div>
