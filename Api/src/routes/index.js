@@ -1,6 +1,12 @@
 'use strict';
 //|> EXPRESS ROUTER
 const router = require('express').Router();
+const path = require('path');
+
+//|> Doctorine API
+router.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '../../src/routes/index.html'));
+});
 
 //|> /sql
 const SQL = require('./routeSQL');
