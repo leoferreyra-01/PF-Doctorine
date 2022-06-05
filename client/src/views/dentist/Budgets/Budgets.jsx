@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllBudgets,
+  getBudgetsDni,
+  getBudgetsName,
   orderBudgetsByHigherPrice,
   orderBudgetsByLowerPrice,
   orderBudgetsByRecentDate,
@@ -10,11 +12,17 @@ import {
   orderBudgetsByNameDes,
   filterPendingBudgets,
   filterCompletedBudgets,
+  clear,
 } from '../../../redux/actions';
 import Budget from '../budget';
-import getPatientName from '../../../helpers/getPatientName';
 import ListButtons from '../../../Components/ListButtons/ListButtons';
 import s from './Budgets.module.css';
+import SearchBar from '../SearchBar/SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faXmark,
+  faCircleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 
 function formatDate(date) {
   const year = date.slice(0, 4);
@@ -33,8 +41,38 @@ export default function Budgets() {
     if (!filledBudgets) dispatch(getAllBudgets());
   }, []);
 
+  if (budgetsToShow === 'Budget Not Found') {
+    return (
+      <div className={s.container}>
+        <SearchBar
+          placeholder='Search budgets with the patient name or DNI'
+          handleDni={getBudgetsDni}
+          handleName={getBudgetsName}
+        />
+        <div className={s.b_container_error}>
+          <div>
+            <FontAwesomeIcon icon={faCircleExclamation} size='2x' />
+          </div>
+          <div>
+            <h4>Error</h4>
+            <h4>Budget not Found — !</h4>
+          </div>
+          <div>
+            <button className={s.x_icon} onClick={() => dispatch(clear())}>
+              <FontAwesomeIcon icon={faXmark} size='2x' />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={s.container}>
+      <SearchBar
+        placeholder='Search budgets with the patient name or DNI'
+        handleDni={getBudgetsDni}
+        handleName={getBudgetsName}
+      />
       {filledBudgets ? (
         <div className={s.list}>
           <div className={s.name_container}>
@@ -72,7 +110,7 @@ export default function Budgets() {
               key={budget.ID}
               totalPrice={budget.totalPrice}
               creationDate={formatDate(budget.creationDate)}
-              patientName={getPatientName(budget.PatientID, allPatients)}
+              patientName={budget.patientFullName}
               paid={budget.paid}
             />
           ))}
