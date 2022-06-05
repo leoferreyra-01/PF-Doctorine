@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Doctorine API</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h2>Rutes Examples</h2>
+        <h4>Sending information</h4>
+        <p>
+          When the information is sent to the database divided into different
+          objects. Use the table name preceded by the word "info". For example:
+          infoUser or infoMedic.
+        </p>
+        <h4>ID and ModelID</h4>
+        <p>
+          The ID is the primary key of the table. The ModelID is the ID of the
+          model that the ID belongs to.
+        </p>
+        <p>
+          When you send a specific ID for a table, use the name of the table
+          plus "ID". For example: UserID or MedicID.
+        </p>
+        <p>
+          All tables that include a foreign ID use the "ModelID" format. For
+          example, when viewing a medic, the infoUser is displayed, the
+          infoMedic is appended, and the infoMedic contains the ClinicID.
+        </p>
+        <h4>
+          <a 
+          href="https://docs.google.com/spreadsheets/d/1GvHFkRhy8OO4bXvyrAfy_D7vV6Oew6tQZIHtp2aAZeE/edit?usp=sharing" target=”_blank”
+          >View Google Sheet infoModels and Rutes</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="jumbotron">
+        <h2>Medic Rutes Example</h2>
+        <ul>
+          <li>
+            <div>
+              <h3>GET all Medics</h3>
+              <a href="http://localhost:3001/medics">
+                <button class="btn btn-primary">/medics</button>
+              </a>
+            </div>
+          </li>
+
+          <li>
+            <div>
+              <h3>GET a Medic</h3>
+              <a href="http://localhost:3001/medics/1">
+                <button class="btn btn-primary">/medics/:ID</button>
+              </a>
+            </div>
+          </li>
+
+          <li>
+            <div>
+              <h3>POST a Medic</h3>
+              <p>/medics</p>
+              <p>Body = { infoUser, infoMedic, ClinicID }</p>
+            </div>
+          </li>
+
+          <li>
+            <div>
+              <h3>PUT a Medic</h3>
+              <p>/medics/:ID</p>
+              <p>Body = { infoUser, infoMedic, ClinicID }</p>
+            </div>
+          </li>
+
+          <li>
+            <div>
+              <h3>DELETE a Medic</h3>
+              <p>/medics/:ID</p>
+              <p>Body = { infoUser, infoMedic, ClinicID }</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
