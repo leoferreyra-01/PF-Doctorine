@@ -13,6 +13,7 @@ export default function Home() {
   
   useEffect(() => {
     let parsedTitle = location.pathname.replace(/\W/g, ' ');
+    if (parsedTitle.length > 19) parsedTitle = parsedTitle.slice(19);
     if (parsedTitle.length > 18) parsedTitle = parsedTitle.slice(18);
     if (parsedTitle.length > 5) parsedTitle = parsedTitle.slice(5);
     setTitle(parsedTitle);

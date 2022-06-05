@@ -174,7 +174,6 @@ const XvalidateInfoUser = [
     .trim()
     .isEmail()
     .withMessage('Email must be valid.')
-    .normalizeEmail()
     .bail()
     .custom(async value => {
       // PRELOADS

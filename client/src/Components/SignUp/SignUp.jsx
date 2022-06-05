@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import logo from './Logo/logo.jpg';
-import { Link, useInRouterContext, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import S from './SingUp.module.css';
+import { useDispatch } from 'react-redux';
+import { postMedicLogin, postPatientLogin } from '../../redux/actions';
 
 export function validate(input) {
   let errors = {};
@@ -51,7 +51,7 @@ export function validate(input) {
   }
   if (medic === false) {
     if (!input.obraSocial) {
-      errors.obraSocial = 'Medical insurance is required'; 
+      errors.obraSocial = 'Medical insurance is required';
     } else if (!/^[0-9]+$/.test(input.obraSocial)) {
       errors.obraSocial = 'Medical insurance is invalid';
     }
@@ -77,14 +77,13 @@ function SignUp() {
     obraSocial: '',
     passwordConfirm: '',
     userType: 'Patient',
-
     title: '',
     tuition_number: '',
     tuition_date: '',
-
     ClinicID: 1,
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const infoUser = {
     email: input.email,
@@ -93,7 +92,6 @@ function SignUp() {
     lastName: input.lastName,
     document: parseInt(input.document),
     birth: input.birth,
-    userType: 'Medic',
   };
 
   const infoMedic = {
@@ -133,38 +131,33 @@ function SignUp() {
       return toast.error('All fields must be completed correctly');
     } else {
       if (medic === false) {
-        axios
-          .post('http://localhost:3001/login/register', {
-            email: input.email,
-            password: input.password,
-            userType: 'Patient',
-            document: input.document,
-            name: input.name,
-            lastName: input.lastName,
-            birth: input.birth,
-          })
-          .then(response => {
-            toast.success(response.data.success);
-            navigate('/');
-          })
-          .catch(() => {
-            return toast.error('This user already exists');
-          });
+        try {
+          dispatch(
+            postPatientLogin({
+              infoUser: infoUser,
+              infoPatient: input.obraSocial,
+            })
+          );
+          toast.success('Registered successfully');
+          navigate('/');
+        } catch (error) {
+          return toast.error('This user already exists');
+        }
       } else {
         console.log(infoUser);
-        axios
-          .post('http://localhost:3001/medics', {
-            infoUser: infoUser,
-            infoMedic: infoMedic,
-            ClinicID: input.ClinicID,
-          })
-          .then(response => {
-            toast.success(response.data.success);
-            navigate('/');
-          })
-          .catch(() => {
-            return toast.error('This user already exists');
-          });
+        try {
+          dispatch(
+            postMedicLogin({
+              infoUser: infoUser,
+              infoMedic: infoMedic,
+              ClinicID: input.ClinicID,
+            })
+          );
+          toast.success('Registered successfully');
+          navigate('/');
+        } catch (error) {
+          return toast.error('This user already exists');
+        }
       }
     }
   };
@@ -173,88 +166,88 @@ function SignUp() {
     <>
       <SignUpDivContainer>
         <div className={S.check}>
-          <label class="switchBtn">
-            <input type="checkbox" onClick={toggleOn} />
+          <label class='switchBtn'>
+            <input type='checkbox' onClick={toggleOn} />
             {medic === false ? (
-              <div class="slide round">
-                <p className={S.pa}>Patient</p>
+              <div class='slide round'>
+                <p className={S.pa}> Patient </p>
               </div>
             ) : (
-              <div class="slide round">
+              <div class='slide round'>
                 <p>Medic</p>
               </div>
             )}
           </label>
         </div>
 
-        <Toaster position="top-center" reverseOrder={false} />
+        <Toaster position='top-center' reverseOrder={false} />
         <SignUpContainer>
           <form onSubmit={register}>
             <label>Email</label>
             <input
               onChange={handleInputChange}
               value={input.email}
-              placeholder="Email"
-              type="text"
-              name="email"
+              placeholder='Email'
+              type='text'
+              name='email'
             />
-            {errors.username && <p className="error">{errors.username}</p>}
+            {errors.username && <p className='error'>{errors.username}</p>}
             <label>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
-              placeholder="Password"
-              type="password"
-              name="password"
+              placeholder='Password'
+              type='password'
+              name='password'
             />
-            {errors.password && <p className="error">{errors.password}</p>}
+            {errors.password && <p className='error'>{errors.password}</p>}
             <label>Confirm password</label>
             <input
               onChange={handleInputChange}
               value={input.passwordConfirm}
-              placeholder="Password"
-              type="password"
-              name="passwordConfirm"
+              placeholder='Password'
+              type='password'
+              name='passwordConfirm'
             />
             {errors.passwordConfirm && (
-              <p className="error">{errors.passwordConfirm}</p>
+              <p className='error'>{errors.passwordConfirm}</p>
             )}
             <label>Name</label>
             <input
               onChange={handleInputChange}
               value={input.name}
-              placeholder="Name"
-              type="text"
-              name="name"
+              placeholder='Name'
+              type='text'
+              name='name'
             />
-            {errors.name && <p className="error">{errors.name}</p>}
+            {errors.name && <p className='error'>{errors.name}</p>}
             <label>Lastname</label>
             <input
               onChange={handleInputChange}
               value={input.lastName}
-              placeholder="Lastname"
-              type="text"
-              name="lastName"
+              placeholder='Lastname'
+              type='text'
+              name='lastName'
             />
-            {errors.lastName && <p className="error">{errors.lastName}</p>}
+            {errors.lastName && <p className='error'>{errors.lastName}</p>}
             <label>ID</label>
             <input
               onChange={handleInputChange}
               value={input.document}
-              placeholder="ID"
-              type="text"
-              name="document"
+              placeholder='ID'
+              type='text'
+              name='document'
             />
-            {errors.document && <p className="error">{errors.document}</p>}
+            {errors.document && <p className='error'>{errors.document}</p>}
             <label>Birth date</label>
             <input
               onChange={handleInputChange}
               value={input.birth}
-              placeholder="Birth date"
-              type="date"
-              name="birth"
+              placeholder='Birth date'
+              type='date'
+              name='birth'
             />
-            {errors.birth && <p className="error">{errors.birth}</p>}
+            {errors.birth && <p className='error'>{errors.birth}</p>}
 
             {medic === false ? (
               <>
@@ -262,12 +255,12 @@ function SignUp() {
                 <input
                   onChange={handleInputChange}
                   value={input.obraSocial}
-                  placeholder="Medical insurance"
-                  type="text"
-                  name="obraSocial"
+                  placeholder='Medical insurance'
+                  type='text'
+                  name='obraSocial'
                 />
                 {errors.obraSocial && (
-                  <p className="error">{errors.obraSocial}</p>
+                  <p className='error'>{errors.obraSocial}</p>
                 )}
               </>
             ) : (
@@ -276,34 +269,34 @@ function SignUp() {
                 <input
                   onChange={handleInputChange}
                   value={input.title}
-                  placeholder="Title"
-                  type="text"
-                  name="title"
+                  placeholder='Title'
+                  type='text'
+                  name='title'
                 />
                 <label>Tuition</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_number}
-                  placeholder="Tuition"
-                  type="text"
-                  name="tuition_number"
+                  placeholder='Tuition'
+                  type='text'
+                  name='tuition_number'
                 />
                 <label>Tuition date</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_date}
-                  placeholder="Tuition date"
-                  type="date"
-                  name="tuition_date"
+                  placeholder='Tuition date'
+                  type='date'
+                  name='tuition_date'
                 />
               </>
             )}
 
-            <button type="submit">Register</button>
+            <button type='submit'>Register</button>
           </form>
         </SignUpContainer>
-        <Link to="/">
-          <button className="back_signUp">Back</button>
+        <Link to='/'>
+          <button className='back_signUp'>Back</button>
         </Link>
       </SignUpDivContainer>
     </>

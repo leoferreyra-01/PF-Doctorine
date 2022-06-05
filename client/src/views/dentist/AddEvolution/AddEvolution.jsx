@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMedics, getTooth, getTreatments } from '../../../redux/actions';
+import { getMedics, getTooth, getTreatments, postEvolution } from '../../../redux/actions';
 import S from './AddEvolution.module.css';
-import axios from 'axios';
 
 export function validate(data) {
   let errors = {};
@@ -100,29 +99,27 @@ function addEvolution() {
     });
   }
 
+  const evolution = {
+    date: data.date,
+    observations: data.observations,
+    PatientID: patientID,
+    MedicID: data.medico[0],
+    TreatmentID: data.treatments[0],
+    toothID: data.tooth[0],
+  };
+
   async function handleSubmit(e) {
     e.preventDefault(e);
     setErrors(validate(data));
     const errors = validate(data);
-    console.log(errors);
-    console.log(data);
     if (Object.keys(errors).length === 0) {
-      await axios
-        .post('/evolutions', {
-          date: data.date,
-          observations: data.observations,
-          PatientID: patientID,
-          MedicID: data.medico[0],
-          TreatmentID: data.treatments[0],
-          toothID: data.tooth[0],
-        })
-        .then(response => {
-          toast.success('Evolution was created');
-          navigate(`/home/${patientID}`);
-        })
-        .catch(() => {
-          return toast.error('This evolution was created.');
-        });
+      try {
+        dispatch(postEvolution(evolution));
+        toast.success('Evolution added successfully');
+        navigate(`/home/${patientID}`);
+      } catch (error) {
+        toast.error('Error adding evolution');
+      }
     } else {
       alert('Please fill all the fields');
     }
@@ -167,9 +164,7 @@ function addEvolution() {
             onChange={e => handleSelect(e)}
             name='medico'
             className={S.casillas}>
-            <option value=''>
-              Select Medic
-            </option>
+            <option value=''>Select Medic</option>
             {medicos &&
               medicos.map(medicos => (
                 <option
