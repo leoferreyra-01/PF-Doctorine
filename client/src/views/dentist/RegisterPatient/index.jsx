@@ -30,8 +30,9 @@ export default function RegisterPatient() {
       icon: 'success',
       title: `You will be redirected to create the patient's medical history`,
     })
-
-    navigate('/home/create-clinical-history/');
+    setTimeout(()=>{
+      navigate('/home/create-clinical-history/');
+    },1500)
   };
 
   return (
