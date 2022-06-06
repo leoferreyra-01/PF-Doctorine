@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import s from './SearchBar.module.css';
+import Swal from 'sweetalert2';
 
 export default function SearchBar({ placeholder, handleDni, handleName }) {
   const [searched, setSearched] = useState('');
@@ -19,9 +20,10 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
         ? dispatch(handleDni(searched))
         : dispatch(handleName(searched));
     } else {
-      alert(
-        'The search field is empty, please enter the ID of the patient to search'
-      );
+      Swal.fire({
+        icon: 'error',
+        title: 'The search field is empty, please enter the ID of the patient to search',
+      })
     }
     setSearched('');
   };

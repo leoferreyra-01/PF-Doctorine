@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerPatientSchema } from './registerPatientSchema';
 import sendPatientHelper from './sendPatientHelper';
+import Swal from 'sweetalert2';
 
 export default function RegisterPatient() {
   const navigate = useNavigate();
@@ -25,7 +26,10 @@ export default function RegisterPatient() {
     const patientReady = sendPatientHelper(data);
     console.log(patientReady);
     dispatch(postPatient(patientReady));
-    alert(`You will be redirected to create the patient's medical history`);
+    Swal.fire({
+      icon: 'success',
+      title: `You will be redirected to create the patient's medical history`,
+    })
 
     navigate('/home/create-clinical-history/');
   };

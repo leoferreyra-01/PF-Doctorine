@@ -3,6 +3,7 @@ import axios from 'axios'
 const login = async credentials => { 
     console.log(credentials)
     const {data} = await axios.post("/login" , credentials)
+    console.log(data)
     return data
 } 
 

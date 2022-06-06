@@ -52,7 +52,10 @@ function AddStudy() {
     const { name, value } = e.target;
 
     if (data.studyType.length > 0 && name === 'studyType') {
-      alert('Only ONE study can be selected');
+      Swal.fire({
+        icon: 'error',
+        title: 'You can only select ONE study',
+      });
     } else {
       setData({
         ...data,
@@ -88,7 +91,10 @@ function AddStudy() {
         patient: patientID,
       });
     } else {
-      alert('Please complete all the fields');
+      Swal.fire({
+        icon: 'error',
+        title: 'Please complete all the fields',
+      })
     }
   }
 

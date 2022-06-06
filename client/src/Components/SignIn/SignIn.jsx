@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 export function validate(input) {
   let errors = {};
-  console.log(errors);
+  // console.log(errors);
 
   if (!input.email) {
     errors.username = 'Username is required';
@@ -65,100 +65,118 @@ function SignUp() {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        toast.error('Fields must be completed correctly');
+        // toast.error('Fields must be completed correctly');
+        Swal.fire({
+          icon: 'error',
+          title: 'Fields must be completed correctly',
+        });
       }
       const user = await service.login(input);
-      console.log(user);
+      // console.log(user);
       setUser(user);
       window.localStorage.setItem('loggedToken', JSON.stringify(user));
       service.setToken(user.token);
       if (user.token) {
         if (user.userType === 'Patient') {
           select = 'patient';
-          toast.success(`Welcome to the main page ${user.name}`);
+          // toast.success(`Welcome to the main page ${user.name}`);
+          Swal.fire({
+            icon: 'success',
+            title: `Welcome to the main page ${user.name}`,
+          });
           dispatch(home(select));
           dispatch(getPatientDni2(user.document));
           window.localStorage.setItem('user', JSON.stringify(user));
           navigate('/home');
         } else {
-          toast.success(
-            `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`
-          );
+          // toast.success(
+          //   `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`
+          // );
+          Swal.fire({
+            icon: 'success',
+            title: `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`,
+          });
           dispatch(home(select));
           navigate('/home');
         }
       }
-      console.log(user);
+      // console.log(user);
     } catch (e) {
       console.log(e);
-      toast.error('Wrong password or user');
+      Swal.fire({
+        icon: 'error',
+        title: 'Incorrect username or password',
+      });
+      // toast.error('Wrong password or user');
     }
   };
   const respuestaGoogle = async respuesta => {
     console.log(respuesta);
-    const register = await axios.post('http://localhost:3001/login/oneUser', {
+    const register = await axios.post('/login/oneUser', {
       email: respuesta.profileObj.email,
-      password: respuesta.profileObj.googleId,
     });
-
     if (register.data.hasOwnProperty('success')) {
-      const user = await axios.post('http://localhost:3001/login', {
+      setInput({
+        ...input,
         email: respuesta.profileObj.email,
-        password: respuesta.profileObj.googleId,
+        password: '',
       });
-      window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
-      service.setToken(user.data.token);
-      if (user.data.token) {
-        toast.success(`Welcome  ${user.data.name}`);
-        navigate('/');
-      }
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please, complete with your password',
+      });
     } else {
-      const userRegister = await axios.post(
-        'http://localhost:3001/login/register',
-        {
-          email: respuesta.profileObj.email,
-          password: respuesta.profileObj.givenName + '123',
-          userType: 'Patient',
-          document: 40158006,
-          name: respuesta.profileObj.givenName,
-          lastName: respuesta.profileObj.familyName,
-          birth: '1997-02-15',
-        }
-      );
-
-      if (userRegister.data) {
+      const doc = respuesta.googleId;
+      const userRegister = await axios.post('/login/register', {
+        email: respuesta.profileObj.email,
+        password: respuesta.profileObj.givenName + '123',
+        userType: 'Patient',
+        document: doc.slice(0, 7),
+        name: respuesta.profileObj.givenName,
+        lastName: respuesta.profileObj.familyName,
+        birth: '1997-02-15',
+      });
+      console.log(doc);
+      if (userRegister.data.hasOwnProperty('success')) {
         setTimeout(async () => {
-          const user = await axios.post('http://localhost:3001/login', {
+          const user = await axios.post('/login', {
             email: respuesta.profileObj.email,
             password: respuesta.profileObj.givenName + '123',
           });
           window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
           service.setToken(user.data.token);
           if (user.data.token) {
-            toast.success(`Welcome to the main page ${user.data.name}`);
+            Swal.fire({
+              title: `Welcome to the main page ${user.data.name}`,
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+              },
+            });
             setTimeout(() => {
               Swal.fire({
-                icon: 'error',
+                icon: 'warning',
                 title: 'Hello!',
                 text: 'Please complete your information!',
                 footer: '<a href="">Do you have doubts ?</a>',
               });
             }, 2500);
-
             navigate('/home/dataUpdate');
           }
-        }, 1500);
+        }, 3000);
       }
     }
   };
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <SignUpDivContainer>
         <ImgSignUp>
           <div className={S.card}>
-            <img className={S.img} src={logo} alt="logo" />
+            <img className={S.img} src={logo} alt='logo' />
           </div>
         </ImgSignUp>
 
@@ -168,44 +186,43 @@ function SignUp() {
             <input
               onChange={handleInputChange}
               value={input.email}
-              placeholder="Email"
-              type="text"
-              name="email"
-              className="input-usuario"
+              placeholder='Email'
+              type='text'
+              name='email'
+              className='input-usuario'
             />
-            {errors.email && <p className="error">{errors.email}</p>}
+            {errors.email && <p className='error'>{errors.email}</p>}
 
             <label>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
-              placeholder="Password"
-              type="password"
-              name="password"
-              className="input-usuario"
+              placeholder='Password'
+              type='password'
+              name='password'
+              className='input-usuario'
             />
-            {errors.password && <p className="error">{errors.password}</p>}
+            {errors.password && <p className='error'>{errors.password}</p>}
             <button>Login</button>
-            <hr className="linea" />
+            <hr className='linea' />
             <GoogleLogin
-              clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
-              buttonText="Login with Google"
+              clientId='909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com'
+              buttonText='Login with Google'
               onSuccess={respuestaGoogle}
               onFailure={() => console.log('fail')}
               cookiePolicy={'single_host_origin'}
-              className="Google-button"
+              className='Google-button'
               style={{ color: 'black important!' }}
             />
-            <div className="OR" style={{ position: 'relative', top: '-1rem' }}>
+            <div className='OR' style={{ position: 'relative', top: '-1rem' }}>
               <Link
-                className="link-to-signup"
-                id="olv-ct"
-                to={'/PasswordReset'}
-              >
+                className='link-to-signup'
+                id='olv-ct'
+                to={'/PasswordReset'}>
                 Forgot your password?
               </Link>
 
-              <Link className="link-to-signup" id="register" to={'/SignUp'}>
+              <Link className='link-to-signup' id='register' to={'/SignUp'}>
                 Register
               </Link>
             </div>
