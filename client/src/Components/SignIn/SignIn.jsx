@@ -8,7 +8,7 @@ import GoogleLogin from 'react-google-login';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import S from './SingIn.module.css';
-import { home } from '../../redux/actions';
+import { home, getPatientDni2 } from '../../redux/actions';
 
 export function validate(input) {
   let errors = {};
@@ -24,9 +24,9 @@ export function validate(input) {
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
     errors.password = 'Password is invalid';
   } else if (input.password.length < 6) {
-    errors.password = 'La contraseña debe ser mayor a 6 digitos';
+    errors.password = 'Password must be greater than 6 digits';
   } else if (input.password.length > 12) {
-    errors.password = 'La contraseña debe ser menor a 12 digitos';
+    errors.password = 'Password must be less than 12 digits';
   }
   return errors;
 }
@@ -64,7 +64,7 @@ function SignUp() {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        toast.error('Debes completar correctamente los campos.');
+        toast.error('Fields must be completed correctly');
       }
       const user = await service.login(input);
       console.log(user);
@@ -73,11 +73,15 @@ function SignUp() {
       service.setToken(user.token);
       if (user.token) {
         if (user.userType === 'Patient') {
-          toast.success(`Bienvenido al Home ${user.name}`);
+          select = 'patient'
+          toast.success(`Welcome to the main page ${user.name}`);
+          dispatch(home(select));
+          dispatch(getPatientDni2(user.document));
+          window.localStorage.setItem('user', JSON.stringify(user));
           navigate('/home');
         } else {
           toast.success(
-            `Bienvenido al Home Dr. ${user.name[0]}. ${user.lastName}`
+            `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`
           );
           dispatch(home(select));
           navigate('/home');
@@ -86,7 +90,7 @@ function SignUp() {
       console.log(user);
     } catch (e) {
       console.log(e);
-      toast.error('Contraseña o usuario incorrecto.');
+      toast.error('Wrong password or user');
     }
   };
   const respuestaGoogle = async respuesta => {
@@ -102,7 +106,7 @@ function SignUp() {
       window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
       service.setToken(user.data.token);
       if (user.data.token) {
-        toast.success(`Bienvenido  ${user.data.name}`);
+        toast.success(`Welcome  ${user.data.name}`);
         navigate('/');
       }
     } else {
@@ -127,7 +131,7 @@ function SignUp() {
           window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
           service.setToken(user.data.token);
           if (user.data.token) {
-            toast.success(`Bienvenido al Home ${user.data.name}`);
+            toast.success(`Welcome to the main page ${user.data.name}`);
             navigate('/');
           }
         }, 3000);
@@ -158,7 +162,7 @@ function SignUp() {
             />
             {errors.email && <p className="error">{errors.email}</p>}
 
-            <label>Contraseña</label>
+            <label>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
@@ -168,11 +172,11 @@ function SignUp() {
               className="input-usuario"
             />
             {errors.password && <p className="error">{errors.password}</p>}
-            <button>Acceder</button>
+            <button>Login</button>
             <hr className="linea" />
             <GoogleLogin
               clientId="909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com"
-              buttonText="Acceder con Google"
+              buttonText="Login with Google"
               onSuccess={respuestaGoogle}
               onFailure={() => console.log('fail')}
               cookiePolicy={'single_host_origin'}
@@ -185,11 +189,11 @@ function SignUp() {
                 id="olv-ct"
                 to={'/PasswordReset'}
               >
-                ¿Olvidaste tu contraseña?
+                Forgot your password?
               </Link>
 
               <Link className="link-to-signup" id="register" to={'/SignUp'}>
-                REGISTRARME
+                Register
               </Link>
             </div>
           </form>

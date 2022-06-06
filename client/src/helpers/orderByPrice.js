@@ -6,7 +6,6 @@ export function orderBudgetsByHigherPrice(budgets) {
     return 0;
   });
 }
-
 export function orderBudgetsByLowerPrice(budgets) {
   const orderedBudgets = [...budgets];
   return orderedBudgets.sort((a, b) => {

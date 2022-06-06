@@ -4,7 +4,6 @@ export default function orderBudgetsByRecentDate(budgets) {
     return new Date(b.creationDate) - new Date(a.creationDate);
   });
 }
-
 export function orderBudgetsByOlderDate(budgets) {
   const orderedBudgets = [...budgets];
   return orderedBudgets.sort((a, b) => {

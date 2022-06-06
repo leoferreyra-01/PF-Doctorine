@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,7 +14,7 @@ export function validate(data) {
   let errors = {};
 
   if (!data.observations) {
-    errors.observations = 'Observations is required';
+    errors.observations = 'Observation is required';
   }
   if (!data.treatments || data.treatments.length === 0) {
     errors.treatments = 'Treatment is required';
@@ -23,7 +23,7 @@ export function validate(data) {
     errors.tooth = 'Teeth is required';
   }
   if (!data.medico || data.medico.length === 0) {
-    errors.medico = 'Medico is required';
+    errors.medico = 'Medic is required';
   }
   if (!data.date) {
     errors.date = 'Date is required';
@@ -65,7 +65,7 @@ function addEvolution() {
     } else if (data.treatments.length > 0 && name === 'treatments') {
       alert('Only ONE treatment can be selected');
     } else if (data.tooth.length > 0 && name === 'tooth') {
-      alert('Only ONE tooth can be selected');
+      alert('Only ONE teeth can be selected');
     } else {
       setData({
         ...data,
@@ -104,24 +104,26 @@ function addEvolution() {
     });
   }
 
-  function handleSubmit(e) {
+  const evolution = {
+    date: data.date,
+    observations: data.observations,
+    PatientID: patientID,
+    MedicID: data.medico[0],
+    TreatmentID: data.treatments[0],
+    toothID: data.tooth[0],
+  };
+
+  async function handleSubmit(e) {
     e.preventDefault(e);
     setErrors(validate(data));
     const errors = validate(data);
-    console.log(errors);
-    console.log(data);
     if (Object.keys(errors).length === 0) {
-      dispatch(
-        postEvolution({
-          date: data.date,
-          observations: data.observations,
-          PatientID: patientID,
-          MedicID: data.medico[0],
-          TreatmentID: data.treatments[0],
-          toothID: data.tooth[0],
-        })
-      );
-      navigate(`/home/${patientID}`);
+      try {
+        dispatch(postEvolution(evolution));
+        navigate(`/home`);
+      } catch (error) {
+        toast.error('Error adding evolution');
+      }
     } else {
       alert('Please fill all the fields');
     }
@@ -141,7 +143,7 @@ function addEvolution() {
           <label className={S.label}>Observations</label>
           <input
             value={data.observations}
-            placeholder="Observations..."
+            placeholder="Observations"
             type="text"
             name="observations"
             onChange={handleChange}
@@ -181,7 +183,7 @@ function addEvolution() {
 
           {data.medico.length > 0 && (
             <div className={S.treatment}>
-              <h4>Selected Medic</h4>
+              <h4>Medic selected</h4>
               <hr />
               <ul>
                 {data.medico.map(t => {
@@ -221,7 +223,7 @@ function addEvolution() {
 
           {data.treatments.length > 0 && (
             <div className={S.treatment}>
-              <h4>Selected Treatment</h4>
+              <h4>Treatment selected</h4>
               <hr />
               <ul>
                 {data.treatments.map(t => {
@@ -260,7 +262,7 @@ function addEvolution() {
           {errors.tooth && <p className={S.err}>{errors.tooth}</p>}
           {data.tooth.length > 0 && (
             <div className={S.treatment}>
-              <h4>Selected Tooth</h4>
+              <h4>Teeth selected</h4>
               <hr />
               <ul>
                 {data.tooth.map(t => {

@@ -45,13 +45,13 @@ function PasswordReset() {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        toast.error("Debes completar correctamente el usuario.");
+        toast.error("User must be completed correctly");
       }
       console.log("INPUT: ", input);
       dispatch(postPasswordReset(input));
     } catch (e) {
       console.log(e);
-      toast.error("Usuario incorrecto.");
+      toast.error("Incorrect user");
     }
   };
 
@@ -71,12 +71,12 @@ function PasswordReset() {
               name="username"
             />
             {errors.username && <p className="error">{errors.username}</p>}
-            <button>Enviar</button>
+            <button>Send</button>
           </form>
         </SignUpContainer>
 
         <Link to="/">
-          <button className="back_signUp">VOLVER</button>
+          <button className="back_signUp">Back</button>
         </Link>
       </SignUpDivContainer>
     </>

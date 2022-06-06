@@ -1,0 +1,35 @@
+.container {
+  grid-area: content;
+}
+
+.containe {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.list2 {
+  font-family: Barlow, Monospace, Arial !important;
+  width: 100%;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.subtitulo {
+  width: 100%;
+  font-size: 16px;
+  font-family: Barlow, Monospace, Arial !important;
+  text-transform: uppercase;
+  color: #666 !important;
+}
+
+.contenido {
+  font-family: Barlow, Monospace, Arial !important;
+  color: #495057 !important;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 20px;
+}

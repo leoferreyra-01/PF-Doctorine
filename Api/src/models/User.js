@@ -19,7 +19,8 @@ module.exports = sequelize => {
       unique: true,
       validate: {
         isInt: true,
-        len: [8, 8],
+        min: 1000000,
+        max: 99999999,
       },
     },
     name: {
@@ -122,16 +123,14 @@ module.exports = sequelize => {
     password: {
       type: DataTypes.STRING,
       set(value) {
-        let userDocument = this.name + this.document;
-        const Upper = userDocument.slice(0, 1).toUpperCase();
-        const _case = userDocument.slice(1, userDocument.length).toLowerCase();
-        userDocument = Upper + _case;
-
-        const hashValue = bcrypt.hashSync(value, 10);
-        const hashNameDocument = bcrypt.hashSync(userDocument, 10);
-
-        if (value) this.setDataValue('password', hashValue);
-        else this.setDataValue('password', hashNameDocument);
+        if (value) {
+          const hashValue = bcrypt.hashSync(value, 10);
+          this.setDataValue('password', hashValue);
+        } else {
+          const userDocument = this.name + this.document;
+          const hashNameDocument = bcrypt.hashSync(userDocument, 10);
+          this.setDataValue('password', hashNameDocument);
+        }
       },
       validate: {
         notEmpty: true,
@@ -143,14 +142,6 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       defaultValue:
         'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png', //temporal
-      set(value) {
-        if (!this.getDataValue('imageProfile'))
-          this.setDataValue(
-            'imageProfile',
-            'https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png'
-          );
-        else this.setDataValue('imageProfile', value);
-      },
       validate: {
         isUrl: true,
       },

@@ -334,7 +334,7 @@ const RegisterDoctor = () => {
               marginBottom: '12px',
             }}
           >
-            <h2 style={{ marginBottom: '10px' }}>clinic information</h2>
+            <h2 style={{ marginBottom: '10px' }}>Clinic information</h2>
             <Grid sx={Styles1.wrapper} container item xs spacing={2}>
               <Grid item xs={2}>
                 <TextField
@@ -464,7 +464,7 @@ const RegisterDoctor = () => {
             </Grid>
           </div>
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Enviar
+            Send
           </Button>
         </form>
       </Container>

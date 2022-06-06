@@ -30,7 +30,7 @@ export default function SearchComponent() {
     return (
       <div className={`${s.sc_container}`}>
         <SearchBar
-          placeholder="Buscar paciente.."
+          placeholder="Search Patient.."
           handleDni={getPatientDni}
           handleName={getPatientName}
         />
@@ -40,10 +40,10 @@ export default function SearchComponent() {
           </div>
           <div>
             <h4>Error</h4>
-            <h4>Paciente no encontrado — !</h4>
+            <h4>Patient not found — !</h4>
           </div>
           <Link to="./register">
-            <button className={s.buton}>Crear paciente?</button>
+            <button className={s.buton}>Create patient?</button>
           </Link>
           <div>
             <button className={s.x_icon} onClick={() => dispatch(clear())}>
@@ -58,10 +58,11 @@ export default function SearchComponent() {
   return (
     <div className={s.sc_container}>
       <SearchBar
-        placeholder="Buscar paciente.."
+        placeholder="Search Patient by ID or Name.."
         handleDni={getPatientDni}
         handleName={getPatientName}
       />
+
       {searchedPatient.length
         ? searchedPatient.map(patient => (
             <PatientCard
@@ -69,7 +70,7 @@ export default function SearchComponent() {
               ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
-              imageProfile={patient.imageProfile}
+              document={patient.document}
             />
           ))
         : allPatients.map(patient => (
@@ -78,7 +79,7 @@ export default function SearchComponent() {
               ID={patient.Patient.ID}
               name={patient.name}
               lastName={patient.lastName}
-              imageProfile={patient.imageProfile}
+              document={patient.document}
             />
           ))}
     </div>

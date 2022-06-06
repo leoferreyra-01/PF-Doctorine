@@ -27,7 +27,7 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
         : dispatch(handleName(searched));
     } else {
       alert(
-        'El campo de busqueda esta vacio, por favor ingrese el dni del paciente a buscar'
+        'The search field is empty, please enter the ID of the patient to search'
       );
     }
     setSearched('');
@@ -50,7 +50,7 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
       </div>
       <input
         type="submit"
-        value="Buscar"
+        value="Search"
         className={s.boton}
         disabled={!!errors}
       />

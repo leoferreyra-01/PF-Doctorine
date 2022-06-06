@@ -25,7 +25,7 @@ export default function RegisterPatient() {
     const patientReady = sendPatientHelper(data);
     console.log(patientReady);
     dispatch(postPatient(patientReady));
-    alert('Sera redireccionado para crear la historia clinica del paciente');
+    alert(`You will be redirected to create the patient's medical history`);
 
     navigate('/home/create-clinical-history/');
   };
@@ -35,9 +35,9 @@ export default function RegisterPatient() {
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('name')}
-            placeholder="Ingrese el nombre del paciente..."
+            placeholder="Enter patient's name"
             className={`${s.input} ${errors.name ? `${s.danger}` : ''}`}
           />
           {errors.name && (
@@ -47,9 +47,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('lastName')}
-            placeholder="Ingrese el apellido del paciente..."
+            placeholder="Enter patient's lastname"
             className={`${s.input} ${errors.lastName ? `${s.danger}` : ''}`}
           />
           {errors.lastName && (
@@ -59,9 +59,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('document')}
-            placeholder="Ingrese el dni del paciente..."
+            placeholder="Enter patient's ID"
             className={`${s.input} ${errors.document ? `${s.danger}` : ''}`}
           />
           {errors.document && (
@@ -71,9 +71,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('email')}
-            placeholder="Ingrese el correo electronico del paciente..."
+            placeholder="Enter patient's email"
             className={`${s.input} ${errors.email ? `${s.danger}` : ''}`}
           />
           {errors.email && (
@@ -83,9 +83,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('street')}
-            placeholder="Ingrese la calle del paciente..."
+            placeholder="Enter patient's street"
             className={`${s.input} ${errors.street ? `${s.danger}` : ''}`}
           />
           {errors.street && (
@@ -95,9 +95,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('city')}
-            placeholder="Ingrese la ciudad del paciente..."
+            placeholder="Enter patient's city"
             className={`${s.input} ${errors.city ? `${s.danger}` : ''}`}
           />
           {errors.city && (
@@ -107,9 +107,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('number')}
-            placeholder="Ingrese el numero de calle..."
+            placeholder="Enter patient's street number"
             className={`${s.input} ${errors.number ? `${s.danger}` : ''}`}
           />
           {errors.number && (
@@ -119,9 +119,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('postalCode')}
-            placeholder="Ingrese el codigo postal del paciente..."
+            placeholder="Enter patient's postal code"
             className={`${s.input} ${errors.postalCode ? `${s.danger}` : ''}`}
           />
           {errors.postalCode && (
@@ -131,9 +131,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('cellphone')}
-            placeholder="Ingrese el numero de telefono del paciente..."
+            placeholder="Enter patient's cellphone"
             className={`${s.input} ${errors.cellphone ? `${s.danger}` : ''}`}
           />
           {errors.cellphone && (
@@ -143,9 +143,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('telephone')}
-            placeholder="Ingrese el numero de telefono local del paciente..."
+            placeholder="Enter patient's telephone"
             className={`${s.input} ${errors.telephone ? `${s.danger}` : ''}`}
           />
           {errors.telephone && (
@@ -155,9 +155,9 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type="text"
+            type='text'
             {...register('medicalService')}
-            placeholder="Ingrese el servicio medico del paciente..."
+            placeholder="Enter patient's medical service"
             className={`${s.input} ${
               errors.medicalService ? `${s.danger}` : ''
             }`}
@@ -168,8 +168,9 @@ export default function RegisterPatient() {
         </div>
 
         <div className={s.input_container}>
+          <h3>Enter the patient's date of birth</h3>
           <input
-            type="date"
+            type='date'
             {...register('birth')}
             className={`${s.input} ${errors.birth ? `${s.danger}` : ''}`}
           />
@@ -178,8 +179,8 @@ export default function RegisterPatient() {
           )}
         </div>
         <div>
-          <button className={s.buton} type="submit">
-            Enviar
+          <button className={s.buton} type='submit'>
+            Send
           </button>
         </div>
       </form>

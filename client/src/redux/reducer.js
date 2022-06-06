@@ -2,6 +2,7 @@ import {
   GET_PATIENT,
   POST_PATIENT,
   GET_PATIENT_DNI,
+  GET_PATIENT_DNI2,
   GET_PATIENT_NAME,
   GET_EVOLUTIONS,
   POST_EVOLUTION,
@@ -26,6 +27,9 @@ import {
   GET_MEDICS,
   POST_CLINICAL_HISTORY,
   GET_TOOTH,
+  POST_EVOLUTION,
+  POST_MEDIC_LOGIN,
+  POST_PATIENT_LOGIN,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -35,6 +39,7 @@ import {
   USER_TO_ADMIN,
   DELETE_USER,
   ENTER_HOME,
+  UPDATE_PATIENT,
 } from './actions';
 
 import getAllPatientsName from '../helpers/getAllPatientsName';
@@ -113,6 +118,12 @@ export default function rootReducer(state = initialState, action) {
         searchedPatient: searchedPatientName,
       };
 
+    case GET_PATIENT_DNI2:
+      return {
+        ...state,
+        searchedPatient: action.payload[0],
+      };
+
     case GET_ALL_PATIENTS:
       return {
         ...state,
@@ -142,6 +153,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         budgetsToShow: searchedBudgetsName,
       };
+
     case GET_BUDGETS:
       const orderedBudgets = orderBudgetsByRecentDate(action.payload);
       const namedBudgets = getAllPatientsName(
@@ -358,6 +370,33 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         urlstudy: action.payload,
+      };
+    case UPDATE_PATIENT:
+      let allPatientsUpdated = state.allPatients.map(patient => {
+        if (patient.ID === action.payload.ID) {
+          return action.payload;
+        } else {
+          return patient;
+        }
+      });
+      return {
+        ...state,
+        allPatients: allPatientsUpdated,
+      };
+    case POST_EVOLUTION:
+      return {
+        ...state,
+        evolutions: [...state.evolutions, ...action.payload],
+      };
+    case POST_MEDIC_LOGIN:
+      return {
+        ...state,
+        medics: [...state.medics, ...action.payload],
+      };
+    case POST_PATIENT_LOGIN:
+      return {
+        ...state,
+        allPatients: [...state.allPatients, ...action.payload],
       };
     default:
       return { ...state };

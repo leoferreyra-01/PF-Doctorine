@@ -16,13 +16,18 @@ export const ORDER_BUDGETS_BY_PRICE_ASC = 'ORDER_BUDGETS_BY_PRICE_ASC';
 export const ORDER_BUDGETS_BY_PRICE_DES = 'ORDER_BUDGETS_BY_PRICE_DES';
 export const FILTER_BUDGETS_BY_PENDING = 'FILTER_BUDGETS_BY_PENDING';
 export const FILTER_BUDGETS_BY_COMPLETED = 'FILTER_BUDGETS_BY_COMPLETED';
+export const UPDATE_PATIENT = 'UPDATE_PATIENT';
 
+export const POST_MEDIC_LOGIN = 'POST_MEDIC_LOGIN';
+export const POST_PATIENT_LOGIN = 'POST_PATIENT_LOGIN';
 //export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
 export const POST_EVOLUTION = 'POST_EVOLUTION';
 //export const GET_STUDY = 'GET_STUDY';
-export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
 export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
+export const GET_PATIENT_DNI2 = 'GET_PATIENT_DNI2';
+export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
+
 export const CLEAR = 'CLEAR';
 export const POST_TURN = 'POST_TURN';
 export const GET_TURNS = 'GET_TURNS';
@@ -91,6 +96,19 @@ export function getPatientDni(dni) {
 
 export function getPatientName(name) {
   return { type: GET_PATIENT_NAME, payload: name };
+}
+
+export function getPatientDni2(dni) {
+  return async function (dispatch) {
+    try {
+      const patient = (await axios.get(`/patients?document=${dni}`)).data;
+      console.log(patient);
+      dispatch({ type: GET_PATIENT_DNI2, payload: patient });
+    } catch (error) {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
+  };
 }
 
 export function getAllPatients() {
@@ -309,7 +327,7 @@ export function home(selectedHome) {
 }
 
 export function getClinicalHistory(id) {
-  return function (dispatch) {
+  return async function (dispatch) {
     return axios
       .get(`/clinicalhistories/search?id=${id}`)
       .then(res => dispatch({ type: GET_CLINICAL_HISTORY, payload: res.data }))
@@ -324,7 +342,8 @@ export function getClinicalHistory(id) {
 export function getEvolutions(patientID) {
   return async dispatch => {
     try {
-      const evolution = (await axios.get(`/evolutions/${patientID}`)).data;
+      const evolution = (await axios.get(`/evolutions?PatientID=${patientID}`))
+        .data;
       return dispatch({ type: GET_EVOLUTIONS, payload: evolution });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -414,6 +433,59 @@ export function getTooth() {
     } catch (e) {
       console.log(e);
       alert(e.response.data.error);
+    }
+  };
+}
+
+export function updatePatient(ID, infoPatient, infoUser) {
+  return async function (dispatch) {
+    return axios
+      .put(`/patients/${ID}`, {
+        ID: ID,
+        infoUser: infoUser,
+        infoPatient: infoPatient,
+      })
+      .then(res => dispatch({ type: UPDATE_PATIENT, payload: res.data }))
+      .catch(error => {
+        if (error.response.status === 404)
+          return alert(error.response.data.msg);
+        alert(error.message);
+      });
+  };
+}
+
+export function postEvolution(evolution) {
+  return async function (dispatch) {
+    try {
+      const evolutions = (await axios.post('/evolutions', evolution)).data;
+      return dispatch({ type: POST_EVOLUTION, payload: evolutions });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postMedicLogin({ infoUser, infoMedic, ClinicID }) {
+  return async function (dispatch) {
+    try {
+      const medics = (
+        await axios.post('/medics', { infoUser, infoMedic, ClinicID })
+      ).data;
+      return dispatch({ type: POST_MEDIC_LOGIN, payload: medics });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postPatientLogin({ infoUser, infoPatient }) {
+  return async function (dispatch) {
+    try {
+      const patient = (await axios.post('/patients', { infoUser, infoPatient }))
+        .data;
+      return dispatch({ type: POST_PATIENT_LOGIN, payload: patient });
+    } catch (error) {
+      console.log(error);
     }
   };
 }
