@@ -9,12 +9,12 @@ export default async function validatePatient(patient, PatientID = null) {
   try {
     let rute = '';
     let ruteType = '';
-    if (!PatientID) {
-      rute = '/validate/patient';
-      ruteType = 'post';
-    } else {
+    if (PatientID) {
       rute = '/validate/patient/' + PatientID;
       ruteType = 'put';
+    } else {
+      rute = '/validate/patient';
+      ruteType = 'post';
     }
     return (await axios[ruteType](rute, patient)).data;
   } catch (error) {
