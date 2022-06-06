@@ -1,0 +1,106 @@
+.container {
+  grid-area: content;
+  overflow: auto;
+  padding: 60px 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 2px;
+  background-color: rgb(0, 131, 182);
+  box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+    -15px -15px 30px rgba(255, 255, 255, 0.135);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  border-radius: 20px;
+}
+
+.list {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.summary_container {
+  border: 1px solid black;
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.patient_details {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: left;
+}
+
+.patient_details p {
+  margin: 0.5rem 0;
+}
+
+.name_container {
+  /* display: flex;
+  justify-content: space-around;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: var(--primary-light);
+  padding: 10px 0;
+  border-bottom: 1px solid black;
+}
+
+.totalPrice {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 8%;
+}
+
+.totalPrice h3 span {
+  display: block;
+}
+
+.label {
+  padding: 10px 0;
+}
+
+.casillas {
+  border-radius: 7px;
+}
+
+.btn {
+  margin: 25px 0;
+  background-color: #ededed;
+  padding: 5px 20px;
+  color: #414141;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.1s;
+  border-radius: 5px;
+  border: none;
+  left: 70px;
+  box-shadow: 0 5px 10px rgba(255, 255, 255, 0.568);
+}
+
+.btn:hover {
+  color: black;
+  box-shadow: 0 0 10px #9088a0, 0 0 10px #9088a0, 0 0 15px #9088a0;
+  transition: 0.8s;
+  border: none;
+  color: white;
+  background-color: #9088a0;
+  cursor: pointer;
+}
+
+.err {
+  color: red;
+}

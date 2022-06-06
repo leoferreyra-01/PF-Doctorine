@@ -338,7 +338,10 @@ export function postEvolution(evolution) {
     try {
       const evolutionWithID = (await axios.post('/evolutions', evolution)).data;
       toast.success('Se ha creado la evolucion');
-      return dispatch({ type: POST_EVOLUTION, payload: evolutionWithID });
+      return dispatch({
+        type: POST_EVOLUTION,
+        payload: evolutionWithID.Evolution,
+      });
     } catch (error) {
       return toast.error('Esta evolucion se ha creado.');
       // if (error.response.status === 404) return alert(error.response.data.msg);
