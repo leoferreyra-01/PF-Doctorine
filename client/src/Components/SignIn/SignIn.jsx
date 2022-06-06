@@ -80,10 +80,17 @@ function SignUp() {
         if (user.userType === 'Patient') {
           select = 'patient';
           // toast.success(`Welcome to the main page ${user.name}`);
-          Swal.fire({
-            icon: 'success',
-            title: `Welcome to the main page ${user.name}`,
-          });
+          setTimeout(() => {
+            Swal.fire({
+              title: `Welcome to the main page ${user.name}`,
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+              },
+            });
+          }, [2000]);
           dispatch(home(select));
           dispatch(getPatientDni2(user.document));
           window.localStorage.setItem('user', JSON.stringify(user));
@@ -92,10 +99,17 @@ function SignUp() {
           // toast.success(
           //   `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`
           // );
-          Swal.fire({
-            icon: 'success',
-            title: `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`,
-          });
+          setTimeout(() => {
+            Swal.fire({
+              title: `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`,
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+              },
+            });
+          }, [2000]);
           dispatch(home(select));
           navigate('/home');
         }
@@ -127,25 +141,26 @@ function SignUp() {
       });
     } else {
       const doc = respuesta.googleId;
-      const userRegister = await axios.post('/login/register', {
+      const infoUser = {
         email: respuesta.profileObj.email,
-        password: respuesta.profileObj.givenName + '123',
+        password: respuesta.profileObj.givenName.slice(0,1).toUpperCase() +respuesta.profileObj.givenName.slice(2) + doc.slice(0,7),
         userType: 'Patient',
         document: doc.slice(0, 7),
         name: respuesta.profileObj.givenName,
         lastName: respuesta.profileObj.familyName,
         birth: '1997-02-15',
-      });
-      console.log(doc);
-      if (userRegister.data.hasOwnProperty('success')) {
-        setTimeout(async () => {
-          const user = await axios.post('/login', {
-            email: respuesta.profileObj.email,
-            password: respuesta.profileObj.givenName + '123',
-          });
-          window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
-          service.setToken(user.data.token);
-          if (user.data.token) {
+      };
+      const userRegister = await axios.post('/patients', { infoUser });
+      console.log(infoUser.password);
+      setTimeout(async () => {
+        const user = await axios.post('/login', {
+          email: respuesta.profileObj.email,
+          password: respuesta.profileObj.givenName + doc.slice(0,7),
+        });
+        window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
+        service.setToken(user.data.token);
+        if (user.data.token) {
+          setTimeout(() => {
             Swal.fire({
               title: `Welcome to the main page ${user.data.name}`,
               showClass: {
@@ -155,18 +170,18 @@ function SignUp() {
                 popup: 'animate__animated animate__fadeOutUp',
               },
             });
-            setTimeout(() => {
-              Swal.fire({
-                icon: 'warning',
-                title: 'Hello!',
-                text: 'Please complete your information!',
-                footer: '<a href="">Do you have doubts ?</a>',
-              });
-            }, 2500);
-            navigate('/home/dataUpdate');
-          }
-        }, 3000);
-      }
+          }, [2000]);
+          setTimeout(() => {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Hello!',
+              text: 'Please complete your information!',
+              footer: '<a href="">Do you have doubts ?</a>',
+            });
+          }, 2500);
+          navigate('/home/dataUpdate');
+        }
+      }, 3000);
     }
   };
 
