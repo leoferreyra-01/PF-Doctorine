@@ -56,12 +56,12 @@ export const mainSidebarItems = [
     label: 'Create HC',
     route: 'create-clinical-history',
   },
-  {
-    id: 6,
-    icon: (
-      <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
-    ),
-    label: 'Register Medic',
-    route: 'Doctor',
-  },
+  // {
+  //   id: 6,
+  //   icon: (
+  //     <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+  //   ),
+  //   label: 'Register Medic',
+  //   route: 'Doctor',
+  // },
 ];
