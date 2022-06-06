@@ -8,6 +8,7 @@ import {
   getTreatments,
   postEvolution,
 } from '../../../redux/actions';
+import Swal from 'sweetalert2';
 import S from './AddEvolution.module.css';
 
 export function validate(data) {
@@ -61,11 +62,23 @@ function addEvolution() {
   function handleSelect(e) {
     const { name, value } = e.target;
     if (data.medico.length > 0 && name === 'medico') {
-      alert('Only ONE medic can be selected');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You can only select ONE medic',
+      });
     } else if (data.treatments.length > 0 && name === 'treatments') {
-      alert('Only ONE treatment can be selected');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You can only select ONE treatment',
+      });
     } else if (data.tooth.length > 0 && name === 'tooth') {
-      alert('Only ONE teeth can be selected');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You can only select ONE tooth',
+      });
     } else {
       setData({
         ...data,
@@ -118,10 +131,24 @@ function addEvolution() {
     setErrors(validate(data));
     const errors = validate(data);
     if (Object.keys(errors).length === 0) {
-      dispatch(postEvolution(evolution));
-      navigate(`/home`);
+      try {
+        dispatch(postEvolution(evolution));
+        Swal.fire({
+          icon: 'success',
+          title: 'Evolution added successfully',
+        });
+        navigate(`/home`);
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error adding evolution',
+        });
+      }
     } else {
-      alert('Please fill all the fields');
+      Swal.fire({
+        icon: 'error',
+        title: 'Please fill all the fields',
+      });
     }
   }
 
@@ -244,7 +271,7 @@ function addEvolution() {
             className={S.casillas2}
           >
             <option hidden value="">
-              Select Teeth
+              Select Tooth
             </option>
             {tooth &&
               tooth.map(t => (
