@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './AddBudget.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTreatments, getAllPatients } from '../../../redux/actions';
+import {
+  getTreatments,
+  getAllPatients,
+  postBudget,
+} from '../../../redux/actions';
 import Treatment from '../Treatment/Treatment';
 
 export function AddBudget() {
@@ -13,7 +17,6 @@ export function AddBudget() {
   const patients = useSelector(state => state.allPatients);
   const filledPatients = !!patients.length;
   const [data, setData] = useState({
-    date: new Date(),
     treatments: [],
     discount: null,
     totalPrice: 0,
@@ -159,7 +162,17 @@ export function AddBudget() {
     if (Object.keys(errors).length === 0) {
       console.log('Hurra');
       console.log(data);
-      //navigate('/home/budget');
+      const { patient, ...restOfData } = data;
+      const patientID = patient.Patient.ID;
+      const patientFullName = patient.FullName;
+      const jsonTreatments = JSON.stringify(restOfData.treatments);
+      const readyBudget = {
+        patientID,
+        patientFullName,
+        ...restOfData,
+        treatments: jsonTreatments,
+      };
+      navigate('/home/budget');
     } else {
       alert('Please complete the budget before creating it');
     }
