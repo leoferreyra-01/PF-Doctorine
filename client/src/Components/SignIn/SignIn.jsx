@@ -82,6 +82,7 @@ function SignUp() {
           // toast.success(`Welcome to the main page ${user.name}`);
           setTimeout(() => {
             Swal.fire({
+              position: 'top',
               title: `Welcome to the main page ${user.name}`,
               showClass: {
                 popup: 'animate__animated animate__fadeInDown',
@@ -89,6 +90,8 @@ function SignUp() {
               hideClass: {
                 popup: 'animate__animated animate__fadeOutUp',
               },
+              showConfirmButton: false,
+              timer: 1500,
             });
           }, [2000]);
           dispatch(home(select));
@@ -101,6 +104,7 @@ function SignUp() {
           // );
           setTimeout(() => {
             Swal.fire({
+              position: 'top',
               title: `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`,
               showClass: {
                 popup: 'animate__animated animate__fadeInDown',
@@ -108,6 +112,8 @@ function SignUp() {
               hideClass: {
                 popup: 'animate__animated animate__fadeOutUp',
               },
+              showConfirmButton: false,
+              timer: 1500,
             });
           }, [2000]);
           dispatch(home(select));
@@ -125,7 +131,7 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async respuesta => {
-    console.log(respuesta);
+    // console.log(respuesta);
     const register = await axios.post('/login/oneUser', {
       email: respuesta.profileObj.email,
     });
@@ -143,7 +149,10 @@ function SignUp() {
       const doc = respuesta.googleId;
       const infoUser = {
         email: respuesta.profileObj.email,
-        password: respuesta.profileObj.givenName.slice(0,1).toUpperCase() +respuesta.profileObj.givenName.slice(2) + doc.slice(0,7),
+        password:
+          respuesta.profileObj.givenName.slice(0, 1).toUpperCase() +
+          respuesta.profileObj.givenName.slice(2) +
+          doc.slice(0, 7),
         userType: 'Patient',
         document: doc.slice(0, 7),
         name: respuesta.profileObj.givenName,
@@ -151,17 +160,18 @@ function SignUp() {
         birth: '1997-02-15',
       };
       const userRegister = await axios.post('/patients', { infoUser });
-      console.log(infoUser.password);
+      // console.log(infoUser.password);
       setTimeout(async () => {
         const user = await axios.post('/login', {
           email: respuesta.profileObj.email,
-          password: respuesta.profileObj.givenName + doc.slice(0,7),
+          password: respuesta.profileObj.givenName + doc.slice(0, 7),
         });
         window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
         service.setToken(user.data.token);
         if (user.data.token) {
           setTimeout(() => {
             Swal.fire({
+              position: 'top',
               title: `Welcome to the main page ${user.data.name}`,
               showClass: {
                 popup: 'animate__animated animate__fadeInDown',
@@ -169,6 +179,8 @@ function SignUp() {
               hideClass: {
                 popup: 'animate__animated animate__fadeOutUp',
               },
+              showConfirmButton: false,
+              timer: 1500,
             });
           }, [2000]);
           setTimeout(() => {
