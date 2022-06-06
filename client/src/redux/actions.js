@@ -356,13 +356,13 @@ export function postEvolution(evolution) {
   return async function (dispatch) {
     try {
       const evolutionWithID = (await axios.post('/evolutions', evolution)).data;
-      toast.success('Se ha creado la evolucion');
+      toast.success('Evolution created sucesfully');
       return dispatch({
         type: POST_EVOLUTION,
         payload: evolutionWithID.Evolution,
       });
     } catch (error) {
-      return toast.error('Esta evolucion se ha creado.');
+      return toast.error('Error adding evolution');
       // if (error.response.status === 404) return alert(error.response.data.msg);
       // alert(error.message);
     }

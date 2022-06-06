@@ -118,12 +118,8 @@ function addEvolution() {
     setErrors(validate(data));
     const errors = validate(data);
     if (Object.keys(errors).length === 0) {
-      try {
-        dispatch(postEvolution(evolution));
-        navigate(`/home`);
-      } catch (error) {
-        toast.error('Error adding evolution');
-      }
+      dispatch(postEvolution(evolution));
+      navigate(`/home`);
     } else {
       alert('Please fill all the fields');
     }
