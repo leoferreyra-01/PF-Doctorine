@@ -454,17 +454,6 @@ export function updatePatient(ID, infoPatient, infoUser) {
   };
 }
 
-export function postEvolution(evolution) {
-  return async function (dispatch) {
-    try {
-      const evolutions = (await axios.post('/evolutions', evolution)).data;
-      return dispatch({ type: POST_EVOLUTION, payload: evolutions });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
 export function postMedicLogin({ infoUser, infoMedic, ClinicID }) {
   return async function (dispatch) {
     try {
