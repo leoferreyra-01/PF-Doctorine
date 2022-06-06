@@ -161,17 +161,23 @@ export function AddBudget() {
     const errors = validate();
     if (Object.keys(errors).length === 0) {
       console.log('Hurra');
-      console.log(data);
-      const { patient, ...restOfData } = data;
+
+      const { patient, totalPrice, ...restOfData } = data;
+      console.log(patient);
       const patientID = patient.Patient.ID;
-      const patientFullName = patient.FullName;
+      const patientDocument = patient.document;
+      const patientFullName = patient.fullName;
       const jsonTreatments = JSON.stringify(restOfData.treatments);
       const readyBudget = {
         patientID,
+        patientDocument,
+        totalPrice: totalPrice + '',
         patientFullName,
         ...restOfData,
         treatments: jsonTreatments,
       };
+      console.log(readyBudget);
+      dispatch(postBudget(readyBudget));
       navigate('/home/budget');
     } else {
       alert('Please complete the budget before creating it');
