@@ -3,10 +3,12 @@
 import Medic from './Medic';
 import Patient from './Patient';
 
-export default bk_validate = {
+const bk_validate = {
   Medic,
   Patient,
 };
+
+export default bk_validate;
 
 /* -NOTE- 
 |*| README
