@@ -30,7 +30,7 @@ export default bk_validate;
 
 |> 4. If the validator fails, you can access the errors object. Render them on React.
   Example. validate the infoUser.name:
-  { patient_fail ? <div>{ patient_errors['infoUser.name'].msg }</div> : '✔️' }
+  { patient_fail ? <div>{ patient_errors['infoUser.name'].msg }</div> : null }
 
   |*| by Alfonso.M0 🤗
 */
