@@ -41,10 +41,10 @@ const searchPatient = () => {
             // marginBottom: '12px',
           }}>
           <div style={{ width: '100%', height: '20%', marginBottom: '10px' }}>
-            <h1> {`Hola ${SearchedPatient.fullName}`}</h1>
+            <h1> {`Welcome ${SearchedPatient.fullName}`}</h1>
           </div>
           <div style={{ width: '100%', height: '20%', marginBottom: '10px' }}>
-            <h2>Realiza fácilmente tus procesos con Doctorine. </h2>
+            <h2>Easily complete all your processes with Doctorine.</h2>
           </div>
           <div style={{ width: '100%', height: '20%', marginBottom: '10px' }}>
             <h2>
