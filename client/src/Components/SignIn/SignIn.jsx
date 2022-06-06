@@ -111,43 +111,59 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async respuesta => {
-    console.log(respuesta)
+    console.log(respuesta);
     const register = await axios.post('/login/oneUser', {
       email: respuesta.profileObj.email,
-      password: respuesta.profileObj.googleId,
     });
     if (register.data.hasOwnProperty('success')) {
-      const user = await axios.post('/login', {
+      setInput({
+        ...input,
         email: respuesta.profileObj.email,
-        password: respuesta.profileObj.googleId,
+        password: '',
       });
-      window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
-      service.setToken(user.data.token);
-      if (user.data.token) {
-        toast.success(`Welcome  ${user.data.name}`);
-        navigate('/');
-      }
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please, complete with your password',
+      });
     } else {
+      const doc = respuesta.googleId;
       const userRegister = await axios.post('/login/register', {
         email: respuesta.profileObj.email,
-        password: respuesta.profileObj.googleId,
+        password: respuesta.profileObj.givenName + '123',
         userType: 'Patient',
-        document: 0,
-        name: 'User',
-        lastName: '',
-        birth: 0,
+        document: doc.slice(0, 7),
+        name: respuesta.profileObj.givenName,
+        lastName: respuesta.profileObj.familyName,
+        birth: '1997-02-15',
       });
+      console.log(doc);
       if (userRegister.data.hasOwnProperty('success')) {
         setTimeout(async () => {
           const user = await axios.post('/login', {
             email: respuesta.profileObj.email,
-            password: respuesta.profileObj.googleId,
+            password: respuesta.profileObj.givenName + '123',
           });
           window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
           service.setToken(user.data.token);
           if (user.data.token) {
-            toast.success(`Welcome to the main page ${user.data.name}`);
-            navigate('/');
+            Swal.fire({
+              title: `Welcome to the main page ${user.data.name}`,
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+              },
+            });
+            setTimeout(() => {
+              Swal.fire({
+                icon: 'warning',
+                title: 'Hello!',
+                text: 'Please complete your information!',
+                footer: '<a href="">Do you have doubts ?</a>',
+              });
+            }, 2500);
+            navigate('/home/dataUpdate');
           }
         }, 3000);
       }
