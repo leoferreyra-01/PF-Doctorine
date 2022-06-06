@@ -9,6 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import S from './SingIn.module.css';
 import { home, getPatientDni2 } from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 export function validate(input) {
   let errors = {};
@@ -73,7 +74,7 @@ function SignUp() {
       service.setToken(user.token);
       if (user.token) {
         if (user.userType === 'Patient') {
-          select = 'patient'
+          select = 'patient';
           toast.success(`Welcome to the main page ${user.name}`);
           dispatch(home(select));
           dispatch(getPatientDni2(user.document));
@@ -94,10 +95,12 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async respuesta => {
+    console.log(respuesta);
     const register = await axios.post('http://localhost:3001/login/oneUser', {
       email: respuesta.profileObj.email,
       password: respuesta.profileObj.googleId,
     });
+
     if (register.data.hasOwnProperty('success')) {
       const user = await axios.post('http://localhost:3001/login', {
         email: respuesta.profileObj.email,
@@ -114,27 +117,37 @@ function SignUp() {
         'http://localhost:3001/login/register',
         {
           email: respuesta.profileObj.email,
-          password: respuesta.profileObj.googleId,
+          password: respuesta.profileObj.givenName + '123',
           userType: 'Patient',
-          document: 0,
-          name: 'User',
-          lastName: '',
-          birth: 0,
+          document: 40158006,
+          name: respuesta.profileObj.givenName,
+          lastName: respuesta.profileObj.familyName,
+          birth: '1997-02-15',
         }
       );
-      if (userRegister.data.hasOwnProperty('success')) {
+
+      if (userRegister.data) {
         setTimeout(async () => {
           const user = await axios.post('http://localhost:3001/login', {
             email: respuesta.profileObj.email,
-            password: respuesta.profileObj.googleId,
+            password: respuesta.profileObj.givenName + '123',
           });
           window.localStorage.setItem('loggedToken', JSON.stringify(user.data));
           service.setToken(user.data.token);
           if (user.data.token) {
             toast.success(`Welcome to the main page ${user.data.name}`);
-            navigate('/');
+            setTimeout(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Hello!',
+                text: 'Please complete your information!',
+                footer: '<a href="">Do you have doubts ?</a>',
+              });
+            }, 2500);
+
+            navigate('/home/dataUpdate');
           }
-        }, 3000);
+        }, 1500);
       }
     }
   };
