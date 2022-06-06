@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import S from './UpdatePatient.module.css';
 import { updatePatient } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 export function validate(data) {
   let errors = {};
@@ -57,10 +58,17 @@ function addEvolution() {
     console.log({ infoUser, infoPatient, patientID });
     try {
       dispatch(updatePatient(patientID, infoPatient, infoUser));
-      toast.success('Patient updated successfully');
+      Swal.fire({
+        icon: 'success',
+        title: 'Patient updated successfully',
+      })
       navigate(`/home`);
     } catch (err) {
-      toast.error("This patient couldn't be updated");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "This patient couldn't be updated",
+      })
     }
   }
 
