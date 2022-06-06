@@ -32,12 +32,11 @@ export function AddBudget() {
 
   const validate = () => {
     const errors = {};
-    if (data.treatments.length === 0) {
-      errors.treatmentsSubmit = 'A Treatment is required for the budget';
-    }
-
-    if (Object.keys(treatmentSelected.treatment).length === 0) {
-      errors.treatment = 'A Treatment is required for the budget';
+    if (
+      data.treatments.length === 0 &&
+      Object.keys(treatmentSelected.treatment).length === 0
+    ) {
+      errors.treatments = 'A Treatment is required for the budget';
     }
     if (Object.keys(data.patient).length === 0) {
       errors.patient = 'A Patient is required for the budget';
@@ -55,7 +54,6 @@ export function AddBudget() {
         ...data,
         [name]: patient,
       });
-      setErrors(validate());
     }
   };
 
@@ -73,7 +71,6 @@ export function AddBudget() {
       ...treatmentSelected,
       treatment: restOfTreatment,
     });
-    setErrors(validate());
   };
 
   const handleMinus = ID => {
@@ -88,18 +85,17 @@ export function AddBudget() {
         } else {
           t.quantity -= 1;
           t.subTotalPrice -= t.price;
-          newSubTotal = t.subTotalPrice;
+          newSubTotal = t.price;
         }
       }
       return t;
     });
     if (i !== null) {
+      console.log(newSubTotal);
       modTreatments = modTreatments.filter(
         (t, index) => index !== i && t !== 'delete me'
       );
     }
-    console.log('handleMinus');
-    console.log(modTreatments);
     setData({
       ...data,
       totalPrice: data.totalPrice - newSubTotal,
@@ -112,12 +108,10 @@ export function AddBudget() {
       if (t.ID === ID) {
         t.quantity += 1;
         t.subTotalPrice += t.price;
-        newSubTotal = t.subTotalPrice;
+        newSubTotal = t.price;
       }
       return t;
     });
-    console.log('handlePlus');
-    console.log(modTreatments);
     setData({
       ...data,
       totalPrice: data.totalPrice + newSubTotal,
@@ -126,6 +120,7 @@ export function AddBudget() {
   };
 
   const handleQuantity = e => {
+    setErrors(validate());
     setTreatmentSelected({
       ...treatmentSelected,
       quantity: e.target.value * 1,

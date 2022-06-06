@@ -14,4 +14,10 @@
 
 .quantity {
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity .text {
+  margin: 0 1rem;
 }
