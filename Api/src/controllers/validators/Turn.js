@@ -52,6 +52,20 @@ const XvalidateInfoTurn = [
     .if(check('description').exists())
     .trim(),
 
+  //|> MEDIC ACCEPTS
+  check('medicAccepts')
+    .default(undefined)
+    .if(check('medicAccepts').exists())
+    .isBoolean()
+    .withMessage('Medic accepts must be a boolean.'),
+
+  //|> PATIENT ACCEPTS
+  check('patientAccepts')
+    .default(undefined)
+    .if(check('patientAccepts').exists())
+    .isBoolean()
+    .withMessage('Patient accepts must be a boolean.'),
+
   //|> MEDIC
   check('MedicID')
     .default(undefined)
