@@ -48,22 +48,22 @@ function addEvolution() {
   const [validations, setValidations] = useState([false, null]);
 
   async function validatePatient() {
-    const data = await bk_validate.Patient(
+    const [fail, err] = await bk_validate.Patient(
       { infoUser, infoPatient },
       patientID
     );
-    if (data[0]) {
-      setValidations([true, data[1]]);
+    if (fail) {
+      setValidations([true, err]);
     } else {
-      setValidations([false, data[1]]);
+      setValidations([false, null]);
     }
-    // console.log('VALIDATIONS 1 => ', validations);
+    console.log('VALIDATIONS Fun, 2 => ', validations);
   }
 
   useEffect(() => {
     validatePatient();
 
-    // console.log('VALIDATIONS 2 => ', validations);
+    console.log('VALIDATIONS useEffect, 1 => ', validations);
   }, [data]);
 
   let [fail, err] = validations;
@@ -71,7 +71,7 @@ function addEvolution() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log({ infoUser, infoPatient, patientID });
+    console.log({ infoUser, infoPatient, patientID });
 
     try {
       if (fail) {

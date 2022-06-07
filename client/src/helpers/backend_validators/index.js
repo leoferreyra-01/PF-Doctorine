@@ -22,14 +22,14 @@ export default bk_validate;
 
 |> 3. Create validation function
   async function validatePatient() {
-    const data = await bk_validate.Patient(
+    const [fail, err] = await bk_validate.Patient(
       { infoUser, infoPatient },
       patientID
     );
-    if (data[0]) {
-      setValidations([true, data[1]]);
+    if (fail) {
+      setValidations([true, err]);
     } else {
-      setValidations([false, data[1]]);
+      setValidations([false, null]);
     }
   }
 
