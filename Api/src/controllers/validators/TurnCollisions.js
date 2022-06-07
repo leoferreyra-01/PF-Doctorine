@@ -168,4 +168,30 @@ function validateTurn(turn, turns, officeHours) {
   return true;
 }
 
-module.exports = { validateTurnCollisions, XvalidateTurnCollisions };
+//|> GET TURNS AVAILABLE
+// Create a list of turns availables, based on a date and a turn standard duration.
+// date: 'yyyy-mm-dd'. Provided by the user-patient.
+// turnStandardDuration: FLOAT. Where 15min = 0.25. Provided by the infoClinic.
+function turnsAvailable(turns, officeHours, turnStandardDuration, date) {
+  const turnsAvailable = [];
+
+  for (let i = 0; i <= 24; i += 0.25) {
+    const turn = {
+      date,
+      time: i,
+      duration: turnStandardDuration,
+    };
+
+    if (validateTurn(turn, turns, officeHours)) {
+      turnsAvailable.push(turn);
+    }
+  }
+
+  return turnsAvailable;
+}
+
+module.exports = {
+  validateTurnCollisions,
+  XvalidateTurnCollisions,
+  turnsAvailable,
+};
