@@ -7,7 +7,6 @@ import {
   GET_EVOLUTIONS,
   GET_STUDIES,
   CLEAR,
-  GET_TURNS,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
   GET_BUDGETS_DNI,
@@ -23,7 +22,6 @@ import {
   FILTER_BUDGETS_BY_PENDING,
   GET_CLINICAL_HISTORY,
   GET_TREATMENTS,
-  GET_MEDICS,
   POST_CLINICAL_HISTORY,
   GET_TOOTH,
   POST_EVOLUTION,
@@ -44,7 +42,7 @@ import {
   POST_TURN,
   DELETE_TURN,
   GET_INFO_CLINIC,
-  GET_MEDICS
+  GET_MEDICS,
   //---------------//
 } from './actions';
 
@@ -406,25 +404,27 @@ export default function rootReducer(state = initialState, action) {
         allPatients: [...state.allPatients, ...action.payload],
       };
 
-      //-------------------//
+    //-------------------//
     case POST_TURN:
       return {
         ...state,
-        unavailableTurns: [...state.unavailableTurns, ...action.payload]
-      }
+        unavailableTurns: [...state.unavailableTurns, ...action.payload],
+      };
 
     case DELETE_TURN:
-      return{
+      return {
         ...state,
-        unavailableTurns: unavailableTurns.filter(turn => turn.id !== action.payload)
-      }
+        unavailableTurns: state.unavailableTurns.filter(
+          turn => turn.id !== action.payload
+        ),
+      };
 
     case GET_INFO_CLINIC:
-      return{
+      return {
         ...state,
-        infoClinics: [...state.infoClinics, ...action.payload]
-      }
-//-----------------------//
+        infoClinics: [...state.infoClinics, ...action.payload],
+      };
+    //-----------------------//
     default:
       return { ...state };
   }
