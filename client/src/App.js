@@ -1,5 +1,5 @@
 import s from './App.module.css';
-import React from 'react';
+import React from 'react';//
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/dentist/Home/Home';
@@ -7,7 +7,6 @@ import SearchComponent from './views/dentist/SearchComponent/SearchComponent';
 import RegisterClinicalHistory from './views/dentist/clinic-history/create/Create';
 import PatientDetails from './views/dentist/PatientDetails/PatientDetails';
 import RegisterDoctor from './views/dentist/RegisterDoctor/RegisterDoctor';
-import PatientHome from './views/patient/home';
 import RegisterPatient from './views/dentist/RegisterPatient';
 import UpdatePatient from './views/dentist/UpdatePatient/UpdatePatient.jsx';
 import Calendar from './views/dentist/calendar';
@@ -18,7 +17,13 @@ import NewPassword from './Components/NewPassword/NewPassword';
 import PasswordReset from './Components/PasswordReset/PasswordReset';
 import AddEvolution from './views/dentist/AddEvolution/AddEvolution';
 import AddStudy from './views/dentist/AddStudies/AddStudies';
+import { AddBudget } from './views/dentist/AddBudget/AddBudget';
 import FileUpload from './FileUpload/FileUpload';
+import SearchPatient from './views/patient/searchPatient/searchPatient';
+import PatientHome from './views/patient/PatientHome/PatientHome';
+import PatientData from './views/patient/PatientData/PatientData';
+import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
+
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
   return (
@@ -49,9 +54,14 @@ function App() {
               element={<RegisterClinicalHistory />}
             />
             <Route path='doctor' element={<RegisterDoctor />} />
+            <Route path="addBudget" element={<AddBudget />} />
           </Route>
         ) : (
-          <Route path='/home' element={<PatientHome />} />
+          <Route path='/home' element={<PatientHome />}>
+            <Route path="/home/" element={<SearchPatient />} />
+            <Route path="data" element={<PatientData />} />
+            <Route path="dataUpdate" element={<PatientDataUpdate />} />
+          </Route>
         )}
       </Routes>
     </div>

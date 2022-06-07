@@ -1,0 +1,45 @@
+.sidebar_container {
+  background-color: #101f33;
+  color: #b4b3b3;
+  grid-area: sidebar;
+}
+
+/*.icon_container .icons_container .icon_title .fa_icon*/
+
+.icons_container {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.icons_container:hover {
+  cursor: pointer;
+}
+
+.icon_container:active {
+  background-color: rgba(255, 255, 255, 0.507);
+}
+
+.divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 5rem 0 2.5rem;
+}
+
+.fa_icon {
+  align-self: center;
+  justify-self: center;
+}
+
+.icon_container {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  padding-bottom: 0.9rem;
+  padding-top: 1rem;
+}
+
+.icon_title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}

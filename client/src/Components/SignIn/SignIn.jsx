@@ -8,7 +8,7 @@ import GoogleLogin from 'react-google-login';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import S from './SingIn.module.css';
-import { home } from '../../redux/actions';
+import { home, getPatientDni2 } from '../../redux/actions';
 
 export function validate(input) {
   let errors = {};
@@ -73,7 +73,11 @@ function SignUp() {
       service.setToken(user.token);
       if (user.token) {
         if (user.userType === 'Patient') {
+          select = 'patient'
           toast.success(`Welcome to the main page ${user.name}`);
+          dispatch(home(select));
+          dispatch(getPatientDni2(user.document));
+          window.localStorage.setItem('user', JSON.stringify(user));
           navigate('/home');
         } else {
           toast.success(

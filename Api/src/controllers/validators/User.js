@@ -31,13 +31,9 @@ const XvalidateInfoUser = [
       return true;
     })
     .if(check('infoUser.document').exists())
-    .isNumeric()
-    .withMessage('Document must be numeric.')
-    .isInt({ min: 1 })
-    .withMessage('Document must be a positive integer.')
-    .isLength({ min: 8 })
-    .withMessage('Document must have 8 or more digits.')
     .trim()
+    .isInt({ min: 1000000, max: 99999999 })
+    .withMessage('Document must be a positive integer of 7 or 8 digits.')
     .bail()
     .custom(async value => {
       // PRELOADS
@@ -174,7 +170,6 @@ const XvalidateInfoUser = [
     .trim()
     .isEmail()
     .withMessage('Email must be valid.')
-    .normalizeEmail()
     .bail()
     .custom(async value => {
       // PRELOADS
@@ -270,10 +265,8 @@ async function validateInfoUser(
     Errors.document = 'The number cant be edited.';
 
   if (document && ruteType === 'POST') {
-    if (`${document}`.length !== 8)
-      Errors.document = 'The number length must be 8 numbers';
-
-    if (!(typeof document === 'number')) Errors.document4 = 'Must be a number.';
+    if (parseInt(document) < 1000000 || parseInt(document) > 99999999)
+      Errors.document = 'Document must be a positive integer of 7 or 8 digits.';
   }
 
   //|> name: STRING.

@@ -7,7 +7,7 @@ export const registerPatientSchema = yup.object({
     .number()
     .positive()
     .integer()
-    .min(11111111, 'Invalid ID')
+    .min(1000000, 'Invalid ID')
     .max(99999999, 'Invalid ID')
     .required('Field is required'), //deberia poner un min y un max, consulta a los chicos esto
   email: yup

@@ -26,6 +26,13 @@
   text-transform: none;
 }
 
+
+.boton:disabled {
+  pointer-events: none;
+  background-color: #009ce546;
+}
+
+
 .boton:hover {
   background-color: #006db3;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
