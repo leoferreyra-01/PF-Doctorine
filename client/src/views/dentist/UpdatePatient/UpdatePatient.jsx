@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import bk_validate from '../../../helpers/backend_validators';
 
-function addEvolution() {
+export default function UpdatePatient() {
   const { patientID } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -217,5 +217,3 @@ function addEvolution() {
     </>
   );
 }
-
-export default addEvolution;
