@@ -204,12 +204,12 @@ async function addTreatments() {
 async function addTurn(n) {
   const randomDay = Math.ceil(Math.random() * 5);
   const randomHour = Math.ceil(Math.random() * 14);
-  const randomDuration = Math.ceil(Math.random() * 1) / 2;
+  const randomDuration = Math.ceil(Math.random() * 2) / 2;
 
   const infoTurn = {
     date: '2022-05-' + (26 + randomDay),
     time: 8 + randomHour,
-    duration: 1,
+    duration: 0.5 + randomDuration,
     description: 'Iteration n° ' + n,
     MedicID: 1, // -NOTE- required for TurnCollisions validation.
   };
