@@ -172,7 +172,12 @@ function validateTurn(turn, turns, officeHours) {
 // Create a list of turns availables, based on a date and a turn standard duration.
 // date: 'yyyy-mm-dd'. Provided by the user-patient.
 // turnStandardDuration: FLOAT. Where 15min = 0.25. Provided by the infoClinic.
-function turnsAvailable(turns, officeHours, turnStandardDuration, date) {
+function turnsAvailable(
+  turns = [],
+  officeHours = [],
+  turnStandardDuration = 0.5,
+  date = 'yyyy-mm-dd'
+) {
   const turnsAvailable = [];
 
   for (let i = 0; i <= 24; i += 0.25) {
