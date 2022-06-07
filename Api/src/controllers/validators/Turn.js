@@ -3,7 +3,7 @@
 //|> EXPRESS-VALIDATOR
 const { check } = require('express-validator');
 
-const XvalidateInfoTurn = [
+const xValidateInfoTurn = [
   //|> DATE
   check('date')
     .default(undefined)
@@ -96,5 +96,5 @@ const XvalidateInfoTurn = [
 ];
 
 module.exports = {
-  XvalidateInfoTurn,
+  xValidateInfoTurn,
 };

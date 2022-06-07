@@ -6,7 +6,7 @@ const { Turn, Medic, Clinic } = require('../../db');
 const { check } = require('express-validator');
 
 //|+| Tested on routerTurns! ✔️
-const XvalidateTurnCollisions = check('time')
+const xValidateTurnCollisions = check('time')
   //|> VALIDATE TURN INTO OFFICE-HOURS
   .custom(async (value, { req }) => {
     const MedicID = req.body.MedicID;
@@ -206,7 +206,7 @@ function dateToString(date) {
 
 module.exports = {
   validateTurnCollisions,
-  XvalidateTurnCollisions,
+  xValidateTurnCollisions,
   turnsAvailable,
   dateToString,
 };
