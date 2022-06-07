@@ -4,11 +4,13 @@
   padding: 60px 40px;
   width: 100%;
 }
-
 .name_container {
-  display: flex;
+  /* display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
   background-color: var(--primary-light);
   padding: 10px 0;
 }
