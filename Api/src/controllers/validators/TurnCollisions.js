@@ -195,8 +195,18 @@ function turnsAvailable(
   return turnsAvailable;
 }
 
+//|> DATE TO STRING
+function dateToString(date) {
+  const day = date.getUTCDate();
+  const month = date.getUTCMonth() + 1;
+  const year = date.getUTCFullYear();
+
+  return `${year}-${month}-${day}`;
+}
+
 module.exports = {
   validateTurnCollisions,
   XvalidateTurnCollisions,
   turnsAvailable,
+  dateToString,
 };
