@@ -53,7 +53,7 @@ export default function CalendarFunction() {
   const turns = useSelector(state => state.unavailableTurns);
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
-  const [availableTurns, setAvailableTurns] = useState({});
+  const [availableTurns, setAvailableTurns] = useState([]);
 
   useEffect(() => {
     dispatch(getTurns());
