@@ -148,12 +148,12 @@ function turnsAvailable(
 
 //|> DATE TO STRING
 function dateToString(date) {
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-  // const hour = date.getHours();
-  // const minute = date.getMinutes()/60;
-  // const hourMinute = hour + minute;
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  if (day < 10) day = `0${day}`;
+  if (month < 10) month = `0${month}`;
 
   return `${year}-${month}-${day}`;
 }
