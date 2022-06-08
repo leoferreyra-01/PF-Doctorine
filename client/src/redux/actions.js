@@ -504,7 +504,7 @@ export function getTurns() {
 // }
 
 // ERROR: YA EXISTIA!!!
-export function postTurn_2_(payload) {
+export function postTurn(payload) {
   return async function (dispatch) {
     try {
       const turn = (await axios.post('/turns', payload)).data;
@@ -521,6 +521,7 @@ export function postTurn_2_(payload) {
       // }
     } catch (error) {
       console.log(error);
+      if (error.response.status === 404) return alert(error.response.data.msg);
     }
   };
 }

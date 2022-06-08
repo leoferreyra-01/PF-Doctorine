@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInfoClinic, getTurns } from '../../../redux/actions';
+import { getInfoClinic, getTurns, postTurn } from '../../../redux/actions';
 
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
@@ -12,6 +12,7 @@ import {
   dateToString,
   numberToHours,
 } from '../../../helpers/validateTurn';
+import { duration } from '@material-ui/core';
 
 //|> IMFORMACIÓN REQUERIDA: Arreglo de turnos libres.
 
@@ -52,6 +53,9 @@ import {
 export default function CalendarFunction() {
   const dispatch = useDispatch();
 
+  const state = useSelector(state => state);
+  console.log(state);
+
   // Para arreglo de turnos libres.
   const [date, setDate] = useState(dateToString(new Date()));
   const turns = useSelector(state => state.unavailableTurns);
@@ -86,6 +90,21 @@ export default function CalendarFunction() {
     } else alert('Choose a date from tomorrow onwards.');
   };
 
+  const handleCkick = e => {
+    e.preventDefault();
+
+    const infoTurn = {
+      date,
+      time: e.target.value.time,
+      duration: e.target.value.duration,
+      // Description,
+      // PatientID,
+      MedicID: 1,
+    };
+
+    dispatch(postTurn(infoTurn));
+  };
+
   return (
     <>
       <h3>Choose a date from tomorrow onwards.</h3>
@@ -93,7 +112,15 @@ export default function CalendarFunction() {
       {availableTurns.length ? (
         availableTurns.map((turn, idx) => (
           <div key={idx}>
-            <p>SELECT</p>
+            <button
+              onClick={handleCkick}
+              value={{
+                time: turn.time,
+                duration: turn.duration,
+              }}
+            >
+              SELECT
+            </button>
             <p>Time: {numberToHours(turn.time)} hs</p>
             <p>Duration: {turn.duration * 60} min.</p>
           </div>
