@@ -6,12 +6,10 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-
 .text {
   font-size: 1.2rem;
   font-weight: 400;
 }
-
 .quantity {
   display: flex;
   align-items: center;

@@ -2,7 +2,6 @@ import React from 'react';
 import s from './Treatment.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-
 export default function Treatment({
   description,
   ID,

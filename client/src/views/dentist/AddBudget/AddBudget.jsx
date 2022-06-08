@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './AddBudget.module.css';
 import { useSelector, useDispatch } from 'react-redux';
+import Treatment from '../Treatment/Treatment';
 import {
   getTreatments,
   getAllPatients,
   postBudget,
 } from '../../../redux/actions';
-import Treatment from '../Treatment/Treatment';
+import Swal from 'sweetalert2';
 
 export function AddBudget() {
   const dispatch = useDispatch();
@@ -46,11 +47,13 @@ export function AddBudget() {
     }
     return errors;
   };
-
   const handleSelectPatient = e => {
     const { name, value } = e.target;
     if (Object.keys(data.patient).length > 0) {
-      alert('You have already selected a patient');
+      Swal.fire({
+        icon: 'warning',
+        title: 'You have already selected a patient',
+      });
     } else {
       const patient = patients.find(p => p.Patient.ID === value * 1);
       setData({
@@ -153,9 +156,11 @@ export function AddBudget() {
         treatments: [...data.treatments, treatmentReady],
       });
     } else {
-      alert(
-        'Please select a patient and select a treatment before adding it to the budget'
-      );
+      Swal.fire({
+        icon: 'error',
+        title:
+          'Please select a patient and select a treatment before adding it to the budget',
+      });
     }
     console.log(data);
   };
@@ -184,7 +189,10 @@ export function AddBudget() {
       dispatch(postBudget(readyBudget));
       navigate('/home/budget');
     } else {
-      alert('Please complete the budget before creating it');
+      Swal.fire({
+        icon: 'error',
+        title: 'Please complete the budget before creating it',
+      });
     }
   };
 
