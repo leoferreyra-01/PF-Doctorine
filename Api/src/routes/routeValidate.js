@@ -6,8 +6,9 @@ const validate = require('../controllers/validators');
 
 //|> RUTE
 
-//#region <>-------------------- POST MEDIC --------------------<>
+//#region <>-------------------- MEDIC --------------------<>
 
+//|> POST MEDIC
 router.post('/medic', validate.POST.Medic, async (req, res) => {
   try {
     res.status(200).json([false, null]);
@@ -17,23 +18,7 @@ router.post('/medic', validate.POST.Medic, async (req, res) => {
   }
 });
 
-//#endregion
-
-//#region <>-------------------- POST PATIENT --------------------<>
-
-router.post('/patient', validate.POST.Patient, async (req, res) => {
-  try {
-    res.status(200).json([false, null]);
-  } catch (error) {
-    console.error(error);
-    res.status(403).json([true, { error: { msg: error.message } }]);
-  }
-});
-
-//#endregion
-
-//#region <>-------------------- PUT MEDIC --------------------<>
-
+//|> PUT MEDIC
 router.put('/medic/:ID', validate.PUT.Medic, async (req, res) => {
   try {
     res.status(200).json([false, null]);
@@ -45,8 +30,19 @@ router.put('/medic/:ID', validate.PUT.Medic, async (req, res) => {
 
 //#endregion
 
-//#region <>-------------------- PUT PATIENT --------------------<>
+//#region <>-------------------- PATIENT --------------------<>
 
+//|> POST PATIENT
+router.post('/patient', validate.POST.Patient, async (req, res) => {
+  try {
+    res.status(200).json([false, null]);
+  } catch (error) {
+    console.error(error);
+    res.status(403).json([true, { error: { msg: error.message } }]);
+  }
+});
+
+//|> PUT PATIENT
 router.put('/patient/:ID', validate.PUT.Patient, async (req, res) => {
   try {
     res.status(200).json([false, null]);
