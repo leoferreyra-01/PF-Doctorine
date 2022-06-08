@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInfoClinic, getTurns } from '../../../redux/actions';
 
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
@@ -44,22 +46,53 @@ import { turnsAvailable, dateToString } from '../../../helpers/validateTurn';
 // * Cuando patientAccepts y medicAccepts son true, una notificación debe ser enviada a ambos.
 
 export default function CalendarFunction() {
-  const [date, setDate] = useState(new Date());
-  console.log(dateToString(date));
-  console.log(date);
-  //Wed Jun 08 2022 08:34:16 GMT-0300 (hora estándar de Argentina)
-  console.log(new Date());
+  const dispatch = useDispatch();
+
+  const state = useSelector(state => state);
+
+  // Para arreglo de turnos libres.
+  const [date, setDate] = useState(dateToString(new Date()));
+  const [turnsUnavailable, setTurnsUnavailable] = useState([]);
+  const [officeHours, setOfficeHours] = useState([]);
+  const [turnStandardDuration, setTurnStandardDuration] = useState(0);
+  const [getturnsAvailable, setTurnsAvailable] = useState([]);
+
+  const turns = useSelector(state => state.unavailableTurns);
+  const infoClinic = useSelector(state => state.infoClinics);
+  // const officeHours = JSON.parse(infoClinic?.officeHours);
+  // const turnStandardDuration = infoClinic?.turnStandardDuration;
+
+  useEffect(() => {
+    dispatch(getTurns());
+    dispatch(getInfoClinic());
+  }, []);
 
   const handleChange = date => {
     if (date > new Date()) {
-      setDate(date);
+      setDate(dateToString(date));
+      setTurnsUnavailable(turns);
+      setOfficeHours(JSON.parse(infoClinic.officeHours));
+      setTurnStandardDuration(infoClinic.turnStandardDuration);
+      setTurnsAvailable(
+        turnsAvailable(turns, officeHours, turnStandardDuration, date)
+      );
     } else alert('You cannot select a date in the past');
   };
+
+  console.log(infoClinic);
 
   return (
     <>
       <p>Pick a date from tomorrow.</p>
       <DatePicker onChange={handleChange} value={date} />
+      {getturnsAvailable.length > 0 &&
+        getturnsAvailable.map((turn, idx) => (
+          <div key={idx}>
+            <p>{turn.date}</p>
+            <p>{turn.time}</p>
+            <p>{turn.duration}</p>
+          </div>
+        ))}
     </>
   );
 }

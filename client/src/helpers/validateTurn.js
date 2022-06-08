@@ -115,14 +115,19 @@ console.log(validateTurn(turn, turns, officeHours));
 const turnStandardDuration = 0.5;
 
 //|> GET TURNS AVAILABLE
-function turnsAvailable(turns, officeHours, turnStandardDuration, date) {
+function turnsAvailable(
+  turns = [],
+  officeHours = [],
+  duration = 0.5,
+  date = ''
+) {
   const turnsAvailable = [];
 
   for (let i = 0; i <= 24; i += 0.25) {
     const turn = {
       date,
       time: i,
-      duration: turnStandardDuration,
+      duration,
     };
 
     if (validateTurn(turn, turns, officeHours)) {
@@ -132,19 +137,22 @@ function turnsAvailable(turns, officeHours, turnStandardDuration, date) {
 
   return turnsAvailable;
 }
-// console.table(
-//   turnsAvailable(turns, officeHours, turnStandardDuration, '2022-05-30')
-// );
+console.table(
+  turnsAvailable(turns, officeHours, turnStandardDuration, '2022-05-30')
+);
 
 //|> DATE TO STRING
 function dateToString(date) {
   const day = date.getUTCDate();
   const month = date.getUTCMonth() + 1;
   const year = date.getUTCFullYear();
+  // const hour = date.getHours();
+  // const minute = date.getMinutes()/60;
+  // const hourMinute = hour + minute;
 
-  return [`${year}-${month}-${day}`, 'Xhs'];
+  return `${year}-${month}-${day}`;
 }
-// console.log(dateToString(new Date()));
+console.log(dateToString(new Date()));
 
 module.exports = {
   turnsAvailable,
