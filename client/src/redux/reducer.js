@@ -7,6 +7,7 @@ import {
   GET_EVOLUTIONS,
   GET_STUDIES,
   CLEAR,
+  GET_TURNS,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
   GET_BUDGETS_DNI,
@@ -22,6 +23,7 @@ import {
   FILTER_BUDGETS_BY_PENDING,
   GET_CLINICAL_HISTORY,
   GET_TREATMENTS,
+  GET_MEDICS,
   POST_CLINICAL_HISTORY,
   GET_TOOTH,
   POST_EVOLUTION,
@@ -37,13 +39,6 @@ import {
   DELETE_USER,
   ENTER_HOME,
   UPDATE_PATIENT,
-  //--TURNERO------//
-  GET_TURNS,
-  POST_TURN,
-  DELETE_TURN,
-  GET_INFO_CLINIC,
-  GET_MEDICS,
-  //---------------//
 } from './actions';
 
 import getAllPatientsName from '../helpers/getAllPatientsName';
@@ -66,6 +61,7 @@ const initialState = {
   allPatients: [],
   newPatientId: 0,
   urlstudy: '',
+  urlPayment: '',
   searchedPatient: [],
   patient: {},
   medics: [],
@@ -73,6 +69,7 @@ const initialState = {
   studies: [],
   allBudgets: [],
   budgetsToShow: [],
+  unavailableTurns: [],
   homeToShow: 'patient',
   treatments: [],
   tooth: [],
@@ -83,9 +80,6 @@ const initialState = {
   auth: false,
   ///////////
   clinicalHistory: [],
-  //////////TURNERO
-  unavailableTurns: [],
-  infoClinics: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -220,10 +214,12 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case POST_BUDGET:
+      const { linkPayment, ...resBudgets } = action.payload;
       return {
         ...state,
-        allBudgets: [action.payload, ...state.allBudgets],
-        budgetsToShow: [action.payload, ...state.allBudgets],
+        allBudgets: [resBudgets, ...state.allBudgets],
+        budgetsToShow: [resBudgets, ...state.allBudgets],
+        urlPayment: linkPayment,
       };
 
     case POST_PATIENT:
@@ -360,19 +356,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         medics: action.payload,
       };
-
     case GET_TOOTH:
       return {
         ...state,
         tooth: action.payload,
       };
-
     case 'POST_URL':
       return {
         ...state,
         urlstudy: action.payload,
       };
-
     case UPDATE_PATIENT:
       let allPatientsUpdated = state.allPatients.map(patient => {
         if (patient.ID === action.payload.ID) {
@@ -385,46 +378,21 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         allPatients: allPatientsUpdated,
       };
-
     case POST_EVOLUTION:
       return {
         ...state,
         evolutions: [...state.evolutions, ...action.payload],
       };
-
     case POST_MEDIC_LOGIN:
       return {
         ...state,
         medics: [...state.medics, ...action.payload],
       };
-
     case POST_PATIENT_LOGIN:
       return {
         ...state,
         allPatients: [...state.allPatients, ...action.payload],
       };
-
-    //-------------------//
-    case POST_TURN:
-      return {
-        ...state,
-        unavailableTurns: [...state.unavailableTurns, ...action.payload],
-      };
-
-    case DELETE_TURN:
-      return {
-        ...state,
-        unavailableTurns: state.unavailableTurns.filter(
-          turn => turn.id !== action.payload
-        ),
-      };
-
-    case GET_INFO_CLINIC:
-      return {
-        ...state,
-        infoClinics: [...state.infoClinics, ...action.payload],
-      };
-    //-----------------------//
     default:
       return { ...state };
   }

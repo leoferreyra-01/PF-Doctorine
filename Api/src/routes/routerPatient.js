@@ -28,62 +28,83 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:ID', validate.GET.Patient, async (req, res) => {
-  const { ID } = req.params;
+router.get(
+  '/:ID',
+  [validate.xModelID('Patient', 'ID'), validate.xResults],
+  async (req, res) => {
+    const { ID } = req.params;
 
-  try {
-    res.status(200).json(await getPatientById(ID));
-  } catch (error) {
-    console.error(error);
-    res.status(404).json([true, { error: { msg: error.message } }]);
+    try {
+      res.status(200).json(await getPatientById(ID));
+    } catch (error) {
+      console.error(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
+    }
   }
-});
+);
 
 //#endregion
 
 //#region <>-------------------- POST --------------------<>
 
-router.post('/', validate.POST.Patient, async (req, res) => {
-  const { infoUser, infoPatient } = req.body;
+router.post(
+  '/',
+  [...validate.xInfoUser, ...validate.xInfoPatient, validate.xResults],
+  async (req, res) => {
+    const { infoUser, infoPatient } = req.body;
 
-  try {
-    res.status(200).json(await postPatient(infoUser, infoPatient));
-  } catch (error) {
-    console.error(error);
-    res.status(404).json([true, { error: { msg: error.message } }]);
+    try {
+      res.status(200).json(await postPatient(infoUser, infoPatient));
+    } catch (error) {
+      console.error(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
+    }
   }
-});
+);
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
 
-router.put('/:ID', validate.PUT.Patient, async (req, res) => {
-  const { ID } = req.params;
-  const { infoUser, infoPatient } = req.body;
+router.put(
+  '/:ID',
+  [
+    validate.xModelID('Patient', 'ID'),
+    ...validate.xInfoUser,
+    ...validate.xInfoPatient,
+    validate.xResults,
+  ],
+  async (req, res) => {
+    const { ID } = req.params;
+    const { infoUser, infoPatient } = req.body;
 
-  try {
-    res.status(200).json(await putPatient(ID, infoUser, infoPatient));
-  } catch (error) {
-    console.error(error);
-    res.status(404).json([true, { error: { msg: error.message } }]);
+    try {
+      res.status(200).json(await putPatient(ID, infoUser, infoPatient));
+    } catch (error) {
+      console.error(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
+    }
   }
-});
+);
 
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
 
-router.delete('/:ID', validate.DELETE.Patient, async (req, res) => {
-  const { ID } = req.params;
+router.delete(
+  '/:ID',
+  [validate.xModelID('Patient', 'ID'), validate.xResults],
+  async (req, res) => {
+    const { ID } = req.params;
 
-  try {
-    res.status(200).send(await deletePatient(ID));
-  } catch (error) {
-    console.error(error);
-    res.status(404).json([true, { error: { msg: error.message } }]);
+    try {
+      res.status(200).send(await deletePatient(ID));
+    } catch (error) {
+      console.error(error);
+      res.status(404).json([true, { error: { msg: error.message } }]);
+    }
   }
-});
+);
 
 //#endregion
 

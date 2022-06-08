@@ -40,10 +40,6 @@ module.exports = sequelize => {
       type: DataTypes.JSON,
       allowNull: false,
     },
-    turnStandardDuration: {
-      type: DataTypes.FLOAT,
-      defaultValue: 0.5,
-    },
     imgLogo: {
       type: DataTypes.STRING,
       defaultValue:

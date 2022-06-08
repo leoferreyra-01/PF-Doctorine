@@ -27,16 +27,17 @@ export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
 export const GET_PATIENT_DNI2 = 'GET_PATIENT_DNI2';
 export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
 export const CLEAR = 'CLEAR';
+export const POST_TURN = 'POST_TURN';
+export const GET_TURNS = 'GET_TURNS';
 export const GET_ALL_PATIENTS = 'GET_ALL_PATIENTS';
 export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
 export const GET_CLINICAL_HISTORY_FOR_CREATE =
   'GET_CLINICAL_HISTORY_FOR_CREATE';
 export const POST_CLINIC = 'POST_CLINIC';
+export const GET_MEDICS = 'GET_MEDICS';
 export const GET_TOOTH = 'GET_TOOTH';
-export const GET_TREATMENTS = 'GET_TREATMENTS';
-
-//--------------------LOGIN-----------------------//
+//login
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const AUTH_SWITCH = 'AUTH_SWITCH';
@@ -44,14 +45,7 @@ export const GET_USERS = 'GET_USERS';
 export const USER_TO_ADMIN = 'USER_TO_ADMIN';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_SUCCESS = 'GET_SUCCESS';
-
-//--------------------TURNERO-----------------------//
-export const GET_TURNS = 'GET_TURNS';
-export const POST_TURN = 'POST_TURN';
-export const DELETE_TURN = 'DELETE_TURN';
-export const GET_INFO_CLINIC = 'GET_INFO_CLINIC'; // (officeHours, turnStandardDuration)
-export const GET_MEDICS = 'GET_MEDICS';
-//-------------------------------------------------//
+export const GET_TREATMENTS = 'GET_TREATMENTS';
 
 export function getUrlStudies(url) {
   return { type: 'POST_URL', payload: url };
@@ -189,7 +183,15 @@ export function postBudget(budget) {
       console.log({ PatientID: patientID, restOfBudget });
       await axios.post('/Budgets', { PatientID: patientID, ...restOfBudget });
       //  const budgetWithID = axios.get(`/Budgets/?ID=${restOfBudget.patientID}`)
+      const { linkPayment } = (
+        await axios.post('/payments/create_preference', {
+          id: 22,
+          ...restOfBudget,
+        })
+      ).data;
+      await axios.put('/Budgets', { ID: 21, linkPayment });
       const frontBudget = {
+        linkPayment: linkPayment,
         ID: 22,
         patientFullName,
         patientID,
@@ -213,6 +215,14 @@ export function clear() {
   };
 }
 
+export function postTurn(payload) {
+  return async function () {
+    return axios.post(`/turn`, payload).catch(error => {
+      if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    });
+  };
+}
 export function postStudy(payload) {
   console.log(payload);
   return async function () {
@@ -327,6 +337,8 @@ export function getUsers() {
   };
 }
 
+export function getTurns() {}
+
 export function home(selectedHome) {
   return {
     type: ENTER_HOME,
@@ -404,6 +416,18 @@ export function getTreatments() {
   };
 }
 
+export function getMedics() {
+  return async function (dispatch) {
+    try {
+      const medics = (await axios.get('/medics')).data;
+      return dispatch({ type: GET_MEDICS, payload: medics });
+    } catch (e) {
+      console.log(e);
+      alert(e.response.data.error);
+    }
+  };
+}
+
 export function getTooth() {
   return async function (dispatch) {
     try {
@@ -466,81 +490,5 @@ export function postPatientLogin({ infoUser, infoPatient }) {
     } catch (error) {
       console.log(error);
     }
-  };
-}
-
-//--------------------TURNERO-----------------------//
-export function getMedics() {
-  return async function (dispatch) {
-    try {
-      const medics = (await axios.get('/medics')).data;
-      return dispatch({ type: GET_MEDICS, payload: medics });
-    } catch (e) {
-      console.log(e);
-      alert(e.response.data.error);
-    }
-  };
-}
-
-export function getTurns() {
-  return async function (dispatch) {
-    try {
-      const turns = (await axios.get('/turns')).data;
-      return dispatch({ type: GET_TURNS, payload: turns });
-    } catch (err) {
-      console.log(err);
-      alert(err.response.data.msg);
-    }
-  };
-}
-
-export function postTurn(payload) {
-  return async function () {
-    return axios.post(`/turn`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
-    });
-  };
-}
-
-// ERROR: YA EXISTIA!!!
-export function postTurn_2_(payload) {
-  return async function (dispatch) {
-    try {
-      const turn = (await axios.post('/turns', payload)).data;
-      return dispatch({ type: POST_TURN, payload: turn });
-
-      //payload:
-      //   {
-      //     "date": "2022-06-06",
-      //     "time": 9,
-      //     "duration": 1,
-      //     "description": "NEW TURN",
-      //     "PatientID": 1,
-      //     "MedicID": 1
-      // }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function getInfoClinic() {
-  // (officeHours, turnStandardDuration)
-  return async function (dispatch) {
-    try {
-      const clinics = (await axios.get('/Clinics')).data;
-      return dispatch({ type: GET_INFO_CLINIC, payload: clinics });
-    } catch (e) {
-      console.log(e);
-      alert(e.response.data.error);
-    }
-  };
-}
-
-export function deleteTurn(id) {
-  return {
-    type: DELETE_TURN,
-    payload: id,
   };
 }
