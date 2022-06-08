@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 
-
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
 // * También te importo la función para convertir el formato fecha que te da el DateTimePicker a un formato que usa turnsAvailable.
@@ -50,12 +49,12 @@ import { DatePicker } from '@material-ui/pickers';
 export default function CalendarFunction() {
   const [date, setDate] = useState(new Date());
   // console.log(dateToString(date))
-  console.log(date)
+  console.log(date);
   //Wed Jun 08 2022 08:34:16 GMT-0300 (hora estándar de Argentina)
-  console.log(new Date())
+  console.log(new Date());
   const handleChange = date => {
     setDate(date);
   };
 
   return <DatePicker onChange={handleChange} value={date} />;
-};
+}
