@@ -16,7 +16,7 @@ const xValidateInfoTurn = [
     .if(check('date').exists())
     .trim()
     .isDate({ format: 'YYYY-MM-DD' })
-    .withMessage('Birth must be a date format (YYYY-MM-DD).'),
+    .withMessage('Date must be a date format (YYYY-MM-DD).'),
 
   //|> TIME
   check('time')
@@ -54,14 +54,14 @@ const xValidateInfoTurn = [
 
   //|> MEDIC ACCEPTS
   check('medicAccepts')
-    .default(undefined)
+    .default(false)
     .if(check('medicAccepts').exists())
     .isBoolean()
     .withMessage('Medic accepts must be a boolean.'),
 
   //|> PATIENT ACCEPTS
   check('patientAccepts')
-    .default(undefined)
+    .default(false)
     .if(check('patientAccepts').exists())
     .isBoolean()
     .withMessage('Patient accepts must be a boolean.'),
