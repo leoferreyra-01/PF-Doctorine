@@ -76,12 +76,17 @@ module.exports = {
   },
   putBudget: async function (req, res) {
     try {
-      const { paid, ID } = req.body;
-
+      const { paid, ID, linkPayment } = req.body;
+      if (linkPayment) {
+        const BudgetByPatient = await Budget.findByPk(ID);
+        const updatePatient = await BudgetByPatient.update({
+          linkPayment: linkPayment,
+        });
+        return res.status(201).json({ msg: 'URL paid successfully' });
+      }
       const BudgetByPatient = await Budget.findByPk(ID);
       // actualizacion del pago
       const updatePatient = await BudgetByPatient.update({ paid: paid });
-
       res.status(201).json({ msg: 'budget paid successfully' });
     } catch (error) {
       res.status(404).json([true, { error: { msg: error.message } }]);

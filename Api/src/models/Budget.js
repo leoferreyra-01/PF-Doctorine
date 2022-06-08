@@ -30,6 +30,10 @@ module.exports = sequelize => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      linkPayment: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       timestamps: true,

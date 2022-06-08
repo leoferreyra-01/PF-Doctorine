@@ -185,7 +185,15 @@ export function postBudget(budget) {
       console.log({ PatientID: patientID, restOfBudget });
       await axios.post('/Budgets', { PatientID: patientID, ...restOfBudget });
       //  const budgetWithID = axios.get(`/Budgets/?ID=${restOfBudget.patientID}`)
+      const { linkPayment } = (
+        await axios.post('/payments/create_preference', {
+          id: 22,
+          ...restOfBudget,
+        })
+      ).data;
+      await axios.put('/Budgets', { ID: 21, linkPayment });
       const frontBudget = {
+        linkPayment: linkPayment,
         ID: 22,
         patientFullName,
         patientID,

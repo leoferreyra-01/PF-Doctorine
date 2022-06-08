@@ -61,6 +61,7 @@ const initialState = {
   allPatients: [],
   newPatientId: 0,
   urlstudy: '',
+  urlPayment: '',
   searchedPatient: [],
   patient: {},
   medics: [],
@@ -214,10 +215,12 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case POST_BUDGET:
+      const { linkPayment, ...resBudgets } = action.payload;
       return {
         ...state,
-        allBudgets: [action.payload, ...state.allBudgets],
-        budgetsToShow: [action.payload, ...state.allBudgets],
+        allBudgets: [resBudgets, ...state.allBudgets],
+        budgetsToShow: [resBudgets, ...state.allBudgets],
+        urlPayment: linkPayment,
       };
 
     case POST_PATIENT:
