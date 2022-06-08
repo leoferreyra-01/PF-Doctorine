@@ -7,7 +7,11 @@ import { getInfoClinic, getTurns } from '../../../redux/actions';
 
 // * También te importo la función para convertir el formato fecha que te da el DateTimePicker a un formato que usa turnsAvailable.
 
-import { turnsAvailable, dateToString } from '../../../helpers/validateTurn';
+import {
+  turnsAvailable,
+  dateToString,
+  numberToHours,
+} from '../../../helpers/validateTurn';
 
 //|> IMFORMACIÓN REQUERIDA: Arreglo de turnos libres.
 
@@ -79,19 +83,19 @@ export default function CalendarFunction() {
       console.log(officeHours);
       console.log(turnStandardDuration);
       console.log(availableTurns);
-    } else alert('You cannot select a date in the past');
+    } else alert('Choose a date from tomorrow onwards.');
   };
 
   return (
     <>
-      <h3>Pick a date from tomorrow.</h3>
+      <h3>Choose a date from tomorrow onwards.</h3>
       <DatePicker onChange={handleChange} value={date} />
       {availableTurns.length ? (
         availableTurns.map((turn, idx) => (
           <div key={idx}>
-            <p>{turn.date}</p>
-            <p>{turn.time}</p>
-            <p>{turn.duration}</p>
+            <p>SELECT</p>
+            <p>Time: {numberToHours(turn.time)} hs</p>
+            <p>Duration: {turn.duration * 60} min.</p>
           </div>
         ))
       ) : (

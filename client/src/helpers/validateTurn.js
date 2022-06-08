@@ -7,6 +7,7 @@
   2) Validar un turno para que no se solape con otros.
 */
 
+//#region experimental data
 const officeHours = [
   [], // i = 0 = domingo
   [
@@ -61,6 +62,7 @@ const turn = {
   time: 8.5,
   duration: 1,
 };
+//#endregion
 
 //|> VALIDATE TURN INTO OFFICE-HOURS
 function validateTurnInOfficeHours(turn, officeHours) {
@@ -75,7 +77,7 @@ function validateTurnInOfficeHours(turn, officeHours) {
 
   return false;
 }
-console.log(validateTurnInOfficeHours(turn, officeHours));
+// console.log(validateTurnInOfficeHours(turn, officeHours));
 
 //|> VALIDATE TURN BETWEEN TURNS IN THE SAME DAY
 function validateTurnBetweenTurnsInADay(turn, turns) {
@@ -92,7 +94,7 @@ function validateTurnBetweenTurnsInADay(turn, turns) {
 
   return true;
 }
-console.log(validateTurnBetweenTurnsInADay(turn, turns));
+// console.log(validateTurnBetweenTurnsInADay(turn, turns));
 
 //|> VALIDATE TURN
 function validateTurn(turn, turns, officeHours) {
@@ -101,7 +103,7 @@ function validateTurn(turn, turns, officeHours) {
 
   return true;
 }
-console.log(validateTurn(turn, turns, officeHours));
+// console.log(validateTurn(turn, turns, officeHours));
 
 /* 
   A la clínica se le añade una duración estándar para turnos de consultas, turnStandardDuration = 0.5 hs.
@@ -115,6 +117,9 @@ console.log(validateTurn(turn, turns, officeHours));
 const turnStandardDuration = 0.5;
 
 //|> GET TURNS AVAILABLE
+// Create a list of turns availables, based on a date and a turn standard duration.
+// date: 'yyyy-mm-dd'. Provided by the user-patient.
+// turnStandardDuration: FLOAT. Where 15min = 0.25. Provided by the infoClinic.
 function turnsAvailable(
   turns = [],
   officeHours = [],
@@ -137,9 +142,9 @@ function turnsAvailable(
 
   return turnsAvailable;
 }
-console.table(
-  turnsAvailable(turns, officeHours, turnStandardDuration, '2022-05-30')
-);
+// console.table(
+//   turnsAvailable(turns, officeHours, turnStandardDuration, '2022-05-30')
+// );
 
 //|> DATE TO STRING
 function dateToString(date) {
@@ -152,9 +157,18 @@ function dateToString(date) {
 
   return `${year}-${month}-${day}`;
 }
-console.log(dateToString(new Date()));
+// console.log(dateToString(new Date()));
+
+//|> Number to Hours
+function numberToHours(number) {
+  const hours = Math.floor(number);
+  const minutes = Math.round((number - hours) * 60);
+
+  return `${hours}:${minutes}`;
+}
 
 module.exports = {
   turnsAvailable,
   dateToString,
+  numberToHours,
 };
