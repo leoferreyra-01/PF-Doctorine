@@ -41,7 +41,7 @@ async function preload_db() {
       await updateBudget(n);
     }
   }
-  // await addTurn(1);
+  await addTurn(1);
   await updateTurn(1, 9);
 
   console.log('\x1b[34m%s\x1b[0m', 'Patients: ', patients);
@@ -207,7 +207,7 @@ async function addTurn(n) {
   const randomDuration = Math.ceil(Math.random() * 2) / 2;
 
   const infoTurn = {
-    date: '2022-05-' + (26 + randomDay),
+    date: '2022-06-' + (15 + randomDay),
     time: 8 + randomHour,
     duration: 0.5 + randomDuration,
     description: 'Iteration n° ' + n,
