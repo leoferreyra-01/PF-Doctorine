@@ -494,37 +494,37 @@ export function getTurns() {
   };
 }
 
-// export function postTurn(payload) {
-//   return async function () {
-//     return axios.post(`/turn`, payload).catch(error => {
-//       if (error.response.status === 404) return alert(error.response.data.msg);
-//       alert(error.message);
-//     });
-//   };
-// }
-
-// ERROR: YA EXISTIA!!!
 export function postTurn(payload) {
-  return async function (dispatch) {
-    try {
-      const turn = (await axios.post('/turns', payload)).data;
-      return dispatch({ type: POST_TURN, payload: turn });
-
-      //payload:
-      //   {
-      //     "date": "2022-06-06",
-      //     "time": 9,
-      //     "duration": 1,
-      //     "description": "NEW TURN",
-      //     "PatientID": 1,
-      //     "MedicID": 1
-      // }
-    } catch (error) {
-      console.log(error);
+  return async function () {
+    return axios.post(`/turns`, payload).catch(error => {
       if (error.response.status === 404) return alert(error.response.data.msg);
-    }
+      alert(error.message);
+    });
   };
 }
+
+// ERROR: YA EXISTIA!!!
+// export function postTurn(payload) {
+//   return async function (dispatch) {
+//     try {
+//       const turn = (await axios.post('/turns', payload)).data;
+//       return dispatch({ type: POST_TURN, payload: turn });
+
+//       //payload:
+//       //   {
+//       //     "date": "2022-06-06",
+//       //     "time": 9,
+//       //     "duration": 1,
+//       //     "description": "NEW TURN",
+//       //     "PatientID": 1,
+//       //     "MedicID": 1
+//       // }
+//     } catch (error) {
+//       console.log(error);
+//       if (error.response.status === 404) return alert(error.response.data.msg);
+//     }
+//   };
+// }
 
 export function getInfoClinic() {
   // (officeHours, turnStandardDuration)
