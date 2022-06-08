@@ -75,6 +75,7 @@ const PatientData = () => {
               borderRadius: '5px',
               borderColor: '#009be5',
               marginBottom: '12px',
+              marginTop: '20px'
             }}>
             <h2 style={{ marginBottom: '10px' }}>Personal information</h2>
             <Grid sx={Styles1.wrapper} container item xs spacing={2}>
