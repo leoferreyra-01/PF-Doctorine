@@ -22,7 +22,19 @@ module.exports = {
   getAllBudgets: async function (req, res) {
     try {
       // se puede recibir por query
-      const { PatientID } = req.query;
+      let { PatientID, DNI } = req.query;
+
+      if (DNI) {
+        const UserID = await User.findOne({
+          where: { document: DNI },
+          include: [Patient],
+        });
+        if (UserID) {
+          PatientID = UserID.Patient.ID;
+        } else {
+          throw new Error('There is no budget with that patient!');
+        }
+      }
 
       if (PatientID) {
         const BudgetByPatient = await Budget.findAll({

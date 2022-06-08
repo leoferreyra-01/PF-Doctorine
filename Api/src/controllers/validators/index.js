@@ -1,34 +1,69 @@
 'use strict';
-const { validateInfoUser, XvalidateInfoUser } = require('./User');
-const { validateInfoMedic, XvalidateInfoMedic } = require('./Medic');
-const { validateInfoPatient, XvalidateInfoPatient } = require('./Patient');
-const { validateModelID, XvalidateModelID } = require('./ModelID');
-const { XvalidateInfoTurn } = require('./Turn');
+const { xValidateInfoUser } = require('./User');
+const { xValidateInfoMedic } = require('./Medic');
+const { xValidateInfoPatient } = require('./Patient');
+const { xValidateModelID } = require('./ModelID');
+const { xValidateInfoTurn } = require('./Turn');
 const {
   validateTurnCollisions,
-  XvalidateTurnCollisions,
+  xValidateTurnCollisions,
 } = require('./TurnCollisions');
 
-const { XvalidateResults } = require('./XvalidateResults');
+const { xValidateResults } = require('./xValidateResults');
 
 const validate = {
-  InfoUser: validateInfoUser,
-  xInfoUser: XvalidateInfoUser,
+  GET: {
+    Medic: [xValidateModelID('Medic', 'ID'), xValidateResults],
+    Patient: [xValidateModelID('Patient', 'ID'), xValidateResults],
+    Turn_PatientID: [xValidateModelID('Patient', 'ID'), xValidateResults],
+    Turn: [xValidateModelID('Turn', 'ID'), xValidateResults],
+  },
 
-  InfoMedic: validateInfoMedic,
-  xInfoMedic: XvalidateInfoMedic,
+  POST: {
+    Medic: [
+      xValidateModelID('Clinic', 'ClinicID'),
+      ...xValidateInfoUser,
+      ...xValidateInfoMedic,
+      xValidateResults,
+    ],
+    Patient: [...xValidateInfoUser, ...xValidateInfoPatient, xValidateResults],
+    Turn: [...xValidateInfoTurn, xValidateTurnCollisions, xValidateResults],
+  },
 
-  InfoPatient: validateInfoPatient,
-  xInfoPatient: XvalidateInfoPatient,
+  PUT: {
+    Medic: [
+      xValidateModelID('Medic', 'ID'),
+      xValidateModelID('Clinic', 'ClinicID'),
+      ...xValidateInfoUser,
+      ...xValidateInfoMedic,
+      xValidateResults,
+    ],
+    Patient: [
+      xValidateModelID('Patient', 'ID'),
+      ...xValidateInfoUser,
+      ...xValidateInfoPatient,
+      xValidateResults,
+    ],
+    Turn: [
+      xValidateModelID('Turn', 'ID'),
+      ...xValidateInfoTurn,
+      xValidateTurnCollisions,
+      xValidateResults,
+    ],
+  },
 
-  ModelID: validateModelID,
-  xModelID: XvalidateModelID,
+  DELETE: {
+    Medic: [xValidateModelID('Medic', 'ID'), xValidateResults],
+    Patient: [xValidateModelID('Patient', 'ID'), xValidateResults],
+    Turn: [xValidateModelID('Turn', 'ID'), xValidateResults],
+  },
 
-  xInfoTurn: XvalidateInfoTurn,
+  // preload_db
   TurnCollisions: validateTurnCollisions,
-  xTurnCollisions: XvalidateTurnCollisions,
 
-  xResults: XvalidateResults,
+  // general use
+  xModelID: xValidateModelID,
+  xResults: xValidateResults,
 };
 
 module.exports = validate;
