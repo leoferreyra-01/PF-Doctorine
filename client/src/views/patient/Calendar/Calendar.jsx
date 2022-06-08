@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInfoClinic, getTurns, postTurn } from '../../../redux/actions';
+import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
 
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
@@ -12,7 +15,6 @@ import {
   dateToString,
   numberToHours,
 } from '../../../helpers/validateTurn';
-import { duration } from '@material-ui/core';
 
 //|> IMFORMACIÓN REQUERIDA: Arreglo de turnos libres.
 
@@ -52,26 +54,59 @@ import { duration } from '@material-ui/core';
 
 export default function CalendarFunction() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const CONSULTATION = 'Consultation appointment.'; // Tipo de turno de consulta. Solo puede ser creado por el paciente.
 
-  const state = useSelector(state => state);
-  console.log(state);
+  // Para obtener los turnos futuros del paciente.
+  const [PatientTurns, setPatientTurns] = useState([]);
+  const funcSetPatientTurns = ID =>
+    axios.get(`/turns/search?ID=${ID}`).then(res => {
+      const futureTurns = res.data
+        .filter(turn => new Date(turn.date) > new Date())
+        .sort((a, b) => a.ID - b.ID); // de menor a mayor ID futuro para ver 1ero el turno más próximo.
+      setPatientTurns(futureTurns);
+    });
+
+  // Para obtener PatientID y luego los turnos del paciente.
+  const userEmail = JSON.parse(localStorage.getItem('loggedToken')).email;
+  const [PatientID, setPatientID] = useState(null);
+  const funcSetPatientID = () =>
+    axios
+      .get(`/patients/?email=${userEmail}`)
+      .then(res => {
+        setPatientID(res.data[0].Patient.ID);
+        return res.data[0].Patient.ID;
+      })
+      .then(ID => funcSetPatientTurns(ID))
+      .catch(err => console.error(err));
+
+  console.log('PatientID => ', PatientID);
+  console.log('PatientTurns => ', PatientTurns);
 
   // Para arreglo de turnos libres.
+  const [availableTurns, setAvailableTurns] = useState([]);
   const [date, setDate] = useState(dateToString(new Date()));
   const turns = useSelector(state => state.unavailableTurns);
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
-  const [availableTurns, setAvailableTurns] = useState([]);
-
+  console.log(date);
   useEffect(() => {
     dispatch(getTurns());
     dispatch(getInfoClinic());
+    funcSetPatientID();
   }, []);
 
   const handleChange = impDate => {
-    if (impDate > new Date()) {
+    console.log(impDate);
+
+    if (PatientTurns.filter(turn => turn.description === CONSULTATION).length)
+      return toast.error('You already have a consultation turn!');
+
+    const today = new Date();
+    const tomorrow = today.setDate(today.getDate() + 1);
+
+    if (impDate > tomorrow) {
       setDate(dateToString(impDate));
-      console.log(dateToString(impDate));
 
       const officeHours = JSON.parse(infoClinic.officeHours);
       const turnStandardDuration = infoClinic.turnStandardDuration;
@@ -84,25 +119,47 @@ export default function CalendarFunction() {
           dateToString(impDate)
         )
       );
-      console.log(officeHours);
-      console.log(turnStandardDuration);
-      console.log(availableTurns);
-    } else alert('Choose a date from tomorrow onwards.');
+    } else toast.error('Choose a date from tomorrow onwards.');
   };
 
   const handleCkick = e => {
     e.preventDefault();
 
-    const infoTurn = {
-      date,
-      time: e.target.value.time,
-      duration: e.target.value.duration,
-      // Description,
-      // PatientID,
-      MedicID: 1,
-    };
+    try {
+      const turn = JSON.parse(e.target.value);
+      console.log(turn);
 
-    dispatch(postTurn(infoTurn));
+      const infoTurn = {
+        ...turn,
+        description: CONSULTATION,
+        PatientID,
+        MedicID: 1,
+      };
+
+      dispatch(postTurn(infoTurn));
+
+      setAvailableTurns([]);
+      funcSetPatientID();
+
+      toast.success('Turn created successfully.');
+    } catch (error) {
+      console.error(error);
+      toast.error('Something went wrong, try again.');
+    }
+
+    navigate('/home');
+  };
+
+  const handleDelete = e => {
+    e.preventDefault();
+    axios
+      .delete(`/turns/delete/${e.target.value}`)
+      .then(res => {
+        console.log(res.data);
+        funcSetPatientID();
+        toast.success('Turn deleted successfully.');
+      })
+      .catch(err => console.error(err));
   };
 
   return (
@@ -112,13 +169,7 @@ export default function CalendarFunction() {
       {availableTurns.length ? (
         availableTurns.map((turn, idx) => (
           <div key={idx}>
-            <button
-              onClick={handleCkick}
-              value={{
-                time: turn.time,
-                duration: turn.duration,
-              }}
-            >
+            <button onClick={handleCkick} value={JSON.stringify(turn)}>
               SELECT
             </button>
             <p>Time: {numberToHours(turn.time)} hs</p>
@@ -128,6 +179,20 @@ export default function CalendarFunction() {
       ) : (
         <h3>No available turns</h3>
       )}
+      <h2>Your turns:</h2>
+      {PatientTurns.length &&
+        PatientTurns.map(turn => (
+          <div key={turn.ID}>
+            <h3>NEXT TURN</h3>
+            <p>Date: {turn.date}</p>
+            <p>Time: {numberToHours(turn.time)} hs</p>
+            <p>Duration: {turn.duration * 60} min.</p>
+            <p>Description: {turn.description}</p>
+            <button onClick={handleDelete} value={turn.ID}>
+              ❌ Delete Turn ❌
+            </button>
+          </div>
+        ))}
     </>
   );
 }
