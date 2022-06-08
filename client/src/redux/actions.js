@@ -494,14 +494,14 @@ export function getTurns() {
   };
 }
 
-export function postTurn(payload) {
-  return async function () {
-    return axios.post(`/turn`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
-    });
-  };
-}
+// export function postTurn(payload) {
+//   return async function () {
+//     return axios.post(`/turn`, payload).catch(error => {
+//       if (error.response.status === 404) return alert(error.response.data.msg);
+//       alert(error.message);
+//     });
+//   };
+// }
 
 // ERROR: YA EXISTIA!!!
 export function postTurn_2_(payload) {

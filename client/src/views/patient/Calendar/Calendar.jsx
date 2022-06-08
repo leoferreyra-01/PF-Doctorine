@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { DateTimePicker } from '@material-ui/pickers';
+import { DatePicker } from '@material-ui/pickers';
 
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
 // * También te importo la función para convertir el formato fecha que te da el DateTimePicker a un formato que usa turnsAvailable.
 
-import {
-  turnsAvailable,
-  dateToString,
-} from '../../../../../Api/src/controllers/validators/TurnCollisions.js';
+// import {
+//   turnsAvailable,
+//   dateToString,
+// } from '../../../../../Api/src/controllers/validators/TurnCollisions.js';
 
 //|> IMFORMACIÓN REQUERIDA: Arreglo de turnos libres.
 
@@ -48,10 +48,13 @@ import {
 
 export default function CalendarFunction() {
   const [date, setDate] = useState(new Date());
-
+  // console.log(dateToString(date))
+  console.log(date);
+  //Wed Jun 08 2022 08:34:16 GMT-0300 (hora estándar de Argentina)
+  console.log(new Date());
   const handleChange = date => {
     setDate(date);
   };
 
-  return <DateTimePicker onChange={handleChange} value={date} />;
+  return <DatePicker onChange={handleChange} value={date} />;
 }

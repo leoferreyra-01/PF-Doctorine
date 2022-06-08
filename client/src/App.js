@@ -23,6 +23,7 @@ import SearchPatient from './views/patient/searchPatient/searchPatient';
 import PatientHome from './views/patient/PatientHome/PatientHome';
 import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
+import CalendarFunction from './views/patient/Calendar/Calendar'; 
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -60,6 +61,7 @@ function App() {
           <Route path='/home' element={<PatientHome />}>
             <Route path="/home/" element={<SearchPatient />} />
             <Route path="data" element={<PatientData />} />
+            <Route path='/home/calendar' element={<CalendarFunction/>} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
           </Route>
         )}
