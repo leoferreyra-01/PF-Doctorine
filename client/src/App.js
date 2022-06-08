@@ -9,7 +9,7 @@ import PatientDetails from './views/dentist/PatientDetails/PatientDetails';
 import RegisterDoctor from './views/dentist/RegisterDoctor/RegisterDoctor';
 import RegisterPatient from './views/dentist/RegisterPatient';
 import UpdatePatient from './views/dentist/UpdatePatient/UpdatePatient.jsx';
-import Calendar from './views/dentist/calendar';
+import Appointments from './views/dentist/calendar';
 import Budgets from './views/dentist/Budgets/Budgets';
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
@@ -36,7 +36,7 @@ function App() {
         {homeToShow === 'medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
-            <Route path="calendar" element={<Calendar />} />
+            <Route path="calendar" element={<Appointments />} />
             <Route path="budget" element={<Budgets />} />
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />

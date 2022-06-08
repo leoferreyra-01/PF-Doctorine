@@ -22,5 +22,13 @@ module.exports = sequelize => {
     description: {
       type: DataTypes.TEXT,
     },
+    medicAccepts: {
+      type: DataTypes.BOOLEAN,
+      DefaultValue: false,
+    },
+    patientAccepts: {
+      type: DataTypes.BOOLEAN,
+      DefaultValue: false,
+    },
   });
 };

@@ -2,35 +2,47 @@
 
 import Medic from './Medic';
 import Patient from './Patient';
+
 const bk_validate = {
   Medic,
   Patient,
 };
-export default bk_validate
 
-/* -NOTE- 
-|*| README
+export default bk_validate;
 
-|> 1. Import the validator.
-  import bk_validate from './backend_validators';
+//|*| README
+// See example of use on component: '../../views/dentist/UpdatePatient/UpdatePatient.jsx';
 
-|> 2. Call the validator on your component.
-  bk_validate.Patient(patient, PatientID);
+/* 
+|> 1. Import validator functions
+  import bk_validate from '../../../helpers/backend_validators';
 
-  * patient: object = { infoUser, infoPatient }
-  * PatientID: default null. Is optional. Use it for PUT validations (default: POST validation).
+|> 2. Create validation State
+  const [validations, setValidations] = useState([false, null]);
 
-|> 3. The validator will return an array of two values.
-  const [patient_fail, patient_errors] = bk_validate.Patient('post', patient);
+|> 3. Create validation function
+  async function validatePatient() {
+    const [fail, err] = await bk_validate.Patient(
+      { infoUser, infoPatient },
+      patientID
+    );
+    if (fail) {
+      setValidations([true, err]);
+    } else {
+      setValidations([false, null]);
+    }
+  }
 
-  * patient_fail: boolean. If true, the validator failed.
-  * patient_errors: object. If fail is false, the errors will be null.
+|> 4. Make a useEffect to validate patient, based on a handleChange data
+  useEffect(() => {
+    validatePatient();
+  }, [data]);
 
-|> 4. If the validator fails, you can access the errors object. Render them on React.
-  Example. validate the infoUser.name:
-  { patient_fail ? <div>{ patient_errors['infoUser.name'].msg }</div> : '✔️' }
+|> 5. Create a frindly variable
+  let [fail, err] = validations;
 
-  |*| by Alfonso.M0 🤗
+|> 6. Render the validation message
+  {fail && err['infoUser.name'] && <p>{err['infoUser.name'].msg}</p>}
+
+  |*| By Alfonso.M0 😀
 */
-
-//|?| IMPORTANT: Testing pending...

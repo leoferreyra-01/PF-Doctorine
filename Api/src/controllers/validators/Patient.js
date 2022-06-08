@@ -4,7 +4,7 @@ const { User } = require('../../db');
 //|> EXPRESS-VALIDATOR
 const { check } = require('express-validator');
 
-const XvalidateInfoPatient = [
+const xValidateInfoPatient = [
   //|> medicalService
   check('infoPatient.medicalService', 'Must be a string.')
     .default(undefined)
@@ -82,4 +82,4 @@ async function validateInfoPatient(
   return [validation, Errors];
 }
 
-module.exports = { validateInfoPatient, XvalidateInfoPatient };
+module.exports = { validateInfoPatient, xValidateInfoPatient };
