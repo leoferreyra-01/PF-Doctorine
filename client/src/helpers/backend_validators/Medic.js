@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 
+//|?| IMPORTANT: Testing pending...
 // based on 'redux/actions/postMedic(medic)'
 export default async function validateMedic(medic, MedicID = null) {
   // medic: medic object = { infoUser, infoMedic, ClinicID }

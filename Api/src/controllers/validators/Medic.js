@@ -7,7 +7,7 @@ const { formatName } = require('./customSanitizer.js');
 //|> VALIDATOR
 const validator = require('validator');
 
-const xValidateInfoMedic = [
+const XvalidateInfoMedic = [
   //|> title
   check('infoMedic.title')
     .default(undefined)
@@ -179,5 +179,5 @@ async function validateInfoMedic(
 
 module.exports = {
   validateInfoMedic,
-  xValidateInfoMedic,
+  XvalidateInfoMedic,
 };
