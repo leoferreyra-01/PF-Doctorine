@@ -3,23 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updatePatient } from '../../../redux/actions';
 import './PatientDataUpdate.css';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { PatientSchema } from './PatientSchema';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
-import Input from '@mui/material/Input';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@mui/material/Avatar';
+// import { useForm } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import { PatientSchema } from './PatientSchema';
+// import Container from '@material-ui/core/Container';
+// import TextField from '@material-ui/core/TextField';
+// import { Button } from '@material-ui/core';
+// import Input from '@mui/material/Input';
+// import Grid from '@material-ui/core/Grid';
+// import Avatar from '@mui/material/Avatar';
 import { getPatientDni2 } from '../../../redux/actions';
+import bk_validate from '../../../helpers/backend_validators';
+import toast from 'react-hot-toast';
 
-const PatientDataUpdate = () => {
+
+export default function PatientDataUpdate() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const SearchedPatient = useSelector(state => state.searchedPatient);
   const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
+  const [validations, setValidations] = useState([false, null]);
 
   console.log(uno)
   console.log(SearchedPatient)
@@ -36,13 +40,30 @@ const PatientDataUpdate = () => {
     telephone: SearchedPatient.number,
     cellphone: SearchedPatient.city,
     email: SearchedPatient.email,
+    medicalService: '',
   })
 
   useEffect(() => {
-    if (!SearchedPatient.medicalService) {
-      dispatch(getPatientDni2(uno.document));
+    dispatch(getPatientDni2(uno.document));
+    // if (!SearchedPatient.medicalService) {
+    // }
+    validatePatient();
+  }, [dispatch, user]);
+
+  async function validatePatient() {
+    const [fail, err] = await bk_validate.Patient(
+      { infoUser, infoPatient },
+      patientID
+    );
+    if (fail) {
+      setValidations([true, err]);
+    } else {
+      setValidations([false, null]);
     }
-  }, [dispatch]);
+    // console.log('VALIDATIONS Fun, 2 => ', validations);
+  }
+
+  let [fail, err] = validations;
 
   // const {
   //   handleSubmit,
@@ -59,37 +80,43 @@ const PatientDataUpdate = () => {
     name: user.name,
     lastName: user.lastName,
     birth: user.birth,
-    telephone: parseInt(user.telephone),
-    cellphone: parseInt(user.cellphone),
+    telephone: user.telephone + '',
+    cellphone: user.cellphone + '',
     street: user.street,
-    number: parseInt(user.number),
+    number: (user.number),
     city: user.city,
-    postalCode: parseInt(user.postalCode),
-    userType: 'Patient'
+    postalCode: (user.postalCode),
+    // userType: 'Patient'
   }
   const infoPatient = {
-    medicalService: SearchedPatient.medicalService,
+    medicalService: user.medicalService,
   };
 
-  const patientID = {
-    patientID: SearchedPatient.ID
-  }
+  const patientID = SearchedPatient.ID
 
-  const onSubmit = e => {
+  const handleSubmit = e => {
+    console.log(patientID, infoPatient, infoUser);
+    // console.log({ infoUser, infoPatient, patientID });
+    console.log(fail)
+    console.log(err)
     e.preventDefault();
 
     try {
-      console.log(patientID, infoPatient, infoUser);
-      dispatch(updatePatient(patientID, infoPatient, infoUser));
-      navigate(`/home`);
+      if (fail) {
+        toast.error('Your form has errors, please check it out.');
+      } else {
+        dispatch(updatePatient(patientID, infoPatient, infoUser));
+        toast.success('Patient update successfully');
+        navigate(`/home`);
+      }
     } catch (error) {
-      console.log(errors)
+      console.error(error);
+      toast.error('Something went wrong, please try again.');
     }
   };
 
   const handleChange = (e) => {
     e.preventDefault();
-
     setUser({ ...user, [e.target.name]: e.target.value });
 
     // setUser(e.target.value);
@@ -98,7 +125,7 @@ const PatientDataUpdate = () => {
   return (
     <div className='container'>
       <div className='container2'>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className='rowContainer'>
             <div className='containerDivInput' style={{ width: '12vw' }}>
               <div className='subtitle' >
@@ -182,12 +209,20 @@ const PatientDataUpdate = () => {
               </input>
             </div>
           </div>
+          <button type="submit" className='button' >
+            Update
+          </button>
         </form>
       </div >
-      <button type="submit" className='button' >
-        Update
-      </button>
     </div>
   );
 }
-export default PatientDataUpdate;
+
+
+
+
+
+
+
+
+
