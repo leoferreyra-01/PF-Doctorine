@@ -99,10 +99,8 @@ export function getPatientName(name) {
 export function getPatientDni2(dni) {
   return async function (dispatch) {
     try {
-      const patient = (
-        await axios.get(`/patients?document=${dni}`)
-      ).data;
-      console.log(patient)
+      const patient = (await axios.get(`/patients?document=${dni}`)).data;
+      console.log(patient);
       dispatch({ type: GET_PATIENT_DNI2, payload: patient });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
@@ -110,7 +108,6 @@ export function getPatientDni2(dni) {
     }
   };
 }
-
 
 export function getAllPatients() {
   return function (dispatch) {
@@ -145,7 +142,6 @@ export function getBudgetsDni(dni) {
 export function getBudgetsName(name) {
   return { type: GET_BUDGETS_NAME, payload: name };
 }
-
 
 export function orderBudgetsByHigherPrice() {
   return { type: ORDER_BUDGETS_BY_PRICE_ASC };
@@ -183,21 +179,29 @@ export function postBudget(budget) {
   return async function (dispatch) {
     try {
       const { patientFullName, patientID, patientDocument, ...restOfBudget } =
-      budget;
-    console.log({ PatientID: patientID, restOfBudget });
-    await axios.post('/Budgets', { PatientID: patientID, ...restOfBudget });
-    //  const budgetWithID = axios.get(`/Budgets/?ID=${restOfBudget.patientID}`)
-    const frontBudget = {
-      ID: 22,
-      patientFullName,
-      patientID,
-      patientDocument,
-      ...restOfBudget,
-      paid: false,
-      creationDate: new Date().toISOString(),
-      updateDate: new Date().toISOString(),
-    };
-    return dispatch({ type: POST_BUDGET, payload: frontBudget });
+        budget;
+      console.log({ PatientID: patientID, restOfBudget });
+      await axios.post('/Budgets', { PatientID: patientID, ...restOfBudget });
+      //  const budgetWithID = axios.get(`/Budgets/?ID=${restOfBudget.patientID}`)
+      const { linkPayment } = (
+        await axios.post('/payments/create_preference', {
+          id: 22,
+          ...restOfBudget,
+        })
+      ).data;
+      await axios.put('/Budgets', { ID: 21, linkPayment });
+      const frontBudget = {
+        linkPayment: linkPayment,
+        ID: 22,
+        patientFullName,
+        patientID,
+        patientDocument,
+        ...restOfBudget,
+        paid: false,
+        creationDate: new Date().toISOString(),
+        updateDate: new Date().toISOString(),
+      };
+      return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -467,7 +471,9 @@ export function postEvolution(evolution) {
 export function postMedicLogin({ infoUser, infoMedic, ClinicID }) {
   return async function (dispatch) {
     try {
-      const medics = (await axios.post('/medics', { infoUser, infoMedic, ClinicID })).data;
+      const medics = (
+        await axios.post('/medics', { infoUser, infoMedic, ClinicID })
+      ).data;
       return dispatch({ type: POST_MEDIC_LOGIN, payload: medics });
     } catch (error) {
       console.log(error);
