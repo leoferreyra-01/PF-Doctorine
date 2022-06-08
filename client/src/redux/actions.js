@@ -180,28 +180,17 @@ export function filterCompletedBudgets() {
 export function postBudget(budget) {
   return async function (dispatch) {
     try {
-      const { patientFullName, patientID, patientDocument, ...restOfBudget } =
-        budget;
-      console.log({ PatientID: patientID, restOfBudget });
-      await axios.post('/Budgets', { PatientID: patientID, ...restOfBudget });
-      //  const budgetWithID = axios.get(`/Budgets/?ID=${restOfBudget.patientID}`)
+      const { patientFullName, patientDocument, ...restOfBudget } = budget;
+      const budgetWithID = (await axios.post('/Budgets', restOfBudget)).data;
       const { linkPayment } = (
-        await axios.post('/payments/create_preference', {
-          id: 22,
-          ...restOfBudget,
-        })
+        await axios.post('/payments/create_preference', budgetWithID)
       ).data;
-      await axios.put('/Budgets', { ID: 21, linkPayment });
+      await axios.put('/Budgets', { ID: budgetWithID.ID, linkPayment });
       const frontBudget = {
-        linkPayment: linkPayment,
-        ID: 22,
+        ...budgetWithID,
+        linkPayment,
         patientFullName,
-        patientID,
         patientDocument,
-        ...restOfBudget,
-        paid: false,
-        creationDate: new Date().toISOString(),
-        updateDate: new Date().toISOString(),
       };
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {

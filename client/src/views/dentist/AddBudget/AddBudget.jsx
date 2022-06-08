@@ -173,12 +173,12 @@ export function AddBudget() {
 
       const { patient, totalPrice, ...restOfData } = data;
       console.log(patient);
-      const patientID = patient.Patient.ID;
+      const PatientID = patient.Patient.ID;
       const patientDocument = patient.document;
       const patientFullName = patient.fullName;
       const jsonTreatments = JSON.stringify(restOfData.treatments);
       const readyBudget = {
-        patientID,
+        PatientID,
         patientDocument,
         totalPrice: totalPrice + '',
         patientFullName,

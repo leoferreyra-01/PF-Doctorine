@@ -215,12 +215,11 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case POST_BUDGET:
-      const { linkPayment, ...resBudgets } = action.payload;
       return {
         ...state,
-        allBudgets: [resBudgets, ...state.allBudgets],
-        budgetsToShow: [resBudgets, ...state.allBudgets],
-        urlPayment: linkPayment,
+        allBudgets: [action.payload, ...state.allBudgets],
+        budgetsToShow: [action.payload, ...state.allBudgets],
+        urlPayment: action.payload.linkPayment,
       };
 
     case POST_PATIENT:
