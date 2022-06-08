@@ -1,5 +1,5 @@
 import s from './App.module.css';
-import React from 'react';//
+import React from 'react'; //
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/dentist/Home/Home';
@@ -23,17 +23,17 @@ import SearchPatient from './views/patient/searchPatient/searchPatient';
 import PatientHome from './views/patient/PatientHome/PatientHome';
 import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
-import CalendarFunction from './views/patient/Calendar/Calendar'; 
+import CalendarFunction from './views/patient/Calendar/Calendar';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
   return (
     <div className={s.global_container}>
       <Routes>
-        <Route path='/' element={<SignIn />} />
-        <Route path='/SignUp' element={<SignUp />} />
-        <Route path='/passwordReset' element={<PasswordReset />} />
-        <Route path='/newPassword' element={<NewPassword />} />
+        <Route path="/" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/newPassword" element={<NewPassword />} />
         {homeToShow === 'medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
@@ -42,26 +42,26 @@ function App() {
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
             <Route
-              path='/home/addEvolution/:patientID'
+              path="/home/addEvolution/:patientID"
               element={<AddEvolution />}
             />
-            <Route path='/home/studies/:patientID' element={<AddStudy />} />
+            <Route path="/home/studies/:patientID" element={<AddStudy />} />
             <Route
-              path='/home/updatePatient/:patientID'
+              path="/home/updatePatient/:patientID"
               element={<UpdatePatient />}
             />
             <Route
-              path='create-clinical-history'
+              path="create-clinical-history"
               element={<RegisterClinicalHistory />}
             />
-            <Route path='doctor' element={<RegisterDoctor />} />
+            <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
           </Route>
         ) : (
-          <Route path='/home' element={<PatientHome />}>
+          <Route path="/home" element={<PatientHome />}>
             <Route path="/home/" element={<SearchPatient />} />
             <Route path="data" element={<PatientData />} />
-            <Route path='/home/calendar' element={<CalendarFunction/>} />
+            <Route path="/home/appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
           </Route>
         )}

@@ -5,10 +5,7 @@ import { DatePicker } from '@material-ui/pickers';
 
 // * También te importo la función para convertir el formato fecha que te da el DateTimePicker a un formato que usa turnsAvailable.
 
-// import {
-//   turnsAvailable,
-//   dateToString,
-// } from '../../../../../Api/src/controllers/validators/TurnCollisions.js';
+import { turnsAvailable, dateToString } from '../../../helpers/validateTurn';
 
 //|> IMFORMACIÓN REQUERIDA: Arreglo de turnos libres.
 
@@ -48,13 +45,21 @@ import { DatePicker } from '@material-ui/pickers';
 
 export default function CalendarFunction() {
   const [date, setDate] = useState(new Date());
-  // console.log(dateToString(date))
+  console.log(dateToString(date));
   console.log(date);
   //Wed Jun 08 2022 08:34:16 GMT-0300 (hora estándar de Argentina)
   console.log(new Date());
+
   const handleChange = date => {
-    setDate(date);
+    if (date > new Date()) {
+      setDate(date);
+    } else alert('You cannot select a date in the past');
   };
 
-  return <DatePicker onChange={handleChange} value={date} />;
+  return (
+    <>
+      <p>Pick a date from tomorrow.</p>
+      <DatePicker onChange={handleChange} value={date} />
+    </>
+  );
 }

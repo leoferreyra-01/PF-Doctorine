@@ -207,6 +207,4 @@ function dateToString(date) {
 module.exports = {
   validateTurnCollisions,
   xValidateTurnCollisions,
-  turnsAvailable,
-  dateToString,
 };
