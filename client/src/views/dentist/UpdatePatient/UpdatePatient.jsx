@@ -71,7 +71,7 @@ export default function UpdatePatient() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log({ infoUser, infoPatient, patientID });
+    // console.log({ infoUser, infoPatient, patientID });
 
     try {
       if (fail) {
