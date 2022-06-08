@@ -15,6 +15,7 @@ import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import NewPassword from './Components/NewPassword/NewPassword';
 import PasswordReset from './Components/PasswordReset/PasswordReset';
+import ClinicDetails from './views/dentist/ClinicDetails/ClinicDetails';
 import AddEvolution from './views/dentist/AddEvolution/AddEvolution';
 import AddStudy from './views/dentist/AddStudies/AddStudies';
 import { AddBudget } from './views/dentist/AddBudget/AddBudget';
@@ -55,6 +56,7 @@ function App() {
             />
             <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
+            <Route path="clinic-details" element={<ClinicDetails />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>

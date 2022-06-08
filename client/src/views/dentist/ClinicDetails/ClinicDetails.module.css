@@ -1,0 +1,5 @@
+.container {
+  grid-area: content;
+  overflow: auto;
+  padding: 60px 40px;
+}
