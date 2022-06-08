@@ -28,7 +28,7 @@ async function getTurnsid(UserID) {
 async function getTurnsidP(UserID) {
   const searchid = await Turn.findAll({
     where: { PatientID: UserID },
-    include: [Medic],
+    include: [Patient, Medic],
   });
 
   return searchid;
