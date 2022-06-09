@@ -22,6 +22,23 @@
   font-size: 1.6rem;
 }
 
+.selectLabel {
+  font-size: 1.6rem;
+}
+
+.schLabel {
+  font-size: 1.6rem;
+  display: block;
+  margin: 1.5rem 0;
+}
+
+.schInput {
+  padding: 27px 12px 10px;
+  border: none;
+  font-size: 1.6rem;
+  margin: 0 0.5rem;
+}
+
 .danger {
   animation: shake 300ms;
   color: #f44336;
@@ -55,5 +72,29 @@
   color: aliceblue;
   border-radius: 5px;
   margin-top: 2%;
-  width: 20%;
+  margin-bottom: 5%;
+  /* width: 20%; */
+}
+
+.whContainer {
+  background-color: var(--primary);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.whContainer h3 {
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.dayContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin: 1rem 0;
+}
+
+.whText {
+  font-size: 1.6rem;
 }

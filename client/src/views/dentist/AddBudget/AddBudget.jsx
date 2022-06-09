@@ -295,8 +295,6 @@ export function AddBudget() {
             <h4>Quantity</h4>
             <h4>Sub-Total</h4>
           </div>
-          {console.log('test')}
-          {console.log(data)}
           {data.treatments.length > 0 ? (
             data.treatments.map(t => (
               <Treatment
