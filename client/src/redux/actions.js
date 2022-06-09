@@ -20,26 +20,22 @@ export const UPDATE_PATIENT = 'UPDATE_PATIENT';
 export const UPDATE_MEDIC_INFO = 'UPDATE_MEDIC_INFO';
 export const POST_MEDIC_LOGIN = 'POST_MEDIC_LOGIN';
 export const POST_PATIENT_LOGIN = 'POST_PATIENT_LOGIN';
-//export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
 export const POST_EVOLUTION = 'POST_EVOLUTION';
 //export const GET_STUDY = 'GET_STUDY';
 export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
 export const GET_PATIENT_DNI2 = 'GET_PATIENT_DNI2';
 export const GET_PATIENT_DNI = 'GET_PATIENT_DNI';
-
 export const CLEAR = 'CLEAR';
-export const POST_TURN = 'POST_TURN';
-export const GET_TURNS = 'GET_TURNS';
 export const GET_ALL_PATIENTS = 'GET_ALL_PATIENTS';
 export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
 export const GET_CLINICAL_HISTORY_FOR_CREATE =
   'GET_CLINICAL_HISTORY_FOR_CREATE';
 export const POST_CLINIC = 'POST_CLINIC';
-export const GET_MEDICS = 'GET_MEDICS';
 export const GET_TOOTH = 'GET_TOOTH';
-//login
+export const GET_TREATMENTS = 'GET_TREATMENTS';
+//--------------------LOGIN-----------------------//
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const AUTH_SWITCH = 'AUTH_SWITCH';
@@ -47,7 +43,13 @@ export const GET_USERS = 'GET_USERS';
 export const USER_TO_ADMIN = 'USER_TO_ADMIN';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_SUCCESS = 'GET_SUCCESS';
-export const GET_TREATMENTS = 'GET_TREATMENTS';
+//--------------------TURNERO-----------------------//
+export const GET_TURNS = 'GET_TURNS';
+export const POST_TURN = 'POST_TURN';
+export const DELETE_TURN = 'DELETE_TURN';
+export const GET_INFO_CLINIC = 'GET_INFO_CLINIC'; // (officeHours, turnStandardDuration)
+export const GET_MEDICS = 'GET_MEDICS';
+//-------------------------------------------------//
 
 export function getUrlStudies(url) {
   return { type: 'POST_URL', payload: url };
@@ -206,14 +208,6 @@ export function clear() {
   };
 }
 
-export function postTurn(payload) {
-  return async function () {
-    return axios.post(`/turn`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
-    });
-  };
-}
 export function postStudy(payload) {
   console.log(payload);
   return async function () {
@@ -332,8 +326,6 @@ export function getUsers() {
   };
 }
 
-export function getTurns() {}
-
 export function home(selectedHome) {
   return {
     type: ENTER_HOME,
@@ -371,13 +363,15 @@ export function postEvolution(evolution) {
   return async function (dispatch) {
     try {
       const evolutionWithID = (await axios.post('/evolutions', evolution)).data;
-      toast.success('Evolution created sucesfully');
       return dispatch({
         type: POST_EVOLUTION,
         payload: evolutionWithID.Evolution,
       });
     } catch (error) {
-      return toast.error('Error adding evolution');
+      return Swal.fire({
+        icon: 'error',
+        title: error.response.data.msg,
+      })
       // if (error.response.status === 404) return alert(error.response.data.msg);
       // alert(error.message);
     }
@@ -406,33 +400,11 @@ export function postClinicalHistory(payload) {
   };
 }
 
-export function postClinic(clinic) {
-  return async function () {
-    try {
-      return await axios.post('/Clinics', clinic);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
 export function getTreatments() {
   return async function (dispatch) {
     try {
       const treatments = (await axios.get('/treatments')).data;
       return dispatch({ type: GET_TREATMENTS, payload: treatments });
-    } catch (e) {
-      console.log(e);
-      alert(e.response.data.error);
-    }
-  };
-}
-
-export function getMedics() {
-  return async function (dispatch) {
-    try {
-      const medics = (await axios.get('/medics')).data;
-      return dispatch({ type: GET_MEDICS, payload: medics });
     } catch (e) {
       console.log(e);
       alert(e.response.data.error);
@@ -494,17 +466,32 @@ export function postPatientLogin({ infoUser, infoPatient }) {
   };
 }
 
-export function postCLinic(clinic) {
+export function postClinic(clinic) {
   return async function (dispatch) {
     try {
+      const clinicWithID = (await axios.post('/Clinics', clinic)).data;
       await axios.post('/Clinics', clinic);
-      return dispatch({ type: POST_CLINIC, payload: clinic });
+      return dispatch({ type: POST_CLINIC, payload: clinicWithID });
     } catch (error) {
       console.log(error);
     }
   };
 }
-const clinicWithID = (await axios.post('/Clinics', clinic)).data;
+
+
+//--------------------TURNERO-----------------------//
+export function getMedics() {
+  return async function (dispatch) {
+    try {
+      const medics = (await axios.get('/medics')).data;
+      return dispatch({ type: GET_MEDICS, payload: medics });
+    } catch (e) {
+      console.log(e);
+      alert(e.response.data.error);
+    }
+  };
+}
+
 export function getTurns() {
   return async function (dispatch) {
     try {
@@ -525,29 +512,6 @@ export function postTurn(payload) {
     });
   };
 }
-
-// ERROR: YA EXISTIA!!!
-// export function postTurn(payload) {
-//   return async function (dispatch) {
-//     try {
-//       const turn = (await axios.post('/turns', payload)).data;
-//       return dispatch({ type: POST_TURN, payload: turn });
-
-//       //payload:
-//       //   {
-//       //     "date": "2022-06-06",
-//       //     "time": 9,
-//       //     "duration": 1,
-//       //     "description": "NEW TURN",
-//       //     "PatientID": 1,
-//       //     "MedicID": 1
-//       // }
-//     } catch (error) {
-//       console.log(error);
-//       if (error.response.status === 404) return alert(error.response.data.msg);
-//     }
-//   };
-// }
 
 export function getInfoClinic() {
   // (officeHours, turnStandardDuration)
