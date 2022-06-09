@@ -7,7 +7,7 @@ const { formatName } = require('./customSanitizer.js');
 //|> VALIDATOR
 const validator = require('validator');
 
-const XvalidateInfoUser = [
+const xValidateInfoUser = [
   //|> userType
   check('infoUser.userType').customSanitizer((value, { req }) => {
     if (req.baseUrl === '/patients') value = 'Patient';
@@ -182,6 +182,7 @@ const XvalidateInfoUser = [
 
       return true;
     }),
+
   //|> password
   check('infoUser.password')
     .default(undefined)
@@ -417,5 +418,5 @@ async function validateInfoUser(
 
 module.exports = {
   validateInfoUser,
-  XvalidateInfoUser,
+  xValidateInfoUser,
 };

@@ -22,7 +22,19 @@ module.exports = {
   getAllBudgets: async function (req, res) {
     try {
       // se puede recibir por query
-      const { PatientID } = req.query;
+      let { PatientID, DNI } = req.query;
+
+      if (DNI) {
+        const UserID = await User.findOne({
+          where: { document: DNI },
+          include: [Patient],
+        });
+        if (UserID) {
+          PatientID = UserID.Patient.ID;
+        } else {
+          throw new Error('There is no budget with that patient!');
+        }
+      }
 
       if (PatientID) {
         const BudgetByPatient = await Budget.findAll({
@@ -69,24 +81,19 @@ module.exports = {
       //*se vincula con el ID del paciente
       CreateBudget.setPatient(PatientID);
 
-      res.status(201).json(CreateBudget);
+      res.status(201).json({ msg: 'successfully created budget' });
     } catch (error) {
       res.status(404).json([true, { error: { msg: error.message } }]);
     }
   },
   putBudget: async function (req, res) {
     try {
-      const { paid, ID, linkPayment } = req.body;
-      if (linkPayment) {
-        const BudgetByPatient = await Budget.findByPk(ID);
-        const updatePatient = await BudgetByPatient.update({
-          linkPayment: linkPayment,
-        });
-        return res.status(201).json({ msg: 'URL paid successfully' });
-      }
+      const { paid, ID } = req.body;
+
       const BudgetByPatient = await Budget.findByPk(ID);
       // actualizacion del pago
       const updatePatient = await BudgetByPatient.update({ paid: paid });
+
       res.status(201).json({ msg: 'budget paid successfully' });
     } catch (error) {
       res.status(404).json([true, { error: { msg: error.message } }]);

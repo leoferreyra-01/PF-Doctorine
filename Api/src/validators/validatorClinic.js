@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 //|> VALIDATOR
 var validator = require('validator');
 const {
-  XvalidateResults,
+  xValidateResults,
 } = require('../controllers/validators/XvalidateResults');
 const validateClinic = [
   //|> ID
@@ -141,7 +141,7 @@ const validateClinic = [
       }
       return true;
     }),
-  XvalidateResults,
+  xValidateResults,
 ];
 
 module.exports = { validateClinic };

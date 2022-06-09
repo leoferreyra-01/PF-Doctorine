@@ -5,12 +5,8 @@ import {
   GET_PATIENT_DNI2,
   GET_PATIENT_NAME,
   GET_EVOLUTIONS,
-  POST_EVOLUTION,
   GET_STUDIES,
   CLEAR,
-  POST_CLINIC,
-  GET_TURNS,
-  DELETE_TURN,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
   GET_BUDGETS_DNI,
@@ -26,13 +22,13 @@ import {
   FILTER_BUDGETS_BY_PENDING,
   GET_CLINICAL_HISTORY,
   GET_TREATMENTS,
-  GET_MEDICS,
   POST_CLINICAL_HISTORY,
   GET_TOOTH,
+  POST_EVOLUTION,
   POST_MEDIC_LOGIN,
   POST_PATIENT_LOGIN,
   UPDATE_MEDIC_INFO,
-  GET_INFO_CLINIC,
+  POST_CLINIC,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -43,6 +39,13 @@ import {
   DELETE_USER,
   ENTER_HOME,
   UPDATE_PATIENT,
+  //--TURNERO------//
+  GET_TURNS,
+  POST_TURN,
+  DELETE_TURN,
+  GET_INFO_CLINIC,
+  GET_MEDICS,
+  //---------------//
 } from './actions';
 
 import getAllPatientsName from '../helpers/getAllPatientsName';
@@ -66,7 +69,7 @@ const initialState = {
   newPatientId: 0,
   urlstudy: '',
   urlPayment: '',
-  searchedPatient: [],
+  searchedPatient: {},
   patient: {},
   medics: [],
   clinic: {},
@@ -85,6 +88,9 @@ const initialState = {
   auth: false,
   ///////////
   clinicalHistory: [],
+  //////////TURNERO
+  unavailableTurns: [],
+  infoClinics: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -409,6 +415,13 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         clinic: action.payload,
+      };
+
+    //-------------------//
+    case POST_TURN:
+      return {
+        ...state,
+        unavailableTurns: [...state.unavailableTurns, ...action.payload],
       };
 
     case DELETE_TURN:

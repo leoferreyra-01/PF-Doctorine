@@ -4,7 +4,7 @@ const { sequelize } = require('../../db');
 //|> EXPRESS-VALIDATOR
 const { check } = require('express-validator');
 
-function XvalidateModelID(model, ModelID) {
+function xValidateModelID(model, ModelID) {
   return check(ModelID)
     .isNumeric()
     .notEmpty()
@@ -38,4 +38,4 @@ async function validateModelID(model, id, ids = []) {
   return [validation, Errors];
 }
 
-module.exports = { validateModelID, XvalidateModelID };
+module.exports = { validateModelID, xValidateModelID };

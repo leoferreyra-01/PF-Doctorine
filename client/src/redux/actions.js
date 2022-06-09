@@ -470,7 +470,6 @@ export function postClinic(clinic) {
   return async function (dispatch) {
     try {
       const clinicWithID = (await axios.post('/Clinics', clinic)).data;
-      await axios.post('/Clinics', clinic);
       return dispatch({ type: POST_CLINIC, payload: clinicWithID });
     } catch (error) {
       console.log(error);

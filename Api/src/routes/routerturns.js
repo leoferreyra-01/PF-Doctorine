@@ -53,47 +53,20 @@ router.get('/:ID', validate.GET.Turn, async (req, res) => {
 //#region <>-------------------- POST --------------------<>
 const { postTurns } = require('../controllers/controllersTurns/PostTurn');
 
-router.post(
-  '/',
-  [
-    // express-validator
-    ...validate.xInfoTurn,
-    validate.xTurnCollisions,
-    validate.xResults,
-  ],
-  postTurns
-);
+router.post('/', validate.POST.Turn, postTurns);
 
 //#endregion
 
 //#region <>-------------------- PUT --------------------<>
 const { updateTurns } = require('../controllers/controllersTurns/UpdateTurn');
-router.put(
-  '/update/:ID',
-  [
-    // express-validator
-    validate.xModelID('Turn', 'ID'),
-    ...validate.xInfoTurn,
-    validate.xTurnCollisions,
-    validate.xResults,
-  ],
-  updateTurns
-);
+router.put('/update/:ID', validate.PUT.Turn, updateTurns);
 
 //#endregion
 
 //#region <>-------------------- DELETE --------------------<>
 const { deleteTurns } = require('../controllers/controllersTurns/DeleteTurn');
 
-router.delete(
-  '/delete/:ID',
-  [
-    // express-validator
-    validate.xModelID('Turn', 'ID'),
-    validate.xResults,
-  ],
-  deleteTurns
-);
+router.delete('/delete/:ID', validate.DELETE.Turn, deleteTurns);
 
 //#endregion
 
