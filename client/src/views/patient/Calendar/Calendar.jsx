@@ -116,7 +116,7 @@ export default function CalendarFunction() {
     } else toast.error('Choose a date from tomorrow onwards.');
   };
 
-  const handleCkick = e => {
+  const handleSelect = e => {
     e.preventDefault();
 
     try {
@@ -125,9 +125,9 @@ export default function CalendarFunction() {
       const infoTurn = {
         ...turn,
         description: CONSULTATION,
+        patientAccepts: true,
         PatientID,
         MedicID: 1,
-        patientAccepts: true,
       };
 
       dispatch(postTurn(infoTurn));
@@ -144,11 +144,30 @@ export default function CalendarFunction() {
 
   const handleDelete = e => {
     // e.preventDefault(); No usar porque necesito que actualice el estado.
+    //|*| Si cancela, debe enviar email al médico.
+
     axios
       .delete(`/turns/delete/${e.target.value}`)
       .then(res => {
         funcSetPatientID();
         toast.success('Turn deleted successfully.');
+      })
+      .catch(err => console.error(err));
+  };
+
+  const handlePatientAccepts = e => {
+    // e.preventDefault(); No usar porque necesito que actualice el estado.
+    //|*| Si acepta, debe enviar email al médico.
+
+    const { ID, time, MedicID } = JSON.parse(e.target.value);
+    console.log('ID => ', ID);
+    console.log('time => ', time);
+
+    axios
+      .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
+      .then(res => {
+        funcSetPatientID();
+        toast.success('Turn accepted successfully.');
       })
       .catch(err => console.error(err));
   };
@@ -163,7 +182,7 @@ export default function CalendarFunction() {
         {availableTurns.length ? (
           availableTurns.map((turn, idx) => (
             <div key={idx} className={styles.turns}>
-              <button onClick={handleCkick} value={JSON.stringify(turn)}>
+              <button onClick={handleSelect} value={JSON.stringify(turn)}>
                 ✔️ SELECT
               </button>
               <p>Time: {numberToHours(turn.time)} hs</p>
@@ -180,6 +199,19 @@ export default function CalendarFunction() {
           <div key={turn.ID}>
             <h3>NEXT TURN</h3>
             <p>Medic accepts: {turn.medicAccepts ? '✔️' : 'Pending...'}</p>
+            <p>
+              Your confirmation:{' '}
+              {turn.patientAccepts ? (
+                '✔️'
+              ) : (
+                <button
+                  onClick={handlePatientAccepts}
+                  value={JSON.stringify(turn)}
+                >
+                  Accept?
+                </button>
+              )}
+            </p>
             <p>Date: {turn.date}</p>
             <p>Time: {numberToHours(turn.time)} hs</p>
             <p>Duration: {turn.duration * 60} min.</p>
