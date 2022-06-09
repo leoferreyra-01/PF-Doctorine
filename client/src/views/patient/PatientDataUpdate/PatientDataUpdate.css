@@ -1,4 +1,74 @@
 .input {
-  height: 30px;
-  padding: 27px 12px 10px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  background-color: rgb(214, 214, 214);
+  border-style: none;
+  padding-left: 8px;
+  /* padding: 27px 12px 10px; */
+  /* align-items:; */
+  align-items: flex-end;
+  /* margin-left: 8px; */
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  text-align: center;
+}
+
+.container2 {
+  height: 40vh;
+  /* border: solid black; */
+  /* padding: 10px; */
+  border-radius: 5px;
+  border: solid #009be5;
+  margin-bottom: 12px;
+  border-width: thin;
+}
+
+.containerDivInput {
+  width: 20vw;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(214, 214, 214);
+  border-style: none;
+  border-bottom: 2px rgb(7, 5, 48);
+  border-style: solid;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-right: 2vw;
+  margin-bottom: 30px;
+}
+
+.subtitle {
+  text-align: left;
+  margin-top: 8px;
+  margin-left: 8px;
+  padding-left: 8px;
+  color: #666;
+}
+
+.rowContainer {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  color: white;
+  border-color: white;
+  width: 15vw;
+  height: 6vh;
+  background-color: #009be5;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.button:hover {
+  cursor: pointer;
 }

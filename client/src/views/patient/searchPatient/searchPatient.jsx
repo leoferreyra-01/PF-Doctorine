@@ -12,10 +12,10 @@ const searchPatient = () => {
   const SearchedPatient = useSelector(state => state.searchedPatient);
 
   useEffect(() => {
-    if (!SearchedPatient.medicalService) {
-      dispatch(getPatientDni2(uno.document));
-      // recargar()
-    }
+    dispatch(getPatientDni2(uno.document));
+    // if (!SearchedPatient.medicalService) {
+    // recargar()
+    // }
   }, [dispatch]);
 
   const recargar = () => {
