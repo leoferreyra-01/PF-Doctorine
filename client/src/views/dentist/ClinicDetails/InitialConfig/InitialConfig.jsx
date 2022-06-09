@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import s from './InitialConfig.module.css';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { initialConfigSchema } from './InitialConfigSchema';
+import Swal from 'sweetalert2';
+import { postClinic } from '../../../../redux/actions';
 
 const days = [
   'Sunday',
@@ -40,6 +43,7 @@ const deFormatMinutes = minutes => {
 };
 
 export default function InitialConfig() {
+  const dispatch = useDispatch();
   const [officeHours, setOfficeHours] = useState([[], [], [], [], [], [], []]);
   let filledOfficeHours = !!officeHours.flat(1).length;
   const {
@@ -50,6 +54,19 @@ export default function InitialConfig() {
     resolver: yupResolver(initialConfigSchema),
   });
   const onSubmit = data => {
+    if (!filledOfficeHours) {
+      Swal.fire({
+        icon: 'error',
+        title:
+          'Please fill at least one day with it working hours before submitting',
+      });
+    } else {
+      const clinic = {
+        ...data,
+        officeHours: JSON.stringify(officeHours),
+      };
+      dispatch(postClinic(clinic));
+    }
     console.log(data);
     console.log(officeHours);
   };
@@ -86,10 +103,9 @@ export default function InitialConfig() {
       ];
       return newState;
     });
-
     e.target.reset();
   };
-
+  //#region
   return (
     <div className={s.ic_container}>
       <h2>InitialConfig</h2>
@@ -260,14 +276,14 @@ export default function InitialConfig() {
           officeHours.map((officeHour, index) => {
             let [morning, afterNoon] = officeHour;
             return (
-              <div className={s.dayContainer}>
+              <div className={s.dayContainer} key={index}>
                 <p className={s.whText}>{days[index]}</p>
                 {officeHour.length > 0 ? (
                   <div className={s.hText}>
                     <p className={s.whText}>{`${morning.min} ${
-                      afterNoon.min * 1 < 12 ? 'AM' : 'PM'
+                      morning.min * 1 < 12 ? 'AM' : 'PM'
                     } - ${morning.max} ${
-                      afterNoon.max * 1 < 12 ? 'AM' : 'PM'
+                      morning.max * 1 < 12 ? 'AM' : 'PM'
                     }`}</p>
                     <p className={s.whText}>{`${afterNoon.min} ${
                       afterNoon.min * 1 < 12 ? 'AM' : 'PM'
@@ -293,3 +309,4 @@ export default function InitialConfig() {
     </div>
   );
 }
+//#endregion

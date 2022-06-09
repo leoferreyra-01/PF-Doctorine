@@ -8,6 +8,7 @@ import {
   POST_EVOLUTION,
   GET_STUDIES,
   CLEAR,
+  POST_CLINIC,
   GET_TURNS,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
@@ -65,6 +66,7 @@ const initialState = {
   searchedPatient: [],
   patient: {},
   medics: [],
+  clinic: {},
   evolutions: [],
   studies: [],
   allBudgets: [],
@@ -91,8 +93,8 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_PATIENT_DNI:
-      let searchedPatientDNI = state.allPatients.filter(
-        patient => patient.document === action.payload * 1
+      let searchedPatientDNI = state.allPatients.filter(patient =>
+        (patient.document + '').includes(action.payload)
       );
       if (searchedPatientDNI.length === 0)
         searchedPatientDNI = 'Patient Not Found';
@@ -131,8 +133,8 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_BUDGETS_DNI:
-      let searchedBudgetsDNI = state.allBudgets.filter(
-        budget => budget.patientDocument === action.payload * 1
+      let searchedBudgetsDNI = state.allBudgets.filter(budget =>
+        (budget.patientDocument + '').includes(action.payload)
       );
       if (searchedBudgetsDNI.length === 0)
         searchedBudgetsDNI = 'Budget Not Found';
@@ -399,6 +401,13 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         allPatients: [...state.allPatients, ...action.payload],
       };
+
+    case POST_CLINIC:
+      return {
+        ...state,
+        clinic: action.payload,
+      };
+
     default:
       return { ...state };
   }

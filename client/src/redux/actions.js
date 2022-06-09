@@ -489,3 +489,14 @@ export function postPatientLogin({ infoUser, infoPatient }) {
     }
   };
 }
+
+export function postCLinic(clinic) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/Clinics', clinic);
+      return dispatch({ type: POST_CLINIC, payload: clinic });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

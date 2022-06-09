@@ -139,9 +139,7 @@ export function AddBudget() {
     setErrors(validate());
     const errors = validate();
     if (Object.keys(errors).length === 0) {
-      console.log(e.target);
       e.target[2].selectedIndex = 0;
-      console.log(e.target[3]);
 
       const subTotalPrice =
         treatmentSelected.quantity * treatmentSelected.treatment.price;
@@ -195,7 +193,7 @@ export function AddBudget() {
       });
     }
   };
-
+  //#region
   return (
     <div className={s.container}>
       <form onSubmit={handleSubmit} className={s.form}>
@@ -324,3 +322,4 @@ export function AddBudget() {
     </div>
   );
 }
+//#endregion
