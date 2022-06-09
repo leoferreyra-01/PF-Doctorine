@@ -19,6 +19,8 @@ async function updateTurns(req, res) {
         description: req.body.description,
         date: req.body.date,
         duration: req.body.duration,
+        medicAccepts: req.body.medicAccepts,
+        patientAccepts: req.body.patientAccepts,
       },
       {
         where: {
