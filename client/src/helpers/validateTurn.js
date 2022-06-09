@@ -171,7 +171,7 @@ const CONSULTATION = 'Consultation appointment.';
 
 // TOMORROW
 const today = new Date();
-const extraDays = 1;
+const extraDays = 0;
 const MIN_CONSULTATION_DATE = today.setDate(today.getDate() + extraDays);
 
 module.exports = {

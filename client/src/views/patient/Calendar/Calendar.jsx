@@ -95,6 +95,7 @@ export default function CalendarFunction() {
   }, []);
 
   const handleChange = impDate => {
+    console.log('impDate => ', impDate);
     if (PatientTurns.filter(turn => turn.description === CONSULTATION).length)
       return toast.error('You already have a consultation turn!');
 
@@ -126,6 +127,7 @@ export default function CalendarFunction() {
         description: CONSULTATION,
         PatientID,
         MedicID: 1,
+        patientAccepts: true,
       };
 
       dispatch(postTurn(infoTurn));
