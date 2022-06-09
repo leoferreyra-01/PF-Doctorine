@@ -161,11 +161,11 @@ function dateToString(date) {
 
 //|> Number to Hours
 function numberToHours(number) {
-  const hours = Math.floor(number);
-  const minutes = Math.round((number - hours) * 60);
+  let hours = Math.floor(number);
+  let minutes = Math.round((number - hours) * 60);
 
-  // if (hours < 10) hours = `0${hours}`; // -BUG-
-  // if (minutes < 10) minutes = `0${minutes}`; // -BUG-
+  if (hours < 10) hours = `0${hours}`;
+  if (minutes < 10) minutes = `0${minutes}`;
 
   return `${hours}:${minutes}`;
 }
