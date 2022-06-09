@@ -213,7 +213,7 @@ export default function CalendarFunction() {
               )}
             </p>
             <p>Date: {turn.date}</p>
-            <p>Time: {numberToHours(turn.time)} hs</p>
+            <p>Time: {numberToHours(turn.time)} hs.</p>
             <p>Duration: {turn.duration * 60} min.</p>
             <p>Description: {turn.description}</p>
             <button onClick={handleDelete} value={turn.ID}>
