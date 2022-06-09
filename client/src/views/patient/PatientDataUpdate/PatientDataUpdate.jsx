@@ -11,9 +11,8 @@ const PatientDataUpdate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const SearchedPatient = useSelector(state => state.searchedPatient);
-
-  const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
   const [validations, setValidations] = useState([false, null]);
+  const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
 
   const [user, setUser] = useState({
     name: SearchedPatient.name,
@@ -87,16 +86,12 @@ const PatientDataUpdate = () => {
   }
 
   const infoPatient = {
-    medicalService: user.medicalService,
+    medicalService: SearchedPatient.medicalService,
   };
 
   const patientID = SearchedPatient.Patient.ID;
 
-  const handleSubmit = e => {
-    console.log(patientID, infoPatient, infoUser);
-    // console.log({ infoUser, infoPatient, patientID });
-    console.log(fail);
-    console.log(err);
+  const onSubmit = e => {
     e.preventDefault();
 
     try {
@@ -121,6 +116,7 @@ const PatientDataUpdate = () => {
 
   const handleChange = e => {
     e.preventDefault();
+
     setUser({ ...user, [e.target.name]: e.target.value });
 
     // setUser(e.target.value);
