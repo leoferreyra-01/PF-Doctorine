@@ -65,7 +65,7 @@ export default function CalendarFunction() {
     axios.get(`/turns/search?ID=${ID}`).then(res => {
       const futureTurns = res.data
         .filter(turn => new Date(turn.date) > new Date())
-        .sort((a, b) => a.ID - b.ID); // de menor a mayor ID futuro para ver 1ero el turno más próximo.
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
       setPatientTurns(futureTurns);
     });
 
@@ -164,7 +164,7 @@ export default function CalendarFunction() {
           availableTurns.map((turn, idx) => (
             <div key={idx} className={styles.turns}>
               <button onClick={handleCkick} value={JSON.stringify(turn)}>
-                SELECT
+                ✔️ SELECT
               </button>
               <p>Time: {numberToHours(turn.time)} hs</p>
               <p>Duration: {turn.duration * 60} min.</p>
@@ -179,6 +179,7 @@ export default function CalendarFunction() {
         PatientTurns.map(turn => (
           <div key={turn.ID}>
             <h3>NEXT TURN</h3>
+            <p>Medic accepts: {turn.medicAccepts ? '✔️' : 'Pending...'}</p>
             <p>Date: {turn.date}</p>
             <p>Time: {numberToHours(turn.time)} hs</p>
             <p>Duration: {turn.duration * 60} min.</p>
