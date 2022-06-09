@@ -136,6 +136,8 @@ function addEvolution() {
         Swal.fire({
           icon: 'success',
           title: 'Evolution added successfully',
+          showConfirmButton: false,
+          timer: 1500,
         });
         navigate(`/home`);
       } catch (error) {

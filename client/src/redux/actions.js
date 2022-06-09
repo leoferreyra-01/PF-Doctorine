@@ -1,5 +1,5 @@
 import axios from 'axios';
-import toast from 'react-hot-toast'; //Esto tambien del login
+import Swal from 'sweetalert2'; //Esto tambien del login
 export const ENTER_HOME = 'ENTER_HOME';
 export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
@@ -288,11 +288,15 @@ export function postPasswordReset(payload) {
       const response = await axios.post('/passwordReset', payload);
       if (response.data.error) {
         console.log('ESTO ES RESPONSE: ', response.data);
-        return toast.error(response.data.error);
+        return Swal.fire({
+          icon: 'error',
+          title: response.data.error,
+        })
       } else {
-        toast.success(
-          'Revisa tu casilla de mensajes en tu correo electronico.'
-        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Go check your email!',
+        })
       }
     } catch (error) {
       console.log(error);
@@ -546,10 +550,10 @@ export function deleteTurn(id) {
     payload: id,
   };
 }
-export function updateMedicInfo({infoMedic, infoUser}, ID) {
+export function updateMedic(infoMedic, infoUser, ClinicID, ID) {
   return async function (dispatch) {
     try {
-      const medics = (await axios.put(`/medics/${ID}`, {infoUser, infoMedic})).data;
+      const medics = (await axios.put(`/medics/${ID}`, {infoUser, infoMedic, ClinicID})).data;
       return dispatch({ type: UPDATE_MEDIC_INFO, payload: medics });
     } catch (error) {
       console.error(error);

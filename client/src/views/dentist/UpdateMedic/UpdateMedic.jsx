@@ -2,33 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import S from './UpdateMedic.module.css';
-import { updatePatient } from '../../../redux/actions';
+import { updateMedic } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 import bk_validate from '../../../helpers/backend_validators';
 
 export default function UpdateMedicInfo() {
-  const { patientID } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [ClinicID, setClinicID] = useState(null);
   const userEmail = JSON.parse(localStorage.getItem('loggedToken')).email;
   const [medicId, setMedicId] = useState(null);
   const funcSetMedicID = () =>
     axios
       .get(`/medics/?email=${userEmail}`)
       .then(res => {
-        console.log(res.data)
         setMedicId(res.data[0].Medic.ID);
+        setClinicID(res.data[0].Medic.ClinicID);
         return res.data[0].Medic.ID;
       })
       .catch(err => console.error(err));
 
-
   const [data, setData] = useState({
     name: '',
     lastName: '',
+    email: '',
     birth: '',
     telephone: '',
     cellphone: '',
@@ -36,11 +35,11 @@ export default function UpdateMedicInfo() {
     number: '',
     city: '',
     postalCode: '',
-    medicalService: '',
+    specialization: '',
+    tuition_date: '',
   });
 
   function handleChange(e) {
-    funcSetMedicID();
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -48,6 +47,7 @@ export default function UpdateMedicInfo() {
   const infoUser = {
     name: data.name,
     lastName: data.lastName,
+    email: data.email,
     birth: data.birth,
     telephone: data.telephone,
     cellphone: data.cellphone,
@@ -57,8 +57,9 @@ export default function UpdateMedicInfo() {
     postalCode: data.postalCode,
   };
 
-  const infoPatient = {
-    medicalService: data.medicalService,
+  const infoMedic = {
+    specialization: data.specialization,
+    tuition_date: data.tuition_date,
   };
 
   //#region  validations
@@ -66,8 +67,8 @@ export default function UpdateMedicInfo() {
 
   async function validatePatient() {
     const [fail, err] = await bk_validate.Patient(
-      { infoUser, infoPatient },
-      patientID
+      { infoUser, infoMedic },
+      medicId
     );
     if (fail) {
       setValidations([true, err]);
@@ -79,7 +80,7 @@ export default function UpdateMedicInfo() {
 
   useEffect(() => {
     validatePatient();
-
+    funcSetMedicID();
     console.log('VALIDATIONS useEffect, 1 => ', validations);
   }, [data]);
 
@@ -88,62 +89,82 @@ export default function UpdateMedicInfo() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log({ infoUser, infoPatient, patientID });
+    console.log({ infoUser, infoMedic, medicId });
 
     try {
       if (fail) {
-        toast.error('Your form has errors, please check it out.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Your form has errors, please check it out.',
+        });
       } else {
-        dispatch(updatePatient(patientID, infoPatient, infoUser));
-        toast.success('Patient updated successfully');
-        navigate(`/home/${patientID}`);
+        dispatch(updateMedic(infoMedic, infoUser, ClinicID, medicId));
+        Swal.fire({
+          icon: 'success',
+          title: 'Your information has been updated.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(`/home`);
       }
     } catch (error) {
       console.error(error);
-      toast.error('Something went wrong, please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong, please try again.',
+      });
     }
   }
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={handleSubmit}>
           <label className={S.label}>Frist Name</label>
           <input
             value={data.name}
-            placeholder="Name..."
-            type="text"
-            name="name"
+            placeholder='Name...'
+            type='text'
+            name='name'
             onChange={handleChange}
           />
           {fail && err['infoUser.name'] && <p>{err['infoUser.name'].msg}</p>}
           <label className={S.label}>Last Name</label>
           <input
             value={data.lastName}
-            placeholder="LastName..."
-            type="text"
-            name="lastName"
+            placeholder='LastName...'
+            type='text'
+            name='lastName'
             onChange={handleChange}
           />
           {fail && err['infoUser.lastName'] && (
             <p>{err['infoUser.lastName'].msg}</p>
           )}
+          <label className={S.label}>Email</label>
+          <input
+            value={data.email}
+            placeholder='Email...'
+            type='text'
+            name='email'
+            onChange={handleChange}
+          />
+          {fail && err['infoUser.email'] && <p>{err['infoUser.email'].msg}</p>}
           <label className={S.label}>Birth</label>
           <input
             value={data.birth}
-            placeholder="Birth..."
-            type="date"
-            name="birth"
+            placeholder='Birth...'
+            type='date'
+            name='birth'
             onChange={handleChange}
           />
           {fail && err['infoUser.birth'] && <p>{err['infoUser.birth'].msg}</p>}
           <label className={S.label}>Telephone</label>
           <input
             value={data.telephone}
-            placeholder="Telephone..."
-            type="text"
-            name="telephone"
+            placeholder='Telephone...'
+            type='text'
+            name='telephone'
             onChange={handleChange}
           />
           {fail && err['infoUser.telephone'] && (
@@ -152,9 +173,9 @@ export default function UpdateMedicInfo() {
           <label className={S.label}>Cellphone</label>
           <input
             value={data.cellphone}
-            placeholder="Cellphone..."
-            type="text"
-            name="cellphone"
+            placeholder='Cellphone...'
+            type='text'
+            name='cellphone'
             onChange={handleChange}
           />
           {fail && err['infoUser.cellphone'] && (
@@ -163,9 +184,9 @@ export default function UpdateMedicInfo() {
           <label className={S.label}>Street</label>
           <input
             value={data.street}
-            placeholder="Street..."
-            type="text"
-            name="street"
+            placeholder='Street...'
+            type='text'
+            name='street'
             onChange={handleChange}
           />
           {fail && err['infoUser.street'] && (
@@ -174,9 +195,9 @@ export default function UpdateMedicInfo() {
           <label className={S.label}>Number</label>
           <input
             value={data.number}
-            placeholder="Number..."
-            type="text"
-            name="number"
+            placeholder='Number...'
+            type='text'
+            name='number'
             onChange={handleChange}
           />
           {fail && err['infoUser.number'] && (
@@ -185,40 +206,51 @@ export default function UpdateMedicInfo() {
           <label className={S.label}>City</label>
           <input
             value={data.city}
-            placeholder="City..."
-            type="text"
-            name="city"
+            placeholder='City...'
+            type='text'
+            name='city'
             onChange={handleChange}
           />
           {fail && err['infoUser.city'] && <p>{err['infoUser.city'].msg}</p>}
           <label className={S.label}>Postal Code</label>
           <input
             value={data.postalCode}
-            placeholder="Postal Code..."
-            type="text"
-            name="postalCode"
+            placeholder='Postal Code...'
+            type='text'
+            name='postalCode'
             onChange={handleChange}
           />
           {fail && err['infoUser.postalCode'] && (
             <p>{err['infoUser.postalCode'].msg}</p>
           )}
-          <label className={S.label}>Medical Service</label>
+          <label className={S.label}>Specialization </label>
           <input
-            value={data.medicalService}
-            placeholder="Medical Service..."
-            type="text"
-            name="medicalService"
+            value={data.specialization}
+            placeholder='Specialization...'
+            type='text'
+            name='specialization'
             onChange={handleChange}
           />
-          {fail && err['infoPatient.medicalService'] && (
-            <p>{err['infoPatient.medicalService'].msg}</p>
+          {fail && err['infoPatient.specialization'] && (
+            <p>{err['infoPatient.specialization'].msg}</p>
+          )}
+          <label className={S.label}>Tuition Date</label>
+          <input
+            value={data.tuition_date}
+            placeholder='Tuition Date...'
+            type='date'
+            name='tuition_date'
+            onChange={handleChange}
+          />
+          {fail && err['infoUser.tuition_date'] && (
+            <p>{err['infoUser.tuition_date'].msg}</p>
           )}
 
-          <button type="submit" className={S.btn}>
+          <button type='submit' className={S.btn}>
             Update Patient
           </button>
         </form>
-        <Link to={`/home/${patientID}`}>
+        <Link to={`/home`}>
           <button className={S.btnBack}>Cancel</button>
         </Link>
       </div>

@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import styles from './calendar.module.css';
 import { parseISO } from 'date-fns';
+import Swal from 'sweetalert2';
 
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
@@ -97,7 +98,10 @@ export default function CalendarFunction() {
   const handleChange = impDate => {
     console.log('impDate => ', impDate);
     if (PatientTurns.filter(turn => turn.description === CONSULTATION).length)
-      return toast.error('You already have a consultation turn!');
+      return Swal.fire({
+        icon: 'error',
+        title: 'You already have a consultation turn!',
+      });
 
     if (impDate > MIN_CONSULTATION_DATE) {
       setDate(dateToString(impDate));
@@ -113,7 +117,11 @@ export default function CalendarFunction() {
           dateToString(impDate)
         )
       );
-    } else toast.error('Choose a date from tomorrow onwards.');
+    } else
+      Swal.fire({
+        icon: 'error',
+        title: 'Choose a date from tomorrow onwards.',
+      });
   };
 
   const handleSelect = e => {
@@ -134,11 +142,18 @@ export default function CalendarFunction() {
 
       setAvailableTurns([]);
       funcSetPatientID();
-
-      toast.success('Turn created successfully.');
+      Swal.fire({
+        icon: 'success',
+        title: 'Consultation turn created!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.error(error);
-      toast.error('Something went wrong, try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong, try again.',
+      });
     }
   };
 
@@ -150,7 +165,12 @@ export default function CalendarFunction() {
       .delete(`/turns/delete/${e.target.value}`)
       .then(res => {
         funcSetPatientID();
-        toast.success('Turn deleted successfully.');
+        Swal.fire({
+          icon: 'success',
+          title: 'Turn deleted!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch(err => console.error(err));
   };
@@ -167,7 +187,12 @@ export default function CalendarFunction() {
       .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
       .then(res => {
         funcSetPatientID();
-        toast.success('Turn accepted successfully.');
+        Swal.fire({
+          icon: 'success',
+          title: 'Turn accepted!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch(err => console.error(err));
   };
@@ -206,8 +231,7 @@ export default function CalendarFunction() {
               ) : (
                 <button
                   onClick={handlePatientAccepts}
-                  value={JSON.stringify(turn)}
-                >
+                  value={JSON.stringify(turn)}>
                   Accept?
                 </button>
               )}

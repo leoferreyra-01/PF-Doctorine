@@ -29,10 +29,12 @@ export default function RegisterPatient() {
     Swal.fire({
       icon: 'success',
       title: `You will be redirected to create the patient's medical history`,
-    })
-    setTimeout(()=>{
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setTimeout(() => {
       navigate('/home/create-clinical-history/');
-    },1500)
+    }, 1500);
   };
 
   return (

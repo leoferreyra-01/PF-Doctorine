@@ -178,6 +178,8 @@ export function AddBudget() {
       Swal.fire({
         icon: 'success',
         title: 'Budget created successfully',
+        showConfirmButton: false,
+        timer: 1500,
       })
       navigate('/home/budget');
     } else {
