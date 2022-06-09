@@ -15,7 +15,7 @@ const validate = require('../controllers/validators');
 
 router.get('/', async (req, res) => {
   try {
-    res.status(200).json(await getMedic());
+    res.status(200).json(await getMedic(null, req.query));
   } catch (error) {
     console.error(error);
     res.status(404).json([true, { error: { msg: error.message } }]);

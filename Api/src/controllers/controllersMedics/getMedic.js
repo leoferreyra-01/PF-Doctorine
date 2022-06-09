@@ -18,7 +18,7 @@ const {
 
 //|> CONTROLLER
 
-async function getMedic(MedicID = null) {
+async function getMedic(MedicID = null, query = {}) {
   if (MedicID) {
     const findMedics = await Medic.findByPk(MedicID);
 
@@ -31,6 +31,7 @@ async function getMedic(MedicID = null) {
   } else {
     const findMedic = await User.findAll({
       where: {
+        ...query,
         userType: 'Medic',
       },
       include: [Medic],
