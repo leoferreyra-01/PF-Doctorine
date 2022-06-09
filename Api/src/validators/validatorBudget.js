@@ -6,8 +6,8 @@ const { check } = require('express-validator');
 var validator = require('validator');
 
 const {
-  xValidateResults,
-} = require('../controllers/validators/xValidateResults');
+  XvalidateResults,
+} = require('../controllers/validators/XvalidateResults');
 
 const validateBudget = [
   //|> ID
@@ -70,7 +70,7 @@ const validateBudget = [
     })
     .if(check('totalPrice').exists())
     .isFloat(),
-  xValidateResults,
+  XvalidateResults,
 ];
 
 module.exports = { validateBudget };

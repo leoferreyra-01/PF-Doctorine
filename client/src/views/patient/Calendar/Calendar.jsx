@@ -9,9 +9,7 @@ import styles from './calendar.module.css';
 import { parseISO } from 'date-fns';
 import Swal from 'sweetalert2';
 
-// * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
-// * También te importo la función para convertir el formato fecha que te da el DateTimePicker a un formato que usa turnsAvailable.
 
 import {
   turnsAvailable,

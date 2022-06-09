@@ -2,7 +2,7 @@
 //|> EXPRESS-VALIDATOR
 const { validationResult } = require('express-validator');
 
-function xValidateResults(req, res, next) {
+function XvalidateResults(req, res, next) {
   try {
     validationResult(req).throw();
     return next();
@@ -19,5 +19,5 @@ function xValidateResults(req, res, next) {
 }
 
 module.exports = {
-  xValidateResults,
+  XvalidateResults,
 };

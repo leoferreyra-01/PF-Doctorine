@@ -33,11 +33,11 @@ function formatDate(date) {
 
 export default function Budgets() {
   const dispatch = useDispatch();
-  const allPatients = useSelector(state => state.allPatients);
   const budgetsToShow = useSelector(state => state.budgetsToShow);
   const filledBudgets = !!budgetsToShow.length;
 
   useEffect(() => {
+    console.log(!filledBudgets);
     if (!filledBudgets) dispatch(getAllBudgets());
   }, []);
 
@@ -45,13 +45,13 @@ export default function Budgets() {
     return (
       <div className={s.container}>
         <SearchBar
-          placeholder='Search budgets with the patient name or DNI'
+          placeholder="Search budgets with the patient name or DNI"
           handleDni={getBudgetsDni}
           handleName={getBudgetsName}
         />
         <div className={s.b_container_error}>
           <div>
-            <FontAwesomeIcon icon={faCircleExclamation} size='2x' />
+            <FontAwesomeIcon icon={faCircleExclamation} size="2x" />
           </div>
           <div>
             <h4>Error</h4>
@@ -59,17 +59,18 @@ export default function Budgets() {
           </div>
           <div>
             <button className={s.x_icon} onClick={() => dispatch(clear())}>
-              <FontAwesomeIcon icon={faXmark} size='2x' />
+              <FontAwesomeIcon icon={faXmark} size="2x" />
             </button>
           </div>
         </div>
       </div>
     );
   }
+
   return (
     <div className={s.container}>
       <SearchBar
-        placeholder='Search budgets with the patient name or DNI'
+        placeholder="Search budgets with the patient name or DNI"
         handleDni={getBudgetsDni}
         handleName={getBudgetsName}
       />

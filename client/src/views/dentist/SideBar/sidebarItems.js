@@ -6,6 +6,7 @@ import {
   faClipboardUser,
   faMoneyBills,
   faSquarePlus,
+  faCircleInfo,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
@@ -56,14 +57,14 @@ export const mainSidebarItems = [
     label: 'Create HC',
     route: 'create-clinical-history',
   },
-  // {
-  //   id: 6,
-  //   icon: (
-  //     <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
-  //   ),
-  //   label: 'Register Medic',
-  //   route: 'Doctor',
-  // },
+  {
+    id: 6,
+    icon: (
+      <FontAwesomeIcon icon={faCircleInfo} size='2x' className={s.fa_icon} />
+    ),
+    label: 'Clinic info',
+    route: 'clinic-details',
+  },
   {
     id: 7,
     icon: (

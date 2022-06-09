@@ -6,8 +6,8 @@ const { check } = require('express-validator');
 var validator = require('validator');
 
 const {
-  xValidateResults,
-} = require('../controllers/validators/xValidateResults');
+  XvalidateResults,
+} = require('../controllers/validators/XvalidateResults');
 
 const validateTreatments = [
   //|> ID
@@ -102,7 +102,7 @@ const validateTreatments = [
       }
       return true;
     }),
-  xValidateResults,
+  XvalidateResults,
 ];
 
 module.exports = { validateTreatments };

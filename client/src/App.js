@@ -9,12 +9,13 @@ import PatientDetails from './views/dentist/PatientDetails/PatientDetails';
 import RegisterDoctor from './views/dentist/RegisterDoctor/RegisterDoctor';
 import RegisterPatient from './views/dentist/RegisterPatient';
 import UpdatePatient from './views/dentist/UpdatePatient/UpdatePatient.jsx';
-import Appointments from './views/dentist/calendar';
+import Calendar from './views/dentist/calendar';
 import Budgets from './views/dentist/Budgets/Budgets';
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import NewPassword from './Components/NewPassword/NewPassword';
 import PasswordReset from './Components/PasswordReset/PasswordReset';
+import ClinicDetails from './views/dentist/ClinicDetails/ClinicDetails';
 import AddEvolution from './views/dentist/AddEvolution/AddEvolution';
 import AddStudy from './views/dentist/AddStudies/AddStudies';
 import { AddBudget } from './views/dentist/AddBudget/AddBudget';
@@ -38,7 +39,7 @@ function App() {
         {homeToShow === 'medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
-            <Route path="calendar" element={<Appointments />} />
+            <Route path="calendar" element={<Calendar />} />
             <Route path="budget" element={<Budgets />} />
             <Route path="register" element={<RegisterPatient />} />
             <Route path=":patientID" element={<PatientDetails />} />
@@ -58,6 +59,7 @@ function App() {
             <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
             <Route path='updateMedic' element={<UpdateMedic />} />
+            <Route path="clinic-details" element={<ClinicDetails />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>
