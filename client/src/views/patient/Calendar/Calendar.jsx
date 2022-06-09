@@ -5,6 +5,8 @@ import { getInfoClinic, getTurns, postTurn } from '../../../redux/actions';
 // import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import styles from './calendar.module.css';
+import { parseISO } from 'date-fns';
 
 // * Te importo la función para generar el arreglo de turnos libres. Haz 'ctrl + click' en ella para verla en detalle.
 
@@ -150,23 +152,26 @@ export default function CalendarFunction() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <h3>Choose a date from tomorrow onwards.</h3>
-      <DatePicker onChange={handleChange} value={date} />
-      {availableTurns.length ? (
-        availableTurns.map((turn, idx) => (
-          <div key={idx}>
-            <button onClick={handleCkick} value={JSON.stringify(turn)}>
-              ✔️ SELECT
-            </button>
-            <p>Date: {turn.date}</p>
-            <p>Time: {numberToHours(turn.time)} hs</p>
-            <p>Duration: {turn.duration * 60} min.</p>
-          </div>
-        ))
-      ) : (
-        <h3>No available turns</h3>
-      )}
+      <div className={styles.datepicker}>
+        <DatePicker onChange={handleChange} value={parseISO(date)} />
+      </div>
+      <div className={styles.turnContainer}>
+        {availableTurns.length ? (
+          availableTurns.map((turn, idx) => (
+            <div key={idx} className={styles.turns}>
+              <button onClick={handleCkick} value={JSON.stringify(turn)}>
+                SELECT
+              </button>
+              <p>Time: {numberToHours(turn.time)} hs</p>
+              <p>Duration: {turn.duration * 60} min.</p>
+            </div>
+          ))
+        ) : (
+          <h3>No available turns</h3>
+        )}
+      </div>
       <h2>Your turns:</h2>
       {PatientTurns.length &&
         PatientTurns.map(turn => (
@@ -181,6 +186,6 @@ export default function CalendarFunction() {
             </button>
           </div>
         ))}
-    </>
+    </div>
   );
 }

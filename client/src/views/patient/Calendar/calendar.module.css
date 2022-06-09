@@ -1,0 +1,33 @@
+/* body{
+
+} */
+/* 
+.container {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h3 {
+  border: 1px solid black;
+  color: green;
+}
+
+.datepicker {
+  display: flex;
+  border: 1px solid red;
+}
+
+.turnContainer {
+  border: 1px solid yellow;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.turns {
+  border: 1px solid pink;
+} */
