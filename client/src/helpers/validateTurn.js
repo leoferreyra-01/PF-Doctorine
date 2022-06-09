@@ -166,9 +166,18 @@ function numberToHours(number) {
 
   return `${hours}:${minutes}`;
 }
+// Tipo de turno de consulta. Solo puede ser creado por el paciente.
+const CONSULTATION = 'Consultation appointment.';
+
+// TOMORROW
+const today = new Date();
+const extraDays = 1;
+const MIN_CONSULTATION_DATE = today.setDate(today.getDate() + extraDays);
 
 module.exports = {
   turnsAvailable,
   dateToString,
   numberToHours,
+  CONSULTATION,
+  MIN_CONSULTATION_DATE,
 };
