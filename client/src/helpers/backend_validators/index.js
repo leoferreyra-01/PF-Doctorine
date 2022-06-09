@@ -38,7 +38,7 @@ export default bk_validate;
     validatePatient();
   }, [data]);
 
-|> 5. Create a frindly variable
+|> 5. Create a friendly variable
   let [fail, err] = validations;
 
 |> 6. Render the validation message

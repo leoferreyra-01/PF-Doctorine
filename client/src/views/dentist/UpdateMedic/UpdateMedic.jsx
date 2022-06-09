@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import S from './UpdatePatient.module.css';
+import S from './UpdateMedic.module.css';
 import { updatePatient } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import bk_validate from '../../../helpers/backend_validators';
 
-export default function UpdatePatient() {
+export default function UpdateMedicInfo() {
   const { patientID } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userEmail = JSON.parse(localStorage.getItem('loggedToken')).email;
+  const [medicId, setMedicId] = useState(null);
+  const funcSetMedicID = () =>
+    axios
+      .get(`/medics/?email=${userEmail}`)
+      .then(res => {
+        console.log(res.data)
+        setMedicId(res.data[0].Medic.ID);
+        return res.data[0].Medic.ID;
+      })
+      .catch(err => console.error(err));
+
 
   const [data, setData] = useState({
     name: '',
@@ -26,6 +40,7 @@ export default function UpdatePatient() {
   });
 
   function handleChange(e) {
+    funcSetMedicID();
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
   }

@@ -27,6 +27,7 @@ import {
   POST_EVOLUTION,
   POST_MEDIC_LOGIN,
   POST_PATIENT_LOGIN,
+  UPDATE_MEDIC_INFO,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -425,6 +426,17 @@ export default function rootReducer(state = initialState, action) {
         infoClinics: [...state.infoClinics, ...action.payload],
       };
     //-----------------------//
+    case UPDATE_MEDIC_INFO:
+      return {
+        ...state,
+        medics: state.medics.map(medic => {
+          if (medic.ID === action.payload.ID) {
+            return action.payload;
+          } else {
+            return medic;
+          }
+        }),
+      };
     default:
       return { ...state };
   }

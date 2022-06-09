@@ -12,13 +12,13 @@ import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 export const mainSidebarItems = [
   {
     id: 0,
-    icon: <FontAwesomeIcon icon={faHouse} size="2x" className={s.fa_icon} />,
+    icon: <FontAwesomeIcon icon={faHouse} size='2x' className={s.fa_icon} />,
     label: 'Home',
     route: '/home',
   },
   {
     id: 1,
-    icon: <FontAwesomeIcon icon={faCalendar} size="2x" className={s.fa_icon} />,
+    icon: <FontAwesomeIcon icon={faCalendar} size='2x' className={s.fa_icon} />,
     label: 'Calendar',
     route: 'calendar',
   },
@@ -26,7 +26,7 @@ export const mainSidebarItems = [
   {
     id: 2,
     icon: (
-      <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
+      <FontAwesomeIcon icon={faClipboardUser} size='2x' className={s.fa_icon} />
     ),
     label: 'Register Patient',
     route: 'register',
@@ -35,7 +35,7 @@ export const mainSidebarItems = [
   {
     id: 3,
     icon: (
-      <FontAwesomeIcon icon={faMoneyBills} size="2x" className={s.fa_icon} />
+      <FontAwesomeIcon icon={faMoneyBills} size='2x' className={s.fa_icon} />
     ),
     label: 'Budget',
     route: 'budget',
@@ -43,7 +43,7 @@ export const mainSidebarItems = [
   {
     id: 4,
     icon: (
-      <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+      <FontAwesomeIcon icon={faSquarePlus} size='2x' className={s.fa_icon} />
     ),
     label: 'Add Budget',
     route: 'addBudget',
@@ -51,7 +51,7 @@ export const mainSidebarItems = [
   {
     id: 5,
     icon: (
-      <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+      <FontAwesomeIcon icon={faSquarePlus} size='2x' className={s.fa_icon} />
     ),
     label: 'Create HC',
     route: 'create-clinical-history',
@@ -64,4 +64,12 @@ export const mainSidebarItems = [
   //   label: 'Register Medic',
   //   route: 'Doctor',
   // },
+  {
+    id: 7,
+    icon: (
+      <FontAwesomeIcon icon={faSquarePlus} size='2x' className={s.fa_icon} />
+    ),
+    label: 'Update Your Info',
+    route: 'updateMedic',
+  },
 ];

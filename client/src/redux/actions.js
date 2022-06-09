@@ -17,6 +17,7 @@ export const ORDER_BUDGETS_BY_PRICE_DES = 'ORDER_BUDGETS_BY_PRICE_DES';
 export const FILTER_BUDGETS_BY_PENDING = 'FILTER_BUDGETS_BY_PENDING';
 export const FILTER_BUDGETS_BY_COMPLETED = 'FILTER_BUDGETS_BY_COMPLETED';
 export const UPDATE_PATIENT = 'UPDATE_PATIENT';
+export const UPDATE_MEDIC_INFO = 'UPDATE_MEDIC_INFO';
 export const POST_EVOLUTION = 'POST_EVOLUTION';
 export const POST_MEDIC_LOGIN = 'POST_MEDIC_LOGIN';
 export const POST_PATIENT_LOGIN = 'POST_PATIENT_LOGIN';
@@ -543,5 +544,15 @@ export function deleteTurn(id) {
   return {
     type: DELETE_TURN,
     payload: id,
+  };
+}
+export function updateMedicInfo({infoMedic, infoUser}, ID) {
+  return async function (dispatch) {
+    try {
+      const medics = (await axios.put(`/medics/${ID}`, {infoUser, infoMedic})).data;
+      return dispatch({ type: UPDATE_MEDIC_INFO, payload: medics });
+    } catch (error) {
+      console.error(error);
+    }
   };
 }
