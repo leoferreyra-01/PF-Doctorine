@@ -7,6 +7,7 @@ const {
   getTurns,
   getTurnsid,
   getTurnsidP,
+  getTurnsByID,
 } = require('../controllers/controllersTurns/GetTurn');
 
 const validate = require('../controllers/validators');
@@ -16,7 +17,7 @@ const validate = require('../controllers/validators');
 //#region <>-------------------- GET --------------------<>
 // const {} = require('./controllersGET');
 router.get('/', async (req, res) => {
-  return res.json(await getTurns());
+  return res.json(await getTurnsByID());
 });
 
 router.get('/search', validate.GET.Turn_PatientID, async (req, res) => {
@@ -26,7 +27,7 @@ router.get('/search', validate.GET.Turn_PatientID, async (req, res) => {
   try {
     if (validate) return res.status(200).json([false, null]);
 
-    return res.json(await getTurnsidP(ID));
+    return res.json(await getTurnsByID({ PatientID: ID }));
   } catch (error) {
     console.error(error);
     res.status(404).json([true, { error: { msg: error.message } }]);
@@ -40,7 +41,7 @@ router.get('/:ID', validate.GET.Turn, async (req, res) => {
   try {
     if (validate) return res.status(200).json([false, null]);
 
-    return res.json(await getTurnsid(ID));
+    return res.json(await getTurnsByID({ TurnID: ID }));
   } catch (error) {
     console.error(error);
     res.status(404).json([true, { error: { msg: error.message } }]);
