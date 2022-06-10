@@ -9,7 +9,7 @@ const {
   xValidateTurnCollisions,
 } = require('./TurnCollisions');
 
-const { xValidateResults } = require('./xValidateResults');
+const { xValidateResults } = require('./XvalidateResults');
 
 const validate = {
   GET: {

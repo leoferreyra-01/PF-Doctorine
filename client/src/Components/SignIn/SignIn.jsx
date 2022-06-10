@@ -227,7 +227,7 @@ function SignUp() {
             <button>Login</button>
             <hr className='linea' />
             <GoogleLogin
-              clientId='909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com'
+              clientId='734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com'
               buttonText='Login with Google'
               onSuccess={respuestaGoogle}
               onFailure={() => console.log('fail')}
