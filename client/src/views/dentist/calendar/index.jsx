@@ -1,8 +1,3 @@
-// import { Calendar, momentLocalizer } from 'react-big-calendar'
-// import moment from 'moment'
-// Setup the localizer by providing the moment (or globalize, or Luxon) Object
-// to the correct localizer.
-// const localizer = momentLocalizer(moment) // or globalizeLocalizer
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
@@ -10,9 +5,19 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import { DatePicker } from '@material-ui/pickers';
+import { alpha } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPatient, getTurns, getAllPatients } from '../../../redux/actions';
+import { getInfoClinic, getTurns, postTurn } from '../../../redux/actions';
+import { parseISO } from 'date-fns';
+import Swal from 'sweetalert2';
+import {
+  turnsAvailable,
+  dateToString,
+  numberToHours,
+  CONSULTATION,
+  MIN_CONSULTATION_DATE,
+} from '../../../helpers/validateTurn';
 
 const locales = {
   'en-US': require('date-fns/locale/en-US'),
@@ -26,87 +31,120 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-// const appointment = [
-//   {}
-// ]
-
 export default function Appointments() {
   const dispatch = useDispatch();
   const { unavailableTurns } = useSelector(state => state);
-  const { allPatients } = useSelector(state => state);
   console.log('unavailableTurns', unavailableTurns);
+  const [availableTurns, setAvailableTurns] = useState([]);
+  const [date, setDate] = useState(dateToString(new Date()));
+  const infoClinic = useSelector(state => state.infoClinics[0]);
+  const turns = useSelector(state => state.unavailableTurns);
 
   useEffect(() => {
     dispatch(getTurns());
+    dispatch(getInfoClinic());
   }, []);
 
-  const patientsID = unavailableTurns.map(turn => turn.PatientID);
-
-  const patientsWithTurns = allPatients.filter(patient =>
-    patientsID.includes(patient.Patient.ID)
-  );
-  console.log('patients', patientsWithTurns);
-
-  let oneEvent;
-  if (patientsWithTurns.length) {
-    oneEvent = patientsWithTurns.map(patient => {
+  let events;
+  if (unavailableTurns.length) {
+    events = unavailableTurns.map(patient => {
       return {
-        id: patient.Patient.ID,
-        title: patient.fullName,
-        // start,
-        // end,
+        id: patient.userPatient.ID,
+        title: `${patient.userPatient.lastName}, ${patient.userPatient.name}`,
+        start: new Date(`${patient.date}T${numberToHours(patient.time)}:00`), //'1995-12-17T03:24:00'
+        end: new Date(
+          `${patient.date} ${numberToHours(patient.time + patient.duration)}`
+        ),
       };
     });
   }
-  console.log('events', oneEvent);
+  console.log('events', events);
 
-  const timeToEvents = unavailableTurns.map(turn => {
-    return {
-      start: new Date(turn.date),
-    };
-  });
-  console.log('timeToEvents', timeToEvents);
+  const handleChange = impDate => {
+    console.log('impDate => ', impDate);
+
+    if (impDate > MIN_CONSULTATION_DATE) {
+      setDate(dateToString(impDate));
+
+      const officeHours = JSON.parse(infoClinic.officeHours);
+      const turnStandardDuration = infoClinic.turnStandardDuration;
+
+      setAvailableTurns(
+        turnsAvailable(
+          turns,
+          officeHours,
+          turnStandardDuration,
+          dateToString(impDate)
+        )
+      );
+    } else
+      Swal.fire({
+        icon: 'error',
+        title: 'Choose a date from tomorrow onwards.',
+      });
+  };
+
+  const handleSelect = e => {
+    e.preventDefault();
+
+    //   try {
+    //     const turn = JSON.parse(e.target.value);
+
+    //     const infoTurn = {
+    //       ...turn,
+    //       description: CONSULTATION,
+    //       patientAccepts: true,
+    //       PatientID,
+    //       MedicID: 1,
+    //     };
+
+    //     dispatch(postTurn(infoTurn));
+
+    //     setAvailableTurns([]);
+    //     funcSetPatientID();
+    //     Swal.fire({
+    //       icon: 'success',
+    //       title: 'Consultation turn created!',
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //     });
+    //   } catch (error) {
+    //     console.error(error);
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: 'Something went wrong, try again.',
+    //     });
+    //   }
+  };
 
   return (
-    <Calendar
-      localizer={localizer}
-      style={{ height: 500, margin: '50px' }}
-      // event={turns}
-    />
+    <div>
+      <Calendar
+        localizer={localizer}
+        style={{ height: 500, margin: '50px' }}
+        events={events}
+      />
+
+      <h3>Schedule a new shift</h3>
+      <div>
+        <DatePicker onChange={handleChange} value={parseISO(date)} />
+      </div>
+
+      <div>
+        {availableTurns.length ? (
+          availableTurns.map((turn, idx) => (
+            <div key={idx}>
+              <button onClick={handleSelect} value={JSON.stringify(turn)}>
+                ✔️ SELECT
+              </button>
+              <p>Time: {numberToHours(turn.time)} hs</p>
+              <p>Duration: {turn.duration * 60} min.</p>
+            </div>
+          ))
+        ) : (
+          <h3>No available turns or no date selected</h3>
+        )}
+      </div>
+    </div>
   );
 }
-//HACER FUNCION QUE TRANSFORME UNAVAILABLETURN EN EVENT
-// consolelog de unavailableTurn:
-//  ID: 2
-// Medic:
-// ClinicID: 1
-// ID: 1
-// UserID: 1
-// specialization: "Odontologo"
-// title: "Medico"
-// tuition_date: "2022-05-22"
-// tuition_number: 33354
-// [[Prototype]]: Object
-// MedicID: 1
-// Patient:
-// ID: 6
-// UserID: 7
-// medicalService: "Sancor Salud - Plan: 6"
-// showClinicalHistory: true
-// tutor: null
-// [[Prototype]]: Object
-// PatientID: 6
-// date: "2022-05-30"
-// description: "Iteration n° 6"
-// duration: 1.5
-// medicAccepts: null
-// patientAccepts: null
-// time: 10
-
-//formato de events:
-// {
-//   title: "event 6",
-//   start: "2019-12-05",
-//   end: "2019-12-07",
-//   allDay: true
-// }
