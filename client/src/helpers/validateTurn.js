@@ -161,14 +161,27 @@ function dateToString(date) {
 
 //|> Number to Hours
 function numberToHours(number) {
-  const hours = Math.floor(number);
-  const minutes = Math.round((number - hours) * 60);
+  let hours = Math.floor(number);
+  let minutes = Math.round((number - hours) * 60);
+
+  if (hours < 10) hours = `0${hours}`;
+  if (minutes < 10) minutes = `0${minutes}`;
 
   return `${hours}:${minutes}`;
 }
+
+// Tipo de turno de consulta. Solo puede ser creado por el paciente.
+const CONSULTATION = 'Consultation appointment.';
+
+// TOMORROW
+const today = new Date();
+const extraDays = 0;
+const MIN_CONSULTATION_DATE = today.setDate(today.getDate() + extraDays);
 
 module.exports = {
   turnsAvailable,
   dateToString,
   numberToHours,
+  CONSULTATION,
+  MIN_CONSULTATION_DATE,
 };

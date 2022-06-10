@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import S from './SingUp.module.css';
 import { useDispatch } from 'react-redux';
 import { postMedicLogin, postPatientLogin } from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 export function validate(input) {
   let errors = {};
@@ -128,7 +129,10 @@ function SignUp() {
   const register = e => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
-      return toast.error('All fields must be completed correctly');
+      return Swal.fire({
+        icon: 'error',
+        title: 'All fields must be completed correctly',
+      });
     } else {
       if (medic === false) {
         try {
@@ -138,10 +142,18 @@ function SignUp() {
               infoPatient: input.obraSocial,
             })
           );
-          toast.success('Registered successfully');
+          Swal.fire({
+            icon: 'success',
+            title: 'Registered successfully',
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate('/');
         } catch (error) {
-          return toast.error('This user already exists');
+          Swal.fire({
+            icon: 'error',
+            title: 'This user already exists',
+          });
         }
       } else {
         console.log(infoUser);
@@ -153,10 +165,18 @@ function SignUp() {
               ClinicID: input.ClinicID,
             })
           );
-          toast.success('Registered successfully');
+          Swal.fire({
+            icon: 'success',
+            title: 'Registered successfully',
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate('/');
         } catch (error) {
-          return toast.error('This user already exists');
+          return Swal.fire({
+            icon: 'error',
+            title: 'This user already exists',
+          });
         }
       }
     }

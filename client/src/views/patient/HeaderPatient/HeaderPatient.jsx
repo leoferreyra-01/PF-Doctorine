@@ -2,6 +2,8 @@ import React from 'react';
 import s from './HeaderPatient.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
 export default function Header({ title }) {
   return (
     // <div className={`${s.header_container}`}>
@@ -26,7 +28,9 @@ export default function Header({ title }) {
         />
       </div>
       <div className='help_container'>
-        <button className='web_btn'>Web setup</button>
+      <Link to="/home/payments">
+          <button className="web_btn">Pagos</button>
+        </Link>
         <FontAwesomeIcon
           icon={faCircleQuestion}
           size='2x'

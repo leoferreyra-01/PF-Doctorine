@@ -82,7 +82,12 @@ function AddStudy() {
       };
       dispatch(postStudy(fixstudie));
 
-      Swal.fire('Study sent correctly!');
+      Swal.fire({
+        icon: 'success',
+        title: 'Study sent correctly!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
       navigate('/home', { replace: true });
       setData({
         description: '',
@@ -94,7 +99,7 @@ function AddStudy() {
       Swal.fire({
         icon: 'error',
         title: 'Please complete all the fields',
-      })
+      });
     }
   }
 
@@ -104,7 +109,7 @@ function AddStudy() {
 
   return (
     <div className={S.studiesContainer}>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={e => handleSubmit(e)}>
           {/* <label className={S.label}>Date</label>
@@ -118,14 +123,13 @@ function AddStudy() {
           <label className={S.label}>Study</label>
           <select
             onChange={e => handleSelect(e)}
-            name="studyType"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='studyType'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Study
             </option>
-            <option value="laboratory">Laboratory</option>
-            <option value="complementary">Complementary</option>
+            <option value='laboratory'>Laboratory</option>
+            <option value='complementary'>Complementary</option>
             {/* {studies &&
               studies.map(st => (
                 <option
@@ -139,15 +143,15 @@ function AddStudy() {
           <label className={S.label}>Description</label>
           <input
             value={data.description}
-            placeholder="Observations"
-            type="text"
-            name="description"
+            placeholder='Observations'
+            type='text'
+            name='description'
             onChange={handleChange}
           />
 
           <FileUpload />
 
-          <button type="submit" className={S.btn}>
+          <button type='submit' className={S.btn}>
             Add Study
           </button>
         </form>

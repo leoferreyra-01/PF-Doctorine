@@ -7,6 +7,13 @@ const { check } = require('express-validator');
 
 //|+| Tested on routerTurns! ✔️
 const xValidateTurnCollisions = check('time')
+  .default(undefined)
+  .custom((value, { req }) => {
+    if (!value) {
+      throw new Error('Time is required.');
+    }
+    return true;
+  })
   //|> VALIDATE TURN INTO OFFICE-HOURS
   .custom(async (value, { req }) => {
     const MedicID = req.body.MedicID;
@@ -59,6 +66,9 @@ const xValidateTurnCollisions = check('time')
       ...oldInfoTurn,
       ...infoTurn,
     };
+
+    Turns = Turns.filter(turn => turn.ID !== infoTurn.ID);
+
     if (!validateTurnBetweenTurnsInADay(infoTurn, Turns))
       throw new Error('The turn time and duration collide with another turn.');
 

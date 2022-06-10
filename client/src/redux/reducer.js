@@ -27,6 +27,8 @@ import {
   POST_EVOLUTION,
   POST_MEDIC_LOGIN,
   POST_PATIENT_LOGIN,
+  UPDATE_MEDIC_INFO,
+  POST_CLINIC,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -66,13 +68,16 @@ const initialState = {
   allPatients: [],
   newPatientId: 0,
   urlstudy: '',
-  searchedPatient: [],
+  urlPayment: '',
+  searchedPatient: {},
   patient: {},
   medics: [],
+  clinic: {},
   evolutions: [],
   studies: [],
   allBudgets: [],
   budgetsToShow: [],
+  unavailableTurns: [],
   homeToShow: 'patient',
   treatments: [],
   tooth: [],
@@ -97,8 +102,8 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_PATIENT_DNI:
-      let searchedPatientDNI = state.allPatients.filter(
-        patient => patient.document === action.payload * 1
+      let searchedPatientDNI = state.allPatients.filter(patient =>
+        (patient.document + '').includes(action.payload)
       );
       if (searchedPatientDNI.length === 0)
         searchedPatientDNI = 'Patient Not Found';
@@ -127,7 +132,8 @@ export default function rootReducer(state = initialState, action) {
     case GET_PATIENT_DNI2:
       return {
         ...state,
-        searchedPatient: action.payload[0],
+        searchedPatient: action.payload.patient[0],
+        allBudgets: action.payload.budgets,
       };
 
     case GET_ALL_PATIENTS:
@@ -137,8 +143,8 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case GET_BUDGETS_DNI:
-      let searchedBudgetsDNI = state.allBudgets.filter(
-        budget => budget.patientDocument === action.payload * 1
+      let searchedBudgetsDNI = state.allBudgets.filter(budget =>
+        (budget.patientDocument + '').includes(action.payload)
       );
       if (searchedBudgetsDNI.length === 0)
         searchedBudgetsDNI = 'Budget Not Found';
@@ -146,6 +152,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         budgetsToShow: searchedBudgetsDNI,
       };
+
     case GET_BUDGETS_NAME:
       let searchedBudgetsName = state.allBudgets.filter(budget =>
         budget.patientFullName
@@ -224,6 +231,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         allBudgets: [action.payload, ...state.allBudgets],
         budgetsToShow: [action.payload, ...state.allBudgets],
+        urlPayment: action.payload.linkPayment,
       };
 
     case POST_PATIENT:
@@ -257,6 +265,12 @@ export default function rootReducer(state = initialState, action) {
         evolutions: Array.isArray(action.payload)
           ? [...action.payload]
           : [action.payload],
+      };
+
+    case POST_EVOLUTION:
+      return {
+        ...state,
+        // evolutions: [action.payload, ...state.evolutions],
       };
 
     case GET_STUDIES:
@@ -352,7 +366,7 @@ export default function rootReducer(state = initialState, action) {
     case 'POST_STUDY':
       return {
         ...state,
-        studies: [action.payload, ...state.studies],
+        // studies: [action.payload, ...state.studies],
       };
 
     case GET_MEDICS:
@@ -360,19 +374,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         medics: action.payload,
       };
-
     case GET_TOOTH:
       return {
         ...state,
         tooth: action.payload,
       };
-
     case 'POST_URL':
       return {
         ...state,
         urlstudy: action.payload,
       };
-
     case UPDATE_PATIENT:
       let allPatientsUpdated = state.allPatients.map(patient => {
         if (patient.ID === action.payload.ID) {
@@ -385,23 +396,26 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         allPatients: allPatientsUpdated,
       };
-
     case POST_EVOLUTION:
       return {
         ...state,
         evolutions: [...state.evolutions, ...action.payload],
       };
-
     case POST_MEDIC_LOGIN:
       return {
         ...state,
         medics: [...state.medics, ...action.payload],
       };
-
     case POST_PATIENT_LOGIN:
       return {
         ...state,
         allPatients: [...state.allPatients, ...action.payload],
+      };
+
+    case POST_CLINIC:
+      return {
+        ...state,
+        clinic: action.payload,
       };
 
     //-------------------//
@@ -425,6 +439,17 @@ export default function rootReducer(state = initialState, action) {
         infoClinics: [...state.infoClinics, ...action.payload],
       };
     //-----------------------//
+    case UPDATE_MEDIC_INFO:
+      return {
+        ...state,
+        medics: state.medics.map(medic => {
+          if (medic.ID === action.payload.ID) {
+            return action.payload;
+          } else {
+            return medic;
+          }
+        }),
+      };
     default:
       return { ...state };
   }

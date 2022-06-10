@@ -54,14 +54,14 @@ const xValidateInfoTurn = [
 
   //|> MEDIC ACCEPTS
   check('medicAccepts')
-    .default(false)
+    .default(undefined)
     .if(check('medicAccepts').exists())
     .isBoolean()
     .withMessage('Medic accepts must be a boolean.'),
 
   //|> PATIENT ACCEPTS
   check('patientAccepts')
-    .default(false)
+    .default(undefined)
     .if(check('patientAccepts').exists())
     .isBoolean()
     .withMessage('Patient accepts must be a boolean.'),
@@ -70,7 +70,7 @@ const xValidateInfoTurn = [
   check('MedicID')
     .default(undefined)
     .custom((value, { req }) => {
-      if (!value) {
+      if (req.method === 'POST' && !value) {
         throw new Error('Medic is required.');
       }
       return true;

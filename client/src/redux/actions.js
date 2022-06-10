@@ -1,5 +1,5 @@
 import axios from 'axios';
-import toast from 'react-hot-toast'; //Esto tambien del login
+import Swal from 'sweetalert2'; //Esto tambien del login
 export const ENTER_HOME = 'ENTER_HOME';
 export const GET_PATIENT = 'GET_PATIENT';
 export const POST_PATIENT = 'POST_PATIENT';
@@ -17,11 +17,11 @@ export const ORDER_BUDGETS_BY_PRICE_DES = 'ORDER_BUDGETS_BY_PRICE_DES';
 export const FILTER_BUDGETS_BY_PENDING = 'FILTER_BUDGETS_BY_PENDING';
 export const FILTER_BUDGETS_BY_COMPLETED = 'FILTER_BUDGETS_BY_COMPLETED';
 export const UPDATE_PATIENT = 'UPDATE_PATIENT';
-export const POST_EVOLUTION = 'POST_EVOLUTION';
+export const UPDATE_MEDIC_INFO = 'UPDATE_MEDIC_INFO';
 export const POST_MEDIC_LOGIN = 'POST_MEDIC_LOGIN';
 export const POST_PATIENT_LOGIN = 'POST_PATIENT_LOGIN';
-//export const GET_EVOLUTION = 'GET_EVOLUTION';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
+export const POST_EVOLUTION = 'POST_EVOLUTION';
 //export const GET_STUDY = 'GET_STUDY';
 export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
 export const GET_PATIENT_DNI2 = 'GET_PATIENT_DNI2';
@@ -35,7 +35,6 @@ export const GET_CLINICAL_HISTORY_FOR_CREATE =
 export const POST_CLINIC = 'POST_CLINIC';
 export const GET_TOOTH = 'GET_TOOTH';
 export const GET_TREATMENTS = 'GET_TREATMENTS';
-
 //--------------------LOGIN-----------------------//
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -44,7 +43,6 @@ export const GET_USERS = 'GET_USERS';
 export const USER_TO_ADMIN = 'USER_TO_ADMIN';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_SUCCESS = 'GET_SUCCESS';
-
 //--------------------TURNERO-----------------------//
 export const GET_TURNS = 'GET_TURNS';
 export const POST_TURN = 'POST_TURN';
@@ -106,8 +104,11 @@ export function getPatientDni2(dni) {
   return async function (dispatch) {
     try {
       const patient = (await axios.get(`/patients?document=${dni}`)).data;
+      const budgets = (
+        await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
+      ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: patient });
+      dispatch({ type: GET_PATIENT_DNI2, payload: {patient, budgets} });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -184,20 +185,17 @@ export function filterCompletedBudgets() {
 export function postBudget(budget) {
   return async function (dispatch) {
     try {
-      const { patientFullName, patientID, patientDocument, ...restOfBudget } =
-        budget;
-      console.log({ PatientID: patientID, restOfBudget });
-      await axios.post('/Budgets', { PatientID: patientID, ...restOfBudget });
-      //  const budgetWithID = axios.get(`/Budgets/?ID=${restOfBudget.patientID}`)
+      const { patientFullName, patientDocument, ...restOfBudget } = budget;
+      const budgetWithID = (await axios.post('/Budgets', restOfBudget)).data;
+      const { linkPayment } = (
+        await axios.post('/payments/create_preference', budgetWithID)
+      ).data;
+      await axios.put('/Budgets', { ID: budgetWithID.ID, linkPayment });
       const frontBudget = {
-        ID: 22,
+        ...budgetWithID,
+        linkPayment,
         patientFullName,
-        patientID,
         patientDocument,
-        ...restOfBudget,
-        paid: false,
-        creationDate: new Date().toISOString(),
-        updateDate: new Date().toISOString(),
       };
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
@@ -287,11 +285,15 @@ export function postPasswordReset(payload) {
       const response = await axios.post('/passwordReset', payload);
       if (response.data.error) {
         console.log('ESTO ES RESPONSE: ', response.data);
-        return toast.error(response.data.error);
+        return Swal.fire({
+          icon: 'error',
+          title: response.data.error,
+        });
       } else {
-        toast.success(
-          'Revisa tu casilla de mensajes en tu correo electronico.'
-        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Go check your email!',
+        });
       }
     } catch (error) {
       console.log(error);
@@ -360,6 +362,25 @@ export function getEvolutions(patientID) {
   };
 }
 
+export function postEvolution(evolution) {
+  return async function (dispatch) {
+    try {
+      const evolutionWithID = (await axios.post('/evolutions', evolution)).data;
+      return dispatch({
+        type: POST_EVOLUTION,
+        payload: evolutionWithID.Evolution,
+      });
+    } catch (error) {
+      return Swal.fire({
+        icon: 'error',
+        title: error.response.data.msg,
+      })
+      // if (error.response.status === 404) return alert(error.response.data.msg);
+      // alert(error.message);
+    }
+  };
+}
+
 export function getStudies(patientID) {
   return async dispatch => {
     try {
@@ -376,16 +397,6 @@ export function postClinicalHistory(payload) {
   return async function () {
     try {
       return await axios.post('/clinicalhistories', payload);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function postClinic(clinic) {
-  return async function () {
-    try {
-      return await axios.post('/Clinics', clinic);
     } catch (error) {
       console.log(error);
     }
@@ -433,17 +444,6 @@ export function updatePatient(ID, infoPatient, infoUser) {
   };
 }
 
-export function postEvolution(evolution) {
-  return async function (dispatch) {
-    try {
-      const evolutions = (await axios.post('/evolutions', evolution)).data;
-      return dispatch({ type: POST_EVOLUTION, payload: evolutions });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
 export function postMedicLogin({ infoUser, infoMedic, ClinicID }) {
   return async function (dispatch) {
     try {
@@ -468,6 +468,18 @@ export function postPatientLogin({ infoUser, infoPatient }) {
     }
   };
 }
+
+export function postClinic(clinic) {
+  return async function (dispatch) {
+    try {
+      const clinicWithID = (await axios.post('/Clinics', clinic)).data;
+      return dispatch({ type: POST_CLINIC, payload: clinicWithID });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 
 //--------------------TURNERO-----------------------//
 export function getMedics() {
@@ -503,29 +515,6 @@ export function postTurn(payload) {
   };
 }
 
-// ERROR: YA EXISTIA!!!
-// export function postTurn(payload) {
-//   return async function (dispatch) {
-//     try {
-//       const turn = (await axios.post('/turns', payload)).data;
-//       return dispatch({ type: POST_TURN, payload: turn });
-
-//       //payload:
-//       //   {
-//       //     "date": "2022-06-06",
-//       //     "time": 9,
-//       //     "duration": 1,
-//       //     "description": "NEW TURN",
-//       //     "PatientID": 1,
-//       //     "MedicID": 1
-//       // }
-//     } catch (error) {
-//       console.log(error);
-//       if (error.response.status === 404) return alert(error.response.data.msg);
-//     }
-//   };
-// }
-
 export function getInfoClinic() {
   // (officeHours, turnStandardDuration)
   return async function (dispatch) {
@@ -543,5 +532,17 @@ export function deleteTurn(id) {
   return {
     type: DELETE_TURN,
     payload: id,
+  };
+}
+export function updateMedic(infoMedic, infoUser, ClinicID, ID) {
+  return async function (dispatch) {
+    try {
+      const medics = (
+        await axios.put(`/medics/${ID}`, { infoUser, infoMedic, ClinicID })
+      ).data;
+      return dispatch({ type: UPDATE_MEDIC_INFO, payload: medics });
+    } catch (error) {
+      console.error(error);
+    }
   };
 }

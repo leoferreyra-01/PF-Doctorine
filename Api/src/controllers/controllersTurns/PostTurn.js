@@ -11,7 +11,16 @@ async function postTurns(req, res) {
   try {
     if (validate) return res.status(200).json([false, null]);
 
-    let { date, time, duration, description, MedicID, PatientID } = req.body;
+    let {
+      date,
+      time,
+      duration,
+      description,
+      medicAccepts,
+      patientAccepts,
+      MedicID,
+      PatientID,
+    } = req.body;
 
     if (!date || moment(date, 'YYYY-MM-DD', true).isValid() === false)
       return res
@@ -34,6 +43,8 @@ async function postTurns(req, res) {
       time,
       duration,
       description,
+      medicAccepts,
+      patientAccepts,
     });
 
     // set MedicID and PatientID by id
