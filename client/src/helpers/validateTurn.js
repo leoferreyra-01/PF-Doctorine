@@ -128,7 +128,7 @@ function turnsAvailable(
 ) {
   const turnsAvailable = [];
 
-  for (let i = 0; i <= 24; i += 0.25) {
+  for (let i = 0; i <= 24; i += duration) {
     const turn = {
       date,
       time: i,
