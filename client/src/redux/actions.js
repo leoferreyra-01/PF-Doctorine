@@ -32,7 +32,10 @@ export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
 export const GET_CLINICAL_HISTORY_FOR_CREATE =
   'GET_CLINICAL_HISTORY_FOR_CREATE';
+export const GET_CLINIC = 'GET_CLINIC';
+export const CREATE_CLINIC = 'CREATE_CLINIC';
 export const POST_CLINIC = 'POST_CLINIC';
+export const UPDATE_CLINIC = 'UPDATE_CLINIC';
 export const GET_TOOTH = 'GET_TOOTH';
 export const GET_TREATMENTS = 'GET_TREATMENTS';
 //--------------------LOGIN-----------------------//
@@ -108,7 +111,7 @@ export function getPatientDni2(dni) {
         await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
       ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: {patient, budgets} });
+      dispatch({ type: GET_PATIENT_DNI2, payload: { patient, budgets } });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -374,7 +377,7 @@ export function postEvolution(evolution) {
       return Swal.fire({
         icon: 'error',
         title: error.response.data.msg,
-      })
+      });
       // if (error.response.status === 404) return alert(error.response.data.msg);
       // alert(error.message);
     }
@@ -480,7 +483,6 @@ export function postClinic(clinic) {
   };
 }
 
-
 //--------------------TURNERO-----------------------//
 export function getMedics() {
   return async function (dispatch) {
@@ -543,6 +545,42 @@ export function updateMedic(infoMedic, infoUser, ClinicID, ID) {
       return dispatch({ type: UPDATE_MEDIC_INFO, payload: medics });
     } catch (error) {
       console.error(error);
+    }
+  };
+}
+
+export function getClinic() {
+  return async function (dispatch) {
+    try {
+      const clinic = await axios.get('/Clinics');
+      if (clinic[0] === true && clinic[1].error.msg === 'No clinics added!') {
+        return dispatch({ type: CREATE_CLINIC });
+      }
+      return dispatch({ type: GET_CLINIC, payload: clinic.data[0] });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postCLinic(clinic) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/Clinics', clinic);
+      return dispatch({ type: POST_CLINIC, payload: clinic });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateClinic(clinic) {
+  return async function (dispatch) {
+    try {
+      const updatedClinic = (await axios.put('/Clinics', clinic)).data;
+      return dispatch({ type: UPDATE_CLINIC, payload: updatedClinic });
+    } catch (error) {
+      console.log(error);
     }
   };
 }

@@ -7,6 +7,10 @@ import {
   GET_EVOLUTIONS,
   GET_STUDIES,
   CLEAR,
+  POST_CLINIC,
+  UPDATE_CLINIC,
+  GET_CLINIC,
+  CREATE_CLINIC,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
   GET_BUDGETS_DNI,
@@ -73,6 +77,7 @@ const initialState = {
   patient: {},
   medics: [],
   clinic: {},
+  createClinic: false,
   evolutions: [],
   studies: [],
   allBudgets: [],
@@ -412,7 +417,26 @@ export default function rootReducer(state = initialState, action) {
         allPatients: [...state.allPatients, ...action.payload],
       };
 
+    case GET_CLINIC:
+      return {
+        ...state,
+        clinic: action.payload,
+      };
+
+    case CREATE_CLINIC:
+      return {
+        ...state,
+        createClinic: true,
+      };
+
     case POST_CLINIC:
+      return {
+        ...state,
+        clinic: action.payload,
+        createClinic: false,
+      };
+
+    case UPDATE_CLINIC:
       return {
         ...state,
         clinic: action.payload,
