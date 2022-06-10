@@ -132,7 +132,8 @@ export default function rootReducer(state = initialState, action) {
     case GET_PATIENT_DNI2:
       return {
         ...state,
-        searchedPatient: action.payload[0],
+        searchedPatient: action.payload.patient[0],
+        allBudgets: action.payload.budgets,
       };
 
     case GET_ALL_PATIENTS:

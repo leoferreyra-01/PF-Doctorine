@@ -178,7 +178,7 @@ export function AddBudget() {
       const readyBudget = {
         PatientID,
         patientDocument,
-        totalPrice: totalPrice + '',
+        totalPrice: totalPrice,
         patientFullName,
         ...restOfData,
         treatments: jsonTreatments,

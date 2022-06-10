@@ -26,6 +26,7 @@ import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
+import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -67,6 +68,7 @@ function App() {
             <Route path="data" element={<PatientData />} />
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
+            <Route path="payments" element={<BudgetPatient />} />
           </Route>
         )}
       </Routes>

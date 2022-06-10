@@ -104,8 +104,11 @@ export function getPatientDni2(dni) {
   return async function (dispatch) {
     try {
       const patient = (await axios.get(`/patients?document=${dni}`)).data;
+      const budgets = (
+        await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
+      ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: patient });
+      dispatch({ type: GET_PATIENT_DNI2, payload: {patient, budgets} });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);

@@ -25,6 +25,7 @@ let preference = {
 };
 router.post('/create_preference', (req, res) => {
   // const treatments = JSON.parse(req.body.treatments);
+  console.log(req.body);
   let preference = {
     items: [
       {
