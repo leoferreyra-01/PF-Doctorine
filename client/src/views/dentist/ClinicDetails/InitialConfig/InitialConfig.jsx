@@ -29,17 +29,12 @@ const formatMinutes = minutes => {
       return '';
   }
 };
-const deFormatMinutes = minutes => {
-  switch (minutes) {
-    case '.5':
-      return '30';
-
-    case '.75':
-      return '45';
-
-    default:
-      return minutes;
-  }
+const deFormatHours = number => {
+  let hours = Math.floor(number);
+  let minutes = Math.floor((number - hours) * 60);
+  if (hours < 10) hours = `0${hours}`;
+  if (minutes < 10) minutes = `0${minutes}`;
+  return `${hours}:${minutes}`;
 };
 
 export default function InitialConfig() {
@@ -89,9 +84,8 @@ export default function InitialConfig() {
     const maxAN = e.target[4].value.split(':');
     const index = e.target[0].selectedIndex - 1;
 
-    setOfficeHours(prevState => {
-      const newState = [...prevState];
-      newState[index] = [
+    if (!filledOfficeHours && index !== 0 && index !== 6) {
+      const working = [
         {
           min: minM[0] + formatMinutes(minM[1]),
           max: maxM[0] + formatMinutes(maxM[1]),
@@ -101,8 +95,31 @@ export default function InitialConfig() {
           max: maxAN[0] + formatMinutes(maxAN[1]),
         },
       ];
-      return newState;
-    });
+      setOfficeHours([
+        [],
+        [...working],
+        [...working],
+        [...working],
+        [...working],
+        [...working],
+        [],
+      ]);
+    } else {
+      setOfficeHours(prevState => {
+        const newState = [...prevState];
+        newState[index] = [
+          {
+            min: minM[0] + formatMinutes(minM[1]),
+            max: maxM[0] + formatMinutes(maxM[1]),
+          },
+          {
+            min: minAN[0] + formatMinutes(minAN[1]),
+            max: maxAN[0] + formatMinutes(maxAN[1]),
+          },
+        ];
+        return newState;
+      });
+    }
     e.target.reset();
   };
   //#region
@@ -280,14 +297,16 @@ export default function InitialConfig() {
                 <p className={s.whText}>{days[index]}</p>
                 {officeHour.length > 0 ? (
                   <div className={s.hText}>
-                    <p className={s.whText}>{`${morning.min} ${
-                      morning.min * 1 < 12 ? 'AM' : 'PM'
-                    } - ${morning.max} ${
-                      morning.max * 1 < 12 ? 'AM' : 'PM'
-                    }`}</p>
-                    <p className={s.whText}>{`${afterNoon.min} ${
+                    <p className={s.whText}>{`${deFormatHours(
+                      morning.min * 1
+                    )} ${morning.min * 1 < 12 ? 'AM' : 'PM'} - ${deFormatHours(
+                      morning.max * 1
+                    )} ${morning.max * 1 < 12 ? 'AM' : 'PM'}`}</p>
+                    <p className={s.whText}>{`${deFormatHours(
+                      afterNoon.min * 1
+                    )} ${
                       afterNoon.min * 1 < 12 ? 'AM' : 'PM'
-                    } - ${afterNoon.max} ${
+                    } - ${deFormatHours(afterNoon.max * 1)} ${
                       afterNoon.max * 1 < 12 ? 'AM' : 'PM'
                     }`}</p>
                   </div>

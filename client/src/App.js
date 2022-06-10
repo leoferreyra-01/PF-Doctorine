@@ -27,6 +27,8 @@ import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpda
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
 import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
+import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
+import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -59,8 +61,13 @@ function App() {
             />
             <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
-            <Route path='updateMedic' element={<UpdateMedic />} />
+            <Route path="updateMedic" element={<UpdateMedic />} />
             <Route path="clinic-details" element={<ClinicDetails />} />
+            <Route
+              path="clinic-details/initial-config"
+              element={<InitialConfig />}
+            />
+            <Route path="clinic-details/update-data" element={<UpdateData />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>

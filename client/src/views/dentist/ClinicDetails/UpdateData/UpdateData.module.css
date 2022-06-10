@@ -1,0 +1,34 @@
+.container {
+  grid-area: content;
+  overflow: auto;
+  padding: 60px 40px;
+}
+
+.form {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+
+.input_container {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.input {
+  padding: 27px 12px 10px;
+  border: none;
+  font-size: 1.6rem;
+}
+
+.buton {
+  background-color: #101f33;
+  border: none;
+  padding: 10px;
+  color: aliceblue;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-bottom: 5%;
+  /* width: 20%; */
+}
