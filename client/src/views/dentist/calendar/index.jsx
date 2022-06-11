@@ -42,9 +42,7 @@ export default function Appointments() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //#region unavailableTurns to Calendar ❌
-  // -BUG- Al cargar formularios, se crean turnos ficticios en el calendario.
-
+  //#region unavailableTurns to Calendar ✔️
   const { unavailableTurns } = useSelector(state => state);
   // console.log('unavailableTurns => ', unavailableTurns);
   const [date, setDate] = useState(new Date());
