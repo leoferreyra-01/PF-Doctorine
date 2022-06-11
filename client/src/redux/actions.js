@@ -108,7 +108,7 @@ export function getPatientDni2(dni) {
         await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
       ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: {patient, budgets} });
+      dispatch({ type: GET_PATIENT_DNI2, payload: { patient, budgets } });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -187,15 +187,20 @@ export function postBudget(budget) {
     try {
       const { patientFullName, patientDocument, ...restOfBudget } = budget;
       const budgetWithID = (await axios.post('/Budgets', restOfBudget)).data;
-      const { linkPayment } = (
+      const { linkPayment, id } = (
         await axios.post('/payments/create_preference', budgetWithID)
       ).data;
-      await axios.put('/Budgets', { ID: budgetWithID.ID, linkPayment });
+      await axios.put('/Budgets', {
+        ID: budgetWithID.ID,
+        linkPayment,
+        idPayment: id,
+      });
       const frontBudget = {
         ...budgetWithID,
         linkPayment,
         patientFullName,
         patientDocument,
+        idPayment: id,
       };
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
@@ -374,7 +379,7 @@ export function postEvolution(evolution) {
       return Swal.fire({
         icon: 'error',
         title: error.response.data.msg,
-      })
+      });
       // if (error.response.status === 404) return alert(error.response.data.msg);
       // alert(error.message);
     }
@@ -479,7 +484,6 @@ export function postClinic(clinic) {
     }
   };
 }
-
 
 //--------------------TURNERO-----------------------//
 export function getMedics() {

@@ -1,22 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-export default function Budgetspatients() {
-  const budgets = useSelector(state => state.allBudgets);
-  function openTab() {
-    window.open(budgets[1].linkPayment);
-  }
-  console.log(budgets);
+import React from 'react';
+import logopago from '../../../../../src/Pictures/horizontal_logo.png';
+import s from './Budget.module.css';
+export default function BudgetPatients({
+  description,
+  linkPayment,
+  totalPrice,
+}) {
+  // function openTab() {
+  //   window.open(linkPayment);
+  // }
   return (
     <div>
-      {budgets.map(e => {
-        return (
-          <div>
-            <h4>Total Price:{e.totalPrice}</h4>
-            <button onClick={openTab}>PAY</button>
-          </div>
-        );
-      })}
+      <img src={logopago} width="100px" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+
+          justifyContent: 'space-between',
+          marginBottom: '10px',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: 'black',
+        }}
+      >
+        <h2>
+          <div>Total Price:</div> ${totalPrice}
+        </h2>
+        <h2>
+          <div>Description:</div>
+          {description === null ? 'Has no description' : description}
+          <a href={linkPayment} target="_self" rel="noopener noreferrer">
+            <button className={s.button}>PAY</button>
+          </a>
+        </h2>
+      </div>
     </div>
   );
 }
