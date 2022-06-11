@@ -8,6 +8,7 @@ export const GET_BUDGETS = 'GET_BUDGETS';
 export const GET_BUDGETS_DNI = 'GET_BUDGETS_DNI';
 export const GET_BUDGETS_NAME = 'GET_BUDGETS_NAME';
 export const POST_BUDGET = 'POST_BUDGET';
+export const UPDATE_BUDGET = 'UPDATE_BUDGET';
 export const ORDER_BUDGETS_BY_NAME_ASC = 'ORDER_BUDGETS_BY_NAME_ASC';
 export const ORDER_BUDGETS_BY_NAME_DES = 'ORDER_BUDGETS_BY_NAME_DES';
 export const ORDER_BUDGETS_BY_DATE_ASC = 'ORDER_BUDGETS_BY_DATE_ASC';
@@ -203,6 +204,17 @@ export function postBudget(budget) {
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
+  };
+}
+
+export function updateBudget(budget) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/Budgets', budget);
+      return dispatch({ type: UPDATE_BUDGET, payload: budget });
+    } catch (error) {
       alert(error.message);
     }
   };

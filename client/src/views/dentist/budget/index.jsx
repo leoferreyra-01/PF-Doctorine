@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import s from './budget.module.css';
 
 export default function Budget({
@@ -6,6 +7,7 @@ export default function Budget({
   creationDate,
   patientName,
   paid,
+  budgetID,
 }) {
   return (
     <div className={s.budget}>
@@ -13,6 +15,9 @@ export default function Budget({
       <p className={s.date}>{creationDate}</p>
       <p className={s.amount}>{totalPrice}</p>
       <p className={s.status}>{paid ? 'Completed' : 'Pending'}</p>
+      <Link className={s.buton} to={`/home/updateBudget/${budgetID}`}>
+        Details
+      </Link>
     </div>
   );
 }

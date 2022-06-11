@@ -1,7 +1,7 @@
 const mercadopago = require('mercadopago');
 // Agrega credenciales
 const router = require('express').Router();
-
+const axios = require('axios');
 mercadopago.configure({
   access_token:
     'TEST-2610828340638564-060709-f54f8a67b694f7b1efe661bb2f32d9ef-21079186',
@@ -17,8 +17,8 @@ let preference = {
     },
   ],
   back_urls: {
-    success: 'http://localhost:3001/feedback',
-    failure: 'http://localhost:3001/feedback',
+    success: 'http://localhost:3001/success',
+    failure: 'http://localhost:3001/failed',
     pending: 'http://localhost:3001/feedback',
   },
   auto_return: 'approved',
@@ -36,17 +36,18 @@ router.post('/create_preference', (req, res) => {
       },
     ],
     back_urls: {
-      success: 'http://localhost:3001/feedback',
-      failure: 'http://localhost:3001/feedback',
+      success: 'http://localhost:3001/payments/feedback',
+      failure: 'http://localhost:3001/failed',
       pending: 'http://localhost:3001/feedback',
     },
     auto_return: 'approved',
   };
-  console.log(preference);
+
   mercadopago.preferences
     .create(preference)
     .then(function (response) {
       res.json({
+        ID: preference.items[0].id,
         id: response.body.id,
         status: response.body.auto_return,
         linkPayment: response.body.sandbox_init_point,
@@ -56,11 +57,23 @@ router.post('/create_preference', (req, res) => {
       console.log(error);
     });
 });
+
 router.get('/feedback', function (req, res) {
-  res.json({
-    Payment: req.query.payment_id,
-    Status: req.query.status,
-    MerchantOrder: req.query.merchant_order_id,
-  });
+  if (req.query.status === 'approved') {
+    axios.put('http://localhost:3001/Budgets', {
+      idPayment: req.query.preference_id,
+    });
+  }
+  res.redirect('http://localhost:3000/home');
+  // res.send(`
+  // <html>
+  // <head>
+  // <title>Redirigir al navegador a otra URL</title>
+  // <META HTTP-EQUIV="REFRESH" CONTENT="5;URL=http://www.desarrolloweb.com">
+  // </head>
+  // <body>
+  // Esta página cambia en 5 segundos por la portada de DesarrolloWeb.com
+  // </body>
+  // </html>`);
 });
 module.exports = router;

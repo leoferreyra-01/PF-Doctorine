@@ -34,6 +34,10 @@ module.exports = sequelize => {
         type: DataTypes.STRING,
         defaultValue: null,
       },
+      idPayment: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       timestamps: true,

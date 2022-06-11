@@ -88,16 +88,24 @@ module.exports = {
   },
   putBudget: async function (req, res) {
     try {
-      const { paid, ID, linkPayment } = req.body;
+      const { paid, ID, linkPayment, idPayment } = req.body;
       if (linkPayment) {
         const BudgetByPatient = await Budget.findByPk(ID);
         const updatePatient = await BudgetByPatient.update({
+          idPayment: idPayment,
           linkPayment: linkPayment,
         });
         return res.status(201).json({ msg: 'URL paid successfully' });
       }
-      const BudgetByPatient = await Budget.findByPk(ID);
-      const updatePatient = await BudgetByPatient.update({ paid: paid });
+      // const BudgetByPatient = await Budget.findByPk(ID);
+      // const updatePatient = await BudgetByPatient.update({ paid: paid });
+      const BudgetByPatient = await Budget.findOne({
+        where: {
+          idPayment: idPayment,
+        },
+      });
+      const updatePatient = await BudgetByPatient.update({ paid: true });
+
       res.status(201).json({ msg: 'budget paid successfully' });
     } catch (error) {
       res.status(404).json([true, { error: { msg: error.message } }]);
