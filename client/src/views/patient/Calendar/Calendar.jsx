@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,6 +56,7 @@ import {
 
 export default function CalendarFunction() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Para obtener los turnos futuros del paciente.
   const [PatientTurns, setPatientTurns] = useState([]);
@@ -132,7 +134,7 @@ export default function CalendarFunction() {
       const infoTurn = {
         ...turn,
         description: 'Consultation.',
-        patientAccepts: true,
+        // patientAccepts: true,
         PatientID,
         MedicID: 1,
       };
@@ -141,6 +143,17 @@ export default function CalendarFunction() {
 
       setAvailableTurns([]);
       funcSetPatientID();
+
+      //#region PAYMENT
+      /* 
+      const budget = {
+        "con los datos del presupuesto estándar de consulta"
+      }
+      */
+      // dispatch("del budget"); // FALTA importar la action
+      // navigate("al lugar de pago");
+      //#endregion
+
       Swal.fire({
         icon: 'success',
         title: 'Consultation turn created!',
