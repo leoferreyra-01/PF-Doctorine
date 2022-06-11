@@ -511,11 +511,21 @@ export function getTurns() {
 }
 
 export function postTurn(payload) {
-  return async function () {
-    return axios.post(`/turns`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
+  return async function (dispatch) {
+    // console.log(payload);
+    try {
+      await axios.post(`/turns`, payload);
+
+      const allTurns = (await axios.get('/turns')).data;
+      const newTurn = allTurns.find(
+        turn => turn.date === payload.date && turn.time === payload.time
+      );
+
+      dispatch({ type: POST_TURN, payload: newTurn });
+    } catch (error) {
+      console.error(error);
       alert(error.message);
-    });
+    }
   };
 }
 

@@ -43,8 +43,8 @@ const xValidateInfoTurn = [
     })
     .if(check('duration').exists())
     .trim()
-    .isFloat({ min: 0.166667 })
-    .withMessage('Duration must be a number greather than 10min.'),
+    .isFloat({ min: 0.166666 })
+    .withMessage('Duration must be at least 10 minutes.'),
 
   //|> DESCRIPTION
   check('description')

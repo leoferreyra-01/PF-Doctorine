@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,8 +9,6 @@ import axios from 'axios';
 import styles from './calendar.module.css';
 import { parseISO } from 'date-fns';
 import Swal from 'sweetalert2';
-
-
 
 import {
   turnsAvailable,
@@ -57,6 +56,7 @@ import {
 
 export default function CalendarFunction() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Para obtener los turnos futuros del paciente.
   const [PatientTurns, setPatientTurns] = useState([]);
@@ -82,9 +82,9 @@ export default function CalendarFunction() {
       .catch(err => console.error(err));
 
   // Para arreglo de turnos libres.
+  const { unavailableTurns } = useSelector(state => state);
   const [availableTurns, setAvailableTurns] = useState([]);
   const [date, setDate] = useState(dateToString(new Date()));
-  const turns = useSelector(state => state.unavailableTurns);
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
   useEffect(() => {
@@ -94,8 +94,11 @@ export default function CalendarFunction() {
   }, []);
 
   const handleChange = impDate => {
-    console.log('impDate => ', impDate);
-    if (PatientTurns.filter(turn => turn.description === CONSULTATION).length)
+    if (
+      PatientTurns.filter(turn =>
+        turn.description.toLocaleLowerCase().includes(CONSULTATION)
+      ).length
+    )
       return Swal.fire({
         icon: 'error',
         title: 'You already have a consultation turn!',
@@ -109,7 +112,7 @@ export default function CalendarFunction() {
 
       setAvailableTurns(
         turnsAvailable(
-          turns,
+          unavailableTurns,
           officeHours,
           turnStandardDuration,
           dateToString(impDate)
@@ -130,8 +133,8 @@ export default function CalendarFunction() {
 
       const infoTurn = {
         ...turn,
-        description: CONSULTATION,
-        patientAccepts: true,
+        description: 'Consultation.',
+        // patientAccepts: true, // Lo sacamos para el pago.
         PatientID,
         MedicID: 1,
       };
@@ -140,6 +143,17 @@ export default function CalendarFunction() {
 
       setAvailableTurns([]);
       funcSetPatientID();
+
+      //#region PAYMENT
+      /* 
+      const budget = {
+        "con los datos del presupuesto estándar de consulta"
+      }
+      */
+      // dispatch("del budget"); // FALTA importar la action
+      // navigate("al lugar de pago");
+      //#endregion
+
       Swal.fire({
         icon: 'success',
         title: 'Consultation turn created!',
@@ -178,9 +192,20 @@ export default function CalendarFunction() {
     //|*| Si acepta, debe enviar email al médico.
 
     const { ID, time, MedicID } = JSON.parse(e.target.value);
-    console.log('ID => ', ID);
-    console.log('time => ', time);
+    // console.log('ID => ', ID);
+    // console.log('time => ', time);
 
+    //#region PAYMENT
+    /* 
+      const budget = {
+        "con los datos del presupuesto estándar de consulta"
+      }
+      */
+    // dispatch("del budget"); // FALTA importar la action
+    // navigate("al lugar de pago");
+    //#endregion
+
+    // Agregar un if("si está pagado") =>
     axios
       .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
       .then(res => {
@@ -229,7 +254,8 @@ export default function CalendarFunction() {
               ) : (
                 <button
                   onClick={handlePatientAccepts}
-                  value={JSON.stringify(turn)}>
+                  value={JSON.stringify(turn)}
+                >
                   Accept?
                 </button>
               )}
