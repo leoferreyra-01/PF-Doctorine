@@ -134,7 +134,7 @@ export default function CalendarFunction() {
       const infoTurn = {
         ...turn,
         description: 'Consultation.',
-        // patientAccepts: true,
+        // patientAccepts: true, // Lo sacamos para el pago.
         PatientID,
         MedicID: 1,
       };
@@ -192,9 +192,20 @@ export default function CalendarFunction() {
     //|*| Si acepta, debe enviar email al médico.
 
     const { ID, time, MedicID } = JSON.parse(e.target.value);
-    console.log('ID => ', ID);
-    console.log('time => ', time);
+    // console.log('ID => ', ID);
+    // console.log('time => ', time);
 
+    //#region PAYMENT
+    /* 
+      const budget = {
+        "con los datos del presupuesto estándar de consulta"
+      }
+      */
+    // dispatch("del budget"); // FALTA importar la action
+    // navigate("al lugar de pago");
+    //#endregion
+
+    // Agregar un if("si está pagado") =>
     axios
       .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
       .then(res => {
