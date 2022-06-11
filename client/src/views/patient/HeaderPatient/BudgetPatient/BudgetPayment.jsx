@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import BudgetPatients from './BudgetPatient';
 export default function BudgetPayments() {
   const budgets = useSelector(state => state.allBudgets);
-
+  const newBudgets = budgets.filter(b => b.paid !== true);
   return (
     <div
       style={{
@@ -15,7 +15,7 @@ export default function BudgetPayments() {
         marginLeft: '10px',
       }}
     >
-      {budgets.map(e => (
+      {newBudgets.map(e => (
         <BudgetPatients
           key={e.treatments.ID}
           linkPayment={e.linkPayment}

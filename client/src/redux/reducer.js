@@ -132,7 +132,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         searchedPatient: action.payload.patient[0],
-        allBudgets: action.payload.budgets.filter(b => b.paid !== true),
+        allBudgets: action.payload.budgets,
       };
 
     case GET_ALL_PATIENTS:
