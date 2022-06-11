@@ -511,8 +511,12 @@ export function postTurn(payload) {
     try {
       await axios.post(`/turns`, payload);
 
-      // const allTurns = (await axios.get('/turns')).data;
-      // dispatch({ type: GET_TURNS, payload: allTurns });
+      const allTurns = (await axios.get('/turns')).data;
+      const newTurn = allTurns.find(
+        turn => turn.date === payload.date && turn.time === payload.time
+      );
+
+      dispatch({ type: POST_TURN, payload: newTurn });
     } catch (error) {
       console.error(error);
       alert(error.message);
