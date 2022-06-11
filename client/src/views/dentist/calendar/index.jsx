@@ -40,19 +40,22 @@ const localizer = dateFnsLocalizer({
 export default function Appointments() {
   const dispatch = useDispatch();
 
-  //#region unavailableTurns to Calendar ✔️
+  //#region unavailableTurns to Calendar ❌
+  // -BUG- Al cargar formularios, se crean turnos ficticios en el calendario.
+
   const { unavailableTurns } = useSelector(state => state);
   // console.log('unavailableTurns => ', unavailableTurns);
   const [date, setDate] = useState(new Date());
   // console.log('setDate => ', date);
 
-  let events;
+  let events = [];
   if (unavailableTurns.length) {
     events = unavailableTurns.map(patient => {
       return {
         id: patient.userPatient.ID,
         title: `${patient.userPatient.lastName}, ${patient.userPatient.name}`,
-        start: new Date(`${patient.date}T${numberToHours(patient.time)}:00`), //'1995-12-17T03:24:00'
+        start: new Date(`${patient.date}T${numberToHours(patient.time)}:00`),
+        //'1995-12-17T03:24:00'
         end: new Date(
           `${patient.date}T${numberToHours(patient.time + patient.duration)}:00`
         ),
@@ -141,11 +144,12 @@ export default function Appointments() {
     date: dateToString(date),
     time: dateTimeToNumber(date),
     ...data,
+    duration: parseInt(data.duration) / 60,
   };
   // console.log('handleChange/infoTurn => ', infoTurn);
   //#endregion
 
-  //#region VALIDATE with handleChange ✔️
+  //#region Backend Validation with handleChange ✔️
   const [validations, setValidations] = useState([false, null]);
 
   async function bk_validateTurn() {
@@ -170,7 +174,7 @@ export default function Appointments() {
   function handleSelectPatient(e) {
     const patient = allPatients.find(patient => {
       const targetValue = e.target.value;
-      const patientData = `${patient.lastName}, ${patient.name}, ${patient.document}`;
+      const patientData = `${patient.name} ${patient.lastName} ${patient.document} ${patient.email}`;
 
       return patientData
         .toLocaleLowerCase()
@@ -178,11 +182,13 @@ export default function Appointments() {
     });
     console.log('handleSelectPatient/patient => ', patient);
 
-    setPatientSelected(patient);
-    setData({
-      ...data,
-      PatientID: patient.Patient.ID,
-    });
+    if (patient) {
+      setPatientSelected(patient);
+      setData({ ...data, PatientID: patient.Patient.ID });
+    } else {
+      setPatientSelected(null);
+      setData({ ...data, PatientID: 0 });
+    }
   }
   //#endregion
 
@@ -236,61 +242,69 @@ export default function Appointments() {
         style={{ height: 500, margin: '50px' }}
         events={events}
       />
-
       <div>
-        <h3>Select a Patient</h3>
-        <form>
-          <label>Patient: </label>
-          <input
-            placeholder="Lastname, name, document"
-            type="text"
-            name="patient"
-            onChange={handleSelectPatient}
+        <h1>Create a Turn</h1>
+        <br />
+        <div>
+          <h3>Select a Patient</h3>
+          <form>
+            <label>Patient: </label>
+            <input
+              placeholder="Fullname, document or email"
+              type="text"
+              name="patient"
+              onChange={handleSelectPatient}
+            />
+            {patientSelected ? (
+              <div>
+                <p>{`SELECTED: ${patientSelected.lastName}, ${patientSelected.name} ✔️`}</p>
+                <p>{`Document: ${patientSelected.document} ✔️`}</p>
+                <p>{`Email: ${patientSelected.email} ✔️`}</p>
+              </div>
+            ) : (
+              <h4>No patient selected ❌</h4>
+            )}
+          </form>
+        </div>
+
+        <br />
+
+        <h3>Select day and time</h3>
+        <div>
+          <DateTimePicker
+            onChange={handleDateTime}
+            value={parseISO(dateToString(date))}
           />
-          {patientSelected ? (
-            <div>
-              <p>{`SELECTED: ${patientSelected.lastName}, ${patientSelected.name} ✔️`}</p>
-              <p>{`DOCUMENT: ${patientSelected.document} ✔️`}</p>
-            </div>
-          ) : (
-            <h4>No patient selected</h4>
-          )}
-        </form>
+        </div>
+
+        <br />
+
+        {turnForm && (
+          <form onSubmit={handleSubmit}>
+            <label>Duration: </label>
+            <input
+              value={data.duration}
+              placeholder="minutes"
+              type="number"
+              name="duration"
+              onChange={handleChange}
+            />
+            {fail && err.duration ? <p>{err.duration.msg}</p> : '✔️'}
+
+            <label>Description: </label>
+            <input
+              value={data.description}
+              placeholder="Ex. Consultation."
+              type="text"
+              name="description"
+              onChange={handleChange}
+            />
+            {fail && err.description ? <p>{err.description.msg}</p> : '✔️'}
+
+            <button type="submit">📝CREATE</button>
+          </form>
+        )}
       </div>
-
-      <h3>Schedule a new turn.</h3>
-      <div>
-        <DateTimePicker
-          onChange={handleDateTime}
-          value={parseISO(dateToString(date))}
-        />
-      </div>
-
-      {turnForm && (
-        <form onSubmit={handleSubmit}>
-          <label>Duration: </label>
-          <input
-            value={data.duration}
-            placeholder="minutes"
-            type="number"
-            name="duration"
-            onChange={handleChange}
-          />
-          {fail && err.duration ? <p>{err.duration.msg}</p> : '✔️'}
-
-          <label>Description: </label>
-          <input
-            value={data.description}
-            placeholder="Ex. Consultation."
-            type="text"
-            name="description"
-            onChange={handleChange}
-          />
-          {fail && err.description ? <p>{err.description.msg}</p> : '✔️'}
-
-          <button type="submit">📝CREATE</button>
-        </form>
-      )}
     </div>
   );
 }
