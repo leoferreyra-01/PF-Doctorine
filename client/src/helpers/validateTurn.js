@@ -170,8 +170,14 @@ function numberToHours(number) {
   return `${hours}:${minutes}`;
 }
 
+//|> DATE-TIME TO Number
+function dateTimeToNumber(date) {
+  return parseFloat((date.getHours() + date.getMinutes() / 60).toFixed(2));
+}
+// console.log(dateTimeToNumber(new Date()));
+
 // Tipo de turno de consulta. Solo puede ser creado por el paciente.
-const CONSULTATION = 'Consultation appointment.';
+const CONSULTATION = 'consult';
 
 // TOMORROW
 const today = new Date();
@@ -179,9 +185,11 @@ const extraDays = 0;
 const MIN_CONSULTATION_DATE = today.setDate(today.getDate() + extraDays);
 
 module.exports = {
+  validateTurn,
   turnsAvailable,
   dateToString,
   numberToHours,
   CONSULTATION,
   MIN_CONSULTATION_DATE,
+  dateTimeToNumber,
 };
