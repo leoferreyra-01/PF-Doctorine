@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
@@ -39,6 +40,7 @@ const localizer = dateFnsLocalizer({
 
 export default function Appointments() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //#region unavailableTurns to Calendar ❌
   // -BUG- Al cargar formularios, se crean turnos ficticios en el calendario.
@@ -129,7 +131,7 @@ export default function Appointments() {
         Swal.fire({
           icon: 'warning',
           title:
-            '"Consult" is a word reserved for consultations. If your patient have a turn with "consult" in the description, he cant be able to create a new consultation turn.',
+            '"Consult" is a word reserved for consultations. If your patient have a turn with "...consult..." in the description, he cant be able to create a new consultation turn.',
         });
       }
     }
@@ -153,7 +155,7 @@ export default function Appointments() {
   const [validations, setValidations] = useState([false, null]);
 
   async function bk_validateTurn() {
-    console.log('bk_validateTurn/infoTurn => ', infoTurn);
+    // console.log('bk_validateTurn/infoTurn => ', infoTurn);
 
     const [fail, err] = await bk_validate.Turn(infoTurn);
 
@@ -193,6 +195,7 @@ export default function Appointments() {
   //#endregion
 
   //#region handleSubmit => postTurn ✔️
+
   const handleSubmit = e => {
     e.preventDefault();
     console.log('infoTurn => ', infoTurn);
@@ -211,6 +214,17 @@ export default function Appointments() {
           });
 
         dispatch(postTurn(infoTurn));
+        setTurnForm(false);
+        setPatientSelected(null);
+        setData({
+          duration: '',
+          description: '',
+          medicAccepts: true,
+          patientAccepts: false,
+          MedicID: 1,
+          PatientID: 0,
+        });
+
         Swal.fire({
           icon: 'success',
           title: 'Turn successfully created.',
@@ -231,8 +245,11 @@ export default function Appointments() {
   useEffect(() => {
     dispatch(getTurns());
     dispatch(getInfoClinic());
-    bk_validateTurn();
     dispatch(getAllPatients());
+  }, []);
+
+  useEffect(() => {
+    bk_validateTurn();
   }, [data]);
 
   return (

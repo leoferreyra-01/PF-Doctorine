@@ -77,7 +77,6 @@ const initialState = {
   studies: [],
   allBudgets: [],
   budgetsToShow: [],
-  unavailableTurns: [],
   homeToShow: 'patient',
   treatments: [],
   tooth: [],
@@ -422,7 +421,7 @@ export default function rootReducer(state = initialState, action) {
     case POST_TURN:
       return {
         ...state,
-        unavailableTurns: [...state.unavailableTurns, ...action.payload],
+        unavailableTurns: [...state.unavailableTurns, action.payload],
       };
 
     case DELETE_TURN:
