@@ -1,17 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/startOfWeek';
-import getDay from 'date-fns/getDay';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import React, { useEffect, useState } from 'react';
-import { DateTimePicker } from '@material-ui/pickers';
-// import { alpha } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-import TurnDetails from '../calendarTurnsDetails';
+import Swal from 'sweetalert2';
 
+//|> REDUX ACTIONS
 import {
   getInfoClinic,
   getTurns,
@@ -19,9 +12,7 @@ import {
   getAllPatients,
 } from '../../../redux/actions';
 
-//|> CALENDAR
-import { parseISO, set } from 'date-fns';
-import Swal from 'sweetalert2';
+//|> VALIDATIONS
 import {
   validateTurn,
   dateToString,
@@ -31,8 +22,24 @@ import {
 } from '../../../helpers/validateTurn';
 import bk_validate from '../../../helpers/backend_validators';
 
+//|> CALENDAR
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import TurnDetails from '../calendarTurnsDetails';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { DateTimePicker } from '@material-ui/pickers';
+// import { alpha } from '@material-ui/core/styles';
+
+// Calendar import configuration
+import { parseISO, set } from 'date-fns';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import startOfWeek from 'date-fns/startOfWeek';
+import getDay from 'date-fns/getDay';
+import enUS from 'date-fns/locale/en-US';
+
+// Calendar configuration
 const locales = {
-  'en-US': require('date-fns/locale/en-US'),
+  'en-US': enUS,
 };
 
 const localizer = dateFnsLocalizer({
@@ -50,20 +57,23 @@ export default function Appointments() {
   //#region unavailableTurns to Calendar ✔️
   const { unavailableTurns } = useSelector(state => state);
   // console.log('unavailableTurns => ', unavailableTurns);
+  const [selectedTurn, setSelectedTurn] = useState(null);
+  // console.log('selectedTurn => ', selectedTurn);
   const [date, setDate] = useState(new Date());
   // console.log('setDate => ', date);
 
   let events = [];
   if (unavailableTurns.length) {
-    events = unavailableTurns.map(patient => {
+    events = unavailableTurns.map(turn => {
       return {
-        id: patient.userPatient.ID,
-        title: `${patient.userPatient.lastName}, ${patient.userPatient.name}`,
-        start: new Date(`${patient.date}T${numberToHours(patient.time)}:00`),
+        id: turn.ID,
+        title: `${turn.userPatient.lastName}, ${turn.userPatient.name}`,
+        start: new Date(`${turn.date}T${numberToHours(turn.time)}:00`),
         //'1995-12-17T03:24:00'
         end: new Date(
-          `${patient.date}T${numberToHours(patient.time + patient.duration)}:00`
+          `${turn.date}T${numberToHours(turn.time + turn.duration)}:00`
         ),
+        infoTurn: turn,
       };
     });
   }
@@ -111,6 +121,7 @@ export default function Appointments() {
 
     setDate(impDate);
     setTurnForm(true);
+    setSelectedTurn(null);
   };
   //#endregion
 
@@ -169,7 +180,7 @@ export default function Appointments() {
     }
   }
   let [fail, err] = validations;
-  console.log('validations => ', validations);
+  // console.log('validations => ', validations);
   //#endregion
 
   //#region handleSelectPatient => setPatientSelected(patient) ✔️
@@ -185,7 +196,7 @@ export default function Appointments() {
         .toLocaleLowerCase()
         .includes(targetValue.toLocaleLowerCase());
     });
-    console.log('handleSelectPatient/patient => ', patient);
+    // console.log('handleSelectPatient/patient => ', patient);
 
     if (patient) {
       setPatientSelected(patient);
@@ -201,7 +212,7 @@ export default function Appointments() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('infoTurn => ', infoTurn);
+    // console.log('infoTurn => ', infoTurn);
 
     try {
       if (fail) {
@@ -245,6 +256,16 @@ export default function Appointments() {
   };
   //#endregion
 
+  function selectDay(day = new Date()) {
+    setDate(day);
+    setSelectedTurn(null);
+    setTurnForm(true);
+  }
+
+  function selectTurn(turn = { infoTurn: null }) {
+    setSelectedTurn(turn.infoTurn);
+  }
+
   useEffect(() => {
     dispatch(getTurns());
     dispatch(getInfoClinic());
@@ -258,6 +279,8 @@ export default function Appointments() {
   return (
     <div>
       <Calendar
+        onDrillDown={selectDay}
+        onSelectEvent={selectTurn}
         localizer={localizer}
         style={{ height: 500, margin: '50px' }}
         events={events}
@@ -325,7 +348,12 @@ export default function Appointments() {
           </form>
         )}
       </div>
-      <TurnDetails unavailableTurns={unavailableTurns} />
+      <TurnDetails
+        unavailableTurns={unavailableTurns}
+        selectedTurn={selectedTurn}
+        date={date}
+        setDate={setDate}
+      />
     </div>
   );
 }

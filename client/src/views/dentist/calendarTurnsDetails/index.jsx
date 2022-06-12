@@ -7,10 +7,15 @@ import axios from 'axios';
 
 import { dateToString, numberToHours } from '../../../helpers/validateTurn';
 
-export default function TurnsDetails({ unavailableTurns }) {
+export default function TurnsDetails({
+  unavailableTurns,
+  selectedTurn,
+  date,
+  setDate,
+}) {
   const dispatch = useDispatch();
 
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
 
   function funcSetDate(date) {
     setDate(date);
@@ -47,13 +52,31 @@ export default function TurnsDetails({ unavailableTurns }) {
     e.preventDefault();
     //|*| Si cancela, debe enviar email al paciente.
 
+    const { ID } = JSON.parse(e.target.value);
+
+    /* //|> para evitar eliminar sin 24hs de antelación
+    // Es para la parte de Paciente.
+    const turnDate = new Date(`${date} ${numberToHours(time)}:00`);
+    const yesterdayTurnDate = new Date(
+      turnDate.setDate(turnDate.getDate() - 1)
+    );
+
+    console.log('turnDate => ', turnDate);
+    console.log('yesterdayTurnDate => ', yesterdayTurnDate);
+
+    if (yesterdayTurnDate < new Date())
+      return Swal.fire({
+        icon: 'error',
+        title: 'You cannot cancel a shift without 24 hours notice.',
+      }); */
+
     axios
-      .delete(`/turns/delete/${e.target.value}`)
+      .delete(`/turns/delete/${ID}`)
       .then(res => dispatch(getTurns()))
       .then(res => {
         Swal.fire({
           icon: 'success',
-          title: `Turn ID ${e.target.value} deleted!`,
+          title: `Turn ID ${ID} deleted!`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -104,7 +127,8 @@ export default function TurnsDetails({ unavailableTurns }) {
                   Patient: {turn.userPatient.lastName}, {turn.userPatient.name}.
                 </p>
                 <p>Document: {turn.userPatient.document}</p>
-                <button onClick={handleDelete} value={turn.ID}>
+                <p>Description: {turn.description}</p>
+                <button onClick={handleDelete} value={JSON.stringify(turn)}>
                   ❌ CANCEL
                 </button>
               </div>
