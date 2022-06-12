@@ -7,14 +7,19 @@ import getDay from 'date-fns/getDay';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import React, { useEffect, useState } from 'react';
 import { DateTimePicker } from '@material-ui/pickers';
-import { alpha } from '@material-ui/core/styles';
+// import { alpha } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+
+import TurnDetails from '../calendarTurnsDetails';
+
 import {
   getInfoClinic,
   getTurns,
   postTurn,
   getAllPatients,
 } from '../../../redux/actions';
+
+//|> CALENDAR
 import { parseISO, set } from 'date-fns';
 import Swal from 'sweetalert2';
 import {
@@ -320,6 +325,7 @@ export default function Appointments() {
           </form>
         )}
       </div>
+      <TurnDetails unavailableTurns={unavailableTurns} />
     </div>
   );
 }
