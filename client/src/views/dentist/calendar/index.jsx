@@ -102,14 +102,6 @@ export default function Appointments() {
       time: dateTimeToNumber(impDate),
       duration: turnStandardDuration,
     };
-    // console.log(impDate);
-    // console.log([dateToString(impDate), dateTimeToNumber(impDate)]);
-    // console.log('infoClinic => ', infoClinic);
-    // console.log('handleDateTime/infoTurn => ', infoTurn);
-    // console.log(
-    //   'validateTurn => ',
-    //   validateTurn(infoTurn, unavailableTurns, officeHours)
-    // );
 
     if (!validateTurn(infoTurn, unavailableTurns, officeHours)) {
       setTurnForm(false);
@@ -256,6 +248,7 @@ export default function Appointments() {
   };
   //#endregion
 
+  //#region Calendar interactions ✔️
   function selectDay(day = new Date()) {
     setDate(day);
     setSelectedTurn(null);
@@ -264,6 +257,7 @@ export default function Appointments() {
   function selectTurn(turn = { infoTurn: null }) {
     setSelectedTurn(turn.infoTurn);
   }
+  //#endregion
 
   useEffect(() => {
     dispatch(getTurns());
@@ -277,6 +271,7 @@ export default function Appointments() {
 
   return (
     <div>
+      //|-------------------------CALENDAR---------------------------|
       <Calendar
         onDrillDown={selectDay}
         onSelectEvent={selectTurn}
@@ -284,6 +279,7 @@ export default function Appointments() {
         style={{ height: 500, margin: '50px' }}
         events={events}
       />
+      //|--------------------------CREATE--------------------------|
       <div>
         <h1>Create a Turn</h1>
         <br />
@@ -347,6 +343,7 @@ export default function Appointments() {
           </form>
         )}
       </div>
+      //|--------------------------DETAILS----------------------------|
       <TurnDetails
         unavailableTurns={unavailableTurns}
         selectedTurn={selectedTurn}
