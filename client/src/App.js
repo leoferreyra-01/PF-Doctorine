@@ -1,6 +1,6 @@
 import s from './App.module.css';
-import React from 'react'; //
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'; //
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/dentist/Home/Home';
 import SearchComponent from './views/dentist/SearchComponent/SearchComponent';
@@ -30,9 +30,21 @@ import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPat
 import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
 import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
+import { home } from './redux/actions';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(homeToShow);
+    const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+    if (loggedTokenJSON) {
+      const routesToShow = JSON.parse(loggedTokenJSON);
+      dispatch(home(routesToShow.userType));
+    }
+  }, []);
+
   return (
     <div className={s.global_container}>
       <Routes>
@@ -40,7 +52,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        {homeToShow === 'medic' ? (
+        {homeToShow === 'Medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
