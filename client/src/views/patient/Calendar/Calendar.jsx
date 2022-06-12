@@ -1,15 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInfoClinic, getTurns, postTurn } from '../../../redux/actions';
+import {
+  getInfoClinic,
+  getTurns,
+  postTurn,
+  postBudget,
+} from '../../../redux/actions';
 // import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import styles from './calendar.module.css';
-import { parseISO } from 'date-fns';
+import { parseISO, set } from 'date-fns';
 import Swal from 'sweetalert2';
-
-
 
 import {
   turnsAvailable,
@@ -57,6 +61,7 @@ import {
 
 export default function CalendarFunction() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Para obtener los turnos futuros del paciente.
   const [PatientTurns, setPatientTurns] = useState([]);
@@ -82,20 +87,51 @@ export default function CalendarFunction() {
       .catch(err => console.error(err));
 
   // Para arreglo de turnos libres.
+  const { unavailableTurns } = useSelector(state => state);
   const [availableTurns, setAvailableTurns] = useState([]);
   const [date, setDate] = useState(dateToString(new Date()));
-  const turns = useSelector(state => state.unavailableTurns);
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
   useEffect(() => {
     dispatch(getTurns());
-    dispatch(getInfoClinic());
     funcSetPatientID();
+    dispatch(getInfoClinic());
+
+    const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
+    console.log(budgetconsulta);
+
+    if (budgetconsulta.length > 0) {
+      console.log(unavailableTurns);
+      for (let i = 0; i < budgetconsulta.length; i++) {
+        if (budgetconsulta[i].paid === true) {
+          const turn = unavailableTurns.find(
+            o => o.PatientID === budgetconsulta[i].PatientID
+          );
+          console.log(turn);
+          const { ID, MedicID, time } = turn;
+          axios
+            .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
+            .then(res => {
+              funcSetPatientID();
+              // Swal.fire({
+              //   icon: 'success',
+              //   title: 'Turn accepted!',
+              //   showConfirmButton: false,
+              //   timer: 1500,
+              // });
+            })
+            .catch(err => console.error(err));
+        }
+      }
+    }
   }, []);
 
   const handleChange = impDate => {
-    console.log('impDate => ', impDate);
-    if (PatientTurns.filter(turn => turn.description === CONSULTATION).length)
+    if (
+      PatientTurns.filter(turn =>
+        turn.description.toLocaleLowerCase().includes(CONSULTATION)
+      ).length
+    )
       return Swal.fire({
         icon: 'error',
         title: 'You already have a consultation turn!',
@@ -109,7 +145,7 @@ export default function CalendarFunction() {
 
       setAvailableTurns(
         turnsAvailable(
-          turns,
+          unavailableTurns,
           officeHours,
           turnStandardDuration,
           dateToString(impDate)
@@ -130,8 +166,8 @@ export default function CalendarFunction() {
 
       const infoTurn = {
         ...turn,
-        description: CONSULTATION,
-        patientAccepts: true,
+        description: 'Consultation.',
+        // patientAccepts: true, // Lo sacamos para el pago.
         PatientID,
         MedicID: 1,
       };
@@ -140,6 +176,18 @@ export default function CalendarFunction() {
 
       setAvailableTurns([]);
       funcSetPatientID();
+
+      //#region PAYMENT
+      const budget = {
+        PatientID: PatientID,
+        treatments:
+          '[{"ID":"0101","treatmentType":"consultas","description":"Examen - Diagnóstico - Fichado y Plan de Tratamiento.","price":1170,"quantity":1,"subTotalPrice":1170}]',
+        discount: null,
+        totalPrice: '1170',
+      };
+
+      dispatch(postBudget(budget));
+      navigate('/home/payments');
       Swal.fire({
         icon: 'success',
         title: 'Consultation turn created!',
@@ -154,6 +202,7 @@ export default function CalendarFunction() {
       });
     }
   };
+  const allBudgets = useSelector(state => state.allBudgets);
 
   const handleDelete = e => {
     // e.preventDefault(); No usar porque necesito que actualice el estado.
@@ -178,21 +227,41 @@ export default function CalendarFunction() {
     //|*| Si acepta, debe enviar email al médico.
 
     const { ID, time, MedicID } = JSON.parse(e.target.value);
-    console.log('ID => ', ID);
-    console.log('time => ', time);
+    // console.log('ID => ', ID);
+    // console.log('time => ', time);
 
-    axios
-      .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
-      .then(res => {
-        funcSetPatientID();
-        Swal.fire({
-          icon: 'success',
-          title: 'Turn accepted!',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch(err => console.error(err));
+    //#region PAYMENT
+
+    // const budget = {
+    //   PatientID: PatientID,
+    //   treatments:
+    //     '[{"ID":"0101","treatmentType":"consultas","description":"Examen - Diagnóstico - Fichado y Plan de Tratamiento.","price":1170,"quantity":1,"subTotalPrice":1170}]',
+    //   discount: null,
+    //   totalPrice: '1170',
+    // };
+
+    // dispatch(postBudget(budget));
+    navigate('/home/payments');
+    //#endregion
+    console.log(allBudgets);
+    const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
+    console.log(budgetconsulta);
+    if (budgetconsulta.length > 0) {
+      if (budgetconsulta[0].paid === true) {
+        axios
+          .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
+          .then(res => {
+            funcSetPatientID();
+            Swal.fire({
+              icon: 'success',
+              title: 'Turn accepted!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch(err => console.error(err));
+      }
+    }
   };
 
   return (
@@ -229,7 +298,8 @@ export default function CalendarFunction() {
               ) : (
                 <button
                   onClick={handlePatientAccepts}
-                  value={JSON.stringify(turn)}>
+                  value={JSON.stringify(turn)}
+                >
                   Accept?
                 </button>
               )}

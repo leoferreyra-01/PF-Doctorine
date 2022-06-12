@@ -65,15 +65,5 @@ router.get('/feedback', function (req, res) {
     });
   }
   res.redirect('http://localhost:3000/home');
-  // res.send(`
-  // <html>
-  // <head>
-  // <title>Redirigir al navegador a otra URL</title>
-  // <META HTTP-EQUIV="REFRESH" CONTENT="5;URL=http://www.desarrolloweb.com">
-  // </head>
-  // <body>
-  // Esta página cambia en 5 segundos por la portada de DesarrolloWeb.com
-  // </body>
-  // </html>`);
 });
 module.exports = router;

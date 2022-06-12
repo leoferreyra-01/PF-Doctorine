@@ -191,15 +191,20 @@ export function postBudget(budget) {
     try {
       const { patientFullName, patientDocument, ...restOfBudget } = budget;
       const budgetWithID = (await axios.post('/Budgets', restOfBudget)).data;
-      const { linkPayment } = (
+      const { linkPayment, id } = (
         await axios.post('/payments/create_preference', budgetWithID)
       ).data;
-      await axios.put('/Budgets', { ID: budgetWithID.ID, linkPayment });
+      await axios.put('/Budgets', {
+        ID: budgetWithID.ID,
+        linkPayment,
+        idPayment: id,
+      });
       const frontBudget = {
         ...budgetWithID,
         linkPayment,
         patientFullName,
         patientDocument,
+        idPayment: id,
       };
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
@@ -521,11 +526,21 @@ export function getTurns() {
 }
 
 export function postTurn(payload) {
-  return async function () {
-    return axios.post(`/turns`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
+  return async function (dispatch) {
+    // console.log(payload);
+    try {
+      await axios.post(`/turns`, payload);
+
+      const allTurns = (await axios.get('/turns')).data;
+      const newTurn = allTurns.find(
+        turn => turn.date === payload.date && turn.time === payload.time
+      );
+
+      dispatch({ type: POST_TURN, payload: newTurn });
+    } catch (error) {
+      console.error(error);
       alert(error.message);
-    });
+    }
   };
 }
 

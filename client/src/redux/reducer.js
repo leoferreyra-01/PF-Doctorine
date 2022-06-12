@@ -273,7 +273,7 @@ export default function rootReducer(state = initialState, action) {
     case GET_TURNS:
       return {
         ...state,
-        unavailableTurns: [...state.unavailableTurns, ...action.payload],
+        unavailableTurns: action.payload,
       };
 
     case GET_EVOLUTIONS:
@@ -452,7 +452,7 @@ export default function rootReducer(state = initialState, action) {
     case POST_TURN:
       return {
         ...state,
-        unavailableTurns: [...state.unavailableTurns, ...action.payload],
+        unavailableTurns: [...state.unavailableTurns, action.payload],
       };
 
     case DELETE_TURN:

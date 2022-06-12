@@ -26,11 +26,12 @@ import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
-import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
+//import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
 import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
 import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
 import { home } from './redux/actions';
+import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPayment';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -89,7 +90,7 @@ function App() {
             <Route path="data" element={<PatientData />} />
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
-            <Route path="payments" element={<BudgetPatient />} />
+            <Route path="payments" element={<BudgetPayment />} />
           </Route>
         )}
       </Routes>
