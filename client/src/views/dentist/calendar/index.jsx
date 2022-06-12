@@ -230,6 +230,10 @@ export default function Appointments() {
           MedicID: 1,
           PatientID: 0,
         });
+        setSelectedTurn({
+          ...infoTurn,
+          userPatient: patientSelected,
+        });
 
         Swal.fire({
           icon: 'success',
@@ -271,15 +275,16 @@ export default function Appointments() {
 
   return (
     <div>
-      //|-------------------------CALENDAR---------------------------|
+      |-------------------------CALENDAR---------------------------|
       <Calendar
         onDrillDown={selectDay}
         onSelectEvent={selectTurn}
+        date={date}
         localizer={localizer}
         style={{ height: 500, margin: '50px' }}
         events={events}
       />
-      //|--------------------------CREATE--------------------------|
+      |--------------------------CREATE--------------------------|
       <div>
         <h1>Create a Turn</h1>
         <br />
@@ -343,7 +348,7 @@ export default function Appointments() {
           </form>
         )}
       </div>
-      //|--------------------------DETAILS----------------------------|
+      |--------------------------DETAILS----------------------------|
       <TurnDetails
         unavailableTurns={unavailableTurns}
         selectedTurn={selectedTurn}

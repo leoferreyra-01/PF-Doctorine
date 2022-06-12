@@ -108,7 +108,7 @@ export default function TurnsDetails({
           return (
             <div key={turn.ID}>
               <p>-----------------------------------------</p>
-              <h3>Turn ID {turn.ID}</h3>
+              {turn.ID ? <h3>Turn ID {turn.ID}</h3> : <h3>New Turn</h3>}
               <p>
                 Patient accepts: {turn.patientAccepts ? '✔️' : 'Pending...'}
               </p>
