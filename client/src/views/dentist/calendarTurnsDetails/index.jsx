@@ -15,8 +15,6 @@ export default function TurnsDetails({
 }) {
   const dispatch = useDispatch();
 
-  // const [date, setDate] = useState(new Date());
-
   function funcSetDate(date) {
     setDate(date);
     dispatch(getTurns());
@@ -90,50 +88,57 @@ export default function TurnsDetails({
       });
   };
 
+  function conditionalTurnsRendering() {
+    if (selectedTurn) return [selectedTurn];
+    if (unavailableTurns.length)
+      return unavailableTurns
+        .filter(turn => turn.date === dateToString(date))
+        .sort((a, b) => a.time - b.time);
+    return [];
+  }
+  console.log('conditionalTurnsRendering => ', conditionalTurnsRendering());
+
   return (
     <div>
       <h1>Turns details</h1>
       <p>Pick a date</p>
       <DatePicker value={date} onChange={funcSetDate} />
-      {unavailableTurns.length &&
-        unavailableTurns
-          .filter(turn => turn.date === dateToString(date))
-          .sort((a, b) => a.time - b.time)
-          .map(turn => {
-            return (
-              <div key={turn.ID}>
-                <p>-----------------------------------------</p>
-                <h3>Turn ID {turn.ID}</h3>
-                <p>
-                  Patient accepts: {turn.patientAccepts ? '✔️' : 'Pending...'}
-                </p>
-                <p>
-                  Your confirmation:{' '}
-                  {turn.medicAccepts ? (
-                    '✔️'
-                  ) : (
-                    <button
-                      onClick={handleMedicAccepts}
-                      value={JSON.stringify(turn)}
-                    >
-                      Accept?
-                    </button>
-                  )}
-                </p>
-                <p>Date: {turn.date}.</p>
-                <p>Time: {numberToHours(turn.time)} hs.</p>
-                <p>Duration: {turn.duration * 60} min.</p>
-                <p>
-                  Patient: {turn.userPatient.lastName}, {turn.userPatient.name}.
-                </p>
-                <p>Document: {turn.userPatient.document}</p>
-                <p>Description: {turn.description}</p>
-                <button onClick={handleDelete} value={JSON.stringify(turn)}>
-                  ❌ CANCEL
-                </button>
-              </div>
-            );
-          })}
+      {conditionalTurnsRendering().length &&
+        conditionalTurnsRendering().map(turn => {
+          return (
+            <div key={turn.ID}>
+              <p>-----------------------------------------</p>
+              <h3>Turn ID {turn.ID}</h3>
+              <p>
+                Patient accepts: {turn.patientAccepts ? '✔️' : 'Pending...'}
+              </p>
+              <p>
+                Your confirmation:{' '}
+                {turn.medicAccepts ? (
+                  '✔️'
+                ) : (
+                  <button
+                    onClick={handleMedicAccepts}
+                    value={JSON.stringify(turn)}
+                  >
+                    Accept?
+                  </button>
+                )}
+              </p>
+              <p>Date: {turn.date}.</p>
+              <p>Time: {numberToHours(turn.time)} hs.</p>
+              <p>Duration: {turn.duration * 60} min.</p>
+              <p>
+                Patient: {turn.userPatient.lastName}, {turn.userPatient.name}.
+              </p>
+              <p>Document: {turn.userPatient.document}</p>
+              <p>Description: {turn.description}</p>
+              <button onClick={handleDelete} value={JSON.stringify(turn)}>
+                ❌ CANCEL
+              </button>
+            </div>
+          );
+        })}
     </div>
   );
 }

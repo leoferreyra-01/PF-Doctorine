@@ -259,7 +259,6 @@ export default function Appointments() {
   function selectDay(day = new Date()) {
     setDate(day);
     setSelectedTurn(null);
-    setTurnForm(true);
   }
 
   function selectTurn(turn = { infoTurn: null }) {
