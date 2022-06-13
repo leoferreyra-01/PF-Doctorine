@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.containerEv{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.containerSt{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.evolutions {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  background-color: rgb(214, 214, 214);
+  border: 2px solid transparent;
+  border-radius: 5%;
+}
+
+.studies {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  background-color: rgb(214, 214, 214);
+  border: 2px solid transparent;
+  border-radius: 5%;
+}

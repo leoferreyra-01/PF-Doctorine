@@ -27,6 +27,7 @@ const PatientDataUpdate = () => {
     cellphone: SearchedPatient.cellphone,
     email: SearchedPatient.email,
   });
+  
   async function validatePatient() {
     const [fail, err] = await bk_validate.Patient(
       { infoUser, infoPatient },

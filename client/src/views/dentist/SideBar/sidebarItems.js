@@ -73,4 +73,12 @@ export const mainSidebarItems = [
     label: 'Update Your Info',
     route: 'updateMedic',
   },
+  {
+    id: 8,
+    icon: (
+      <FontAwesomeIcon icon={faClipboardUser} size='2x' className={s.fa_icon} />
+    ),
+    label: 'Sign out',
+    route: '/',
+  },
 ];

@@ -1,74 +1,92 @@
-const bcrypt = require("bcrypt")
-const { User } = require("../../db");
-var NODEMAILER = require("nodemailer");
+const bcrypt = require('bcrypt');
+const { User } = require('../../db');
+var nodemailer = require('nodemailer');
 const saltRounds = 10;
 
-const newPassword = async(req, res) => { 
-  try{ 
-      const { email, password } = req.body;
-      const user = await User.findAll({ where: { email } });
-      if (user.length) {
-        bcrypt.hash(password, saltRounds, async (err, hash) => {
-          if (err) {
-            console.log(err);
-          }
-          await User.update(
-            {
-              password: hash,
-            },
-            { where: { email: email } }
-          );
-        });
-        res.send("Password actualizado correctamente");
-        // registerMail(username);
-      } else {
-        res
-          .status(401)
-          .json({ error: "Este usuario no existe en la base de datos" });
-      }
-  }catch(error){ 
-      console.log(error)
-  }
-} 
-
-const passwordReset = async(req , res) => { 
-    try{  
-        const user = await User.findOne({
-            where: {
-              email: req.body.email,
-            },
-          });
-          if (user) {
-            var transporter = NODEMAILER.createTransport({
-              service: "gmail",
-              auth: {
-                user: process.env.USER_ADMIN,
-                pass: process.env.PASSWORD,
-              },
-            });
-            var mailOptions = {
-              from: process.env.USER_ADMIN,
-              to: req.body.username,
-              subject: "Recuperacion de contraseña!",
-              html: `<p>Para cambiar su contraseña, por favor ingrese al siguiente enlace: <a href=http://localhost:3000/newPassword?usuario=${req.body.username}>RESETEAR CONTRASEÑA</a></p>`,
-            };
-            transporter.sendMail(mailOptions, function (error, info) {
-              if (error) {
-                res.status(500).send(error.message);
-              } else {
-                res.status(200).jsonp(req.body);
-                console.log("Email enviado");
-              }
-            });
-          } else {
-            res.json({ error: "Usuario no registrado!" });
-          }
-    }catch(error){ 
-        console.log(error)
+const newPassword = async req => {
+  // console.log(req)
+  const { email, currentPassword, newPassword } = req;
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      throw new Error('User not found');
     }
-} 
+    if (!currentPassword) {
+      throw new Error('Current password is required');
+    }
+    if (!newPassword) {
+      throw new Error('New password is required');
+    }
 
-module.exports = { 
+    let result = bcrypt.compareSync(
+      currentPassword,
+      user.dataValues.password
+    );
+    if (result) {
+      const userUpdated = User.update({password: newPassword}, {where: {email: email}});
+    }
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw new Error('There was a problem updating the password');
+  }
+};
+
+const passwordReset = async (req, res) => {
+  try {
+    console.log('ESTE ====>', req.body.email)
+    const user = await User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (user) {
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: process.env.USER_ADMIN, // generated ethereal user
+          pass: process.env.PASSWORD, // generated ethereal password
+        },
+      });
+      transporter.verify().then(()=>{
+        console.log('Ready for send mails')
+      })
+      await transporter.sendMail({
+        from: '"Reset password 😎" <doctorine.com@gmail.com>', // sender address
+        to: req.body.email, // list of receivers
+        subject: "Reset Password Doctorine", // Subject line
+        html: "<b>To reset your password, click on the link</b><div><a href=http://localhost:3000/newPassword>Link</a></div>", // html body
+      });
+    } else {
+      res.json({ error: 'Usuario no registrado!' });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const newPasswordReset = async req => {
+  const { email, password } = req;
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if(!password){
+      throw new Error('Password is required');
+    }
+    const userUpdated = User.update({password: password}, {where: {email: email}});
+    return userUpdated;
+  } catch (error) {
+    console.log(error);
+    throw new Error('There was a problem updating the password');
+  }
+}
+
+module.exports = {
   newPassword,
   passwordReset,
-}
+  newPasswordReset,
+};

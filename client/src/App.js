@@ -26,7 +26,9 @@ import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
+import ChangePassword from './views/dentist/UpdateMedic/ChangePassword/ChangePassword'
 import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
+import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNStudies.jsx';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -60,6 +62,7 @@ function App() {
             <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
             <Route path='updateMedic' element={<UpdateMedic />} />
+            <Route path='changePassword' element={<ChangePassword />} />
             <Route path="clinic-details" element={<ClinicDetails />} />
           </Route>
         ) : (
@@ -69,6 +72,7 @@ function App() {
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
             <Route path="payments" element={<BudgetPatient />} />
+            <Route path="evolutionsNStudies" element={<EvolutionsNStudies/>} />
           </Route>
         )}
       </Routes>
