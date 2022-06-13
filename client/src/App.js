@@ -36,15 +36,20 @@ import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPay
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
   const dispatch = useDispatch();
+  const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+  if (loggedTokenJSON) {
+    const routesToShow = JSON.parse(loggedTokenJSON);
+    dispatch(home(routesToShow.userType));
+  }
 
-  useEffect(() => {
-    console.log(homeToShow);
-    const loggedTokenJSON = window.localStorage.getItem('loggedToken');
-    if (loggedTokenJSON) {
-      const routesToShow = JSON.parse(loggedTokenJSON);
-      dispatch(home(routesToShow.userType));
-    }
-  }, []);
+  // useEffect(() => {
+  //   console.log(homeToShow);
+  //   const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+  //   if (loggedTokenJSON) {
+  //     const routesToShow = JSON.parse(loggedTokenJSON);
+  //     dispatch(home(routesToShow.userType));
+  //   }
+  // }, []);
 
   return (
     <div className={s.global_container}>
