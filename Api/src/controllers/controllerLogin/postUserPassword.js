@@ -7,7 +7,7 @@ const newPassword = async req => {
   // console.log(req)
   const { email, currentPassword, newPassword } = req;
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email: email } });
     if (!user) {
       throw new Error('User not found');
     }
@@ -17,15 +17,13 @@ const newPassword = async req => {
     if (!newPassword) {
       throw new Error('New password is required');
     }
-    let result = await bcrypt.compare(
+
+    let result = bcrypt.compareSync(
       currentPassword,
       user.dataValues.password
     );
     if (result) {
-      bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
-        console.log(hash);
-        await User.update({ password: hash }, { where: { email: email } });
-      });
+      const userUpdated = User.update({password: newPassword}, {where: {email: email}});
     }
     return result;
   } catch (error) {

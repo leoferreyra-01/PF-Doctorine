@@ -560,18 +560,8 @@ export function getMedicInfo(email) {
 export function updatePassword(changedPassword) {
   return async function () {
     try {
-      const result = await axios.post(`/password/update`, changedPassword);
-      if(result){
-        return Swal.fire({
-          icon: 'success',
-          title: 'Password updated',
-        })
-      } else {
-        return Swal.fire({
-          icon: 'error',
-          title: 'Error',
-        })
-      }
+      const result = await axios.put(`/password/update`, changedPassword);
+      return result;
     } catch (error) {
       console.log(error);
       return Swal.fire({

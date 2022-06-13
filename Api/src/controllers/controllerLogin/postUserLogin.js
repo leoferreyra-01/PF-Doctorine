@@ -39,7 +39,7 @@ const loginUser = async (req, res) => {
     } else {
       return res
         .status(401)
-        .json({ error: 'There was a problem with the login in' });
+        .json({ error: 'The password is invalid, please try again' });
     }
   } catch (err) {
     console.log(err);

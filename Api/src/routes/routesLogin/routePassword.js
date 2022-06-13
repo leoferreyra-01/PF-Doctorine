@@ -5,10 +5,9 @@ const { User } = require('../../db');
 const {
   newPassword,
   passwordReset,
-  checkCurrentPassword
 } = require('../../controllers/controllerLogin/postUserPassword');
 
-router.post('/update', async (req, res) => {
+router.put('/update', async (req, res) => {
   try {
     const result = await newPassword(req.body);
     console.log(result)
