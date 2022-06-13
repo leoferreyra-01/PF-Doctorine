@@ -136,8 +136,7 @@ export default function Appointments() {
         setCounterWarning(false);
         Swal.fire({
           icon: 'warning',
-          title:
-            '"Consult" is a word reserved for consultations. If your patient have a turn with "...consult..." in the description, he cant be able to create a new consultation turn.',
+          title: `"${CONSULTATION}" is a word reserved for consultations. If your patient have a turn with "...${CONSULTATION}..." in the description, he cant be able to create a new consultation turn.`,
         });
       }
     }

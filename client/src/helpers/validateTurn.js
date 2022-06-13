@@ -177,7 +177,7 @@ function dateTimeToNumber(date) {
 // console.log(dateTimeToNumber(new Date()));
 
 // Tipo de turno de consulta. Solo puede ser creado por el paciente.
-const CONSULTATION = 'consult';
+const CONSULTATION = '#consult';
 
 // TOMORROW
 const today = new Date();
