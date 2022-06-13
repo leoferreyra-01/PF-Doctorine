@@ -16,7 +16,9 @@ export function validate(input) {
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
     errors.password = 'Password is invalid';
   }
-
+  if (!input.email) {
+    errors.email = 'Email must be require';
+  } 
   if (!input.passwordConfirm) {
     errors.passwordConfirm = 'Password must be confirmed';
   } else if (input.password !== input.passwordConfirm) {
@@ -26,11 +28,9 @@ export function validate(input) {
 }
 
 function NewPassword() {
-  const query = new URLSearchParams(useLocation().search);
-  const username = query.get('usuario');
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    username: username,
+    email: '',
     password: '',
     passwordConfirm: '',
   });
@@ -56,10 +56,10 @@ function NewPassword() {
       return toast.error('All fields must be completed correctly');
     } else {
       console.log('SI ENTRO');
-      dispatch(postNewPassword(input));
-      navigate('/');
+      // dispatch(postNewPassword(input));
       axios
-        .post('http://localhost:3001/newPassword', {
+        .put('/password/reupdate', {
+          email: input.email,
           password: input.password,
         })
         .then(response => {
@@ -80,6 +80,15 @@ function NewPassword() {
 
         <SignUpContainer>
           <form onSubmit={register}>
+          <label>Email</label>
+            <input
+              onChange={handleInputChange}
+              value={input.email}
+              placeholder="Email"
+              type="text"
+              name="email"
+            />
+            {errors.email && <p className="error">{errors.email}</p>}
             <label>Password</label>
             <input
               onChange={handleInputChange}
@@ -122,7 +131,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: grey;
+  background-color: #07182e;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -184,7 +193,9 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a9c;
+    background-color: rgb(0, 131, 182);
+    box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
+      -15px -15px 30px rgba(255, 255, 255, 0.135);
     -webkit-backdrop-filter: blur(7px);
     width: 32rem;
     height: auto;

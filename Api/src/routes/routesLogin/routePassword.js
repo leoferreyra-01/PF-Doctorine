@@ -5,12 +5,27 @@ const { User } = require('../../db');
 const {
   newPassword,
   passwordReset,
+  newPasswordReset,
 } = require('../../controllers/controllerLogin/postUserPassword');
 
 router.put('/update', async (req, res) => {
   try {
     const result = await newPassword(req.body);
-    console.log(result)
+    console.log(result);
+    return res.json(result);
+  } catch (error) {
+    return res.status(401).json({
+      error: 'ERR_UPD_PSW',
+      description: 'The was a problem updating the password',
+      message: error.message,
+    });
+  }
+});
+
+router.put('/reupdate', async (req, res) => {
+  try {
+    const result = await newPasswordReset(req.body);
+    console.log(result);
     return res.json(result);
   } catch (error) {
     return res.status(401).json({
