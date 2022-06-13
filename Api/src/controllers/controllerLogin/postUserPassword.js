@@ -57,7 +57,7 @@ const passwordReset = async (req, res) => {
         from: '"Reset password 😎" <doctorine.com@gmail.com>', // sender address
         to: req.body.email, // list of receivers
         subject: "Reset Password Doctorine", // Subject line
-        html: "<b>To reset your password, click on the link</b><div><a href=http://localhost:3000/newPassword>Link</a></div>", // html body
+        html: "<b>To reset your password, click on the link</b><br/><div><a href=http://localhost:3000/newPassword>Link</a></div>", // html body
       });
     } else {
       res.json({ error: 'Usuario no registrado!' });

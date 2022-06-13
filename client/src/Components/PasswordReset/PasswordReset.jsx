@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { postPasswordReset } from "../../redux/actions";
+import Swal from 'sweetalert2';
 import S from "./PasswordReset.module.css"
 
 export function validate(input) {
@@ -48,6 +49,12 @@ function PasswordReset() {
         toast.error("User must be completed correctly");
       }
       dispatch(postPasswordReset(input));
+      Swal.fire({
+        icon: 'success',
+        title: 'Check your email box',
+        showConfirmButton: true,
+
+      });
     } catch (e) {
       console.log(e);
       toast.error("Incorrect user");
