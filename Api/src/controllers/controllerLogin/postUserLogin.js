@@ -6,37 +6,41 @@ var NODEMAILER = require('nodemailer');
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    // console.log(req.body)
     const user = await User.findOne({ where: { email: email } });
-    // console.log(user)
-
+    console.log(user.dataValues.password);
     if (!user) {
-      return res.status(400).json({ error: 'A' });
+      return res.status(400).json({ error: 'Please complete all the fields' });
     }
-
-    // const passwordCorrect =
-    //   user === null ? false : await bcrypt.compare(password, user.password);
 
     if (!(user && password)) {
-      return res.status(401).json({ error: 'E' });
+      return res.status(401).json({ error: 'Please complete all the fields' });
     }
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.dataValues.password
+    );
+    if (isPasswordValid) {
+      const userForToken = {
+        ID: user.ID,
+        email: user.email,
+      };
 
-    const userForToken = {
-      ID: user.ID,
-      email: user.email,
-    };
+      const token = jwt.sign(userForToken, process.env.SECRET);
 
-    const token = jwt.sign(userForToken, process.env.SECRET);
-
-    return res.send({
-      email: user.email,
-      token,
-      userType: user.userType,
-      name: user.name,
-      lastName: user.lastName,
-      document: user.document,
-      birth: user.birth,
-    });
+      return res.send({
+        email: user.email,
+        token,
+        userType: user.userType,
+        name: user.name,
+        lastName: user.lastName,
+        document: user.document,
+        birth: user.birth,
+      });
+    } else {
+      return res
+        .status(401)
+        .json({ error: 'There was a problem with the login in' });
+    }
   } catch (err) {
     console.log(err);
   }
