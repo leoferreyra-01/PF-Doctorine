@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../../db');
-var NODEMAILER = require('nodemailer');
+var nodemailer = require('nodemailer');
 const saltRounds = 10;
 
 const newPassword = async req => {
@@ -34,32 +34,30 @@ const newPassword = async req => {
 
 const passwordReset = async (req, res) => {
   try {
+    console.log('ESTE ====>', req.body.email)
     const user = await User.findOne({
       where: {
         email: req.body.email,
       },
     });
     if (user) {
-      var transporter = NODEMAILER.createTransport({
-        service: 'gmail',
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
         auth: {
-          user: process.env.USER_ADMIN,
-          pass: process.env.PASSWORD,
+          user: process.env.USER_ADMIN, // generated ethereal user
+          pass: process.env.PASSWORD, // generated ethereal password
         },
       });
-      var mailOptions = {
-        from: process.env.USER_ADMIN,
-        to: req.body.username,
-        subject: 'Recuperacion de contraseña!',
-        html: `<p>Para cambiar su contraseña, por favor ingrese al siguiente enlace: <a href=http://localhost:3000/newPassword?usuario=${req.body.username}>RESETEAR CONTRASEÑA</a></p>`,
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          res.status(500).send(error.message);
-        } else {
-          res.status(200).jsonp(req.body);
-          console.log('Email enviado');
-        }
+      transporter.verify().then(()=>{
+        console.log('Ready for send mails')
+      })
+      await transporter.sendMail({
+        from: '"Reset password 😎" <doctorine.com@gmail.com>', // sender address
+        to: req.body.email, // list of receivers
+        subject: "Reset Password Doctorine", // Subject line
+        html: "<b>To reset your password, click on the link</b><div><a href=http://localhost:3000>Link</a></div>", // html body
       });
     } else {
       res.json({ error: 'Usuario no registrado!' });
