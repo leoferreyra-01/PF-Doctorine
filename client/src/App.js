@@ -40,7 +40,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        {homeToShow === 'medic' ? (
+        {homeToShow === 'Medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
