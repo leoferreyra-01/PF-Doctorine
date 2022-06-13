@@ -6,7 +6,6 @@ export default function PatientCard({ ID, name, lastName, document }) {
   return (
     <div>
       <div
-        to={`/home/${ID}`}
         style={{ textDecoration: 'none', width: '100%' }}
         className={s.container}>
         <div className={s.title_container}>

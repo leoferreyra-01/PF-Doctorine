@@ -10,12 +10,14 @@ import {
 import {
   clear,
   getAllPatients,
+  getMedicInfo,
   getPatientDni,
   getPatientName,
 } from '../../../redux/actions';
 import PatientCard from '../PatientCard/PatientCard';
 import SearchBar from '../SearchBar/SearchBar';
 export default function SearchComponent() {
+  const userEmail = JSON.parse(localStorage.getItem('loggedToken')).email;
   const searchedPatient = useSelector(state => state.searchedPatient);
   const allPatients = useSelector(state => state.allPatients);
   const filledPatients = !!allPatients.length;
@@ -23,6 +25,7 @@ export default function SearchComponent() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!filledPatients) dispatch(getAllPatients());
+    dispatch(getMedicInfo(userEmail));
     return () => dispatch(clear());
   }, []);
 

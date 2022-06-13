@@ -26,8 +26,7 @@ export default function PatientDetails() {
     if (!filledStudies) dispatch(getStudies(patientID));
     if (!filledEvolutions) dispatch(getEvolutions(patientID));
     if (Object.keys(patient).length === 0) dispatch(getPatient(patientID));
-
-    return () => dispatch(clear());
+    // return () => dispatch(clear());
   }, []);
 
   const detailsSearch = () => console.log('hola');
