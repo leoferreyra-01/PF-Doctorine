@@ -82,7 +82,7 @@ const initialState = {
   studies: [],
   allBudgets: [],
   budgetsToShow: [],
-  homeToShow: 'patient',
+  homeToShow: 'Patient',
   treatments: [],
   tooth: [],
   //////LOGIN
