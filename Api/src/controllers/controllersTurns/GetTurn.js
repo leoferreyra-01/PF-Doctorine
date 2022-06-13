@@ -35,9 +35,9 @@ const { User, Medic, Patient, Turn } = require('../../db');
 // }
 
 async function getTurnsByID(IDs) {
-  let TurnID = IDs.TurnID;
-  let MedicID = IDs.MedicID;
-  let PatientID = IDs.PatientID;
+  let TurnID = IDs?.TurnID;
+  let MedicID = IDs?.MedicID;
+  let PatientID = IDs?.PatientID;
 
   //|> Data to search
   let UserMedicID = null;
