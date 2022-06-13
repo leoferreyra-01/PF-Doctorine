@@ -1,5 +1,6 @@
 import {
   GET_PATIENT,
+  GET_PATIENT_INFO,
   POST_PATIENT,
   GET_PATIENT_DNI,
   GET_PATIENT_DNI2,
@@ -29,6 +30,7 @@ import {
   POST_PATIENT_LOGIN,
   UPDATE_MEDIC_INFO,
   POST_CLINIC,
+  GET_MEDIC_INFO,
   /////LOGIN
   LOGIN_USER,
   AUTH_SWITCH,
@@ -70,6 +72,7 @@ const initialState = {
   urlstudy: '',
   urlPayment: '',
   searchedPatient: {},
+  searchedMedic: {},
   patient: {},
   medics: [],
   clinic: {},
@@ -95,7 +98,7 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_PATIENT:
+    case GET_PATIENT_INFO:
       return {
         ...state,
         patient: action.payload,
@@ -266,13 +269,11 @@ export default function rootReducer(state = initialState, action) {
           ? [...action.payload]
           : [action.payload],
       };
-
     case POST_EVOLUTION:
       return {
         ...state,
-        // evolutions: [action.payload, ...state.evolutions],
+        evolutions: [...state.evolutions, ...action.payload],
       };
-
     case GET_STUDIES:
       return {
         ...state,
@@ -396,11 +397,6 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         allPatients: allPatientsUpdated,
       };
-    case POST_EVOLUTION:
-      return {
-        ...state,
-        evolutions: [...state.evolutions, ...action.payload],
-      };
     case POST_MEDIC_LOGIN:
       return {
         ...state,
@@ -439,6 +435,12 @@ export default function rootReducer(state = initialState, action) {
         infoClinics: [...state.infoClinics, ...action.payload],
       };
     //-----------------------//
+    case GET_MEDIC_INFO:
+      // console.log(action.payload);
+      return {
+        ...state,
+        searchedMedic: action.payload[0],
+      };
     case UPDATE_MEDIC_INFO:
       return {
         ...state,

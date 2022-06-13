@@ -125,7 +125,7 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async respuesta => {
-    // console.log(respuesta);
+    console.log(respuesta);
     const register = await axios.post('/login/oneUser', {
       email: respuesta.profileObj.email,
     });
@@ -230,7 +230,7 @@ function SignUp() {
               clientId='909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com'
               buttonText='Login with Google'
               onSuccess={respuestaGoogle}
-              onFailure={() => console.log('fail')}
+              onFailure={(res) => console.log(res)}
               cookiePolicy={'single_host_origin'}
               className='Google-button'
               style={{ color: 'black important!' }}

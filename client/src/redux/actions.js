@@ -2,6 +2,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2'; //Esto tambien del login
 export const ENTER_HOME = 'ENTER_HOME';
 export const GET_PATIENT = 'GET_PATIENT';
+export const GET_PATIENT_INFO = 'GET_PATIENT_INFO';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
 export const GET_BUDGETS = 'GET_BUDGETS';
@@ -22,6 +23,8 @@ export const POST_MEDIC_LOGIN = 'POST_MEDIC_LOGIN';
 export const POST_PATIENT_LOGIN = 'POST_PATIENT_LOGIN';
 export const GET_EVOLUTIONS = 'GET_EVOLUTIONS';
 export const POST_EVOLUTION = 'POST_EVOLUTION';
+export const POST_PASSWORDUPDATE = 'POST_PASSWORDUPDATE';
+export const GET_MEDIC_INFO = 'GET_MEDIC_INFO';
 //export const GET_STUDY = 'GET_STUDY';
 export const GET_PATIENT_NAME = 'GET_PATIENT_NAME';
 export const GET_PATIENT_DNI2 = 'GET_PATIENT_DNI2';
@@ -55,14 +58,14 @@ export function getUrlStudies(url) {
   return { type: 'POST_URL', payload: url };
 }
 
-export function getPatient(id) {
-  return function (dispatch) {
-    // return axios.get(`/recipes/?id=${id}`)
-    //     .then(res => dispatch({ type: GET_PATIENT, payload: res.data }))
-    //     .catch(error => {
-    //         if (error.response.status === 404) return alert(error.response.data.msg)
-    //         alert(error.message)
-    //     })
+export function getPatient(patient) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/patients/${patient}`);
+      dispatch({ type: GET_PATIENT_INFO, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -108,7 +111,7 @@ export function getPatientDni2(dni) {
         await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
       ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: {patient, budgets} });
+      dispatch({ type: GET_PATIENT_DNI2, payload: { patient, budgets } });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -363,20 +366,14 @@ export function getEvolutions(patientID) {
 }
 
 export function postEvolution(evolution) {
-  return async function (dispatch) {
+  return async function () {
     try {
-      const evolutionWithID = (await axios.post('/evolutions', evolution)).data;
-      return dispatch({
-        type: POST_EVOLUTION,
-        payload: evolutionWithID.Evolution,
-      });
+      return await axios.post('/evolutions', evolution);
     } catch (error) {
       return Swal.fire({
         icon: 'error',
-        title: error.response.data.msg,
-      })
-      // if (error.response.status === 404) return alert(error.response.data.msg);
-      // alert(error.message);
+        title: error.message,
+      });
     }
   };
 }
@@ -480,7 +477,6 @@ export function postClinic(clinic) {
   };
 }
 
-
 //--------------------TURNERO-----------------------//
 export function getMedics() {
   return async function (dispatch) {
@@ -534,6 +530,7 @@ export function deleteTurn(id) {
     payload: id,
   };
 }
+
 export function updateMedic(infoMedic, infoUser, ClinicID, ID) {
   return async function (dispatch) {
     try {
@@ -543,6 +540,45 @@ export function updateMedic(infoMedic, infoUser, ClinicID, ID) {
       return dispatch({ type: UPDATE_MEDIC_INFO, payload: medics });
     } catch (error) {
       console.error(error);
+    }
+  };
+}
+
+export function getMedicInfo(email) {
+  // console.log(email)
+  return async function (dispatch) {
+    try {
+      const medicInfo = (await axios.get(`/medics/?email=${email}`)).data;
+      // console.log(medicInfo)
+      return dispatch({ type: GET_MEDIC_INFO, payload: medicInfo });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updatePassword(changedPassword) {
+  return async function () {
+    try {
+      const result = await axios.post(`/password/update`, changedPassword);
+      if(result){
+        return Swal.fire({
+          icon: 'success',
+          title: 'Password updated',
+        })
+      } else {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+        })
+      }
+    } catch (error) {
+      console.log(error);
+      return Swal.fire({
+        icon: 'error',
+        title: error.response.data.error,
+        text: error.response.data.description,
+      });
     }
   };
 }
