@@ -336,7 +336,7 @@ export default function Appointments() {
             <label>Description: </label>
             <input
               value={data.description}
-              placeholder="Ex. Consultation."
+              placeholder={`Example: ${CONSULTATION}`}
               type="text"
               name="description"
               onChange={handleChange}
