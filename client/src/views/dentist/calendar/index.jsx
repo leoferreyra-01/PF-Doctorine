@@ -352,6 +352,7 @@ export default function Appointments() {
       <TurnDetails
         unavailableTurns={unavailableTurns}
         selectedTurn={selectedTurn}
+        setSelectedTurn={setSelectedTurn}
         date={date}
         setDate={setDate}
       />

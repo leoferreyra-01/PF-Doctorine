@@ -10,6 +10,7 @@ import { dateToString, numberToHours } from '../../../helpers/validateTurn';
 export default function TurnsDetails({
   unavailableTurns,
   selectedTurn,
+  setSelectedTurn,
   date,
   setDate,
 }) {
@@ -24,11 +25,14 @@ export default function TurnsDetails({
     e.preventDefault();
     //|*| Si acepta, debe enviar email al paciente.
 
-    const { ID, time, MedicID } = JSON.parse(e.target.value);
+    const infoTurn = JSON.parse(e.target.value);
+    infoTurn.medicAccepts = true;
+    const { ID, time, MedicID, medicAccepts } = infoTurn;
 
     axios
-      .put(`/turns/update/${ID}`, { time, MedicID, medicAccepts: true })
+      .put(`/turns/update/${ID}`, { time, MedicID, medicAccepts })
       .then(res => dispatch(getTurns()))
+      .then(res => setSelectedTurn(infoTurn))
       .then(res => {
         Swal.fire({
           icon: 'success',
@@ -86,6 +90,7 @@ export default function TurnsDetails({
         });
         console.error(err);
       });
+    setSelectedTurn(null);
   };
 
   function conditionalTurnsRendering() {
