@@ -9,9 +9,9 @@ import S from "./PasswordReset.module.css"
 export function validate(input) {
   let errors = {};
 
-  if (!input.username) {
+  if (!input.email) {
     errors.username = "Username is required";
-  } else if (!/\S+@\S+\.\S+/.test(input.username)) {
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.username = "Username is invalid";
   }
   return errors;
@@ -19,7 +19,7 @@ export function validate(input) {
 
 function PasswordReset() {
   const [input, setInput] = useState({
-    username: "",
+    email: "",
   });
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
@@ -47,7 +47,6 @@ function PasswordReset() {
       if (Object.keys(errors).length > 0) {
         toast.error("User must be completed correctly");
       }
-      console.log("INPUT: ", input);
       dispatch(postPasswordReset(input));
     } catch (e) {
       console.log(e);
@@ -65,10 +64,10 @@ function PasswordReset() {
             <label>Username</label>
             <input
               onChange={handleInputChange}
-              value={input.username}
+              value={input.email}
               placeholder="Email"
               type="text"
-              name="username"
+              name="email"
             />
             {errors.username && <p className="error">{errors.username}</p>}
             <button>Send</button>

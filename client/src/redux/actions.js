@@ -282,10 +282,11 @@ export function loginUser(payload) {
 //   return { type: LOGIN_USER };
 // }
 
-export function postPasswordReset(payload) {
+export function postPasswordReset(email) {
   return async function (dispatch) {
     try {
-      const response = await axios.post('/passwordReset', payload);
+      console.log(email)
+      const response = await axios.post('/password/reset', email);
       if (response.data.error) {
         console.log('ESTO ES RESPONSE: ', response.data);
         return Swal.fire({
