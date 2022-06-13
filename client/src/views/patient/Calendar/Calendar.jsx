@@ -166,7 +166,7 @@ export default function CalendarFunction() {
 
       const infoTurn = {
         ...turn,
-        description: 'Consultation.',
+        description: CONSULTATION,
         // patientAccepts: true, // Lo sacamos para el pago.
         PatientID,
         MedicID: 1,
