@@ -85,7 +85,7 @@ export default function UpdatePatient() {
         dispatch(updatePatient(patientID, infoPatient, infoUser));
         Swal.fire({
           icon: 'success',
-          title: 'Patient updated successfully',
+          title: 'Patient updated successfully.',
           showConfirmButton: false,
           timer: 1500,
         });
@@ -102,24 +102,24 @@ export default function UpdatePatient() {
 
   return (
     <>
-      <Toaster position='top-center' reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={handleSubmit}>
           <label className={S.label}>Frist Name</label>
           <input
             value={data.name}
-            placeholder='Name...'
-            type='text'
-            name='name'
+            placeholder="Name..."
+            type="text"
+            name="name"
             onChange={handleChange}
           />
           {fail && err['infoUser.name'] && <p>{err['infoUser.name'].msg}</p>}
           <label className={S.label}>Last Name</label>
           <input
             value={data.lastName}
-            placeholder='LastName...'
-            type='text'
-            name='lastName'
+            placeholder="LastName..."
+            type="text"
+            name="lastName"
             onChange={handleChange}
           />
           {fail && err['infoUser.lastName'] && (
@@ -128,18 +128,18 @@ export default function UpdatePatient() {
           <label className={S.label}>Birth</label>
           <input
             value={data.birth}
-            placeholder='Birth...'
-            type='date'
-            name='birth'
+            placeholder="Birth..."
+            type="date"
+            name="birth"
             onChange={handleChange}
           />
           {fail && err['infoUser.birth'] && <p>{err['infoUser.birth'].msg}</p>}
           <label className={S.label}>Telephone</label>
           <input
             value={data.telephone}
-            placeholder='Telephone...'
-            type='text'
-            name='telephone'
+            placeholder="Telephone..."
+            type="text"
+            name="telephone"
             onChange={handleChange}
           />
           {fail && err['infoUser.telephone'] && (
@@ -148,9 +148,9 @@ export default function UpdatePatient() {
           <label className={S.label}>Cellphone</label>
           <input
             value={data.cellphone}
-            placeholder='Cellphone...'
-            type='text'
-            name='cellphone'
+            placeholder="Cellphone..."
+            type="text"
+            name="cellphone"
             onChange={handleChange}
           />
           {fail && err['infoUser.cellphone'] && (
@@ -159,9 +159,9 @@ export default function UpdatePatient() {
           <label className={S.label}>Street</label>
           <input
             value={data.street}
-            placeholder='Street...'
-            type='text'
-            name='street'
+            placeholder="Street..."
+            type="text"
+            name="street"
             onChange={handleChange}
           />
           {fail && err['infoUser.street'] && (
@@ -170,9 +170,9 @@ export default function UpdatePatient() {
           <label className={S.label}>Number</label>
           <input
             value={data.number}
-            placeholder='Number...'
-            type='text'
-            name='number'
+            placeholder="Number..."
+            type="text"
+            name="number"
             onChange={handleChange}
           />
           {fail && err['infoUser.number'] && (
@@ -181,18 +181,18 @@ export default function UpdatePatient() {
           <label className={S.label}>City</label>
           <input
             value={data.city}
-            placeholder='City...'
-            type='text'
-            name='city'
+            placeholder="City..."
+            type="text"
+            name="city"
             onChange={handleChange}
           />
           {fail && err['infoUser.city'] && <p>{err['infoUser.city'].msg}</p>}
           <label className={S.label}>Postal Code</label>
           <input
             value={data.postalCode}
-            placeholder='Postal Code...'
-            type='text'
-            name='postalCode'
+            placeholder="Postal Code..."
+            type="text"
+            name="postalCode"
             onChange={handleChange}
           />
           {fail && err['infoUser.postalCode'] && (
@@ -201,16 +201,16 @@ export default function UpdatePatient() {
           <label className={S.label}>Medical Service</label>
           <input
             value={data.medicalService}
-            placeholder='Medical Service...'
-            type='text'
-            name='medicalService'
+            placeholder="Medical Service..."
+            type="text"
+            name="medicalService"
             onChange={handleChange}
           />
           {fail && err['infoPatient.medicalService'] && (
             <p>{err['infoPatient.medicalService'].msg}</p>
           )}
 
-          <button type='submit' className={S.btn}>
+          <button type="submit" className={S.btn}>
             Update Patient
           </button>
         </form>

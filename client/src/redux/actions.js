@@ -108,7 +108,7 @@ export function getPatientDni2(dni) {
         await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
       ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: {patient, budgets} });
+      dispatch({ type: GET_PATIENT_DNI2, payload: { patient, budgets } });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
@@ -374,7 +374,7 @@ export function postEvolution(evolution) {
       return Swal.fire({
         icon: 'error',
         title: error.response.data.msg,
-      })
+      });
       // if (error.response.status === 404) return alert(error.response.data.msg);
       // alert(error.message);
     }
@@ -480,7 +480,6 @@ export function postClinic(clinic) {
   };
 }
 
-
 //--------------------TURNERO-----------------------//
 export function getMedics() {
   return async function (dispatch) {
@@ -507,11 +506,21 @@ export function getTurns() {
 }
 
 export function postTurn(payload) {
-  return async function () {
-    return axios.post(`/turns`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
+  return async function (dispatch) {
+    // console.log(payload);
+    try {
+      await axios.post(`/turns`, payload);
+
+      const allTurns = (await axios.get('/turns')).data;
+      const newTurn = allTurns.find(
+        turn => turn.date === payload.date && turn.time === payload.time
+      );
+
+      dispatch({ type: POST_TURN, payload: newTurn });
+    } catch (error) {
+      console.error(error);
       alert(error.message);
-    });
+    }
   };
 }
 

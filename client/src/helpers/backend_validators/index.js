@@ -2,10 +2,14 @@
 
 import Medic from './Medic';
 import Patient from './Patient';
+import Turn from './Turn';
+import Clinic from './Clinic';
 
 const bk_validate = {
   Medic,
   Patient,
+  Turn,
+  Clinic,
 };
 
 export default bk_validate;
