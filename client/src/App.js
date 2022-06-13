@@ -1,6 +1,6 @@
 import s from './App.module.css';
-import React, { useEffect } from 'react'; //
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react'; //
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/dentist/Home/Home';
 import SearchComponent from './views/dentist/SearchComponent/SearchComponent';
@@ -35,21 +35,6 @@ import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPay
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
-  const dispatch = useDispatch();
-  const loggedTokenJSON = window.localStorage.getItem('loggedToken');
-  if (loggedTokenJSON) {
-    const routesToShow = JSON.parse(loggedTokenJSON);
-    dispatch(home(routesToShow.userType));
-  }
-
-  // useEffect(() => {
-  //   console.log(homeToShow);
-  //   const loggedTokenJSON = window.localStorage.getItem('loggedToken');
-  //   if (loggedTokenJSON) {
-  //     const routesToShow = JSON.parse(loggedTokenJSON);
-  //     dispatch(home(routesToShow.userType));
-  //   }
-  // }, []);
 
   return (
     <div className={s.global_container}>

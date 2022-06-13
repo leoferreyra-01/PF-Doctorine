@@ -68,6 +68,8 @@ import {
 
 import { orderByNameAsc, orderByNameDes } from '../helpers/orderByName';
 
+const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+
 const initialState = {
   allPatients: [],
   newPatientId: 0,
@@ -82,7 +84,9 @@ const initialState = {
   studies: [],
   allBudgets: [],
   budgetsToShow: [],
-  homeToShow: 'Patient',
+  homeToShow: loggedTokenJSON
+    ? JSON.parse(loggedTokenJSON).userType
+    : 'Patient',
   treatments: [],
   tooth: [],
   //////LOGIN

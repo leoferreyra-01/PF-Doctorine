@@ -10,16 +10,15 @@ import Loader from '../../../Components/Loader/loader';
 // import { useSelector } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPatientDni2, getTurns } from '../../../redux/actions';
-import { getPatientDni2 } from '../../../redux/actions';
 
 export default function Home() {
   const [title, setTitle] = useState(null);
   const location = useLocation();
   const [loader, setLoader] = useState(true);
   const user = useSelector(state => state.user);
+  const turns = useSelector(state => state.unavailableTurns);
 
   const dispatch = useDispatch();
-  dispatch(getTurns());
   // const allPatients = useSelector(state => state.allPatients);
   const searchedPatient = useSelector(state => state.searchedPatient);
   // window.localStorage.setItem('user', JSON.stringify(searchedPatient));
@@ -29,7 +28,6 @@ export default function Home() {
 
   console.log(searchedPatient);
   console.log(searchedPatient.name);
-  console.log(window.localStorage.getItem('user'));
   const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
   // console.log(window.localStorage.getItem('user'));
   console.log(uno);
@@ -40,6 +38,8 @@ export default function Home() {
     if (parsedTitle.length > 18) parsedTitle = parsedTitle.slice(18);
     if (parsedTitle.length > 5) parsedTitle = parsedTitle.slice(5);
     setTitle(parsedTitle);
+    if (turns.length === 0) dispatch(getTurns());
+
     // dispatch(getPatientDni2(uno.document));
   }, [location]);
 

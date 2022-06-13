@@ -94,7 +94,7 @@ function SignUp() {
           }, [2000]);
           dispatch(home(select));
           dispatch(getPatientDni2(user.document));
-          window.localStorage.setItem('user', JSON.stringify(user));
+          // window.localStorage.setItem('user', JSON.stringify(user));
           navigate('/home');
         } else {
           setTimeout(() => {
@@ -190,6 +190,13 @@ function SignUp() {
       }, 3000);
     }
   };
+
+  useEffect(() => {
+    const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+    if (loggedTokenJSON) {
+      window.localStorage.removeItem('loggedToken');
+    }
+  }, []);
 
   return (
     <>
