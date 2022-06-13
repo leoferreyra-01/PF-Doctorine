@@ -109,7 +109,7 @@ module.exports = {
 
       const updateClinic = await clinicById.update(infoClinicUpdate);
 
-      res.status(201).send({ msg: 'successfully modified clinic.' });
+      res.status(201).send(updateClinic);
     } catch (error) {
       console.log(error);
       res.status(404).send([true, { error: { msg: error.message } }]);

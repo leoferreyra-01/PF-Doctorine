@@ -2,12 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInfoClinic, getTurns, postTurn } from '../../../redux/actions';
+import {
+  getInfoClinic,
+  getTurns,
+  postTurn,
+  postBudget,
+} from '../../../redux/actions';
 // import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import styles from './calendar.module.css';
-import { parseISO } from 'date-fns';
+import { parseISO, set } from 'date-fns';
 import Swal from 'sweetalert2';
 
 import {
@@ -89,8 +94,36 @@ export default function CalendarFunction() {
 
   useEffect(() => {
     dispatch(getTurns());
-    dispatch(getInfoClinic());
     funcSetPatientID();
+    dispatch(getInfoClinic());
+
+    const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
+    console.log(budgetconsulta);
+
+    if (budgetconsulta.length > 0) {
+      console.log(unavailableTurns);
+      for (let i = 0; i < budgetconsulta.length; i++) {
+        if (budgetconsulta[i].paid === true) {
+          const turn = unavailableTurns.find(
+            o => o.PatientID === budgetconsulta[i].PatientID
+          );
+          console.log(turn);
+          const { ID, MedicID, time } = turn;
+          axios
+            .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
+            .then(res => {
+              funcSetPatientID();
+              // Swal.fire({
+              //   icon: 'success',
+              //   title: 'Turn accepted!',
+              //   showConfirmButton: false,
+              //   timer: 1500,
+              // });
+            })
+            .catch(err => console.error(err));
+        }
+      }
+    }
   }, []);
 
   const handleChange = impDate => {
@@ -145,15 +178,16 @@ export default function CalendarFunction() {
       funcSetPatientID();
 
       //#region PAYMENT
-      /* 
       const budget = {
-        "con los datos del presupuesto estándar de consulta"
-      }
-      */
-      // dispatch("del budget"); // FALTA importar la action
-      // navigate("al lugar de pago");
-      //#endregion
+        PatientID: PatientID,
+        treatments:
+          '[{"ID":"0101","treatmentType":"consultas","description":"Examen - Diagnóstico - Fichado y Plan de Tratamiento.","price":1170,"quantity":1,"subTotalPrice":1170}]',
+        discount: null,
+        totalPrice: '1170',
+      };
 
+      dispatch(postBudget(budget));
+      navigate('/home/payments');
       Swal.fire({
         icon: 'success',
         title: 'Consultation turn created!',
@@ -168,6 +202,7 @@ export default function CalendarFunction() {
       });
     }
   };
+  const allBudgets = useSelector(state => state.allBudgets);
 
   const handleDelete = e => {
     // e.preventDefault(); No usar porque necesito que actualice el estado.
@@ -196,28 +231,37 @@ export default function CalendarFunction() {
     // console.log('time => ', time);
 
     //#region PAYMENT
-    /* 
-      const budget = {
-        "con los datos del presupuesto estándar de consulta"
-      }
-      */
-    // dispatch("del budget"); // FALTA importar la action
-    // navigate("al lugar de pago");
-    //#endregion
 
-    // Agregar un if("si está pagado") =>
-    axios
-      .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
-      .then(res => {
-        funcSetPatientID();
-        Swal.fire({
-          icon: 'success',
-          title: 'Turn accepted!',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch(err => console.error(err));
+    // const budget = {
+    //   PatientID: PatientID,
+    //   treatments:
+    //     '[{"ID":"0101","treatmentType":"consultas","description":"Examen - Diagnóstico - Fichado y Plan de Tratamiento.","price":1170,"quantity":1,"subTotalPrice":1170}]',
+    //   discount: null,
+    //   totalPrice: '1170',
+    // };
+
+    // dispatch(postBudget(budget));
+    navigate('/home/payments');
+    //#endregion
+    console.log(allBudgets);
+    const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
+    console.log(budgetconsulta);
+    if (budgetconsulta.length > 0) {
+      if (budgetconsulta[0].paid === true) {
+        axios
+          .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
+          .then(res => {
+            funcSetPatientID();
+            Swal.fire({
+              icon: 'success',
+              title: 'Turn accepted!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch(err => console.error(err));
+      }
+    }
   };
 
   return (

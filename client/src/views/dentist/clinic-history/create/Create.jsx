@@ -194,11 +194,6 @@ export default function RegisterClinicalHistory() {
     //   } else return false;
   };
 
-  useEffect(() => {
-    return () => {
-      dispatch(clear());
-    };
-  });
   // useEffect(() => {
   //   return () => {
   //     dispatch(clear());

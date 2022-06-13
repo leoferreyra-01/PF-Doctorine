@@ -1,6 +1,6 @@
 import s from './App.module.css';
-import React from 'react'; //
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'; //
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/dentist/Home/Home';
 import SearchComponent from './views/dentist/SearchComponent/SearchComponent';
@@ -26,10 +26,31 @@ import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
-import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
+//import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
+import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
+import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
+import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
+import { home } from './redux/actions';
+import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPayment';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
+  const dispatch = useDispatch();
+  const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+  if (loggedTokenJSON) {
+    const routesToShow = JSON.parse(loggedTokenJSON);
+    dispatch(home(routesToShow.userType));
+  }
+
+  // useEffect(() => {
+  //   console.log(homeToShow);
+  //   const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+  //   if (loggedTokenJSON) {
+  //     const routesToShow = JSON.parse(loggedTokenJSON);
+  //     dispatch(home(routesToShow.userType));
+  //   }
+  // }, []);
+
   return (
     <div className={s.global_container}>
       <Routes>
@@ -37,7 +58,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        {homeToShow === 'medic' ? (
+        {homeToShow === 'Medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
@@ -59,8 +80,14 @@ function App() {
             />
             <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
-            <Route path='updateMedic' element={<UpdateMedic />} />
+            <Route path="updateBudget/:budgetID" element={<UpdateBudget />} />
+            <Route path="updateMedic" element={<UpdateMedic />} />
             <Route path="clinic-details" element={<ClinicDetails />} />
+            <Route
+              path="clinic-details/initial-config"
+              element={<InitialConfig />}
+            />
+            <Route path="clinic-details/update-data" element={<UpdateData />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>
@@ -68,7 +95,7 @@ function App() {
             <Route path="data" element={<PatientData />} />
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
-            <Route path="payments" element={<BudgetPatient />} />
+            <Route path="payments" element={<BudgetPayment />} />
           </Route>
         )}
       </Routes>

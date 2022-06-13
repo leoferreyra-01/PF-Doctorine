@@ -7,9 +7,9 @@ const { xValidateInfoTurn } = require('./Turn');
 const {
   validateTurnCollisions,
   xValidateTurnCollisions,
-} = require('./TurnCollisions');
+} = require('./TurnCollisions'); //xValidateResults
 
-const { xValidateResults } = require('./xValidateResults');
+const { xValidateResults } = require('./XvalidateResults');
 
 const validate = {
   GET: {
