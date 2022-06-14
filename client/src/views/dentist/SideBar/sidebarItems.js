@@ -76,6 +76,14 @@ export const mainSidebarItems = [
   {
     id: 8,
     icon: (
+      <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+    ),
+    label: 'Update Treatments',
+    route: 'updateTreatments',
+  },
+  {
+    id: 9,
+    icon: (
       <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
     ),
     label: 'Sign out',

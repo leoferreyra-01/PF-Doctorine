@@ -37,6 +37,7 @@ import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialCo
 import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
 import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPayment';
+import UpdateTreatments from './views/dentist/UpdateTreatments/UpdateTreatments';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
@@ -79,6 +80,7 @@ function App() {
               element={<InitialConfig />}
             />
             <Route path="clinic-details/update-data" element={<UpdateData />} />
+            <Route path="updateTreatments" element={<UpdateTreatments />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>
