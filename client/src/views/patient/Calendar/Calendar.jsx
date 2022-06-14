@@ -172,7 +172,7 @@ export default function CalendarFunction() {
         MedicID: 1,
       };
 
-      dispatch(postTurn(infoTurn));
+      dispatch(postTurn({...infoTurn, email: userEmail}));
 
       setAvailableTurns([]);
       funcSetPatientID();

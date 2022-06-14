@@ -218,7 +218,7 @@ export default function Appointments() {
             title: 'Please select a patient.',
           });
 
-        dispatch(postTurn(infoTurn));
+        dispatch(postTurn({...infoTurn, email: patientSelected.email}));
         setTurnForm(false);
         setPatientSelected(null);
         setData({
