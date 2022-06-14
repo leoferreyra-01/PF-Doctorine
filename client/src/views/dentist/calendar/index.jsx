@@ -262,10 +262,20 @@ export default function Appointments() {
   }
   //#endregion
 
+  // Constant updates
+  function loop() {
+    setTimeout(function () {
+      dispatch(getTurns());
+
+      loop();
+    }, 10000); // every 10 seconds.
+  }
+
   useEffect(() => {
     dispatch(getTurns());
     dispatch(getInfoClinic());
     dispatch(getAllPatients());
+    loop();
   }, []);
 
   useEffect(() => {
