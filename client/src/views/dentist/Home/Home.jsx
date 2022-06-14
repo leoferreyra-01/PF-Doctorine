@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import s from './Home.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getClinic } from '../../../redux/actions';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -12,6 +12,7 @@ export default function Home() {
   const [title, setTitle] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const clinic = useSelector(state => state.clinic);
   const filledClinic = !!Object.keys(clinic).length;
