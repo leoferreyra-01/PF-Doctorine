@@ -2,6 +2,8 @@ const mercadopago = require('mercadopago');
 // Agrega credenciales
 const router = require('express').Router();
 const axios = require('axios');
+axios.defaults.baseURL = process.env.REACT_APP_API || `http://localhost:3001`;
+
 mercadopago.configure({
   access_token:
     'TEST-2610828340638564-060709-f54f8a67b694f7b1efe661bb2f32d9ef-21079186',
