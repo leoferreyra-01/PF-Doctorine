@@ -2,28 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import S from './UpdatePatient.module.css';
-import { updatePatient } from '../../../redux/actions';
+import { updatePatient, getPatient } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import bk_validate from '../../../helpers/backend_validators';
 
 export default function UpdatePatient() {
   const { patientID } = useParams();
-  const patient = useSelector(state => state.patient);
+  const { patient } = useSelector(state => state);
+  // console.log('UPDATE/patient => ', patient);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(getPatient(patientID)).then(() => {
+      setData({
+        name: patient.name,
+        lastName: patient.lastName,
+        birth: patient.birth,
+        telephone: patient.telephone,
+        cellphone: patient.cellphone,
+        street: patient.street,
+        number: patient.number,
+        city: patient.city,
+        postalCode: patient.postalCode,
+        medicalService: patient.Patient.medicalService,
+      });
+    });
+  }, []);
+
   const [data, setData] = useState({
-    name: patient.name,
-    lastName: patient.lastName,
-    birth: patient.birth,
-    telephone: patient.telephone,
-    cellphone: patient.cellphone,
-    street: patient.street,
-    number: patient.number,
-    city: patient.city,
-    postalCode: patient.postalCode,
-    medicalService: patient.Patient.medicalService,
+    name: null,
+    lastName: null,
+    birth: null,
+    telephone: null,
+    cellphone: null,
+    street: null,
+    number: null,
+    city: null,
+    postalCode: null,
+    medicalService: null,
   });
 
   function handleChange(e) {
@@ -60,13 +78,13 @@ export default function UpdatePatient() {
     } else {
       setValidations([false, null]);
     }
-    console.log('VALIDATIONS Fun, 2 => ', validations);
+    // console.log('VALIDATIONS Fun, 2 => ', validations);
   }
 
   useEffect(() => {
     validatePatient();
 
-    console.log('VALIDATIONS useEffect, 1 => ', validations);
+    // console.log('VALIDATIONS useEffect, 1 => ', validations);
   }, [data]);
 
   let [fail, err] = validations;
@@ -102,60 +120,60 @@ export default function UpdatePatient() {
   }
 
   return (
-    <div className='container'>
-      <div className='container2'>
+    <div className="container">
+      <div className="container2">
         <form onSubmit={handleSubmit}>
-          <div className='rowContainer'>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Frist Name</label>
+          <div className="rowContainer">
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Frist Name</label>
               <input
-                className='input'
+                className="input"
                 value={data.name}
-                placeholder='Name...'
-                type='text'
-                name='name'
+                placeholder="Name..."
+                type="text"
+                name="name"
                 onChange={handleChange}
               />
               {fail && err['infoUser.name'] && (
                 <p>{err['infoUser.name'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Last Name</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Last Name</label>
               <input
-                className='input'
+                className="input"
                 value={data.lastName}
-                placeholder='LastName...'
-                type='text'
-                name='lastName'
+                placeholder="LastName..."
+                type="text"
+                name="lastName"
                 onChange={handleChange}
               />
               {fail && err['infoUser.lastName'] && (
                 <p>{err['infoUser.lastName'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Birth</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Birth</label>
               <input
-                className='input'
+                className="input"
                 value={data.birth}
-                placeholder='Birth...'
-                type='date'
-                name='birth'
+                placeholder="Birth..."
+                type="date"
+                name="birth"
                 onChange={handleChange}
               />
               {fail && err['infoUser.birth'] && (
                 <p>{err['infoUser.birth'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Telephone</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Telephone</label>
               <input
-                className='input'
+                className="input"
                 value={data.telephone}
-                placeholder='Telephone...'
-                type='text'
-                name='telephone'
+                placeholder="Telephone..."
+                type="text"
+                name="telephone"
                 onChange={handleChange}
               />
               {fail && err['infoUser.telephone'] && (
@@ -163,57 +181,57 @@ export default function UpdatePatient() {
               )}
             </div>
           </div>
-          <div className='rowContainer'>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Cellphone</label>
+          <div className="rowContainer">
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Cellphone</label>
               <input
-                className='input'
+                className="input"
                 value={data.cellphone}
-                placeholder='Cellphone...'
-                type='text'
-                name='cellphone'
+                placeholder="Cellphone..."
+                type="text"
+                name="cellphone"
                 onChange={handleChange}
               />
               {fail && err['infoUser.cellphone'] && (
                 <p>{err['infoUser.cellphone'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Street</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Street</label>
               <input
-                className='input'
+                className="input"
                 value={data.street}
-                placeholder='Street...'
-                type='text'
-                name='street'
+                placeholder="Street..."
+                type="text"
+                name="street"
                 onChange={handleChange}
               />
               {fail && err['infoUser.street'] && (
                 <p>{err['infoUser.street'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Number</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Number</label>
               <input
-                className='input'
+                className="input"
                 value={data.number}
-                placeholder='Number...'
-                type='text'
-                name='number'
+                placeholder="Number..."
+                type="text"
+                name="number"
                 onChange={handleChange}
               />
               {fail && err['infoUser.number'] && (
                 <p>{err['infoUser.number'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>City</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">City</label>
               <input
-                className='input'
+                className="input"
                 value={data.city}
-                placeholder='City...'
-                type='text'
-                name='city'
+                placeholder="City..."
+                type="text"
+                name="city"
                 onChange={handleChange}
               />
               {fail && err['infoUser.city'] && (
@@ -221,29 +239,29 @@ export default function UpdatePatient() {
               )}
             </div>
           </div>
-          <div className='rowContainer'>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Postal Code</label>
+          <div className="rowContainer">
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Postal Code</label>
               <input
-                className='input'
+                className="input"
                 value={data.postalCode}
-                placeholder='Postal Code...'
-                type='text'
-                name='postalCode'
+                placeholder="Postal Code..."
+                type="text"
+                name="postalCode"
                 onChange={handleChange}
               />
               {fail && err['infoUser.postalCode'] && (
                 <p>{err['infoUser.postalCode'].msg}</p>
               )}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Medical Service</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Medical Service</label>
               <input
-                className='input'
+                className="input"
                 value={data.medicalService}
-                placeholder='Medical Service...'
-                type='text'
-                name='medicalService'
+                placeholder="Medical Service..."
+                type="text"
+                name="medicalService"
                 onChange={handleChange}
               />
               {fail && err['infoPatient.medicalService'] && (
@@ -252,7 +270,7 @@ export default function UpdatePatient() {
             </div>
           </div>
 
-          <button type='submit' className='button'>
+          <button type="submit" className="button">
             Update Patient
           </button>
         </form>
