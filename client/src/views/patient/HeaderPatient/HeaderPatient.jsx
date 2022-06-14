@@ -1,8 +1,14 @@
-import React from 'react';
+// import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './HeaderPatient.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+
+
 export default function Header({ title }) {
+
+  if (title === ' PatientCH') title = 'Clinic history'
+
   return (
     // <div className={`${s.header_container}`}>
     <div className='header_container'>
@@ -26,7 +32,7 @@ export default function Header({ title }) {
         />
       </div>
       <div className='help_container'>
-        <button className='web_btn'>Web setup</button>
+        {/* <button className='web_btn'>Web setup</button> */}
         <FontAwesomeIcon
           icon={faCircleQuestion}
           size='2x'

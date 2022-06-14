@@ -40,6 +40,13 @@ export const mainSidebarItems = [
 
   {
     id: 4,
+    icon: <FontAwesomeIcon icon={faCalendar} size="2x" className={s.fa_icon} />,
+    label: 'Clinic history',
+    route: 'PatientCH',
+  },
+
+  {
+    id: 5,
     icon: (
       <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
     ),

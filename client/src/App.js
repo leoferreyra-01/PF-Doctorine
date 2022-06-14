@@ -1,5 +1,6 @@
 import s from './App.module.css';
 import React from 'react';//
+// import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/dentist/Home/Home';
@@ -23,9 +24,13 @@ import SearchPatient from './views/patient/searchPatient/searchPatient';
 import PatientHome from './views/patient/PatientHome/PatientHome';
 import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
+import PatientCH from './views/patient/PatientCH/PatientCH';
+import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
+
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
+  const user = useSelector(state => state.searchedPatient)
   return (
     <div className={s.global_container}>
       <Routes>
@@ -61,7 +66,10 @@ function App() {
             <Route path="/home/" element={<SearchPatient />} />
             <Route path="data" element={<PatientData />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
+            <Route path="PatientCH" element={<PatientCH />}></Route>
+            <Route path="PatientCH/PatientCHPdf" element={<PatientCHPdf />} />
           </Route>
+
         )}
       </Routes>
     </div>
