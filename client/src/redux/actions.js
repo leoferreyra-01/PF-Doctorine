@@ -217,6 +217,7 @@ export function postBudget(budget) {
 export function updateBudget(budget) {
   return async function (dispatch) {
     try {
+      console.log(budget);
       await axios.put('/Budgets', budget);
       return dispatch({ type: UPDATE_BUDGET, payload: budget });
     } catch (error) {

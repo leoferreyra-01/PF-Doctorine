@@ -35,7 +35,8 @@ export default function UpdateBudget() {
   const { totalPrice } = budget;
   const treatments = JSON.parse(budget.treatments);
   const handleClick = () => {
-    dispatch(updateBudget(budget));
+    const { linkPayment, ...restOfBudget } = budget;
+    dispatch(updateBudget(restOfBudget));
   };
 
   return (

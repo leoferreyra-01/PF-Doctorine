@@ -88,7 +88,7 @@ module.exports = {
   },
   putBudget: async function (req, res) {
     try {
-      const { paid, ID, linkPayment, idPayment } = req.body;
+      const { ID, linkPayment, idPayment } = req.body;
       if (linkPayment) {
         const BudgetByPatient = await Budget.findByPk(ID);
         const updatePatient = await BudgetByPatient.update({
