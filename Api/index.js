@@ -28,11 +28,10 @@
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
 const { preload_db } = require('./preload_db/');
-const axios = require('axios');
 
 // Syncing all the models at once
 
-axios.defaults.baseURL = process.env.REACT_APP_API || `http://localhost:3001`;
+
 
 const syncConfig = { force: true }; // -FIX-
 const PORT = parseInt(process.env.PORT);
