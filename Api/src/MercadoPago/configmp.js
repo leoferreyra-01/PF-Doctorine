@@ -60,7 +60,7 @@ router.post('/create_preference', (req, res) => {
 
 router.get('/feedback', function (req, res) {
   if (req.query.status === 'approved') {
-    axios.put('http://localhost:3001/Budgets', {
+    axios.put('/Budgets', {
       idPayment: req.query.preference_id,
     });
   }
