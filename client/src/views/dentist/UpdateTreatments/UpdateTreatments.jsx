@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import s from './UpdateTreatments.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import Treatment from '../Treatment/Treatment';
-import { getTreatments } from '../../../redux/actions';
+
+import { getTreatments, updateTreatment } from '../../../redux/actions';
 
 //|| agregado por Laura
 import { DataGrid } from '@material-ui/data-grid';
@@ -46,6 +46,12 @@ function UpdateTreatments() {
       <div style={{ height: 550, width: '100%' }}>
         {filledTreatments ? (
           <DataGrid
+            onCellEditCommit={(params, event, details) => {
+              console.log(params);
+              console.log(event);
+              console.log(details);
+              //dispatch(updateTreatment({ id: params.id, price: params.value }));
+            }}
             rows={treatments.map(t => ({
               id: t.ID,
               treatmentType: t.treatmentType,
@@ -64,22 +70,6 @@ function UpdateTreatments() {
     </div>
   );
   //||
-  /* return (
-    <div className={s.container}>
-      {filledTreatments ? (
-        treatments.map(t => (
-          <Treatment
-            key={t.ID}
-            ID={t.ID}
-            description={t.description}
-            price={t.price}
-          />
-        ))
-      ) : (
-        <h3>Loading treatments...</h3>
-      )}
-    </div>
-  ); */
 }
 
 export default UpdateTreatments;

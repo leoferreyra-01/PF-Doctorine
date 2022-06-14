@@ -42,6 +42,8 @@ export const POST_CLINIC = 'POST_CLINIC';
 export const UPDATE_CLINIC = 'UPDATE_CLINIC';
 export const GET_TOOTH = 'GET_TOOTH';
 export const GET_TREATMENTS = 'GET_TREATMENTS';
+export const UPDATE_TREATMENT = 'UPDATE_TREATMENT';
+export const DELETE_TREATMENT = 'DELETE_TREATMENT';
 //--------------------LOGIN-----------------------//
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -430,6 +432,17 @@ export function getTreatments() {
     } catch (e) {
       console.log(e);
       alert(e.response.data.error);
+    }
+  };
+}
+
+export function updateTreatment(treatment) {
+  return async function (dispatch) {
+    try {
+      await axios.put(`/treatments`, treatment);
+      return dispatch({ type: UPDATE_TREATMENT, payload: treatment });
+    } catch (error) {
+      console.log(error);
     }
   };
 }
