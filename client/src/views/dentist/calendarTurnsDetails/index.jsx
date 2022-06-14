@@ -32,7 +32,9 @@ export default function TurnsDetails({
     axios
       .put(`/turns/update/${ID}`, { time, MedicID, medicAccepts })
       .then(res => dispatch(getTurns()))
-      .then(res => setSelectedTurn(infoTurn))
+      .then(res => {
+        if (conditionalTurnsRendering().length === 1) setSelectedTurn(infoTurn);
+      })
       .then(res => {
         Swal.fire({
           icon: 'success',
