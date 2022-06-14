@@ -44,15 +44,15 @@ export default function Header({ title }) {
             size="xs"
             // pull="left"
           />
-          <span
+          {/* <span
             class="fa-layers-counter fa-layers-top-right"
             style={{ backgroundColor: 'tomato' }}
           >
             1,419
-          </span>
+          </span> */}
         </span>
         <img
-          src="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
+          src="https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png"
           alt="Avatar Icon"
           className={s.avatar}
         />

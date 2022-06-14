@@ -30,7 +30,6 @@ import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
 import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
 import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
-import { home } from './redux/actions';
 import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPayment';
 
 function App() {
