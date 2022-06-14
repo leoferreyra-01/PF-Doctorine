@@ -24,23 +24,18 @@ import SearchPatient from './views/patient/searchPatient/searchPatient';
 import PatientHome from './views/patient/PatientHome/PatientHome';
 import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
-import PatientCH from './views/patient/PatientCH/PatientCH';
-import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
-
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
-import ChangePassword from './views/dentist/UpdateMedic/ChangePassword/ChangePassword';
-import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
-import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNStudies.jsx';
-//import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
-import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
-import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
-import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
 import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPayment';
-
+import ChangePassword from './views/dentist/UpdateMedic/ChangePassword/ChangePassword';
+import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
+import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
+import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNStudies';
+import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
+import PatientCH from './views/patient/PatientCH/PatientCH';
+import UpdateData from './views/dentist/ClinicDetails/ClinicDetails';
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
-  const user = useSelector(state => state.searchedPatient);
   return (
     <div className={s.global_container}>
       <Routes>
@@ -48,7 +43,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        {homeToShow === 'Medic' ? (
+        {homeToShow === 'medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
@@ -86,10 +81,10 @@ function App() {
             <Route path="data" element={<PatientData />} />
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
-            <Route path="PatientCH" element={<PatientCH />}></Route>
+            <Route path="payments" element={<BudgetPayment />} />
             <Route path="PatientCH/PatientCHPdf" element={<PatientCHPdf />} />
-            <Route path="payments" element={<BudgetPatient />} />
             <Route path="evolutionsNStudies" element={<EvolutionsNStudies />} />
+            <Route path="PatientCH" element={<PatientCH />} />
             <Route
               path="create-clinical-history"
               element={<RegisterClinicalHistory />}
