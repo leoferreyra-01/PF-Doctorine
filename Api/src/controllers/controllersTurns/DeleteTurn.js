@@ -2,7 +2,9 @@
 
 //|> SEQUELIZE
 
-const { Patient, Turn } = require('../../db');
+const { Patient, Turn, Medic, User } = require('../../db');
+var nodemailer = require('nodemailer');
+
 
 //|> CONTROLLER
 
@@ -23,6 +25,43 @@ async function deleteTurns(req, res) {
         data: result,
       });
     });
+
+    //|> EMAIL
+    const turn = (await Turn.findOne({where: {ID: ID}})).dataValues;
+    const medic = (
+      await Medic.findOne({ where: { ID: turn.MedicID }, include: [User] })
+    ).dataValues;
+    const medicEmail = medic.User.dataValues.email;
+    const patient = (
+      await Patient.findOne({ where: { ID: turn.PatientID }, include: [User] })
+    ).dataValues;
+    const patientEmail = patient.User.dataValues.email;
+
+    if (patient) {
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: process.env.USER_ADMIN, // generated ethereal user
+          pass: process.env.PASSWORD, // generated ethereal password
+        },
+      });
+      transporter.verify().then(() => {
+        console.log('Ready for send mails');
+      });
+      await transporter.sendMail({
+        from: '"Turn Accepted" <doctorine.com@gmail.com>', // sender address
+        to: `${patientEmail}, ${medicEmail}`, // list of receivers
+        subject: `Turn accepted for ${req.body.date}`, // Subject line
+        html: `<b>The doctor ${medic.User.dataValues.name} ${
+          medic.User.dataValues.lastName
+        } has accepted a Turn on ${req.body.date} at ${numberToHours(req.body.time)}hs.</b>`, // html body
+      });
+    } else {
+      res.json({ error: 'User not found!' });
+    }
+
   } catch (error) {
     console.error(error);
     res.status(404).json([true, { error: { msg: error.message } }]);
