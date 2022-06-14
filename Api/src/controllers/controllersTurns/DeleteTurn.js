@@ -5,6 +5,15 @@
 const { Patient, Turn, Medic, User } = require('../../db');
 var nodemailer = require('nodemailer');
 
+function numberToHours(number) {
+  let hours = Math.floor(number);
+  let minutes = Math.round((number - hours) * 60);
+
+  if (hours < 10) hours = `0${hours}`;
+  if (minutes < 10) minutes = `0${minutes}`;
+
+  return `${hours}:${minutes}`;
+}
 
 //|> CONTROLLER
 
@@ -27,7 +36,7 @@ async function deleteTurns(req, res) {
     });
 
     //|> EMAIL
-    const turn = (await Turn.findOne({where: {ID: ID}})).dataValues;
+    const turn = (await Turn.findByPk(ID)).dataValues;
     const medic = (
       await Medic.findOne({ where: { ID: turn.MedicID }, include: [User] })
     ).dataValues;
