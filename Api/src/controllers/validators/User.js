@@ -182,6 +182,7 @@ const xValidateInfoUser = [
 
       return true;
     }),
+
   //|> password
   check('infoUser.password')
     .default(undefined)

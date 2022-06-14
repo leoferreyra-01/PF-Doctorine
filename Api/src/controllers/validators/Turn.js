@@ -16,7 +16,7 @@ const xValidateInfoTurn = [
     .if(check('date').exists())
     .trim()
     .isDate({ format: 'YYYY-MM-DD' })
-    .withMessage('Birth must be a date format (YYYY-MM-DD).'),
+    .withMessage('Date must be a date format (YYYY-MM-DD).'),
 
   //|> TIME
   check('time')
@@ -70,7 +70,7 @@ const xValidateInfoTurn = [
   check('MedicID')
     .default(undefined)
     .custom((value, { req }) => {
-      if (!value) {
+      if (req.method === 'POST' && !value) {
         throw new Error('Medic is required.');
       }
       return true;

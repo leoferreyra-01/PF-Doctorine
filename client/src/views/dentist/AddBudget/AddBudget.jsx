@@ -28,10 +28,12 @@ export function AddBudget() {
     treatment: {},
   });
   const [errors, setErrors] = useState({});
+
   useEffect(() => {
     if (!filledPatients) dispatch(getAllPatients());
     if (!filledTreatments) dispatch(getTreatments());
   }, []);
+
   const validate = () => {
     const errors = {};
     if (
@@ -50,23 +52,24 @@ export function AddBudget() {
     if (Object.keys(data.patient).length > 0) {
       Swal.fire({
         icon: 'warning',
-        title: 'You have already selected a patient'
-      })
+        title: 'You have already selected a patient',
+      });
     } else {
       const patient = patients.find(p => p.Patient.ID === value * 1);
       setData({
         ...data,
         [name]: patient,
       });
-      setErrors(validate());
     }
   };
+
   const handleDeletePatient = () => {
     setData({
       ...data,
       patient: {},
     });
   };
+
   const handleSelectTreatment = e => {
     const treatment = treatments.find(t => t.ID === e.target.value);
     const { ClinicID, ...restOfTreatment } = treatment;
@@ -75,6 +78,7 @@ export function AddBudget() {
       treatment: restOfTreatment,
     });
   };
+
   const handleMinus = ID => {
     let i = null;
     let newSubTotal = 0;
@@ -93,6 +97,7 @@ export function AddBudget() {
       return t;
     });
     if (i !== null) {
+      console.log(newSubTotal);
       modTreatments = modTreatments.filter(
         (t, index) => index !== i && t !== 'delete me'
       );
@@ -109,18 +114,17 @@ export function AddBudget() {
       if (t.ID === ID) {
         t.quantity += 1;
         t.subTotalPrice += t.price;
-        newSubTotal = t.subTotalPrice;
+        newSubTotal = t.price;
       }
       return t;
     });
-    console.log('handlePlus');
-    console.log(modTreatments);
     setData({
       ...data,
       totalPrice: data.totalPrice + newSubTotal,
       treatments: modTreatments,
     });
   };
+
   const handleQuantity = e => {
     setErrors(validate());
     setTreatmentSelected({
@@ -128,12 +132,15 @@ export function AddBudget() {
       quantity: e.target.value * 1,
     });
   };
+
   const handleSubmit = e => {
     e.preventDefault();
     console.log('handleSubmit');
     setErrors(validate());
     const errors = validate();
     if (Object.keys(errors).length === 0) {
+      e.target[2].selectedIndex = 0;
+
       const subTotalPrice =
         treatmentSelected.quantity * treatmentSelected.treatment.price;
       const treatmentReady = {
@@ -149,25 +156,29 @@ export function AddBudget() {
     } else {
       Swal.fire({
         icon: 'error',
-        title: 'Please select a patient and select a treatment before adding it to the budget',
-      })
+        title:
+          'Please select a patient and select a treatment before adding it to the budget',
+      });
     }
     console.log(data);
   };
+
   const handleSent = () => {
     setErrors(validate());
     const errors = validate();
     if (Object.keys(errors).length === 0) {
+      console.log('Hurra');
+
       const { patient, totalPrice, ...restOfData } = data;
       console.log(patient);
-      const patientID = patient.Patient.ID;
+      const PatientID = patient.Patient.ID;
       const patientDocument = patient.document;
       const patientFullName = patient.fullName;
       const jsonTreatments = JSON.stringify(restOfData.treatments);
       const readyBudget = {
-        patientID,
+        PatientID,
         patientDocument,
-        totalPrice: totalPrice + '',
+        totalPrice: totalPrice,
         patientFullName,
         ...restOfData,
         treatments: jsonTreatments,
@@ -178,24 +189,28 @@ export function AddBudget() {
       Swal.fire({
         icon: 'success',
         title: 'Budget created successfully',
+        showConfirmButton: false,
+        timer: 1500,
       })
       navigate('/home/budget');
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Please complete the budget before creating it',
-      })
+      });
     }
   };
+  //#region
   return (
     <div className={s.container}>
       <form onSubmit={handleSubmit} className={s.form}>
         <label className={s.label}>Select Patient</label>
         <select
-          name='patient'
+          name="patient"
           onChange={handleSelectPatient}
-          className={s.casillas}>
-          <option hidden value=''>
+          className={s.casillas}
+        >
+          <option hidden value="">
             Select a Patient
           </option>
           {filledPatients ? (
@@ -209,6 +224,7 @@ export function AddBudget() {
           )}
         </select>
         {errors.patient && <p className={s.err}>{errors.patient}</p>}
+
         {Object.keys(data.patient).length > 0 && (
           <div>
             <h4>Selected Patient</h4>
@@ -216,12 +232,14 @@ export function AddBudget() {
             <h3>{data.patient.fullName}</h3>
           </div>
         )}
+
         <label className={s.label}>Treatments</label>
         <select
-          name='treatmentSelected'
+          name="treatmentSelected"
           onChange={handleSelectTreatment}
-          className={s.casillas}>
-          <option hidden value=''>
+          className={s.casillas}
+        >
+          <option hidden value="">
             Select Treatment
           </option>
           {filledTreatments ? (
@@ -237,16 +255,16 @@ export function AddBudget() {
         {errors.treatments && <p className={s.err}>{errors.treatments}</p>}
         <label className={s.label}>Quantity</label>
         <input
-          type='number'
-          name='quantity'
+          type="number"
+          name="quantity"
           onChange={handleQuantity}
           value={treatmentSelected.quantity}
           className={s.casillas}
-          min='1'
+          min="1"
         />
         <input
-          type='submit'
-          value='Add treatment to Budget'
+          type="submit"
+          value="Add treatment to Budget"
           className={s.btn}
         />
       </form>
@@ -282,8 +300,6 @@ export function AddBudget() {
             <h4>Quantity</h4>
             <h4>Sub-Total</h4>
           </div>
-          {console.log('test')}
-          {console.log(data)}
           {data.treatments.length > 0 ? (
             data.treatments.map(t => (
               <Treatment
@@ -313,3 +329,4 @@ export function AddBudget() {
     </div>
   );
 }
+//#endregion

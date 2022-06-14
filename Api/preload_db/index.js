@@ -41,7 +41,7 @@ async function preload_db() {
       await updateBudget(n);
     }
   }
-  // await addTurn(1);
+  await addTurn(1);
   await updateTurn(1, 9);
 
   console.log('\x1b[34m%s\x1b[0m', 'Patients: ', patients);
@@ -204,13 +204,17 @@ async function addTreatments() {
 async function addTurn(n) {
   const randomDay = Math.ceil(Math.random() * 5);
   const randomHour = Math.ceil(Math.random() * 14);
-  const randomDuration = Math.ceil(Math.random() * 2) / 2;
+  // const randomDuration = Math.ceil(Math.random() * 2) / 2;
+  const randomAcepts = Math.random() < 0.5 ? false : true;
 
   const infoTurn = {
-    date: '2022-05-' + (26 + randomDay),
+    date: '2022-06-' + (15 + randomDay),
     time: 8 + randomHour,
-    duration: 0.5 + randomDuration,
+    duration: 1,
     description: 'Iteration n° ' + n,
+    medicAccepts: randomAcepts,
+    patientAccepts: randomAcepts,
+    PatientID: n,
     MedicID: 1, // -NOTE- required for TurnCollisions validation.
   };
 

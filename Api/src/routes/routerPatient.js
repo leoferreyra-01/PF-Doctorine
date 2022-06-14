@@ -31,7 +31,10 @@ router.get('/', async (req, res) => {
 router.get('/:ID', validate.GET.Patient, async (req, res) => {
   const { ID } = req.params;
 
+  const { validate } = req.query;
   try {
+    if (validate) return res.status(200).json([false, null]);
+
     res.status(200).json(await getPatientById(ID));
   } catch (error) {
     console.error(error);
@@ -46,7 +49,10 @@ router.get('/:ID', validate.GET.Patient, async (req, res) => {
 router.post('/', validate.POST.Patient, async (req, res) => {
   const { infoUser, infoPatient } = req.body;
 
+  const { validate } = req.query;
   try {
+    if (validate) return res.status(200).json([false, null]);
+
     res.status(200).json(await postPatient(infoUser, infoPatient));
   } catch (error) {
     console.error(error);
@@ -62,7 +68,10 @@ router.put('/:ID', validate.PUT.Patient, async (req, res) => {
   const { ID } = req.params;
   const { infoUser, infoPatient } = req.body;
 
+  const { validate } = req.query;
   try {
+    if (validate) return res.status(200).json([false, null]);
+
     res.status(200).json(await putPatient(ID, infoUser, infoPatient));
   } catch (error) {
     console.error(error);
@@ -77,7 +86,10 @@ router.put('/:ID', validate.PUT.Patient, async (req, res) => {
 router.delete('/:ID', validate.DELETE.Patient, async (req, res) => {
   const { ID } = req.params;
 
+  const { validate } = req.query;
   try {
+    if (validate) return res.status(200).json([false, null]);
+
     res.status(200).send(await deletePatient(ID));
   } catch (error) {
     console.error(error);

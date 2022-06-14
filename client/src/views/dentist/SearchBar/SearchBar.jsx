@@ -12,6 +12,18 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
   const handleOnChange = e => {
     console.log(e.target.value);
     setSearched(e.target.value);
+    if (
+      /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(e.target.value) ||
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(e.target.value)
+    ) {
+      setErrors('Wrong search format, please try again');
+      Swal.fire({
+        icon: 'error',
+        title: 'Wrong search format, please try again',
+      });
+    } else {
+      setErrors('');
+    }
   };
   const handleSubmit = e => {
     e.preventDefault();
@@ -22,8 +34,9 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
     } else {
       Swal.fire({
         icon: 'error',
-        title: 'The search field is empty, please enter the ID of the patient to search',
-      })
+        title:
+          'The search field is empty, please enter the ID of the patient to search',
+      });
     }
     setSearched('');
   };

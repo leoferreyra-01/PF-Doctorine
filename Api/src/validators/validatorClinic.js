@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 var validator = require('validator');
 const {
   xValidateResults,
-} = require('../controllers/validators/xValidateResults');
+} = require('../controllers/validators/XvalidateResults');
 const validateClinic = [
   //|> ID
   check('ID')

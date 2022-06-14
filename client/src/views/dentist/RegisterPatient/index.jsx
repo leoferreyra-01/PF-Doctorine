@@ -2,9 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postPatient } from '../../../redux/actions';
 import { useNavigate } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
-import Input from '@mui/material/Input';
 import s from './buton.module.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,10 +26,12 @@ export default function RegisterPatient() {
     Swal.fire({
       icon: 'success',
       title: `You will be redirected to create the patient's medical history`,
-    })
-    setTimeout(()=>{
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setTimeout(() => {
       navigate('/home/create-clinical-history/');
-    },1500)
+    }, 1500);
   };
 
   return (
@@ -40,7 +39,7 @@ export default function RegisterPatient() {
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('name')}
             placeholder="Enter patient's name"
             className={`${s.input} ${errors.name ? `${s.danger}` : ''}`}
@@ -52,7 +51,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('lastName')}
             placeholder="Enter patient's lastname"
             className={`${s.input} ${errors.lastName ? `${s.danger}` : ''}`}
@@ -64,7 +63,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('document')}
             placeholder="Enter patient's ID"
             className={`${s.input} ${errors.document ? `${s.danger}` : ''}`}
@@ -76,7 +75,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('email')}
             placeholder="Enter patient's email"
             className={`${s.input} ${errors.email ? `${s.danger}` : ''}`}
@@ -88,7 +87,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('street')}
             placeholder="Enter patient's street"
             className={`${s.input} ${errors.street ? `${s.danger}` : ''}`}
@@ -100,7 +99,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('city')}
             placeholder="Enter patient's city"
             className={`${s.input} ${errors.city ? `${s.danger}` : ''}`}
@@ -112,7 +111,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('number')}
             placeholder="Enter patient's street number"
             className={`${s.input} ${errors.number ? `${s.danger}` : ''}`}
@@ -124,7 +123,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('postalCode')}
             placeholder="Enter patient's postal code"
             className={`${s.input} ${errors.postalCode ? `${s.danger}` : ''}`}
@@ -136,7 +135,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('cellphone')}
             placeholder="Enter patient's cellphone"
             className={`${s.input} ${errors.cellphone ? `${s.danger}` : ''}`}
@@ -148,7 +147,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('telephone')}
             placeholder="Enter patient's telephone"
             className={`${s.input} ${errors.telephone ? `${s.danger}` : ''}`}
@@ -160,7 +159,7 @@ export default function RegisterPatient() {
 
         <div className={s.input_container}>
           <input
-            type='text'
+            type="text"
             {...register('medicalService')}
             placeholder="Enter patient's medical service"
             className={`${s.input} ${
@@ -175,7 +174,7 @@ export default function RegisterPatient() {
         <div className={s.input_container}>
           <h3>Enter the patient's date of birth</h3>
           <input
-            type='date'
+            type="date"
             {...register('birth')}
             className={`${s.input} ${errors.birth ? `${s.danger}` : ''}`}
           />
@@ -184,116 +183,11 @@ export default function RegisterPatient() {
           )}
         </div>
         <div>
-          <button className={s.buton} type='submit'>
+          <button className={s.buton} type="submit">
             Send
           </button>
         </div>
       </form>
     </div>
   );
-}
-
-{
-  /* <TextField
-          label="name"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('name')}
-          error={!!errors.name}
-          helperText={errors.name ? errors.name.message : null}
-        />
-        <TextField
-          label="lastName"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('lastName')}
-          error={!!errors.lastName}
-          helperText={errors.lastName ? errors.lastName.message : null}
-        />
-        <TextField
-          label="document"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('document')}
-          error={!!errors.document}
-          helperText={errors.document ? errors.document.message : null}
-        />
-        <TextField
-          label="email"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('email')}
-          error={!!errors.email}
-          helperText={errors.email ? errors.email.message : null}
-        />
-        <TextField
-          label="street"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('street')}
-          error={!!errors.street}
-          helperText={errors.street ? errors.street.message : null}
-        />
-        <TextField
-          label="number"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('number')}
-          error={!!errors.number}
-          helperText={errors.number ? errors.number.message : null}
-        />
-        <TextField
-          label="city"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('city')}
-          error={!!errors.city}
-          helperText={errors.city ? errors.city.message : null}
-        />
-        <TextField
-          label="postalCode"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('postalCode')}
-          error={!!errors.postalCode}
-          helperText={errors.postalCode ? errors.postalCode.message : null}
-        />
-        <TextField
-          label="cellphone"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('cellphone')}
-          error={!!errors.cellphone}
-          helperText={errors.cellphone ? errors.cellphone.message : null}
-        />
-        <TextField
-          label="telephone"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('telephone')}
-          error={!!errors.telephone}
-          helperText={errors.telephone ? errors.telephone.message : null}
-        />
-        <TextField
-          label="medicalService"
-          fullWidth
-          variant="filled"
-          margin="normal"
-          {...register('medicalService')}
-          error={!!errors.medicalService}
-          helperText={
-            errors.medicalService ? errors.medicalService.message : null
-          }
-        />
-        <Input type="date" fullWidth variant="filled" {...register('birth')} /> */
 }

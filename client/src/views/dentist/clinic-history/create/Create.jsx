@@ -145,9 +145,7 @@ export default function RegisterClinicalHistory() {
           //   Other: { value: false, obs: null },
           //   patient: 21,
           // });
-          setTimeout(()=>{
-            navigate(`/home/${Id}`);
-          },1500)
+          navigate(`/home/${Id}`);
         }
       } else if (result.isDenied) {
         Swal.fire('Form not send');

@@ -65,7 +65,6 @@ function SignUp() {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        // toast.error('Fields must be completed correctly');
         Swal.fire({
           icon: 'error',
           title: 'Fields must be completed correctly',
@@ -79,7 +78,6 @@ function SignUp() {
       if (user.token) {
         if (user.userType === 'Patient') {
           select = 'patient';
-          // toast.success(`Welcome to the main page ${user.name}`);
           setTimeout(() => {
             Swal.fire({
               position: 'top',
@@ -99,9 +97,6 @@ function SignUp() {
           window.localStorage.setItem('user', JSON.stringify(user));
           navigate('/home');
         } else {
-          // toast.success(
-          //   `Welcome to the main page Dr. ${user.name[0]}. ${user.lastName}`
-          // );
           setTimeout(() => {
             Swal.fire({
               position: 'top',
@@ -127,7 +122,6 @@ function SignUp() {
         icon: 'error',
         title: 'Incorrect username or password',
       });
-      // toast.error('Wrong password or user');
     }
   };
   const respuestaGoogle = async respuesta => {
@@ -233,7 +227,7 @@ function SignUp() {
             <button>Login</button>
             <hr className='linea' />
             <GoogleLogin
-              clientId='909615731637-in2a5sb985nndpniessv5trc4ph926q7.apps.googleusercontent.com'
+              clientId='734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com'
               buttonText='Login with Google'
               onSuccess={respuestaGoogle}
               onFailure={() => console.log('fail')}

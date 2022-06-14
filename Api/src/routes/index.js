@@ -60,8 +60,8 @@ router.use('/password', passwordChange);
 const tooth = require('./routeTeeth');
 router.use('/tooth', tooth);
 
-//|> /validate
-const validate = require('./routeValidate');
-router.use('/validate', validate);
+//|> /mercadoPago
+const mercadoPago = require('../MercadoPago/configmp');
+router.use('/payments', mercadoPago);
 
 module.exports = router;

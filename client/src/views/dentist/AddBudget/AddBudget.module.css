@@ -37,9 +37,11 @@
   justify-content: flex-end;
   text-align: left;
 }
+
 .patient_details p {
   margin: 0.5rem 0;
 }
+
 .name_container {
   /* display: flex;
   justify-content: space-around;
@@ -56,15 +58,19 @@
   justify-content: flex-end;
   padding-right: 8%;
 }
+
 .totalPrice h3 span {
   display: block;
 }
+
 .label {
   padding: 10px 0;
 }
+
 .casillas {
   border-radius: 7px;
 }
+
 .btn {
   margin: 25px 0;
   background-color: #ededed;
@@ -88,6 +94,7 @@
   background-color: #9088a0;
   cursor: pointer;
 }
+
 .err {
   color: red;
 }

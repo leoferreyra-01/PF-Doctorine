@@ -7,6 +7,13 @@ const { check } = require('express-validator');
 
 //|+| Tested on routerTurns! ✔️
 const xValidateTurnCollisions = check('time')
+  .default(undefined)
+  .custom((value, { req }) => {
+    if (!value) {
+      throw new Error('Time is required.');
+    }
+    return true;
+  })
   //|> VALIDATE TURN INTO OFFICE-HOURS
   .custom(async (value, { req }) => {
     const MedicID = req.body.MedicID;
@@ -59,6 +66,9 @@ const xValidateTurnCollisions = check('time')
       ...oldInfoTurn,
       ...infoTurn,
     };
+
+    Turns = Turns.filter(turn => turn.ID !== infoTurn.ID);
+
     if (!validateTurnBetweenTurnsInADay(infoTurn, Turns))
       throw new Error('The turn time and duration collide with another turn.');
 
@@ -168,45 +178,7 @@ function validateTurn(turn, turns, officeHours) {
   return true;
 }
 
-//|> GET TURNS AVAILABLE
-// Create a list of turns availables, based on a date and a turn standard duration.
-// date: 'yyyy-mm-dd'. Provided by the user-patient.
-// turnStandardDuration: FLOAT. Where 15min = 0.25. Provided by the infoClinic.
-function turnsAvailable(
-  turns = [],
-  officeHours = [],
-  turnStandardDuration = 0.5,
-  date = 'yyyy-mm-dd'
-) {
-  const turnsAvailable = [];
-
-  for (let i = 0; i <= 24; i += 0.25) {
-    const turn = {
-      date,
-      time: i,
-      duration: turnStandardDuration,
-    };
-
-    if (validateTurn(turn, turns, officeHours)) {
-      turnsAvailable.push(turn);
-    }
-  }
-
-  return turnsAvailable;
-}
-
-//|> DATE TO STRING
-function dateToString(date) {
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
-
-  return `${year}-${month}-${day}`;
-}
-
 module.exports = {
   validateTurnCollisions,
   xValidateTurnCollisions,
-  turnsAvailable,
-  dateToString,
 };

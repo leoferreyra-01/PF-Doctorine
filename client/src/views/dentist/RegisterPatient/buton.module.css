@@ -48,8 +48,7 @@
 .danger:focus-visible {
   border: 2px solid #f44336;
 }
-/* , .danger_img, .danger_hp, .danger_atck,
-.danger_def,.danger_speed,.danger_height,.danger_weight*/
+
 @keyframes shake {
   25% {
     transform: translateX(4px);

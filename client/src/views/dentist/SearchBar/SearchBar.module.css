@@ -26,12 +26,10 @@
   text-transform: none;
 }
 
-
 .boton:disabled {
   pointer-events: none;
   background-color: #009ce546;
 }
-
 
 .boton:hover {
   background-color: #006db3;

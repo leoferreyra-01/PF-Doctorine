@@ -51,6 +51,7 @@ module.exports = {
         telephone,
         email,
         officeHours,
+        turnStandardDuration,
         imgLogo,
       } = req.body;
 
@@ -64,6 +65,7 @@ module.exports = {
         telephone,
         email,
         officeHours,
+        turnStandardDuration,
         imgLogo,
       };
 
@@ -86,6 +88,7 @@ module.exports = {
         telephone,
         email,
         officeHours,
+        turnStandardDuration,
         imgLogo,
       } = req.body;
 
@@ -100,6 +103,7 @@ module.exports = {
         telephone,
         email,
         officeHours,
+        turnStandardDuration,
         imgLogo,
       };
 

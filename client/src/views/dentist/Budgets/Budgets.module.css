@@ -41,7 +41,6 @@
   align-items: center;
 }
 
-
 .b_container_error {
   display: flex;
   padding: 16px;
@@ -49,6 +48,7 @@
   border: 1px solid #ef5350;
   justify-content: space-between;
 }
+
 .x_icon {
   background: none;
   cursor: pointer;
