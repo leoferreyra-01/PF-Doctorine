@@ -24,10 +24,11 @@ export default function PatientDetails() {
   const filledEvolutions = !!evolutions.length;
 
   useEffect(() => {
-    if (!filledStudies) dispatch(getStudies(patientID));
-    if (!filledEvolutions) dispatch(getEvolutions(patientID));
-    // if (Object.keys(patient).length === 0)
-    dispatch(getPatient(patientID));
+    setTimeout(() => {
+      if (!filledStudies) dispatch(getStudies(patientID));
+      if (!filledEvolutions) dispatch(getEvolutions(patientID));
+    }, 1000);
+    if (Object.keys(patient).length === 0) dispatch(getPatient(patientID));
     // return () => dispatch(clear());
   }, []);
 

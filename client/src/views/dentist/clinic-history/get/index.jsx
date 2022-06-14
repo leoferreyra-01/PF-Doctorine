@@ -90,13 +90,12 @@ export default function ClinicalHistory({ id }) {
     }
   });
 
-  
   useEffect(() => {
     dispatch(getClinicalHistory(id));
 
-    return () => {
-      dispatch(clear());
-    };
+    // return () => {
+    //   dispatch(clear());
+    // };
   }, [dispatch, id]); //]
 
   return (
