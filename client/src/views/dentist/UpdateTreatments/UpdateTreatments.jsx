@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import s from './UpdateTreatments.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { getTreatments, updateTreatment } from '../../../redux/actions';
 
 //|| agregado por Laura
@@ -52,7 +51,7 @@ function UpdateTreatments() {
               console.log(params);
               console.log(event);
               console.log(details);
-              //dispatch(updateTreatment({ ID: params.id, price: params.value }));
+              dispatch(updateTreatment({ ID: params.id, price: params.value }));
             }}
             rows={treatments.map(t => ({
               id: t.ID,
