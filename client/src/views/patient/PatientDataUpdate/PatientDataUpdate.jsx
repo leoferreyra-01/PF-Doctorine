@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { updatePatient } from '../../../redux/actions';
 import './PatientDataUpdate.css';
 import toast from 'react-hot-toast';
@@ -237,6 +237,7 @@ const PatientDataUpdate = () => {
             Update
           </button>
         </form>
+        <Link to="/home/create-clinical-history">create </Link>
       </div>
     </div>
   );

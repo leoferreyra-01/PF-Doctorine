@@ -185,6 +185,8 @@ function SignUp() {
               footer: '<a href="">Do you have doubts ?</a>',
             });
           }, 2500);
+          dispatch(home(select));
+          dispatch(getPatientDni2(user.document));
           navigate('/home/dataUpdate');
         }
       }, 3000);

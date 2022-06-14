@@ -38,7 +38,11 @@ async function getHistoryClinicPId(id) {
     where: { PatientID: id },
     include: [Patient, Study],
   });
-  return hcid;
+  if (!hcid) {
+    return 'No hay Hc';
+  } else {
+    return hcid;
+  }
 }
 
 module.exports = {

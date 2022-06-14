@@ -80,6 +80,10 @@ function App() {
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
             <Route path="payments" element={<BudgetPayment />} />
+            <Route
+              path="create-clinical-history"
+              element={<RegisterClinicalHistory />}
+            />
           </Route>
         )}
       </Routes>
