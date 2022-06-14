@@ -1,10 +1,14 @@
-import React from 'react';
+// import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './HeaderPatient.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 export default function Header({ title }) {
+
+  if (title === ' PatientCH') title = 'Clinic history'
+
   return (
     // <div className={`${s.header_container}`}>
     <div className='header_container'>
@@ -28,7 +32,7 @@ export default function Header({ title }) {
         />
       </div>
       <div className='help_container'>
-      <Link to="/home/payments">
+        <Link to="/home/payments">
           <button className="web_btn">Pagos</button>
         </Link>
         <FontAwesomeIcon

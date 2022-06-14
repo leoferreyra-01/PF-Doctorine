@@ -24,6 +24,9 @@ import SearchPatient from './views/patient/searchPatient/searchPatient';
 import PatientHome from './views/patient/PatientHome/PatientHome';
 import PatientData from './views/patient/PatientData/PatientData';
 import PatientDataUpdate from './views/patient/PatientDataUpdate/PatientDataUpdate';
+import PatientCH from './views/patient/PatientCH/PatientCH';
+import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
+
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
 import ChangePassword from './views/dentist/UpdateMedic/ChangePassword/ChangePassword'
@@ -32,6 +35,7 @@ import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNSt
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
+  const user = useSelector(state => state.searchedPatient)
   return (
     <div className={s.global_container}>
       <Routes>
@@ -71,9 +75,12 @@ function App() {
             <Route path="data" element={<PatientData />} />
             <Route path="appointment" element={<CalendarFunction />} />
             <Route path="dataUpdate" element={<PatientDataUpdate />} />
+            <Route path="PatientCH" element={<PatientCH />}></Route>
+            <Route path="PatientCH/PatientCHPdf" element={<PatientCHPdf />} />
             <Route path="payments" element={<BudgetPatient />} />
             <Route path="evolutionsNStudies" element={<EvolutionsNStudies/>} />
           </Route>
+
         )}
       </Routes>
     </div>

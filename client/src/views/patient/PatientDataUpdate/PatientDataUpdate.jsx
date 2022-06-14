@@ -6,6 +6,7 @@ import './PatientDataUpdate.css';
 import toast from 'react-hot-toast';
 import { getPatientDni2 } from '../../../redux/actions';
 import bk_validate from '../../../helpers/backend_validators';
+
 const PatientDataUpdate = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
