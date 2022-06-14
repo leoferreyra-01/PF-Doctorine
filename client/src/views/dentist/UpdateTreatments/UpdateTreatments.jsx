@@ -50,7 +50,7 @@ function UpdateTreatments() {
               console.log(params);
               console.log(event);
               console.log(details);
-              //dispatch(updateTreatment({ id: params.id, price: params.value }));
+              //dispatch(updateTreatment({ ID: params.id, price: params.value }));
             }}
             rows={treatments.map(t => ({
               id: t.ID,

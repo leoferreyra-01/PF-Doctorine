@@ -389,7 +389,7 @@ export default function rootReducer(state = initialState, action) {
 
     case UPDATE_TREATMENT:
       const updatedTreatments = state.treatments.map(t => {
-        if (t.ID === action.payload.id) {
+        if (t.ID === action.payload.ID) {
           return { ...t, price: action.payload.price };
         }
         return t;
