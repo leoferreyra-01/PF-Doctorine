@@ -32,7 +32,9 @@ export default function TurnsDetails({
     axios
       .put(`/turns/update/${ID}`, { time, MedicID, medicAccepts })
       .then(res => dispatch(getTurns()))
-      .then(res => setSelectedTurn(infoTurn))
+      .then(res => {
+        if (conditionalTurnsRendering().length === 1) setSelectedTurn(infoTurn);
+      })
       .then(res => {
         Swal.fire({
           icon: 'success',
@@ -55,22 +57,6 @@ export default function TurnsDetails({
     //|*| Si cancela, debe enviar email al paciente.
 
     const { ID } = JSON.parse(e.target.value);
-
-    /* //|> para evitar eliminar sin 24hs de antelación
-    // Es para la parte de Paciente.
-    const turnDate = new Date(`${date} ${numberToHours(time)}:00`);
-    const yesterdayTurnDate = new Date(
-      turnDate.setDate(turnDate.getDate() - 1)
-    );
-
-    console.log('turnDate => ', turnDate);
-    console.log('yesterdayTurnDate => ', yesterdayTurnDate);
-
-    if (yesterdayTurnDate < new Date())
-      return Swal.fire({
-        icon: 'error',
-        title: 'You cannot cancel a shift without 24 hours notice.',
-      }); */
 
     axios
       .delete(`/turns/delete/${ID}`)
@@ -113,7 +99,7 @@ export default function TurnsDetails({
           return (
             <div key={turn.ID}>
               <p>-----------------------------------------</p>
-              {turn.ID ? <h3>Turn ID {turn.ID}</h3> : <h3>New Turn</h3>}
+              {turn.ID ? <h3>Turn n° {turn.ID}</h3> : <h3>New Turn</h3>}
               <p>
                 Patient accepts: {turn.patientAccepts ? '✔️' : 'Pending...'}
               </p>

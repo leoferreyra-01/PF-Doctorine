@@ -218,7 +218,7 @@ export default function Appointments() {
             title: 'Please select a patient.',
           });
 
-        dispatch(postTurn(infoTurn));
+        dispatch(postTurn({...infoTurn, email: patientSelected.email}));
         setTurnForm(false);
         setPatientSelected(null);
         setData({
@@ -262,10 +262,20 @@ export default function Appointments() {
   }
   //#endregion
 
+  // Constant updates
+  function loop() {
+    setTimeout(function () {
+      dispatch(getTurns());
+
+      loop();
+    }, 10000); // every 10 seconds.
+  }
+
   useEffect(() => {
     dispatch(getTurns());
     dispatch(getInfoClinic());
     dispatch(getAllPatients());
+    loop();
   }, []);
 
   useEffect(() => {

@@ -128,9 +128,12 @@ export default function CalendarFunction() {
 
   const handleChange = impDate => {
     if (
-      PatientTurns.filter(turn =>
-        turn.description.toLocaleLowerCase().includes(CONSULTATION)
-      ).length
+      PatientTurns.filter(turn => {
+        if (turn.description) {
+          return turn.description.toLocaleLowerCase().includes(CONSULTATION);
+        }
+        return false;
+      }).length
     )
       return Swal.fire({
         icon: 'error',
@@ -172,7 +175,7 @@ export default function CalendarFunction() {
         MedicID: 1,
       };
 
-      dispatch(postTurn(infoTurn));
+      dispatch(postTurn({...infoTurn, email: userEmail}));
 
       setAvailableTurns([]);
       funcSetPatientID();
@@ -208,8 +211,23 @@ export default function CalendarFunction() {
     // e.preventDefault(); No usar porque necesito que actualice el estado.
     //|*| Si cancela, debe enviar email al médico.
 
+    const { ID, date, time, medicAccepts } = JSON.parse(e.target.value);
+
+    // para evitar eliminar sin 24hs de antelación
+    const turnDate = new Date(`${date} ${numberToHours(time)}:00`);
+    const yesterdayTurnDate = new Date(
+      turnDate.setDate(turnDate.getDate() - 1)
+    );
+
+    if (yesterdayTurnDate < new Date() && medicAccepts)
+      return Swal.fire({
+        icon: 'error',
+        title:
+          'If your doctor accepted the shift, you cannot cancel a shift without 24 hours notice.',
+      });
+
     axios
-      .delete(`/turns/delete/${e.target.value}`)
+      .delete(`/turns/delete/${ID}`)
       .then(res => {
         funcSetPatientID();
         Swal.fire({
@@ -219,7 +237,13 @@ export default function CalendarFunction() {
           timer: 1500,
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong, try again.',
+        });
+      });
   };
 
   const handlePatientAccepts = e => {
@@ -264,6 +288,17 @@ export default function CalendarFunction() {
     }
   };
 
+  // Constant updates
+  function loop() {
+    setTimeout(function () {
+      funcSetPatientID();
+      loop();
+    }, 10000); // every 10 seconds.
+  }
+  useEffect(() => {
+    loop();
+  }, []);
+
   return (
     <div className={styles.container}>
       <h3>Choose a date from tomorrow onwards.</h3>
@@ -289,7 +324,8 @@ export default function CalendarFunction() {
       {PatientTurns.length &&
         PatientTurns.map(turn => (
           <div key={turn.ID}>
-            <h3>NEXT TURN</h3>
+            <p>--------------------------------------------</p>
+            <h3>Turn n° {turn.ID}</h3>
             <p>Medic accepts: {turn.medicAccepts ? '✔️' : 'Pending...'}</p>
             <p>
               Your confirmation:{' '}
@@ -308,7 +344,7 @@ export default function CalendarFunction() {
             <p>Time: {numberToHours(turn.time)} hs.</p>
             <p>Duration: {turn.duration * 60} min.</p>
             <p>Description: {turn.description}</p>
-            <button onClick={handleDelete} value={turn.ID}>
+            <button onClick={handleDelete} value={JSON.stringify(turn)}>
               ❌ CANCEL
             </button>
           </div>
