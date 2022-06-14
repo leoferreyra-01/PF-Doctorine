@@ -28,6 +28,7 @@ import {
   FILTER_BUDGETS_BY_PENDING,
   GET_CLINICAL_HISTORY,
   GET_TREATMENTS,
+  UPDATE_TREATMENT,
   POST_CLINICAL_HISTORY,
   GET_TOOTH,
   POST_EVOLUTION,
@@ -385,6 +386,19 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         treatments: action.payload,
       };
+
+    case UPDATE_TREATMENT:
+      const updatedTreatments = state.treatments.map(t => {
+        if (t.ID === action.payload.ID) {
+          return { ...t, price: action.payload.price };
+        }
+        return t;
+      });
+      return {
+        ...state,
+        treatments: updatedTreatments,
+      };
+
     case 'POST_STUDY':
       return {
         ...state,

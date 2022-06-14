@@ -34,6 +34,8 @@ import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNSt
 import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
 import PatientCH from './views/patient/PatientCH/PatientCH';
 import UpdateData from './views/dentist/ClinicDetails/ClinicDetails';
+import UpdateTreatments from './views/dentist/UpdateTreatments/UpdateTreatments';
+
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
   return (
@@ -74,6 +76,7 @@ function App() {
               element={<InitialConfig />}
             />
             <Route path="clinic-details/update-data" element={<UpdateData />} />
+            <Route path="updateTreatments" element={<UpdateTreatments />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>

@@ -119,21 +119,32 @@ export default function UpdateData() {
   };
 
   const handleSelectDay = e => {
+    console.log(updatedClinic);
     console.log(e.target.selectedIndex);
-    setSelectedDay({
-      morningMin: deFormatHours(
-        updatedClinic.officeHours[e.target.selectedIndex - 1][0].min
-      ),
-      morningMax: deFormatHours(
-        updatedClinic.officeHours[e.target.selectedIndex - 1][0].max
-      ),
-      afternoonMin: deFormatHours(
-        updatedClinic.officeHours[e.target.selectedIndex - 1][1].min
-      ),
-      afternoonMax: deFormatHours(
-        updatedClinic.officeHours[e.target.selectedIndex - 1][1].max
-      ),
-    });
+    console.log(updatedClinic.officeHours);
+    if (updatedClinic.officeHours[e.target.selectedIndex - 1].length === 0) {
+      setSelectedDay({
+        morningMin: '',
+        morningMax: '',
+        afternoonMin: '',
+        afternoonMax: '',
+      });
+    } else {
+      setSelectedDay({
+        morningMin: deFormatHours(
+          updatedClinic.officeHours[e.target.selectedIndex - 1][0].min
+        ),
+        morningMax: deFormatHours(
+          updatedClinic.officeHours[e.target.selectedIndex - 1][0].max
+        ),
+        afternoonMin: deFormatHours(
+          updatedClinic.officeHours[e.target.selectedIndex - 1][1].min
+        ),
+        afternoonMax: deFormatHours(
+          updatedClinic.officeHours[e.target.selectedIndex - 1][1].max
+        ),
+      });
+    }
   };
 
   const handleHoursChange = e => {
