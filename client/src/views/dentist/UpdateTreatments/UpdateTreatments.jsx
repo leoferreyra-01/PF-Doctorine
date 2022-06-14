@@ -20,24 +20,26 @@ function UpdateTreatments() {
   //|| agregado por Laura
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'creationDate', headerName: 'Creation Date', width: 150 },
+    { field: 'updateDate', headerName: 'Update Date', width: 150 },
     {
       field: 'treatmentType',
       headerName: 'Treatment Type',
-      width: 200,
+      width: 150,
       /* fontSize: '40px', */
       editable: true,
     },
     {
       field: 'description',
       headerName: 'Description',
-      width: 600,
+      width: 300,
       editable: true,
     },
     {
       field: 'price',
       headerName: 'Price',
       type: 'number',
-      width: 200,
+      width: 150,
       editable: true,
     },
   ];
@@ -46,8 +48,15 @@ function UpdateTreatments() {
       <div style={{ height: 550, width: '100%' }}>
         {filledTreatments ? (
           <DataGrid
+            onCellEditCommit={(params, event, details) => {
+              console.log(params);
+              console.log(event);
+              console.log(details);
+            }}
             rows={treatments.map(t => ({
               id: t.ID,
+              creationDate: new Date(t.creationDate).toLocaleString(),
+              updateDate: new Date(t.updateDate).toLocaleString(),
               treatmentType: t.treatmentType,
               description: t.description,
               price: t.price,
