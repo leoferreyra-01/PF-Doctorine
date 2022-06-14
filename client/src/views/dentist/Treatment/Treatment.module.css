@@ -6,6 +6,13 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+
+.treatment_dt {
+  padding: 0.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
 .text {
   font-size: 1.2rem;
   font-weight: 400;

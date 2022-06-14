@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import s from './calendar.module.css';
 import Swal from 'sweetalert2';
 
 //|> REDUX ACTIONS
@@ -273,7 +273,7 @@ export default function Appointments() {
   }, [data]);
 
   return (
-    <div>
+    <div className={s.container}>
       |-------------------------CALENDAR---------------------------|
       <Calendar
         onDrillDown={selectDay}

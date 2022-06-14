@@ -59,7 +59,7 @@ function SignUp() {
     );
   };
 
-  let select = 'medic';
+  let select = 'Medic';
 
   const handleSumbit = async e => {
     try {
@@ -77,7 +77,7 @@ function SignUp() {
       service.setToken(user.token);
       if (user.token) {
         if (user.userType === 'Patient') {
-          select = 'patient';
+          select = 'Patient';
           setTimeout(() => {
             Swal.fire({
               position: 'top',
@@ -94,7 +94,7 @@ function SignUp() {
           }, [2000]);
           dispatch(home(select));
           dispatch(getPatientDni2(user.document));
-          window.localStorage.setItem('user', JSON.stringify(user));
+          // window.localStorage.setItem('user', JSON.stringify(user));
           navigate('/home');
         } else {
           setTimeout(() => {
@@ -185,19 +185,28 @@ function SignUp() {
               footer: '<a href="">Do you have doubts ?</a>',
             });
           }, 2500);
+          dispatch(home(select));
+          dispatch(getPatientDni2(user.document));
           navigate('/home/dataUpdate');
         }
       }, 3000);
     }
   };
 
+  useEffect(() => {
+    const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+    if (loggedTokenJSON) {
+      window.localStorage.removeItem('loggedToken');
+    }
+  }, []);
+
   return (
     <>
-      <Toaster position='top-center' reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
         <ImgSignUp>
           <div className={S.card}>
-            <img className={S.img} src={logo} alt='logo' />
+            <img className={S.img} src={logo} alt="logo" />
           </div>
         </ImgSignUp>
 
@@ -207,43 +216,44 @@ function SignUp() {
             <input
               onChange={handleInputChange}
               value={input.email}
-              placeholder='Email'
-              type='text'
-              name='email'
-              className='input-usuario'
+              placeholder="Email"
+              type="text"
+              name="email"
+              className="input-usuario"
             />
-            {errors.email && <p className='error'>{errors.email}</p>}
+            {errors.email && <p className="error">{errors.email}</p>}
 
             <label>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
-              placeholder='Password'
-              type='password'
-              name='password'
-              className='input-usuario'
+              placeholder="Password"
+              type="password"
+              name="password"
+              className="input-usuario"
             />
-            {errors.password && <p className='error'>{errors.password}</p>}
+            {errors.password && <p className="error">{errors.password}</p>}
             <button>Login</button>
-            <hr className='linea' />
+            <hr className="linea" />
             <GoogleLogin
-              clientId='734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com'
-              buttonText='Login with Google'
+              clientId="734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com"
+              buttonText="Login with Google"
               onSuccess={respuestaGoogle}
               onFailure={(res) => console.log(res)}
               cookiePolicy={'single_host_origin'}
-              className='Google-button'
+              className="Google-button"
               style={{ color: 'black important!' }}
             />
-            <div className='OR' style={{ position: 'relative', top: '-1rem' }}>
+            <div className="OR" style={{ position: 'relative', top: '-1rem' }}>
               <Link
-                className='link-to-signup'
-                id='olv-ct'
-                to={'/PasswordReset'}>
+                className="link-to-signup"
+                id="olv-ct"
+                to={'/PasswordReset'}
+              >
                 Forgot your password?
               </Link>
 
-              <Link className='link-to-signup' id='register' to={'/SignUp'}>
+              <Link className="link-to-signup" id="register" to={'/SignUp'}>
                 Register
               </Link>
             </div>

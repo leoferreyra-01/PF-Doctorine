@@ -1,7 +1,4 @@
-.ic_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.container {
   grid-area: content;
   overflow: auto;
   padding: 60px 40px;
@@ -42,6 +39,17 @@
   margin: 0 0.5rem;
 }
 
+.buton {
+  background-color: #101f33;
+  border: none;
+  padding: 10px;
+  color: aliceblue;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-bottom: 5%;
+  /* width: 20%; */
+}
+
 .danger {
   animation: shake 300ms;
   color: #f44336;
@@ -66,17 +74,6 @@
   75% {
     transform: translateX(4px);
   }
-}
-
-.buton {
-  background-color: #101f33;
-  border: none;
-  padding: 10px;
-  color: aliceblue;
-  border-radius: 5px;
-  margin-top: 2%;
-  margin-bottom: 5%;
-  /* width: 20%; */
 }
 
 .whContainer {

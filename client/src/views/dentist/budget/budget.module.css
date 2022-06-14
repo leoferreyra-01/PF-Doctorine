@@ -4,7 +4,8 @@
   align-items: center; */
   padding: 0.5rem 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
 }
 
 .budget p {
@@ -12,22 +13,13 @@
   font-weight: 400;
 }
 
-/* .pname {
-  margin-left: 10px;
-  margin-right: 10px;
+.buton {
+  background-color: #101f33;
+  text-decoration: none;
+  border: none;
+  padding: 10px;
+  color: aliceblue;
+  border-radius: 5px;
+  justify-self: center;
+  width: 50%;
 }
-
-.date {
-  margin-left: 20px;
-  margin-right: 10px;
-}
-
-.amount {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.status {
-  margin-left: 10px;
-  margin-right: 10px;
-} */

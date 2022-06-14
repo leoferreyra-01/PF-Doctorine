@@ -37,7 +37,6 @@ export default function Budgets() {
   const filledBudgets = !!budgetsToShow.length;
 
   useEffect(() => {
-    console.log(!filledBudgets);
     if (!filledBudgets) dispatch(getAllBudgets());
   }, []);
 
@@ -77,38 +76,42 @@ export default function Budgets() {
       {filledBudgets ? (
         <div className={s.list}>
           <div className={s.name_container}>
-            <div className={`${s.list_item} ${s.pname}`}>
+            <div className={`${s.list_item}`}>
               <h4>Patient Name</h4>
               <ListButtons
                 up={orderBudgetsByNameAsc}
                 down={orderBudgetsByNameDes}
               />
             </div>
-            <div className={`${s.list_item} ${s.date}`}>
+            <div className={`${s.list_item}`}>
               <h4>Date</h4>
               <ListButtons
                 up={orderBudgetsByRecentDate}
                 down={orderBudgetsByOlderDate}
               />
             </div>
-            <div className={`${s.list_item} ${s.amount}`}>
+            <div className={`${s.list_item}`}>
               <h4>Amount</h4>
               <ListButtons
                 up={orderBudgetsByHigherPrice}
                 down={orderBudgetsByLowerPrice}
               />
             </div>
-            <div className={`${s.list_item} ${s.status}`}>
+            <div className={`${s.list_item}`}>
               <h4>Payment Status</h4>
               <ListButtons
                 up={filterPendingBudgets}
                 down={filterCompletedBudgets}
               />
             </div>
+            <div className={`${s.list_item}`}>
+              <h4>Payment Details</h4>
+            </div>
           </div>
           {budgetsToShow.map(budget => (
             <Budget
               key={budget.ID}
+              budgetID={budget.ID}
               totalPrice={budget.totalPrice}
               creationDate={formatDate(budget.creationDate)}
               patientName={budget.patientFullName}

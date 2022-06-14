@@ -18,12 +18,12 @@ const newPassword = async req => {
       throw new Error('New password is required');
     }
 
-    let result = bcrypt.compareSync(
-      currentPassword,
-      user.dataValues.password
-    );
+    let result = bcrypt.compareSync(currentPassword, user.dataValues.password);
     if (result) {
-      const userUpdated = User.update({password: newPassword}, {where: {email: email}});
+      const userUpdated = User.update(
+        { password: newPassword },
+        { where: { email: email } }
+      );
     }
     return result;
   } catch (error) {
@@ -34,7 +34,7 @@ const newPassword = async req => {
 
 const passwordReset = async (req, res) => {
   try {
-    console.log('ESTE ====>', req.body.email)
+    console.log('ESTE ====>', req.body.email);
     const user = await User.findOne({
       where: {
         email: req.body.email,
@@ -42,7 +42,7 @@ const passwordReset = async (req, res) => {
     });
     if (user) {
       let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
+        host: 'smtp.gmail.com',
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
@@ -50,14 +50,14 @@ const passwordReset = async (req, res) => {
           pass: process.env.PASSWORD, // generated ethereal password
         },
       });
-      transporter.verify().then(()=>{
-        console.log('Ready for send mails')
-      })
+      transporter.verify().then(() => {
+        console.log('Ready for send mails');
+      });
       await transporter.sendMail({
         from: '"Reset password 😎" <doctorine.com@gmail.com>', // sender address
         to: req.body.email, // list of receivers
-        subject: "Reset Password Doctorine", // Subject line
-        html: "<b>To reset your password, click on the link</b><br/><div><a href=http://localhost:3000/newPassword>Link</a></div>", // html body
+        subject: 'Reset Password Doctorine', // Subject line
+        html: '<b>To reset your password, click on the link</b><br/><div><a href=http://localhost:3000/newPassword>Link</a></div>', // html body
       });
     } else {
       res.json({ error: 'Usuario no registrado!' });
@@ -74,16 +74,19 @@ const newPasswordReset = async req => {
     if (!user) {
       throw new Error('User not found');
     }
-    if(!password){
+    if (!password) {
       throw new Error('Password is required');
     }
-    const userUpdated = User.update({password: password}, {where: {email: email}});
+    const userUpdated = User.update(
+      { password: password },
+      { where: { email: email } }
+    );
     return userUpdated;
   } catch (error) {
     console.log(error);
     throw new Error('There was a problem updating the password');
   }
-}
+};
 
 module.exports = {
   newPassword,

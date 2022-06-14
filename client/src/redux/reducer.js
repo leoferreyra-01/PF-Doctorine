@@ -8,11 +8,16 @@ import {
   GET_EVOLUTIONS,
   GET_STUDIES,
   CLEAR,
+  POST_CLINIC,
+  UPDATE_CLINIC,
+  GET_CLINIC,
+  CREATE_CLINIC,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
   GET_BUDGETS_DNI,
   GET_BUDGETS_NAME,
   POST_BUDGET,
+  UPDATE_BUDGET,
   ORDER_BUDGETS_BY_DATE_ASC,
   ORDER_BUDGETS_BY_DATE_DES,
   ORDER_BUDGETS_BY_PRICE_ASC,
@@ -29,7 +34,6 @@ import {
   POST_MEDIC_LOGIN,
   POST_PATIENT_LOGIN,
   UPDATE_MEDIC_INFO,
-  POST_CLINIC,
   GET_MEDIC_INFO,
   /////LOGIN
   LOGIN_USER,
@@ -66,6 +70,8 @@ import {
 
 import { orderByNameAsc, orderByNameDes } from '../helpers/orderByName';
 
+const loggedTokenJSON = window.localStorage.getItem('loggedToken');
+
 const initialState = {
   allPatients: [],
   newPatientId: 0,
@@ -76,11 +82,14 @@ const initialState = {
   patient: {},
   medics: [],
   clinic: {},
+  createClinic: false,
   evolutions: [],
   studies: [],
   allBudgets: [],
   budgetsToShow: [],
-  homeToShow: 'patient',
+  homeToShow: loggedTokenJSON
+    ? JSON.parse(loggedTokenJSON).userType
+    : 'Patient',
   treatments: [],
   tooth: [],
   //////LOGIN
@@ -234,6 +243,19 @@ export default function rootReducer(state = initialState, action) {
         allBudgets: [action.payload, ...state.allBudgets],
         budgetsToShow: [action.payload, ...state.allBudgets],
         urlPayment: action.payload.linkPayment,
+      };
+
+    case UPDATE_BUDGET:
+      const updatedBudgets = state.allBudgets.map(b => {
+        if (b.ID === action.payload.ID) {
+          return { ...action.payload, paid: true };
+        }
+        return b;
+      });
+      return {
+        ...state,
+        allBudgets: updatedBudgets,
+        budgetsToShow: updatedBudgets,
       };
 
     case POST_PATIENT:
@@ -407,7 +429,26 @@ export default function rootReducer(state = initialState, action) {
         allPatients: [...state.allPatients, ...action.payload],
       };
 
+    case GET_CLINIC:
+      return {
+        ...state,
+        clinic: action.payload,
+      };
+
+    case CREATE_CLINIC:
+      return {
+        ...state,
+        createClinic: true,
+      };
+
     case POST_CLINIC:
+      return {
+        ...state,
+        clinic: action.payload,
+        createClinic: false,
+      };
+
+    case UPDATE_CLINIC:
       return {
         ...state,
         clinic: action.payload,

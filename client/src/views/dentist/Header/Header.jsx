@@ -1,7 +1,14 @@
 import React from 'react';
 import s from './Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBell,
+  faCircleQuestion,
+  faCircle,
+  faCheck,
+  faChevronDown,
+  faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Header({ title }) {
   return (
@@ -11,15 +18,41 @@ export default function Header({ title }) {
       </div>
       <div className={`${s.avatar_container}`}>
         <button className={s.docs_btn}>Go to docs</button>
-        <div className={`${s.fa_icon}`}>
+        {/* <span className="fa-layers fa-fw fa-lg">
+          <FontAwesomeIcon icon={faCircle} />
+          <FontAwesomeIcon icon={faCheck} transform="shrink-6" />
+        </span> */}
+        {/* <span
+          class="fa-layers fa-fw fa-5x"
+          style={{ backgroundColor: 'MistyRose' }}
+        >
+          <FontAwesomeIcon icon={faEnvelope} />
+          <span
+            class="fa-layers-counter "
+            style={{ backgroundColor: 'tomato' }}
+          >
+            1,419
+          </span>
+        </span> */}
+        <span
+          className={`${s.fa_icon}`}
+          class="fa-layers fa-fw fa-4x fa_icon"
+          // style={{ backgroundColor: 'MistyRose' }}
+        >
           <FontAwesomeIcon
             icon={faBell}
-            size="2x"
+            size="xs"
             // pull="left"
           />
-        </div>
+          {/* <span
+            class="fa-layers-counter fa-layers-top-right"
+            style={{ backgroundColor: 'tomato' }}
+          >
+            1,419
+          </span> */}
+        </span>
         <img
-          src="https://i.gyazo.com/91c25cfe3cba6768abc0f2153ce58538.png"
+          src="https://pngimage.net/wp-content/uploads/2018/06/happy-customer-icon-png-5.png"
           alt="Avatar Icon"
           className={s.avatar}
         />

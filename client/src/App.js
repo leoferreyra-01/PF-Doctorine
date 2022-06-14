@@ -29,13 +29,18 @@ import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
 
 import CalendarFunction from './views/patient/Calendar/Calendar';
 import UpdateMedic from './views/dentist/UpdateMedic/UpdateMedic';
-import ChangePassword from './views/dentist/UpdateMedic/ChangePassword/ChangePassword'
+import ChangePassword from './views/dentist/UpdateMedic/ChangePassword/ChangePassword';
 import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
 import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNStudies.jsx';
+//import BudgetPatient from './views/patient/HeaderPatient/BudgetPatient/BudgetPatient';
+import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialConfig';
+import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
+import UpdateBudget from './views/dentist/UpdateBudget/UpdateBudget';
+import BudgetPayment from './views/patient/HeaderPatient/BudgetPatient/BudgetPayment';
 
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
-  const user = useSelector(state => state.searchedPatient)
+  const user = useSelector(state => state.searchedPatient);
   return (
     <div className={s.global_container}>
       <Routes>
@@ -43,7 +48,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        {homeToShow === 'medic' ? (
+        {homeToShow === 'Medic' ? (
           <Route path="/home" element={<Home />}>
             <Route path="/home/" element={<SearchComponent />} />
             <Route path="calendar" element={<Calendar />} />
@@ -65,9 +70,15 @@ function App() {
             />
             <Route path="doctor" element={<RegisterDoctor />} />
             <Route path="addBudget" element={<AddBudget />} />
-            <Route path='updateMedic' element={<UpdateMedic />} />
-            <Route path='changePassword' element={<ChangePassword />} />
+            <Route path="updateMedic" element={<UpdateMedic />} />
+            <Route path="changePassword" element={<ChangePassword />} />
             <Route path="clinic-details" element={<ClinicDetails />} />
+            <Route path="updateBudget/:budgetID" element={<UpdateBudget />} />
+            <Route
+              path="clinic-details/initial-config"
+              element={<InitialConfig />}
+            />
+            <Route path="clinic-details/update-data" element={<UpdateData />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>
@@ -78,9 +89,12 @@ function App() {
             <Route path="PatientCH" element={<PatientCH />}></Route>
             <Route path="PatientCH/PatientCHPdf" element={<PatientCHPdf />} />
             <Route path="payments" element={<BudgetPatient />} />
-            <Route path="evolutionsNStudies" element={<EvolutionsNStudies/>} />
+            <Route path="evolutionsNStudies" element={<EvolutionsNStudies />} />
+            <Route
+              path="create-clinical-history"
+              element={<RegisterClinicalHistory />}
+            />
           </Route>
-
         )}
       </Routes>
     </div>

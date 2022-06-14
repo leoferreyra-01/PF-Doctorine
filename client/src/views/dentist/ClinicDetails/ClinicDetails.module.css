@@ -3,3 +3,22 @@
   overflow: auto;
   padding: 60px 40px;
 }
+
+.btn {
+  background-color: #101f33;
+  text-decoration: none;
+  border: none;
+  padding: 10px;
+  color: aliceblue;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-bottom: 5%;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.text {
+  font-size: 1.8rem;
+}

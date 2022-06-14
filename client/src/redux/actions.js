@@ -9,6 +9,7 @@ export const GET_BUDGETS = 'GET_BUDGETS';
 export const GET_BUDGETS_DNI = 'GET_BUDGETS_DNI';
 export const GET_BUDGETS_NAME = 'GET_BUDGETS_NAME';
 export const POST_BUDGET = 'POST_BUDGET';
+export const UPDATE_BUDGET = 'UPDATE_BUDGET';
 export const ORDER_BUDGETS_BY_NAME_ASC = 'ORDER_BUDGETS_BY_NAME_ASC';
 export const ORDER_BUDGETS_BY_NAME_DES = 'ORDER_BUDGETS_BY_NAME_DES';
 export const ORDER_BUDGETS_BY_DATE_ASC = 'ORDER_BUDGETS_BY_DATE_ASC';
@@ -35,7 +36,10 @@ export const GET_CLINICAL_HISTORY = 'GET_CLINICAL_HISTORY';
 export const POST_CLINICAL_HISTORY = 'POST_CLINICAL_HISTORY';
 export const GET_CLINICAL_HISTORY_FOR_CREATE =
   'GET_CLINICAL_HISTORY_FOR_CREATE';
+export const GET_CLINIC = 'GET_CLINIC';
+export const CREATE_CLINIC = 'CREATE_CLINIC';
 export const POST_CLINIC = 'POST_CLINIC';
+export const UPDATE_CLINIC = 'UPDATE_CLINIC';
 export const GET_TOOTH = 'GET_TOOTH';
 export const GET_TREATMENTS = 'GET_TREATMENTS';
 //--------------------LOGIN-----------------------//
@@ -190,19 +194,36 @@ export function postBudget(budget) {
     try {
       const { patientFullName, patientDocument, ...restOfBudget } = budget;
       const budgetWithID = (await axios.post('/Budgets', restOfBudget)).data;
-      const { linkPayment } = (
+      const { linkPayment, id } = (
         await axios.post('/payments/create_preference', budgetWithID)
       ).data;
-      await axios.put('/Budgets', { ID: budgetWithID.ID, linkPayment });
+      await axios.put('/Budgets', {
+        ID: budgetWithID.ID,
+        linkPayment,
+        idPayment: id,
+      });
       const frontBudget = {
         ...budgetWithID,
         linkPayment,
         patientFullName,
         patientDocument,
+        idPayment: id,
       };
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
+      alert(error.message);
+    }
+  };
+}
+
+export function updateBudget(budget) {
+  return async function (dispatch) {
+    try {
+      console.log(budget);
+      await axios.put('/Budgets', budget);
+      return dispatch({ type: UPDATE_BUDGET, payload: budget });
+    } catch (error) {
       alert(error.message);
     }
   };
@@ -285,7 +306,7 @@ export function loginUser(payload) {
 export function postPasswordReset(email) {
   return async function (dispatch) {
     try {
-      console.log(email)
+      console.log(email);
       const response = await axios.post('/password/reset', email);
       if (response.data.error) {
         console.log('ESTO ES RESPONSE: ', response.data);
@@ -568,6 +589,19 @@ export function getMedicInfo(email) {
   };
 }
 
+export function getClinic() {
+  return async function (dispatch) {
+    try {
+      const clinic = await axios.get('/Clinics');
+      if (clinic[0] === true && clinic[1].error.msg === 'No clinics added!') {
+        return dispatch({ type: CREATE_CLINIC });
+      }
+      return dispatch({ type: GET_CLINIC, payload: clinic.data[0] });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function updatePassword(changedPassword) {
   return async function () {
     try {
@@ -580,6 +614,28 @@ export function updatePassword(changedPassword) {
         title: error.response.data.error,
         text: error.response.data.description,
       });
+    }
+  };
+}
+
+export function postCLinic(clinic) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/Clinics', clinic);
+      return dispatch({ type: POST_CLINIC, payload: clinic });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateClinic(clinic) {
+  return async function (dispatch) {
+    try {
+      const updatedClinic = (await axios.put('/Clinics', clinic)).data;
+      return dispatch({ type: UPDATE_CLINIC, payload: updatedClinic });
+    } catch (error) {
+      console.log(error);
     }
   };
 }
