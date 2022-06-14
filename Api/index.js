@@ -33,7 +33,7 @@ const { preload_db } = require('./preload_db/');
 
 
 
-const syncConfig = { force: true }; // -FIX-
+const syncConfig = { force: false }; // -FIX-
 const PORT = parseInt(process.env.PORT);
 
 conn.sync(syncConfig).then(() => {

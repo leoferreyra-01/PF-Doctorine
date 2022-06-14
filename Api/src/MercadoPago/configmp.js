@@ -1,4 +1,5 @@
 const mercadopago = require('mercadopago');
+require('dotenv').config();
 // Agrega credenciales
 const router = require('express').Router();
 const axios = require('axios');
