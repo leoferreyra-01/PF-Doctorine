@@ -9,9 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import PatientCHPdf from './PatientCHPdf';
 
-
-
-
 const PatientCH = ({ id }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,19 +19,19 @@ const PatientCH = ({ id }) => {
   const month = today.getMonth() + 1;
   const day = today.getDate();
   const date = day + '/' + month + '/' + year;
-  const patientID = SearchedPatient.Patient.ID
+  const patientID = SearchedPatient.Patient.ID;
   const toRender = [];
-  const data = 'ErnestoAbril'
+  const data = 'ErnestoAbril';
 
   for (const property in clinicalHistory) {
     toRender.push(`${property}:  ${clinicalHistory[property]}`); //${clinicalHistory[property]}
   }
 
-  console.log(toRender)
+  console.log(toRender);
 
   toRender.shift(); //de aca saco las tres cosas que guarde arriba
 
-  console.log(toRender)
+  console.log(toRender);
 
   const toRenderParsed = toRender.map(property => {
     if (property.charAt(0) === 'b' && property.charAt(1) === '_') {
@@ -103,12 +100,12 @@ const PatientCH = ({ id }) => {
           .toUpperCase();
       }
     }
-  })
+  });
 
   window.localStorage.setItem('patientCH', JSON.stringify(toRenderParsed));
 
-  console.log(toRenderParsed)
-  console.log(toRenderParsed)
+  console.log(toRenderParsed);
+  console.log(toRenderParsed);
 
   const [user, setUser] = useState({
     name: SearchedPatient.name,
@@ -124,12 +121,11 @@ const PatientCH = ({ id }) => {
     email: SearchedPatient.email,
   });
 
-
   useEffect(() => {
     dispatch(getClinicalHistory(2));
-    return () => {
-      dispatch(clear());
-    };
+    // return () => {
+    //   dispatch(clear());
+    // };
   }, [dispatch, id]); //]
 
   // const handleOnClick = () => {
@@ -141,7 +137,7 @@ const PatientCH = ({ id }) => {
   return (
     <div className="container">
       <div className="container2">
-        <form >
+        <form>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
               <div className="subtitle">Document</div>
@@ -149,7 +145,7 @@ const PatientCH = ({ id }) => {
                 className="input"
                 name="document"
                 value={user.document}
-              // onChange={handleChange}
+                // onChange={handleChange}
               ></input>
             </div>
             <div className="containerDivInput" style={{ width: '20vw' }}>
@@ -158,7 +154,7 @@ const PatientCH = ({ id }) => {
                 className="input"
                 name="name"
                 value={user.name}
-              // onChange={handleChange}
+                // onChange={handleChange}
               ></input>
             </div>
             <div className="containerDivInput" style={{ width: '20vw' }}>
@@ -167,7 +163,7 @@ const PatientCH = ({ id }) => {
                 className="input"
                 name="lastName"
                 value={user.lastName}
-              // onChange={handleChange}
+                // onChange={handleChange}
               ></input>
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
@@ -177,26 +173,26 @@ const PatientCH = ({ id }) => {
                 // name="birth"
                 className="input"
                 value={date}
-              // onChange={handleChange}
+                // onChange={handleChange}
               ></input>
             </div>
           </div>
           {/* </div> */}
-
         </form>
       </div>
       {/* <div className="container"> */}
-      <div className="container3"> Detalle de la Historia Clínica
+      <div className="container3">
+        {' '}
+        Detalle de la Historia Clínica
         <div>
           <div className="rowContainer">
             {toRenderParsed ? (
-              <div className='rowContainer2' >
+              <div className="rowContainer2">
                 {toRenderParsed.map(property => (
-                  <div className='property' key={id}>
+                  <div className="property" key={id}>
                     {property}
                   </div>
                 ))}
-
               </div>
             ) : (
               <div>
@@ -215,14 +211,15 @@ const PatientCH = ({ id }) => {
       {/* <button onClick={() => navigate('PatientCHPdf')} type='button' className="button">
         Download
       </button> */}
-      <PDFDownloadLink document={<PatientCHPdf />} fileName='Clinic History.pdf'>
-        <button>
-          Download
-        </button>
+      <PDFDownloadLink
+        document={<PatientCHPdf />}
+        fileName="Clinic History.pdf"
+      >
+        <button>Download</button>
       </PDFDownloadLink>
       {/* <PatientCHPdf poema={user}></PatientCHPdf> */}
-    </div >
-  )
+    </div>
+  );
 };
 
-export default PatientCH
+export default PatientCH;
