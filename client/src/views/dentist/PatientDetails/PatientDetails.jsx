@@ -17,14 +17,17 @@ export default function PatientDetails() {
   let { patientID } = useParams();
   const dispatch = useDispatch();
   const patient = useSelector(state => state.patient);
+  console.log('DETAILS/patient => ', patient);
   const studies = useSelector(state => state.studies);
   const filledStudies = !!studies.length;
   const evolutions = useSelector(state => state.evolutions);
   const filledEvolutions = !!evolutions.length;
 
   useEffect(() => {
-    if (!filledStudies) dispatch(getStudies(patientID));
-    if (!filledEvolutions) dispatch(getEvolutions(patientID));
+    setTimeout(() => {
+      if (!filledStudies) dispatch(getStudies(patientID));
+      if (!filledEvolutions) dispatch(getEvolutions(patientID));
+    }, 1000);
     if (Object.keys(patient).length === 0) dispatch(getPatient(patientID));
     // return () => dispatch(clear());
   }, []);
@@ -33,7 +36,7 @@ export default function PatientDetails() {
   return (
     <div className={s.dt_container}>
       <SearchBar
-        placeholder='Search studies or evolutions'
+        placeholder="Search studies or evolutions"
         onClick={detailsSearch}
       />
       <Link to={`/home/addEvolution/${patientID}`}>
