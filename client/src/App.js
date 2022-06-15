@@ -37,71 +37,86 @@ import PatientCH from './views/patient/PatientCH/PatientCH';
 import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateTreatments from './views/dentist/UpdateTreatments/UpdateTreatments';
 
+import { useDispatch } from 'react-redux';
+import { getTurns } from './redux/actions';
+
 function App() {
   const homeToShow = useSelector(state => state.homeToShow);
 
+  const dispatch = useDispatch();
+  function loop() {
+    setTimeout(() => {
+      dispatch(getTurns());
+
+      loop();
+    }, 10000); // every 10 seconds.
+  }
+
   useEffect(() => {
-    function start(){
+    loop();
+
+    function start() {
       gapi.client.init({
-        clientId: '734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com',
-        scope: ""
-      })
-    };
+        clientId:
+          '734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com',
+        scope: '',
+      });
+    }
     gapi.load('client:auth2', start);
   });
 
   return (
     <div className={s.global_container}>
       <Routes>
-        <Route path='/' element={<SignIn />} />
-        <Route path='/SignUp' element={<SignUp />} />
-        <Route path='/passwordReset' element={<PasswordReset />} />
-        <Route path='/newPassword' element={<NewPassword />} />
+        <Route path="/" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/newPassword" element={<NewPassword />} />
         {homeToShow === 'Medic' ? (
-          <Route path='/home' element={<Home />}>
-            <Route path='/home/' element={<SearchComponent />} />
-            <Route path='calendar' element={<Calendar />} />
-            <Route path='budget' element={<Budgets />} />
-            <Route path='register' element={<RegisterPatient />} />
-            <Route path=':patientID' element={<PatientDetails />} />
+          <Route path="/home" element={<Home />}>
+            <Route path="/home/" element={<SearchComponent />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="budget" element={<Budgets />} />
+            <Route path="register" element={<RegisterPatient />} />
+            <Route path=":patientID" element={<PatientDetails />} />
             <Route
-              path='/home/addEvolution/:patientID'
+              path="/home/addEvolution/:patientID"
               element={<AddEvolution />}
             />
-            <Route path='/home/studies/:patientID' element={<AddStudy />} />
+            <Route path="/home/studies/:patientID" element={<AddStudy />} />
             <Route
-              path='/home/updatePatient/:patientID'
+              path="/home/updatePatient/:patientID"
               element={<UpdatePatient />}
             />
             <Route
-              path='create-clinical-history'
+              path="create-clinical-history"
               element={<RegisterClinicalHistory />}
             />
-            <Route path='doctor' element={<RegisterDoctor />} />
-            <Route path='addBudget' element={<AddBudget />} />
-            <Route path='updateMedic' element={<UpdateMedic />} />
-            <Route path='changePassword' element={<ChangePassword />} />
-            <Route path='clinic-details' element={<ClinicDetails />} />
-            <Route path='updateBudget/:budgetID' element={<UpdateBudget />} />
+            <Route path="doctor" element={<RegisterDoctor />} />
+            <Route path="addBudget" element={<AddBudget />} />
+            <Route path="updateMedic" element={<UpdateMedic />} />
+            <Route path="changePassword" element={<ChangePassword />} />
+            <Route path="clinic-details" element={<ClinicDetails />} />
+            <Route path="updateBudget/:budgetID" element={<UpdateBudget />} />
             <Route
-              path='clinic-details/initial-config'
+              path="clinic-details/initial-config"
               element={<InitialConfig />}
             />
             <Route path="clinic-details/update-data" element={<UpdateData />} />
             <Route path="infoTreatments" element={<UpdateTreatments />} />
           </Route>
         ) : (
-          <Route path='/home' element={<PatientHome />}>
-            <Route path='/home/' element={<SearchPatient />} />
-            <Route path='data' element={<PatientData />} />
-            <Route path='appointment' element={<CalendarFunction />} />
-            <Route path='dataUpdate' element={<PatientDataUpdate />} />
-            <Route path='payments' element={<BudgetPayment />} />
-            <Route path='PatientCH/PatientCHPdf' element={<PatientCHPdf />} />
-            <Route path='evolutionsNStudies' element={<EvolutionsNStudies />} />
-            <Route path='PatientCH' element={<PatientCH />} />
+          <Route path="/home" element={<PatientHome />}>
+            <Route path="/home/" element={<SearchPatient />} />
+            <Route path="data" element={<PatientData />} />
+            <Route path="appointment" element={<CalendarFunction />} />
+            <Route path="dataUpdate" element={<PatientDataUpdate />} />
+            <Route path="payments" element={<BudgetPayment />} />
+            <Route path="PatientCH/PatientCHPdf" element={<PatientCHPdf />} />
+            <Route path="evolutionsNStudies" element={<EvolutionsNStudies />} />
+            <Route path="PatientCH" element={<PatientCH />} />
             <Route
-              path='create-clinical-history'
+              path="create-clinical-history"
               element={<RegisterClinicalHistory />}
             />
           </Route>

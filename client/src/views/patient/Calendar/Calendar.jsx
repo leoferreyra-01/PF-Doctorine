@@ -93,8 +93,11 @@ export default function CalendarFunction() {
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
   useEffect(() => {
-    dispatch(getTurns());
     funcSetPatientID();
+  }, [unavailableTurns]);
+
+  useEffect(() => {
+    dispatch(getTurns());
     dispatch(getInfoClinic());
 
     const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
@@ -250,22 +253,27 @@ export default function CalendarFunction() {
     // e.preventDefault(); No usar porque necesito que actualice el estado.
     //|*| Si acepta, debe enviar email al médico.
 
-    const { ID, time, MedicID } = JSON.parse(e.target.value);
+    const { ID, time, MedicID, description } = JSON.parse(e.target.value);
     // console.log('ID => ', ID);
     // console.log('time => ', time);
 
     //#region PAYMENT
+    if (description.toLowerCase().includes(CONSULTATION))
+      navigate('/home/payments');
+    else
+      return axios
+        .put(`/turns/update/${ID}`, { time, MedicID, patientAccepts: true })
+        .then(res => {
+          funcSetPatientID();
+          Swal.fire({
+            icon: 'success',
+            title: 'Turn accepted!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch(err => console.error(err));
 
-    // const budget = {
-    //   PatientID: PatientID,
-    //   treatments:
-    //     '[{"ID":"0101","treatmentType":"consultas","description":"Examen - Diagnóstico - Fichado y Plan de Tratamiento.","price":1170,"quantity":1,"subTotalPrice":1170}]',
-    //   discount: null,
-    //   totalPrice: '1170',
-    // };
-
-    // dispatch(postBudget(budget));
-    navigate('/home/payments');
     //#endregion
     console.log(allBudgets);
     const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
@@ -287,17 +295,6 @@ export default function CalendarFunction() {
       }
     }
   };
-
-  // Constant updates
-  function loop() {
-    setTimeout(function () {
-      funcSetPatientID();
-      loop();
-    }, 10000); // every 10 seconds.
-  }
-  useEffect(() => {
-    loop();
-  }, []);
 
   return (
     <div className={styles.container}>

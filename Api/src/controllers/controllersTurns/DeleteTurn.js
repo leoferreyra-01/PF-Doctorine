@@ -35,7 +35,7 @@ async function deleteTurns(req, res) {
       });
     });
 
-    //|> EMAIL
+    //#region |> EMAIL
     const turn = (await Turn.findByPk(ID)).dataValues;
     const medic = (
       await Medic.findOne({ where: { ID: turn.MedicID }, include: [User] })
@@ -65,12 +65,14 @@ async function deleteTurns(req, res) {
         subject: `Turn accepted for ${req.body.date}`, // Subject line
         html: `<b>The doctor ${medic.User.dataValues.name} ${
           medic.User.dataValues.lastName
-        } has accepted a Turn on ${req.body.date} at ${numberToHours(req.body.time)}hs.</b>`, // html body
+        } has accepted a Turn on ${req.body.date} at ${numberToHours(
+          req.body.time
+        )}hs.</b>`, // html body
       });
     } else {
       res.json({ error: 'User not found!' });
     }
-
+    //#endregion
   } catch (error) {
     console.error(error);
     res.status(404).json([true, { error: { msg: error.message } }]);
