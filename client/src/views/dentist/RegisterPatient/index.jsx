@@ -65,7 +65,7 @@ export default function RegisterPatient() {
           <input
             type="text"
             {...register('document')}
-            placeholder="Enter patient's ID"
+            placeholder="Enter patient's document"
             className={`${s.input} ${errors.document ? `${s.danger}` : ''}`}
           />
           {errors.document && (
@@ -88,24 +88,24 @@ export default function RegisterPatient() {
         <div className={s.input_container}>
           <input
             type="text"
-            {...register('street')}
-            placeholder="Enter patient's street"
-            className={`${s.input} ${errors.street ? `${s.danger}` : ''}`}
-          />
-          {errors.street && (
-            <span className={s.danger}>{errors.street.message}</span>
-          )}
-        </div>
-
-        <div className={s.input_container}>
-          <input
-            type="text"
             {...register('city')}
             placeholder="Enter patient's city"
             className={`${s.input} ${errors.city ? `${s.danger}` : ''}`}
           />
           {errors.city && (
             <span className={s.danger}>{errors.city.message}</span>
+          )}
+        </div>
+
+        <div className={s.input_container}>
+          <input
+            type="text"
+            {...register('street')}
+            placeholder="Enter patient's street"
+            className={`${s.input} ${errors.street ? `${s.danger}` : ''}`}
+          />
+          {errors.street && (
+            <span className={s.danger}>{errors.street.message}</span>
           )}
         </div>
 
@@ -172,7 +172,7 @@ export default function RegisterPatient() {
         </div>
 
         <div className={s.input_container}>
-          <h3>Enter the patient's date of birth</h3>
+          <h3>Enter the patient's birth date</h3>
           <input
             type="date"
             {...register('birth')}
