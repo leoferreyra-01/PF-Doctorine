@@ -20,7 +20,7 @@ export default function ClinicalHistory({ id }) {
   toRender.pop();
   toRender.shift();
 
-  const toRenderParsed = toRender.map(property => {
+  const toRenderParsed = toRender.map(property => { 
     if (property.charAt(0) === 'b' && property.charAt(1) === '_') {
       return property
         .substring(2)

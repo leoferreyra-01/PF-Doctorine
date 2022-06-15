@@ -162,15 +162,15 @@ function addEvolution() {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={e => handleSubmit(e)}>
           <label className={S.label}>Observations</label>
           <input
             value={data.observations}
-            placeholder="Observations"
-            type="text"
-            name="observations"
+            placeholder='Observations'
+            type='text'
+            name='observations'
             onChange={handleChange}
           />
 
@@ -181,8 +181,8 @@ function addEvolution() {
           <label className={S.label}>Date</label>
           <input
             value={data.date}
-            type="date"
-            name="date"
+            type='date'
+            name='date'
             onChange={handleChange}
           />
 
@@ -191,16 +191,16 @@ function addEvolution() {
           <label className={S.label}>Medic</label>
           <select
             onChange={e => handleSelect(e)}
-            name="medico"
-            className={S.casillas}
-          >
-            <option value="">Select Medic</option>
+            name='medico'
+            className={S.casillas}>
+            <option value=''>Select Medic</option>
             {medicos &&
               medicos.map(medicos => (
                 <option
                   value={medicos.ID}
-                  className={S.casillas}
-                >{`${medicos.fullName} (${medicos.Medic.tuition_number})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${medicos.fullName} (${medicos.Medic.tuition_number})`}</option>
               ))}
           </select>
 
@@ -212,12 +212,12 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.medico.map(t => {
-                  let medic = medicos.filter(me => (me.ID === t ? me : null));
+                  let medic = medicos.filter(me => (me.ID === parseInt(t) ? me : null)); 
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteMedic(e)} name={t}>
-                        {/* <span role="img" aria-label="X"> */}❌
-                        {/* </span> */}
+                        <span role="img" aria-label="X">❌
+                        </span>
                       </button>
 
                       {`${medic[0].name}${medic[0].lastName} (${medic[0].Medic.tuition_number})`}
@@ -231,18 +231,18 @@ function addEvolution() {
           <label className={S.label}>Treatment</label>
           <select
             onChange={e => handleSelect(e)}
-            name="treatments"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='treatments'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Treatment
             </option>
             {treatment &&
               treatment.map(tr => (
                 <option
                   value={tr.ID}
-                  className={S.casillas}
-                >{`${tr.description}(${tr.ID})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${tr.description}(${tr.ID})`}</option>
               ))}
           </select>
 
@@ -254,12 +254,12 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.treatments.map(t => {
-                  let treat = treatment.filter(tr => (tr.ID === t ? tr : null));
+                  let treat = treatment.filter(tr => (tr.ID === parseInt(t) ? tr : null));
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTreatment(e)} name={t}>
-                        {/* <span role="img" aria-label="X"> */}❌
-                        {/* </span> */}
+                        <span role="img" aria-label="X">❌
+                        </span>
                       </button>
                       {`${treat[0].description}(${treat[0].ID})`}
                     </li>
@@ -272,18 +272,18 @@ function addEvolution() {
           <label className={S.label}>Teeth</label>
           <select
             onChange={e => handleSelect(e)}
-            name="tooth"
-            className={S.casillas2}
-          >
-            <option hidden value="">
+            name='tooth'
+            className={S.casillas2}>
+            <option hidden value=''>
               Select Teeth
             </option>
             {tooth &&
               tooth.map(t => (
                 <option
                   value={t.ID}
-                  className={S.casillas}
-                >{`${t.ID}(zone:${t.zone} & pos:${t.position})`}</option>
+                  className={
+                    S.casillas
+                  }>{`${t.ID}(zone:${t.zone} & pos:${t.position})`}</option>
               ))}
           </select>
 
@@ -294,12 +294,13 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.tooth.map(t => {
-                  const th = tooth.filter(teeth => teeth.ID === t && teeth);
+                  const th = tooth.filter(teeth => teeth.ID === parseInt(t) && teeth);
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTeeth(e)} name={t}>
-                        {/* <span role="img" aria-label="X"> */}❌
-                        {/* </span> */}
+                        <span role='img' aria-label='X'>
+                          ❌
+                        </span>
                       </button>
                       {`${th[0].ID}(zone:${th[0].zone} & pos:${th[0].position})`}
                     </li>
@@ -309,7 +310,7 @@ function addEvolution() {
             </div>
           )}
 
-          <button type="submit" className={S.btn}>
+          <button type='submit' className={S.btn}>
             Add Evolution
           </button>
         </form>

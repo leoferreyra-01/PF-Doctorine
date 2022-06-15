@@ -4,13 +4,15 @@ import logo from './Logo/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import service from '../services/login';
 import { useDispatch, useSelector } from 'react-redux';
-import GoogleLogin from 'react-google-login';
+import {GoogleLogin} from 'react-google-login';
 import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import S from './SingIn.module.css';
-import { home, getPatientDni2 } from '../../redux/actions';
+import { home, getPatientDni2, postPatient } from '../../redux/actions';
 import Swal from 'sweetalert2';
 
+
+// "You have created a new client application that uses libraries for user authentication or authorization that will soon be deprecated. New clients must use the new libraries instead; existing clients must also migrate before these libraries are deprecated. See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."
 export function validate(input) {
   let errors = {};
 
@@ -123,6 +125,7 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async respuesta => {
+    console.log(respuesta)
     const register = await axios.post('/login/oneUser', {
       email: respuesta.profileObj.email,
     });
@@ -141,8 +144,8 @@ function SignUp() {
       const infoUser = {
         email: respuesta.profileObj.email,
         password:
-          respuesta.profileObj.givenName.slice(0, 1).toUpperCase() +
-          respuesta.profileObj.givenName.slice(2) +
+          respuesta.profileObj.givenName.slice(0,1).toUpperCase() +
+          respuesta.profileObj.givenName.slice(1) +
           doc.slice(0, 7),
         userType: 'Patient',
         document: doc.slice(0, 7),
@@ -150,8 +153,9 @@ function SignUp() {
         lastName: respuesta.profileObj.familyName,
         birth: '1997-02-15',
       };
+      console.log(infoUser)
       // eslint-disable-next-line
-      const userRegister = await axios.post('/patients', { infoUser });
+      dispatch(postPatient(infoUser));
 
       setTimeout(async () => {
         const user = await axios.post('/login', {
@@ -237,7 +241,7 @@ function SignUp() {
               clientId="734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={respuestaGoogle}
-              // onFailure={res => console.log(res)}
+              onFailure={res => console.log(res)}
               cookiePolicy={'single_host_origin'}
               className="Google-button"
               style={{ color: 'black important!' }}
