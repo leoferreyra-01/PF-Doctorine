@@ -185,8 +185,8 @@ const xValidateInfoUser = [
 
   //|> password
   check('infoUser.password')
-    .default(undefined)
-    .if(check('infoUser.password').exists())
+    .default(null)
+    .if(check('infoUser.password').exists({ checkNull: true }))
     .notEmpty()
     .isStrongPassword({
       minLength: 8,
