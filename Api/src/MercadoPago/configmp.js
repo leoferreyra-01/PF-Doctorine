@@ -69,8 +69,8 @@ router.get('/feedback', function (req, res) {
   }
   const redirectURL =
     paymentUpdate === 'http://localhost:3001'
-      ? 'http://localhost:3000'
-      : 'https://doctorine.vercel.app/';
+      ? 'http://localhost:3000/home'
+      : 'https://doctorine.vercel.app/home';
   res.redirect(redirectURL);
 });
 module.exports = router;
