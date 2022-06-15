@@ -49,14 +49,6 @@ export const mainSidebarItems = [
     label: 'Add Budget',
     route: 'addBudget',
   },
-  // {
-  //   id: 5,
-  //   icon: (
-  //     <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
-  //   ),
-  //   label: 'Create HC',
-  //   route: 'create-clinical-history',
-  // },
   {
     id: 5,
     icon: (
