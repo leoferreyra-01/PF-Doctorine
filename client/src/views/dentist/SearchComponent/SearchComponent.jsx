@@ -61,7 +61,7 @@ export default function SearchComponent() {
   return (
     <div className={s.sc_container}>
       <SearchBar
-        placeholder="Search Patient by ID or Name.."
+        placeholder="Search Patient by Document or Name.."
         handleDni={getPatientDni}
         handleName={getPatientName}
       />

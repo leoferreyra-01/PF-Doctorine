@@ -10,7 +10,6 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
   const [errors, setErrors] = useState('');
   const dispatch = useDispatch();
   const handleOnChange = e => {
-    console.log(e.target.value);
     setSearched(e.target.value);
     if (
       /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(e.target.value) ||
@@ -42,7 +41,7 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
   };
   return (
     <form onSubmit={handleSubmit} className={s.search_container}>
-      <div>
+      <div className={s.icon_input}>
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
           size="2x"

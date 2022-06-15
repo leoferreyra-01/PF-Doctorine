@@ -33,7 +33,7 @@ import InitialConfig from './views/dentist/ClinicDetails/InitialConfig/InitialCo
 import EvolutionsNStudies from './views/patient/EvolutionsNStudies/EvolutionsNStudies';
 import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
 import PatientCH from './views/patient/PatientCH/PatientCH';
-import UpdateData from './views/dentist/ClinicDetails/ClinicDetails';
+import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateTreatments from './views/dentist/UpdateTreatments/UpdateTreatments';
 
 function App() {

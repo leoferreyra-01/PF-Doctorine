@@ -21,9 +21,34 @@ export default function Home() {
 
   useEffect(() => {
     let parsedTitle = location.pathname.replace(/\W/g, ' ');
+
     if (parsedTitle.length > 19) parsedTitle = parsedTitle.slice(19);
     if (parsedTitle.length > 18) parsedTitle = parsedTitle.slice(18);
+    if (parsedTitle === 'ate data') parsedTitle = 'Update Clinic Data';
     if (parsedTitle.length > 5) parsedTitle = parsedTitle.slice(5);
+    if (parsedTitle === 's' && location.pathname === '/home/infoTreatments') {
+      parsedTitle = 'Info Treatments';
+    }
+    if (parsedTitle === 's') parsedTitle = 'Clinic Details';
+    if (parsedTitle === 'tial config') parsedTitle = 'Clinic Inital Config';
+    if (location.pathname.includes('/home/updateBudget/')) {
+      parsedTitle = `Budget ${location.pathname.slice(19)}`;
+    }
+    if (
+      location.pathname.includes('/home/') &&
+      (parsedTitle.length === 2 || parsedTitle.length === 3)
+    ) {
+      parsedTitle = `Patient ${parsedTitle}`;
+    }
+    if (
+      location.pathname.includes('/home/addEvolution/') &&
+      parsedTitle.length === 1
+    ) {
+      parsedTitle = `Add Evolution to Patient ${parsedTitle}`;
+    }
+    if (parsedTitle === 'story ') {
+      parsedTitle = `New Patient Clinical History`;
+    }
     setTitle(parsedTitle);
   }, [location]);
 
