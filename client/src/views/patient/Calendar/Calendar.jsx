@@ -93,8 +93,11 @@ export default function CalendarFunction() {
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
   useEffect(() => {
-    dispatch(getTurns());
     funcSetPatientID();
+  }, [unavailableTurns]);
+
+  useEffect(() => {
+    dispatch(getTurns());
     dispatch(getInfoClinic());
 
     const budgetconsulta = allBudgets.filter(p => p.totalPrice === 1170);
@@ -292,17 +295,6 @@ export default function CalendarFunction() {
       }
     }
   };
-
-  // Constant updates
-  function loop() {
-    setTimeout(function () {
-      funcSetPatientID();
-      loop();
-    }, 10000); // every 10 seconds.
-  }
-  useEffect(() => {
-    loop();
-  }, []);
 
   return (
     <div className={styles.container}>

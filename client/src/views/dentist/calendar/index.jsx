@@ -285,20 +285,25 @@ export default function Appointments() {
   }
   //#endregion
 
-  // Constant updates
-  function loop() {
-    setTimeout(function () {
-      dispatch(getTurns());
+  //#region  constant update
+  function selectedTurnControl() {
+    let find = null;
 
-      loop();
-    }, 10000); // every 10 seconds.
+    if (selectedTurn) {
+      find = unavailableTurns.find(turn => turn.ID === selectedTurn.ID);
+
+      if (!find) setSelectedTurn(null);
+    }
   }
+  useEffect(() => {
+    selectedTurnControl();
+  }, [unavailableTurns]);
+  //#region
 
   useEffect(() => {
     dispatch(getTurns());
     dispatch(getInfoClinic());
     dispatch(getAllPatients());
-    loop();
   }, []);
 
   useEffect(() => {
