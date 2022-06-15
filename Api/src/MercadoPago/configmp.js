@@ -40,7 +40,7 @@ router.post('/create_preference', (req, res) => {
     ],
     back_urls: {
       success: `${paymentUpdate}/payments/feedback`,
-      failure: 'http://localhost:3001/failed',
+      failure: `${paymentUpdate}/payments/feedback`,
       pending: 'http://localhost:3001/feedback',
     },
     auto_return: 'approved',
@@ -67,6 +67,7 @@ router.get('/feedback', function (req, res) {
       idPayment: req.query.preference_id,
     });
   }
+
   const redirectURL =
     paymentUpdate === 'http://localhost:3001'
       ? 'http://localhost:3000/home'
