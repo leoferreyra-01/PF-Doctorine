@@ -14,6 +14,7 @@ import {
   CREATE_CLINIC,
   GET_ALL_PATIENTS,
   GET_BUDGETS,
+  GET_PATIENT_BUDGETS,
   GET_BUDGETS_DNI,
   GET_BUDGETS_NAME,
   POST_BUDGET,
@@ -145,7 +146,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         searchedPatient: action.payload.patient[0],
-        allBudgets: action.payload.budgets,
+      };
+
+    case GET_PATIENT_BUDGETS:
+      return {
+        ...state,
+        allBudgets: action.payload,
       };
 
     case GET_ALL_PATIENTS:

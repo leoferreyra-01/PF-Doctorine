@@ -6,6 +6,7 @@ export const GET_PATIENT_INFO = 'GET_PATIENT_INFO';
 export const POST_PATIENT = 'POST_PATIENT';
 export const GET_STUDIES = 'GET_STUDIES';
 export const GET_BUDGETS = 'GET_BUDGETS';
+export const GET_PATIENT_BUDGETS = 'GET_PATIENT_BUDGETS';
 export const GET_BUDGETS_DNI = 'GET_BUDGETS_DNI';
 export const GET_BUDGETS_NAME = 'GET_BUDGETS_NAME';
 export const POST_BUDGET = 'POST_BUDGET';
@@ -113,14 +114,30 @@ export function getPatientDni2(dni) {
   return async function (dispatch) {
     try {
       const patient = (await axios.get(`/patients?document=${dni}`)).data;
-      const budgets = (
-        await axios.get(`Budgets/?PatientID=${patient[0].Patient.ID}`)
-      ).data;
       console.log(patient);
-      dispatch({ type: GET_PATIENT_DNI2, payload: { patient, budgets } });
+      dispatch({ type: GET_PATIENT_DNI2, payload: { patient } });
     } catch (error) {
       if (error.response.status === 404) return alert(error.response.data.msg);
       alert(error.message);
+    }
+  };
+}
+
+export function getPatientBudgets(patientID) {
+  return async function (dispatch) {
+    try {
+      const budgets = (await axios.get(`Budgets/?PatientID=${patientID}`)).data;
+      dispatch({ type: GET_PATIENT_BUDGETS, payload: budgets });
+    } catch (error) {
+      //[true, { error: { msg: error.message } }]
+      console.log(error);
+      console.log('Error joto', error.response.data[1].error.msg);
+      if (
+        error.response.data[1].error.msg ===
+        'There is no budget with that patient!'
+      ) {
+        dispatch({ type: GET_PATIENT_BUDGETS, payload: [] });
+      }
     }
   };
 }
