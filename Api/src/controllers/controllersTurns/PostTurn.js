@@ -70,7 +70,7 @@ async function postTurns(req, res) {
       include: [Medic, Patient],
     });
 
-    //|> EMAIL
+    //#region  |> EMAIL
     const medic = (
       await Medic.findOne({ where: { ID: MedicID }, include: [User] })
     ).dataValues;
