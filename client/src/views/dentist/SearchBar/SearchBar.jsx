@@ -10,7 +10,6 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
   const [errors, setErrors] = useState('');
   const dispatch = useDispatch();
   const handleOnChange = e => {
-    console.log(e.target.value);
     setSearched(e.target.value);
     if (
       /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(e.target.value) ||

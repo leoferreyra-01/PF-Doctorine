@@ -9,7 +9,6 @@ import {
   clear,
 } from '../../../redux/actions';
 import ClinicalHistory from '../clinic-history/get';
-import SearchBar from '../SearchBar/SearchBar';
 import Evolution from '../Evolution/Evolution';
 import Study from '../Study/Study';
 
@@ -32,22 +31,31 @@ export default function PatientDetails() {
     // return () => dispatch(clear());
   }, []);
 
-  const detailsSearch = () => console.log('hola');
   return (
     <div className={s.dt_container}>
-      <SearchBar
-        placeholder="Search studies or evolutions"
-        onClick={detailsSearch}
-      />
-      <Link to={`/home/addEvolution/${patientID}`}>
-        <button className={s.btn}>Add Evolution</button>
-      </Link>
-      <Link to={`/home/studies/${patientID}`}>
-        <button className={s.btn}>Add Studies</button>
-      </Link>
-      <Link to={`/home/updatePatient/${patientID}`}>
-        <button className={s.btn}>Update Patient Info</button>
-      </Link>
+      <div className={s.links_container}>
+        <Link to={`/home/addEvolution/${patientID}`} className={s.link_btn}>
+          <button className={s.btn}>
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}> Add Evolution</span>
+          </button>
+        </Link>
+        <Link to={`/home/studies/${patientID}`} className={s.link_btn}>
+          <button className={s.btn}>
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}>Add Studies</span>
+          </button>
+        </Link>
+        <Link to={`/home/updatePatient/${patientID}`} className={s.link_btn}>
+          <button className={s.btn}>
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}>Update Patient Info</span>
+          </button>
+        </Link>
+      </div>
       {filledStudies ? (
         studies.map(p => (
           <Study

@@ -1,6 +1,6 @@
 .search_container {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 80% 20%;
   border-radius: 8.5px;
   margin-bottom: 20px;
   border-bottom: 2px solid rgb(165, 165, 165);

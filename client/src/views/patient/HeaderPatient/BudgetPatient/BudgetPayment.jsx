@@ -26,7 +26,7 @@ export default function BudgetPayments() {
           />
         ))
       ) : (
-        <h3>This patiente has no budgets</h3>
+        <h3>This patient has no budgets</h3>
       )}
     </div>
   );
