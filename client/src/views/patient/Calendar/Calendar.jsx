@@ -175,7 +175,7 @@ export default function CalendarFunction() {
         MedicID: 1,
       };
 
-      dispatch(postTurn({...infoTurn, email: userEmail}));
+      dispatch(postTurn({ ...infoTurn, email: userEmail }));
 
       setAvailableTurns([]);
       funcSetPatientID();
@@ -309,9 +309,14 @@ export default function CalendarFunction() {
         {availableTurns.length ? (
           availableTurns.map((turn, idx) => (
             <div key={idx} className={styles.turns}>
-              <button onClick={handleSelect} value={JSON.stringify(turn)}>
-                ✔️ SELECT
+              <button
+                onClick={handleSelect}
+                value={JSON.stringify(turn)}
+                className={styles.btn}
+              >
+                SELECT ✔️
               </button>
+
               <p>Time: {numberToHours(turn.time)} hs</p>
               <p>Duration: {turn.duration * 60} min.</p>
             </div>

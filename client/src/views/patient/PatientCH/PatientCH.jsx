@@ -215,7 +215,7 @@ const PatientCH = ({ id }) => {
         document={<PatientCHPdf />}
         fileName="Clinic History.pdf"
       >
-        <button>Download</button>
+        <button className="buttonDownload">Download</button>
       </PDFDownloadLink>
       {/* <PatientCHPdf poema={user}></PatientCHPdf> */}
     </div>
