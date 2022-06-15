@@ -77,7 +77,7 @@ function addEvolution() {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'You can only select ONE tooth',
+        text: 'You can only select ONE teeth',
       });
     } else {
       setData({
@@ -158,7 +158,7 @@ function addEvolution() {
     dispatch(getTreatments());
     dispatch(getMedics());
     dispatch(getTooth());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -200,7 +200,7 @@ function addEvolution() {
                 <option
                   value={medicos.ID}
                   className={S.casillas}
-                >{`${medicos.fullName}(${medicos.Medic.tuition_number})`}</option>
+                >{`${medicos.fullName} (${medicos.Medic.tuition_number})`}</option>
               ))}
           </select>
 
@@ -212,13 +212,15 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.medico.map(t => {
-                  let medic = medicos.filter(me => (me.ID == t ? me : null));
+                  let medic = medicos.filter(me => (me.ID === t ? me : null));
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteMedic(e)} name={t}>
-                        ❌
+                        {/* <span role="img" aria-label="X"> */}❌
+                        {/* </span> */}
                       </button>
-                      {`${medic[0].fullName}(${medic[0].Medic.tuition_number})`}
+
+                      {`${medic[0].name}${medic[0].lastName} (${medic[0].Medic.tuition_number})`}
                     </li>
                   );
                 })}
@@ -252,11 +254,12 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.treatments.map(t => {
-                  let treat = treatment.filter(tr => (tr.ID == t ? tr : null));
+                  let treat = treatment.filter(tr => (tr.ID === t ? tr : null));
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTreatment(e)} name={t}>
-                        ❌
+                        {/* <span role="img" aria-label="X"> */}❌
+                        {/* </span> */}
                       </button>
                       {`${treat[0].description}(${treat[0].ID})`}
                     </li>
@@ -273,7 +276,7 @@ function addEvolution() {
             className={S.casillas2}
           >
             <option hidden value="">
-              Select Tooth
+              Select Teeth
             </option>
             {tooth &&
               tooth.map(t => (
@@ -291,11 +294,12 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.tooth.map(t => {
-                  const th = tooth.filter(teeth => teeth.ID == t && teeth);
+                  const th = tooth.filter(teeth => teeth.ID === t && teeth);
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTeeth(e)} name={t}>
-                        ❌
+                        {/* <span role="img" aria-label="X"> */}❌
+                        {/* </span> */}
                       </button>
                       {`${th[0].ID}(zone:${th[0].zone} & pos:${th[0].position})`}
                     </li>

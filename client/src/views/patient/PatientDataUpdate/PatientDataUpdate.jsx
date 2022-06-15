@@ -8,6 +8,7 @@ import { getPatientDni2 } from '../../../redux/actions';
 import bk_validate from '../../../helpers/backend_validators';
 
 const PatientDataUpdate = () => {
+  // eslint-disable-next-line
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const PatientDataUpdate = () => {
     cellphone: SearchedPatient.cellphone,
     email: SearchedPatient.email,
   });
-  
+
   async function validatePatient() {
     const [fail, err] = await bk_validate.Patient(
       { infoUser, infoPatient },
@@ -72,6 +73,7 @@ const PatientDataUpdate = () => {
       userType: 'Patient',
     };
   } else {
+    // eslint-disable-next-line
     var infoUser = {
       name: user.name,
       lastName: user.lastName,
@@ -113,6 +115,7 @@ const PatientDataUpdate = () => {
       toast.error('Something went wrong, please try again.');
     }
   };
+  // eslint-disable-next-line
   let [fail, err] = validations;
   //#endregion
 

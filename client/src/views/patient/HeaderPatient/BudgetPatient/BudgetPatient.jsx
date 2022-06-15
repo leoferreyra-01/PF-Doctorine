@@ -11,7 +11,7 @@ export default function BudgetPatients({
   // }
   return (
     <div>
-      <img src={logopago} width="100px" />
+      <img src={logopago} alt="logo" width="100px" />
       <div
         style={{
           display: 'flex',

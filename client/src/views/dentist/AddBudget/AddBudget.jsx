@@ -191,7 +191,7 @@ export function AddBudget() {
         title: 'Budget created successfully',
         showConfirmButton: false,
         timer: 1500,
-      })
+      });
       navigate('/home/budget');
     } else {
       Swal.fire({
@@ -228,7 +228,11 @@ export function AddBudget() {
         {Object.keys(data.patient).length > 0 && (
           <div>
             <h4>Selected Patient</h4>
-            <button onClick={handleDeletePatient}>❌</button>
+            <button onClick={handleDeletePatient}>
+              <span role="img" aria-label="X">
+                ❌
+              </span>
+            </button>
             <h3>{data.patient.fullName}</h3>
           </div>
         )}

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../searchPatient/searchPatient.css';
-import { Link } from 'react-router-dom';
 import { getPatientDni2 } from '../../../redux/actions';
 
 const searchPatient = () => {
@@ -9,7 +8,7 @@ const searchPatient = () => {
   const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
   // dispatch(getPatientDni2(uno.document));
   // const SearchedPatient = JSON.parse(window.localStorage.getItem('user'))
-  const SearchedPatient = useSelector(state => state.searchedPatient);
+  let SearchedPatient = useSelector(state => state.searchedPatient);
 
   useEffect(() => {
     dispatch(getPatientDni2(uno.document));
@@ -17,7 +16,7 @@ const searchPatient = () => {
     // recargar()
     // }
   }, [dispatch]);
-
+  // eslint-disable-next-line
   const recargar = () => {
     SearchedPatient = useSelector(state => state.searchedPatient);
   };
@@ -25,8 +24,8 @@ const searchPatient = () => {
   // console.log(searchedPatient.Patient.medicalService)
 
   return (
-    <div className='container'>
-      <div className='containe'>
+    <div className="container">
+      <div className="containe">
         {/* <div > */}
         <div
           style={{
@@ -39,7 +38,8 @@ const searchPatient = () => {
             borderRadius: '5px',
             borderColor: '#009be5',
             // marginBottom: '12px',
-          }}>
+          }}
+        >
           <div style={{ width: '100%', height: '20%', marginBottom: '10px' }}>
             <h1> {`Welcome ${SearchedPatient.fullName}`}</h1>
           </div>
@@ -53,7 +53,7 @@ const searchPatient = () => {
             </h2>
           </div>
         </div>
-        <div className='containe'>
+        <div className="containe">
           <div
             style={{
               width: '200px',
@@ -65,17 +65,18 @@ const searchPatient = () => {
               borderRadius: '5px',
               borderColor: '#009be5',
               // marginBottom: '12px',
-            }}>
-            <div className='list2'>
+            }}
+          >
+            <div className="list2">
               <div>
-                <div className='subtitulo'>Medical service</div>
-                <div className='contenido'>
+                <div className="subtitulo">Medical service</div>
+                <div className="contenido">
                   {/* {SearchedPatient.Patient.medicalService} */}
                 </div>
               </div>
-              <div className='subtitulo'>Medical Center</div>
-              <div className='contenido'>Clinica Henry</div>
-              <div className='contenido'>San Salvador</div>
+              <div className="subtitulo">Medical Center</div>
+              <div className="contenido">Clinica Henry</div>
+              <div className="contenido">San Salvador</div>
             </div>
           </div>
         </div>

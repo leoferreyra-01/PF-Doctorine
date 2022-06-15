@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import service from '../services/login';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleLogin from 'react-google-login';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import S from './SingIn.module.css';
 import { home, getPatientDni2 } from '../../redux/actions';
@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 
 export function validate(input) {
   let errors = {};
-  // console.log(errors);
 
   if (!input.email) {
     errors.username = 'Username is required';
@@ -39,10 +38,10 @@ function SignUp() {
   });
 
   const dispatch = useDispatch();
-
+  // eslint-disable-next-line
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
-
+  // eslint-disable-next-line
   const User = useSelector(state => state.user);
   const navigate = useNavigate();
 
@@ -71,7 +70,7 @@ function SignUp() {
         });
       }
       const user = await service.login(input);
-      // console.log(user);
+
       setUser(user);
       window.localStorage.setItem('loggedToken', JSON.stringify(user));
       service.setToken(user.token);
@@ -115,7 +114,6 @@ function SignUp() {
           navigate('/home');
         }
       }
-      // console.log(user);
     } catch (e) {
       console.log(e);
       Swal.fire({
@@ -125,7 +123,6 @@ function SignUp() {
     }
   };
   const respuestaGoogle = async respuesta => {
-    console.log(respuesta);
     const register = await axios.post('/login/oneUser', {
       email: respuesta.profileObj.email,
     });
@@ -153,8 +150,9 @@ function SignUp() {
         lastName: respuesta.profileObj.familyName,
         birth: '1997-02-15',
       };
+      // eslint-disable-next-line
       const userRegister = await axios.post('/patients', { infoUser });
-      // console.log(infoUser.password);
+
       setTimeout(async () => {
         const user = await axios.post('/login', {
           email: respuesta.profileObj.email,
@@ -239,7 +237,7 @@ function SignUp() {
               clientId="734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={respuestaGoogle}
-              onFailure={(res) => console.log(res)}
+              // onFailure={res => console.log(res)}
               cookiePolicy={'single_host_origin'}
               className="Google-button"
               style={{ color: 'black important!' }}
@@ -471,7 +469,7 @@ const SignUpContainer = styled.div`
     }
   }
 `;
-
+// eslint-disable-next-line
 const AuthDiv = styled.div`
   margin-top: -6.5rem;
   display: flex;

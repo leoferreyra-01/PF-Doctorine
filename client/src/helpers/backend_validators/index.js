@@ -1,5 +1,3 @@
-'use strict';
-
 import Medic from './Medic';
 import Patient from './Patient';
 import Turn from './Turn';
