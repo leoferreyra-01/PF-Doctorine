@@ -165,16 +165,23 @@ export default function Appointments() {
   const { allPatients } = useSelector(state => state);
   const [patientSelected, setPatientSelected] = useState(null);
 
+  function preventSubmit(e) {
+    e.preventDefault();
+    if (data.PatientID === 0) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Select a patient.',
+      });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Patient selected successfully.',
+      });
+    }
+  }
+
   function handleSelectPatient(e) {
-    window.addEventListener(
-      'keypress',
-      function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-        }
-      },
-      false
-    );
+    e.preventDefault();
     const patient = allPatients.find(patient => {
       const targetValue = e.target.value;
       const patientData = `${patient.name} ${patient.lastName} ${patient.document} ${patient.email}`;
@@ -183,6 +190,11 @@ export default function Appointments() {
         .toLocaleLowerCase()
         .includes(targetValue.toLocaleLowerCase());
     });
+
+    if (e.target.value === '') {
+      setPatientSelected(null);
+      return setData({ ...data, PatientID: 0 });
+    }
 
     if (patient) {
       setPatientSelected(patient);
@@ -198,6 +210,7 @@ export default function Appointments() {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log('infoTurn => ', infoTurn);
 
     try {
       if (fail) {
@@ -293,7 +306,7 @@ export default function Appointments() {
         <br />
         <div>
           <h3>Select a Patient</h3>
-          <form>
+          <form onSubmit={preventSubmit}>
             <label>Patient: </label>
             <input
               placeholder="Fullname, document or email"
