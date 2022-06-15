@@ -16,10 +16,20 @@ export const registerPatientSchema = yup.object({
     .required('Field is required'),
   street: yup.string().required('Field is required'),
   city: yup.string().required('Field is required'),
-  postalCode: yup.number().positive().integer().required('Field is required'),
+  postalCode: yup
+    .number()
+    .positive()
+    .integer()
+    .max(9999)
+    .required('Field is required'),
   birth: yup.date().required('Field is required'),
   cellphone: yup.string().min(9).required('Field is required'),
   telephone: yup.string().min(9).required('Field is required'),
-  number: yup.number().positive().integer().required('Field is required'),
+  number: yup
+    .number()
+    .positive()
+    .integer()
+    .max(9999)
+    .required('Field is required'),
   medicalService: yup.string().required('Field is required'),
 });
