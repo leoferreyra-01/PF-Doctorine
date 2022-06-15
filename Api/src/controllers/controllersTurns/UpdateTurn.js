@@ -5,7 +5,6 @@
 const { Medic, Patient, Turn, User } = require('../../db');
 var nodemailer = require('nodemailer');
 
-
 //|> CONTROLLER
 
 function numberToHours(number) {
@@ -45,8 +44,8 @@ async function updateTurns(req, res) {
       });
     });
 
-    //|> EMAIL
-    const turn = (await Turn.findOne({where: {ID: ID}})).dataValues;
+    //#region |> EMAIL
+    const turn = (await Turn.findOne({ where: { ID: ID } })).dataValues;
     const medic = (
       await Medic.findOne({ where: { ID: turn.MedicID }, include: [User] })
     ).dataValues;
@@ -75,11 +74,14 @@ async function updateTurns(req, res) {
         subject: `Turn accepted for ${req.body.date}`, // Subject line
         html: `<b>The doctor ${medic.User.dataValues.name} ${
           medic.User.dataValues.lastName
-        } has accepted a Turn on ${req.body.date} at ${numberToHours(req.body.time)}hs.</b>`, // html body
+        } has accepted a Turn on ${req.body.date} at ${numberToHours(
+          req.body.time
+        )}hs.</b>`, // html body
       });
     } else {
       res.json({ error: 'User not found!' });
     }
+    //#endregion
   } catch (error) {
     console.error(error);
     res.status(404).json([true, { error: { msg: error.message } }]);
