@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 // import { postNewPassword } from '../../redux/actions';
 import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 // import S from './NewPassword.module.css';
 
 export function validate(input) {
@@ -51,7 +52,10 @@ function NewPassword() {
   const register = e => {
     e.preventDefault();
     if (Object.keys(errors).length > 0) {
-      return toast.error('All fields must be completed correctly');
+      return Swal.fire({
+        icon: 'error',
+        title: 'All fields must be completed correctly',
+      })
     } else {
       console.log('SI ENTRO');
       // dispatch(postNewPassword(input));
@@ -62,11 +66,17 @@ function NewPassword() {
         })
         .then(response => {
           console.log(response.data);
-          toast.success(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Password updated successfully',
+          })
           navigate('/');
         })
         .catch(() => {
-          return toast.error('This user already exists');
+          return Swal.fire({
+            icon: 'error',
+            title: 'Error updating password',
+          })
         });
     }
   };

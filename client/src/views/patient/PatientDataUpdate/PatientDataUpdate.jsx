@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { updatePatient } from '../../../redux/actions';
 import './PatientDataUpdate.css';
-import toast from 'react-hot-toast';
 import { getPatientDni2 } from '../../../redux/actions';
 import bk_validate from '../../../helpers/backend_validators';
+import Swal from 'sweetalert2';
 
 const PatientDataUpdate = () => {
   // eslint-disable-next-line
@@ -100,19 +100,28 @@ const PatientDataUpdate = () => {
 
     try {
       if (fail) {
-        toast.error('Your form has errors, please check it out.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Your form has errors, please check it out.',
+        })
       } else {
         console.log(patientID, infoPatient, infoUser);
         dispatch(updatePatient(patientID, infoPatient, infoUser));
         setTimeout(() => {
           dispatch(getPatientDni2(uno.document));
         }, 1000);
-        toast.success('Patient updated successfully');
+        Swal.fire({
+          icon: 'success',
+          title: 'Your data has been updated successfully',
+        })
         navigate(`/home`);
       }
     } catch (error) {
       console.log(errors);
-      toast.error('Something went wrong, please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong, please try again.',
+      })
     }
   };
   // eslint-disable-next-line
