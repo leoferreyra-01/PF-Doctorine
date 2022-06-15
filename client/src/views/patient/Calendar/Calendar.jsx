@@ -315,6 +315,7 @@ export default function CalendarFunction() {
                 </span>{' '}
                 SELECT
               </button>
+
               <p>Time: {numberToHours(turn.time)} hs</p>
               <p>Duration: {turn.duration * 60} min.</p>
             </div>
