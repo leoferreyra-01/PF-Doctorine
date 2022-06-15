@@ -42,7 +42,7 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
   };
   return (
     <form onSubmit={handleSubmit} className={s.search_container}>
-      <div>
+      <div className={s.icon_input}>
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
           size="2x"

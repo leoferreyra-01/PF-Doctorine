@@ -24,7 +24,7 @@
 
 .divider {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  margin: 5rem 0 2.5rem;
+  margin: 2.5rem 0; /*margin: 8rem 0 2.5rem;*/
 }
 
 .fa_icon {
@@ -36,10 +36,20 @@
   display: grid;
   grid-template-columns: 30% 70%;
   padding-bottom: 0.9rem;
-  padding-top: 1rem;
+  padding-top: 2rem;
 }
 
 .icon_title {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 600;
+}
+
+.serviceLogo {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.serviceLogo_container {
+  padding-top: 2.5rem;
 }

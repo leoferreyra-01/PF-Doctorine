@@ -15,7 +15,7 @@
   grid-area: bottom-left;
   display: flex;
   align-items: center;
-  padding-left: 2rem;
+  padding-left: 4rem;
   padding-bottom: 2rem;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 3.2rem;
   font-weight: 600;
   text-transform: capitalize;
 }
