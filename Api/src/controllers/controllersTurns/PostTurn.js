@@ -2,7 +2,6 @@
 
 //|> EMAIL
 var nodemailer = require('nodemailer');
-require('dotenv').config();
 
 //|> SEQUELIZE
 var moment = require('moment');
