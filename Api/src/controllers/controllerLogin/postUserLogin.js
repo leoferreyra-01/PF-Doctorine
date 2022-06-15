@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { User } = require('../../db');
-var NODEMAILER = require('nodemailer');
+var nodemailer = require('nodemailer');
 
 const loginUser = async (req) => {
   try {
@@ -46,33 +46,36 @@ const loginUser = async (req) => {
 
 const saltRounds = 10;
 var registerMail = async username => {
-  var transporter = NODEMAILER.createTransport({
-    service: 'gmail',
-    // host: "smtp.gmail.com",
-    // port: 465,
-    // secure: true,
+  var transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.USER_ADMIN,
       pass: process.env.PASSWORD,
     },
   });
-  var mailOptions = {
-    from: process.env.USER_ADMIN,
-    to: username,
-    subject: 'Registro exitoso!',
-    text: 'Hola, queremos informarte que tu cuenta fue registrada correctamente en mode parfum ❤',
-  };
+  transporter.verify().then(() => {
+    console.log('Ready for send mails');
+  });
+  await transporter.sendMail({
+    from: '"Welcome!" <doctorine.com@gmail.com>', // sender address
+    to: username, // list of receivers
+    subject: 'Welcome to Doctorine!', // Subject line
+    html: '<b><div>Welcome to Doctorine!</div>>div>¡Here you can do all yours managements 100% online!</div></b>', // html body
+  });
 };
 
-const registerUser = async (req, res) => {
+const registerUser = async (req) => {
   try {
     const { email, password, userType, document, name, lastName, birth } =
-      req.body;
+      req;
     const user = await User.findAll({ where: { email } });
     if (!user.length) {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         if (err) {
           console.log(err);
+          throw new Error(err);
         }
         await User.findOrCreate({
           where: {
@@ -86,30 +89,30 @@ const registerUser = async (req, res) => {
           },
         });
       });
-      res.json({ success: 'Usuario creado correctamente' });
       registerMail(email);
+      return ({ success: 'Usuario creado correctamente' });
     } else {
-      res
-        .status(401)
-        .json({ error: 'Este usuario ya existe en la base de datos' });
+      return ({ error: 'Este usuario ya existe en la base de datos' });
     }
   } catch (error) {
     console.log(error);
+    throw new Error('There were some errors when registering');
   }
 };
 
-const userExist = async (req, res) => {
+const userExist = async (req) => {
   try {
-    const { email } = req.body;
+    const { email } = req;
     const user = await User.findOne({ where: { email } });
     // console.log(user)
     if (user) {
-      return res.json({ success: 'usuario encontrado' });
+      return ({ success: 'User found' });
     } else {
-      return res.json({ failure: 'usuario no encontrado' });
+      return ({ failure: 'User not found' });
     }
   } catch (error) {
     console.log(error);
+    throw new Error('There were some errors when checking if user exist');
   }
 };
 

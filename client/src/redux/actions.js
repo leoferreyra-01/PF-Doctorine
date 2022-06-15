@@ -621,11 +621,13 @@ export function updatePassword(changedPassword) {
       const result = await axios.put(`/password/update`, changedPassword);
       return result;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return Swal.fire({
         icon: 'error',
         title: error.response.data.error,
-        text: error.response.data.description,
+        text:
+          error.response.data.description +
+          '. For your security you were redirected to the login page',
       });
     }
   };
