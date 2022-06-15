@@ -3,17 +3,18 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../db');
 var NODEMAILER = require('nodemailer');
 
-const loginUser = async (req, res) => {
+const loginUser = async (req) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req;
+    
     const user = await User.findOne({ where: { email: email } });
-    console.log(user.dataValues.password);
+
     if (!user) {
-      return res.status(400).json({ error: 'Please complete all the fields' });
+      throw new Error('User not found');
     }
 
     if (!(user && password)) {
-      return res.status(401).json({ error: 'Please complete all the fields' });
+      throw new Error('User or password not found');
     }
     const isPasswordValid = await bcrypt.compare(
       password,
@@ -27,7 +28,7 @@ const loginUser = async (req, res) => {
 
       const token = jwt.sign(userForToken, process.env.SECRET);
 
-      return res.send({
+      return ({
         email: user.email,
         token,
         userType: user.userType,
@@ -37,12 +38,11 @@ const loginUser = async (req, res) => {
         birth: user.birth,
       });
     } else {
-      return res
-        .status(401)
-        .json({ error: 'The password is invalid, please try again' });
+      throw new Error('Password is invalid');
     }
   } catch (err) {
     console.log(err);
+    throw new Error('There were some errors when logging in');
   }
 };
 
