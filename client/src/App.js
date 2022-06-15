@@ -76,7 +76,7 @@ function App() {
               element={<InitialConfig />}
             />
             <Route path="clinic-details/update-data" element={<UpdateData />} />
-            <Route path="updateTreatments" element={<UpdateTreatments />} />
+            <Route path="infoTreatments" element={<UpdateTreatments />} />
           </Route>
         ) : (
           <Route path="/home" element={<PatientHome />}>

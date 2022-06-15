@@ -26,13 +26,13 @@ function UpdateTreatments() {
       headerName: 'Treatment Type',
       width: 150,
       /* fontSize: '40px', */
-      editable: true,
+      editable: false,
     },
     {
       field: 'description',
       headerName: 'Description',
       width: 300,
-      editable: true,
+      editable: false,
     },
     {
       field: 'price',

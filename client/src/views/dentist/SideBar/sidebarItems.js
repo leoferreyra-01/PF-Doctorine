@@ -62,7 +62,7 @@ export const mainSidebarItems = [
     icon: (
       <FontAwesomeIcon icon={faCircleInfo} size="2x" className={s.fa_icon} />
     ),
-    label: 'Clinic info',
+    label: 'Info Clinic',
     route: 'clinic-details',
   },
   {
@@ -76,10 +76,10 @@ export const mainSidebarItems = [
   {
     id: 8,
     icon: (
-      <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+      <FontAwesomeIcon icon={faCircleInfo} size="2x" className={s.fa_icon} />
     ),
-    label: 'Update Treatments',
-    route: 'updateTreatments',
+    label: 'Info Treatments',
+    route: 'infoTreatments',
   },
   {
     id: 9,

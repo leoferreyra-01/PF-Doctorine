@@ -13,7 +13,6 @@ import { faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 
 export default function UpdateBudget() {
   const { budgetID } = useParams();
-  console.log(budgetID);
   const dispatch = useDispatch();
   const allBudgets = useSelector(state => state.allBudgets);
   const filledBudgets = !!allBudgets.length;
@@ -68,6 +67,14 @@ export default function UpdateBudget() {
             <p>
               Patient Medical Service:
               <span> {patient.Patient.medicalService}</span>
+            </p>
+            <p>
+              Creation Date:
+              <span> {new Date(budget.creationDate).toLocaleString()}</span>
+            </p>
+            <p>
+              Update Date:
+              <span> {new Date(budget.updateDate).toLocaleString()}</span>
             </p>
           </div>
         )}
