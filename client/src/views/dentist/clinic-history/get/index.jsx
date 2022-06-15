@@ -1,27 +1,26 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClinicalHistory, clear } from '../../../../redux/actions';
+import { getClinicalHistory } from '../../../../redux/actions';
 import s from './hc.module.css';
+
 export default function ClinicalHistory({ id }) {
   const dispatch = useDispatch();
 
   const { clinicalHistory } = useSelector(state => state);
-
+  // eslint-disable-next-line
   const studies = clinicalHistory.Studies;
-  const patient = clinicalHistory.Patient; //datos a renderizar en el header
-  const patientID = clinicalHistory.PatientID;
 
   const toRender = [];
   for (const property in clinicalHistory) {
-    toRender.push(`${property}: ${clinicalHistory[property]}`); //${clinicalHistory[property]}
+    toRender.push(`${property}: ${clinicalHistory[property]}`);
   }
 
-  toRender.pop(); //de aca saco las tres cosas que guarde arriba
-  toRender.pop(); //como studies, patient y patient ID
   toRender.pop();
-  toRender.shift(); //Y de aca saco el ID para que no se renderice
+  toRender.pop();
+  toRender.pop();
+  toRender.shift();
 
-  const toRenderParsed = toRender.map(property => {
+  const toRenderParsed = toRender.map(property => { 
     if (property.charAt(0) === 'b' && property.charAt(1) === '_') {
       return property
         .substring(2)
@@ -92,14 +91,9 @@ export default function ClinicalHistory({ id }) {
 
   useEffect(() => {
     dispatch(getClinicalHistory(id));
-
-    // return () => {
-    //   dispatch(clear());
-    // };
-  }, [dispatch, id]); //]
+  }, [id]);
 
   return (
-    // cuando este el update deberia tener un boton aca que muestre el formulario de actualizacion
     <div className={s.hc_container}>
       {clinicalHistory ? (
         <div className={s.hc}>
@@ -108,12 +102,6 @@ export default function ClinicalHistory({ id }) {
               {property}
             </div>
           ))}
-
-          <div>
-            {studies
-              ? studies.map(study => study)
-              : 'No studies have been done yet.'}
-          </div>
         </div>
       ) : (
         <div>

@@ -1,9 +1,11 @@
 'use strict';
 
+//|> EMAIL
+var nodemailer = require('nodemailer');
+
 //|> SEQUELIZE
 var moment = require('moment');
 const { Medic, Patient, Turn, User } = require('../../db');
-var nodemailer = require('nodemailer');
 
 //|> CONTROLLER
 
@@ -33,7 +35,7 @@ async function postTurns(req, res) {
       PatientID,
       email,
     } = req.body;
-    
+
     if (!date || moment(date, 'YYYY-MM-DD', true).isValid() === false)
       return res
         .status(400)
@@ -67,8 +69,10 @@ async function postTurns(req, res) {
       include: [Medic, Patient],
     });
 
-    //|> EMAIL
-    const medic = (await Medic.findOne({where: {ID: MedicID}, include: [User]})).dataValues;
+    //#region  |> EMAIL
+    const medic = (
+      await Medic.findOne({ where: { ID: MedicID }, include: [User] })
+    ).dataValues;
     console.log(medic);
     const medicEmail = medic.User.dataValues.email;
     const user = await User.findOne({
@@ -93,7 +97,9 @@ async function postTurns(req, res) {
         from: '"Turn Created" <doctorine.com@gmail.com>', // sender address
         to: `${email}, ${medicEmail}`, // list of receivers
         subject: `Turn created for ${date}`, // Subject line
-        html: `<b>The doctor ${medic.User.dataValues.name} ${medic.User.dataValues.lastName} has created a Turn on ${date} at ${numberToHours(time)}hs.</b>`, // html body
+        html: `<b>The doctor ${medic.User.dataValues.name} ${
+          medic.User.dataValues.lastName
+        } has created a Turn on ${date} at ${numberToHours(time)}hs.</b>`, // html body
       });
     } else {
       res.json({ error: 'User not found!' });

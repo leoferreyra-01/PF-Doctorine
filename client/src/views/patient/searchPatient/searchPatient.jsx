@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../searchPatient/searchPatient.css';
-import { Link } from 'react-router-dom';
-import { getPatientDni2, getPatientBudgets } from '../../../redux/actions';
+import { getPatientBudgets, getPatientDni2 } from '../../../redux/actions';
 
 const searchPatient = () => {
   const dispatch = useDispatch();
   const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
   // dispatch(getPatientDni2(uno.document));
   // const SearchedPatient = JSON.parse(window.localStorage.getItem('user'))
-  const SearchedPatient = useSelector(state => state.searchedPatient);
+  let SearchedPatient = useSelector(state => state.searchedPatient);
 
   useEffect(() => {
     dispatch(getPatientDni2(uno.document));
@@ -18,7 +17,7 @@ const searchPatient = () => {
     // recargar()
     // }
   }, [dispatch]);
-
+  // eslint-disable-next-line
   const recargar = () => {
     SearchedPatient = useSelector(state => state.searchedPatient);
   };

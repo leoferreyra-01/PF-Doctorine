@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { getTurns } from '../../../redux/actions';
 import { DatePicker } from '@material-ui/pickers';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-
 import { dateToString, numberToHours } from '../../../helpers/validateTurn';
 
 export default function TurnsDetails({
@@ -125,7 +124,10 @@ export default function TurnsDetails({
               <p>Document: {turn.userPatient.document}</p>
               <p>Description: {turn.description}</p>
               <button onClick={handleDelete} value={JSON.stringify(turn)}>
-                ❌ CANCEL
+                <span role="img" aria-label="X">
+                  ❌
+                </span>{' '}
+                CANCEL
               </button>
             </div>
           );

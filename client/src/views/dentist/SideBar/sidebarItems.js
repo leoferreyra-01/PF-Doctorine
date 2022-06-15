@@ -50,22 +50,24 @@ export const mainSidebarItems = [
     label: 'Add Budget',
     route: 'addBudget',
   },
+  // {
+  //   id: 5,
+  //   icon: (
+  //     <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+  //   ),
+  //   label: 'Create HC',
+  //   route: 'create-clinical-history',
+  // },
   {
     id: 5,
     icon: (
-      <FontAwesomeIcon icon={faSquarePlus} size="2x" className={s.fa_icon} />
+      <FontAwesomeIcon icon={faCircleInfo} size="2x" className={s.fa_icon} />
     ),
-    label: 'Create HC',
-    route: 'create-clinical-history',
-  },
-  {
-    id: 6,
-    icon: <FontAwesomeIcon icon={faHospital} size="2x" className={s.fa_icon} />,
-    label: 'Info Clinic',
+    label: 'Clinic info',
     route: 'clinic-details',
   },
   {
-    id: 7,
+    id: 6,
     icon: (
       <FontAwesomeIcon icon={faUserDoctor} size="2x" className={s.fa_icon} />
     ),
@@ -73,7 +75,7 @@ export const mainSidebarItems = [
     route: 'updateMedic',
   },
   {
-    id: 8,
+    id: 7,
     icon: (
       <FontAwesomeIcon icon={faCircleInfo} size="2x" className={s.fa_icon} />
     ),
@@ -81,7 +83,7 @@ export const mainSidebarItems = [
     route: 'infoTreatments',
   },
   {
-    id: 9,
+    id: 8,
     icon: (
       <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
     ),

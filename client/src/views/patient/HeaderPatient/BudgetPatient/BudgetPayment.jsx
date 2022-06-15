@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import BudgetPatients from './BudgetPatient';
 export default function BudgetPayments() {
   const budgets = useSelector(state => state.allBudgets);

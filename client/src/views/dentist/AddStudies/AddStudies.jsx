@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { postStudy } from '../../../redux/actions';
 import S from './Study.module.css';
@@ -23,18 +23,18 @@ export function validate(data) {
 
 function AddStudy() {
   const navigate = useNavigate();
-  const { patientID } = useParams();
+  const { patientID } = useParams(); // eslint-disable-next-line
   const studies = useSelector(state => state.studies); //studyType, Description, attatch, clinicalHistoryId, patientId
   const urlstudy = useSelector(state => state.urlstudy);
   const dispatch = useDispatch();
-  console.log(urlstudy);
+
   const [data, setData] = useState({
     description: '',
     //date: '',
     studyType: '',
     patient: patientID,
   });
-  console.log(data.attach);
+  // eslint-disable-next-line
   const [errors, setErrors] = useState({});
 
   function handleChange(e) {
@@ -74,7 +74,7 @@ function AddStudy() {
     e.preventDefault(e);
     setErrors(validate(data));
     const errors = validate(data);
-    console.log(errors);
+
     if (Object.keys(errors).length === 0) {
       const fixstudie = {
         ...data,
@@ -103,13 +103,9 @@ function AddStudy() {
     }
   }
 
-  // useEffect(() => {
-  //   // dispatch(getTreatments());
-  // }, [dispatch]);
-
   return (
     <div className={S.studiesContainer}>
-      <Toaster position='top-center' reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className={S.content}>
         <form className={S.form} onSubmit={e => handleSubmit(e)}>
           {/* <label className={S.label}>Date</label>
@@ -123,13 +119,14 @@ function AddStudy() {
           <label className={S.label}>Study</label>
           <select
             onChange={e => handleSelect(e)}
-            name='studyType'
-            className={S.casillas2}>
-            <option hidden value=''>
+            name="studyType"
+            className={S.casillas2}
+          >
+            <option hidden value="">
               Select Study
             </option>
-            <option value='laboratory'>Laboratory</option>
-            <option value='complementary'>Complementary</option>
+            <option value="laboratory">Laboratory</option>
+            <option value="complementary">Complementary</option>
             {/* {studies &&
               studies.map(st => (
                 <option
@@ -143,15 +140,15 @@ function AddStudy() {
           <label className={S.label}>Description</label>
           <input
             value={data.description}
-            placeholder='Observations'
-            type='text'
-            name='description'
+            placeholder="Observations"
+            type="text"
+            name="description"
             onChange={handleChange}
           />
 
           <FileUpload />
 
-          <button type='submit' className={S.btn}>
+          <button type="submit" className={S.btn}>
             Add Study
           </button>
         </form>

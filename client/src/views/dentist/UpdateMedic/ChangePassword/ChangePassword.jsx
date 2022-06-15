@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updatePassword } from '../../../../redux/actions';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 export default function changePassword() {
   const dispatch = useDispatch();
@@ -25,11 +25,13 @@ export default function changePassword() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
     const changedPassword = {
       email: data.email,
       currentPassword: data.currentPassword,
       newPassword: data.newPassword,
     };
+
     if (data.password !== data.newPassword) {
       Swal.fire({
         icon: 'error',
@@ -38,7 +40,7 @@ export default function changePassword() {
       });
     } else {
       try {
-        const result = dispatch(updatePassword(changedPassword));
+        const result = await axios.put(`/password/update`, changedPassword);
         if (result) {
           Swal.fire({
             icon: 'success',
@@ -57,8 +59,9 @@ export default function changePassword() {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'There was an error updating your password, please try again',
+          text: 'There was an error updating your password, you were redirected to the login page for your safety',
         });
+        navigate('/');
       }
     }
   };

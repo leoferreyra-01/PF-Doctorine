@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClinicalHistory, clear } from '../../../redux/actions';
+import { getClinicalHistory } from '../../../redux/actions';
 import './PatientCH.css';
 // import './hc.module.css';
-import ClinicalHistory from '../../dentist/clinic-history/get';
+// import ClinicalHistory from '../../dentist/clinic-history/get';
 // import PatientCHPdf from './PatientCHPdf';
-import { useNavigate } from 'react-router-dom';
-import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import PatientCHPdf from './PatientCHPdf';
 
 const PatientCH = ({ id }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { clinicalHistory } = useSelector(state => state);
   const SearchedPatient = useSelector(state => state.searchedPatient);
@@ -19,19 +17,16 @@ const PatientCH = ({ id }) => {
   const month = today.getMonth() + 1;
   const day = today.getDate();
   const date = day + '/' + month + '/' + year;
+  // eslint-disable-next-line
   const patientID = SearchedPatient.Patient.ID;
   const toRender = [];
+  // eslint-disable-next-line
   const data = 'ErnestoAbril';
 
   for (const property in clinicalHistory) {
     toRender.push(`${property}:  ${clinicalHistory[property]}`); //${clinicalHistory[property]}
   }
-
-  console.log(toRender);
-
-  toRender.shift(); //de aca saco las tres cosas que guarde arriba
-
-  console.log(toRender);
+  toRender.shift();
 
   const toRenderParsed = toRender.map(property => {
     if (property.charAt(0) === 'b' && property.charAt(1) === '_') {
@@ -106,7 +101,7 @@ const PatientCH = ({ id }) => {
 
   console.log(toRenderParsed);
   console.log(toRenderParsed);
-
+  // eslint-disable-next-line
   const [user, setUser] = useState({
     name: SearchedPatient.name,
     lastName: SearchedPatient.lastName,

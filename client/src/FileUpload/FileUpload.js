@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { storage } from './firebase';
 import { getUrlStudies } from '../redux/actions';
 import Swal from 'sweetalert2';
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  uploadBytesResumable,
-} from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -51,6 +46,8 @@ export default function FileUpload() {
             case 'running':
               console.log('Upload is running');
               break;
+            default:
+              break;
           }
         },
         error => {
@@ -59,8 +56,9 @@ export default function FileUpload() {
               break;
             case 'storage/canceled':
               break;
-
             case 'storage/unknown':
+              break;
+            default:
               break;
           }
         },

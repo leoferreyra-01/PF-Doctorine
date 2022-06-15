@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './calendar.module.css';
@@ -28,9 +27,8 @@ import TurnDetails from '../calendarTurnsDetails';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { DateTimePicker } from '@material-ui/pickers';
 // import { alpha } from '@material-ui/core/styles';
-
 // Calendar import configuration
-import { parseISO, set } from 'date-fns';
+import { parseISO } from 'date-fns';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import startOfWeek from 'date-fns/startOfWeek';
@@ -52,15 +50,11 @@ const localizer = dateFnsLocalizer({
 
 export default function Appointments() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   //#region unavailableTurns to Calendar ✔️
   const { unavailableTurns } = useSelector(state => state);
-  // console.log('unavailableTurns => ', unavailableTurns);
   const [selectedTurn, setSelectedTurn] = useState(null);
-  // console.log('selectedTurn => ', selectedTurn);
   const [date, setDate] = useState(new Date());
-  // console.log('setDate => ', date);
 
   let events = [];
   if (unavailableTurns.length) {
@@ -69,7 +63,6 @@ export default function Appointments() {
         id: turn.ID,
         title: `${turn.userPatient.lastName}, ${turn.userPatient.name}`,
         start: new Date(`${turn.date}T${numberToHours(turn.time)}:00`),
-        //'1995-12-17T03:24:00'
         end: new Date(
           `${turn.date}T${numberToHours(turn.time + turn.duration)}:00`
         ),
@@ -77,12 +70,10 @@ export default function Appointments() {
       };
     });
   }
-  // console.log('events => ', events);
   //#endregion
 
   //#region handleDateTime => setDate(impDate) | setTurnForm(true) ✔️
   const [turnForm, setTurnForm] = useState(false);
-  // console.log('turnForm => ', turnForm);
   const infoClinic = useSelector(state => state.infoClinics[0]);
 
   const handleDateTime = impDate => {
@@ -153,15 +144,12 @@ export default function Appointments() {
     ...data,
     duration: parseInt(data.duration) / 60,
   };
-  // console.log('handleChange/infoTurn => ', infoTurn);
   //#endregion
 
   //#region Backend Validation with handleChange ✔️
   const [validations, setValidations] = useState([false, null]);
 
   async function bk_validateTurn() {
-    // console.log('bk_validateTurn/infoTurn => ', infoTurn);
-
     const [fail, err] = await bk_validate.Turn(infoTurn);
 
     if (fail) {
@@ -171,7 +159,6 @@ export default function Appointments() {
     }
   }
   let [fail, err] = validations;
-  // console.log('validations => ', validations);
   //#endregion
 
   //#region handleSelectPatient => setPatientSelected(patient) ✔️
@@ -203,7 +190,6 @@ export default function Appointments() {
         .toLocaleLowerCase()
         .includes(targetValue.toLocaleLowerCase());
     });
-    // console.log('handleSelectPatient/patient => ', patient);
 
     if (e.target.value === '') {
       setPatientSelected(null);
@@ -224,7 +210,7 @@ export default function Appointments() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log('infoTurn => ', infoTurn);
+    console.log('infoTurn => ', infoTurn);
 
     try {
       if (fail) {
@@ -335,7 +321,12 @@ export default function Appointments() {
                 <p>{`Email: ${patientSelected.email} ✔️`}</p>
               </div>
             ) : (
-              <h4>No patient selected ❌</h4>
+              <h4>
+                No patient selected{' '}
+                <span role="img" aria-label="X">
+                  ❌
+                </span>
+              </h4>
             )}
           </form>
         </div>
@@ -374,7 +365,12 @@ export default function Appointments() {
             />
             {fail && err.description ? <p>{err.description.msg}</p> : '✔️'}
 
-            <button type="submit">📝CREATE</button>
+            <button type="submit">
+              <span role="img" aria-label="agend">
+                📝
+              </span>
+              CREATE
+            </button>
           </form>
         )}
       </div>

@@ -9,10 +9,10 @@ import {
   postBudget,
 } from '../../../redux/actions';
 // import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+//import toast from 'react-hot-toast';
 import axios from 'axios';
 import styles from './calendar.module.css';
-import { parseISO, set } from 'date-fns';
+import { parseISO } from 'date-fns';
 import Swal from 'sweetalert2';
 
 import {
@@ -175,7 +175,7 @@ export default function CalendarFunction() {
         MedicID: 1,
       };
 
-      dispatch(postTurn({...infoTurn, email: userEmail}));
+      dispatch(postTurn({ ...infoTurn, email: userEmail }));
 
       setAvailableTurns([]);
       funcSetPatientID();
@@ -310,7 +310,10 @@ export default function CalendarFunction() {
           availableTurns.map((turn, idx) => (
             <div key={idx} className={styles.turns}>
               <button onClick={handleSelect} value={JSON.stringify(turn)}>
-                ✔️ SELECT
+                <span role="img" aria-label="ok">
+                  ✔️
+                </span>{' '}
+                SELECT
               </button>
               <p>Time: {numberToHours(turn.time)} hs</p>
               <p>Duration: {turn.duration * 60} min.</p>
@@ -345,7 +348,10 @@ export default function CalendarFunction() {
             <p>Duration: {turn.duration * 60} min.</p>
             <p>Description: {turn.description}</p>
             <button onClick={handleDelete} value={JSON.stringify(turn)}>
-              ❌ CANCEL
+              <span role="img" aria-label="X">
+                ❌
+              </span>{' '}
+              CANCEL
             </button>
           </div>
         ))}

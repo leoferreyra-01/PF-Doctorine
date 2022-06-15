@@ -9,12 +9,13 @@ import { Toaster } from 'react-hot-toast';
 import Loader from '../../../Components/Loader/loader';
 // import { useSelector } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
+// eslint-disable-next-line
 import { getPatientDni2, getTurns } from '../../../redux/actions';
 
 export default function Home() {
   const [title, setTitle] = useState(null);
   const location = useLocation();
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(true); // eslint-disable-next-line
   const user = useSelector(state => state.user);
   const turns = useSelector(state => state.unavailableTurns);
 

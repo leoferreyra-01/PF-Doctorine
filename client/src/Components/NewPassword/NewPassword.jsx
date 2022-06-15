@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { postNewPassword } from '../../redux/actions';
+// import { useDispatch } from 'react-redux';
+// import { postNewPassword } from '../../redux/actions';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import S from './NewPassword.module.css';
+// import S from './NewPassword.module.css';
 
 export function validate(input) {
   let errors = {};
@@ -18,7 +17,7 @@ export function validate(input) {
   }
   if (!input.email) {
     errors.email = 'Email must be require';
-  } 
+  }
   if (!input.passwordConfirm) {
     errors.passwordConfirm = 'Password must be confirmed';
   } else if (input.password !== input.passwordConfirm) {
@@ -28,7 +27,6 @@ export function validate(input) {
 }
 
 function NewPassword() {
-  const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: '',
     password: '',
@@ -80,7 +78,7 @@ function NewPassword() {
 
         <SignUpContainer>
           <form onSubmit={register}>
-          <label>Email</label>
+            <label>Email</label>
             <input
               onChange={handleInputChange}
               value={input.email}
@@ -160,7 +158,7 @@ const SignUpDivContainer = styled.div`
     background-position: center;
   }
 `;
-
+// eslint-disable-next-line
 const ImgSignUp = styled.div`
   margin-top: -2.5rem;
   display: flex;

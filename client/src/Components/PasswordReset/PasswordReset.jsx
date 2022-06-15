@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
-import { postPasswordReset } from "../../redux/actions";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import toast, { Toaster } from 'react-hot-toast';
+import { postPasswordReset } from '../../redux/actions';
 import Swal from 'sweetalert2';
-import S from "./PasswordReset.module.css"
+// import S from "./PasswordReset.module.css"
 
 export function validate(input) {
   let errors = {};
 
   if (!input.email) {
-    errors.username = "Username is required";
+    errors.username = 'Username is required';
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.username = "Username is invalid";
+    errors.username = 'Username is invalid';
   }
   return errors;
 }
 
 function PasswordReset() {
   const [input, setInput] = useState({
-    email: "",
+    email: '',
   });
+  // eslint-disable-next-line
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.user);
-
+  // eslint-disable-next-line
+  const User = useSelector(state => state.user);
 
   const handleInputChange = function (e) {
     setInput({
@@ -42,22 +43,21 @@ function PasswordReset() {
     );
   };
 
-  const handleSumbit = async (e) => {
+  const handleSumbit = async e => {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        toast.error("User must be completed correctly");
+        toast.error('User must be completed correctly');
       }
       dispatch(postPasswordReset(input));
       Swal.fire({
         icon: 'success',
         title: 'Check your email box',
         showConfirmButton: true,
-
       });
     } catch (e) {
       console.log(e);
-      toast.error("Incorrect user");
+      toast.error('Incorrect user');
     }
   };
 
@@ -65,7 +65,6 @@ function PasswordReset() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
-
         <SignUpContainer>
           <form onSubmit={handleSumbit}>
             <label>Username</label>
@@ -99,7 +98,7 @@ const SignUpDivContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: #07182E;
+  background-color: #07182e;
   object-fit: fill;
   background-size: cover;
   background-repeat: no-repeat;
@@ -130,7 +129,7 @@ const SignUpDivContainer = styled.div`
     background-position: center;
   }
 `;
-
+// eslint-disable-next-line
 const ImgSignUp = styled.div`
   margin-top: -2.5rem;
   display: flex;
@@ -148,8 +147,8 @@ const SignUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   * {
-    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-    font-family: "Poppins", sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    font-family: 'Poppins', sans-serif;
   }
   label {
     padding-top: 10px;
@@ -165,7 +164,7 @@ const SignUpContainer = styled.div`
     align-items: center;
     background-color: rgb(0, 131, 182);
     box-shadow: 15px 15px 30px rgba(255, 255, 255, 0.129),
-             -15px -15px 30px rgba(255, 255, 255, 0.135);
+      -15px -15px 30px rgba(255, 255, 255, 0.135);
     width: 32rem;
     height: auto;
     border-radius: 20px;
@@ -243,7 +242,7 @@ const SignUpContainer = styled.div`
     }
   }
 `;
-
+// eslint-disable-next-line
 const AuthDiv = styled.div`
   margin-top: -6.5rem;
   display: flex;

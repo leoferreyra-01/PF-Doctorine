@@ -21,7 +21,18 @@ export default function PatientCard({ ID, name, lastName, document }) {
         </div>
         <NavLink to={`/home/${ID}`} className={s.link}>
           <div className={s.cardactions}>
-            <button className={s.btn}>See Clinical History 📁</button>
+            <button className={s.btn}>
+              See Clinical History{' '}
+              <span role="img" aria-label="HC">
+                📁
+              </span>
+            </button>
+            <button className={s.btn}>
+              See Studies{' '}
+              <span role="img" aria-label="medic">
+                🩺
+              </span>
+            </button>
           </div>
         </NavLink>
       </div>

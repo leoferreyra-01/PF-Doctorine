@@ -9,7 +9,6 @@ const {
   registerUser,
   userExist,
 } = require('../../controllers/controllerLogin/postUserLogin');
-// router.post('/', loginUser);
 
 router.post('/', async (req, res) => {
   try {
@@ -21,13 +20,37 @@ router.post('/', async (req, res) => {
       error: 'ERR_LOGIN',
       description: 'The was a problem logging in',
       message: error.message,
-    })
+    });
   }
 });
 
-router.post('/register', registerUser);
+router.post('/register', async (req, res) => {
+  try {
+    const result = await registerUser(req.body);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'ERR_REGISTER',
+      description: 'The was a problem registering',
+      message: error.message,
+    });
+  }
+});
 
-router.post('/oneUser', userExist);
+router.post('/oneUser', async(req, res)=>{
+  try {
+    const result = await userExist(req.body);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'ERR_REGISTER',
+      description: 'The was a problem registering',
+      message: error.message,
+    });
+  }
+});
 
 module.exports = router;
 

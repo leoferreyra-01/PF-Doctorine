@@ -32,12 +32,12 @@ const newPassword = async req => {
   }
 };
 
-const passwordReset = async (req, res) => {
+const passwordReset = async (req) => {
   try {
-    console.log('ESTE ====>', req.body.email);
+    console.log('ESTE ====>', req.email);
     const user = await User.findOne({
       where: {
-        email: req.body.email,
+        email: req.email,
       },
     });
     if (user) {
@@ -55,15 +55,16 @@ const passwordReset = async (req, res) => {
       });
       await transporter.sendMail({
         from: '"Reset password 😎" <doctorine.com@gmail.com>', // sender address
-        to: req.body.email, // list of receivers
+        to: req.email, // list of receivers
         subject: 'Reset Password Doctorine', // Subject line
         html: '<b>To reset your password, click on the link</b><br/><div><a href=http://localhost:3000/newPassword>Link</a></div>', // html body
       });
     } else {
-      res.json({ error: 'Usuario no registrado!' });
+      return ({ error: 'Usuario no registrado!' });
     }
   } catch (error) {
     console.log(error);
+    throw new Error('There was a problem updating the password');
   }
 };
 
@@ -88,8 +89,28 @@ const newPasswordReset = async req => {
   }
 };
 
+const checkPassword = async (req) => {
+  const { email, password } = req;
+  try{
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if (!password) {
+      throw new Error('Password is required');
+    }
+    console.log(user.dataValues.password);
+    let result = bcrypt.compareSync(password, user.dataValues.password);
+    return result;
+  } catch (error){
+    console.log(error);
+    throw new Error('There was a problem checking your password');
+  }
+}
+
 module.exports = {
   newPassword,
   passwordReset,
   newPasswordReset,
+  checkPassword
 };

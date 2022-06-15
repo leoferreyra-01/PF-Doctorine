@@ -3,7 +3,6 @@ import s from './createHC.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   postClinicalHistory,
-  clear,
   getClinicalHistory,
 } from '../../../../redux/actions';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +19,6 @@ export default function RegisterClinicalHistory() {
     Id = SearchedPatient.Patient.ID;
   }
 
-  console.log(Id);
   let [newHC, setNewHC] = useState({
     Smoker: { value: false },
     'Use drugs': { value: false },
@@ -65,7 +63,6 @@ export default function RegisterClinicalHistory() {
     arrayToMap.push(property);
   }
   let handleChange = e => {
-    console.log(e.target.value.toLowerCase());
     setNewHC({
       ...newHC,
       [e.target.name]: {
@@ -78,7 +75,7 @@ export default function RegisterClinicalHistory() {
       },
     });
   };
-
+  // eslint-disable-next-line
   let handleInputChange = e => {
     setNewHC(prevState => {
       return {
@@ -106,7 +103,7 @@ export default function RegisterClinicalHistory() {
   for (let i = 0; i < newhc3.length; i++) {
     finalhc.push(`${newhcKey[i]}: ${newhc3[i]}`);
   }
-  console.log(finalhc);
+
   let handleSubmit = e => {
     e.preventDefault();
     //indice de params
@@ -115,7 +112,7 @@ export default function RegisterClinicalHistory() {
         ...prevState,
       };
     });
-    console.log(newHC.patient);
+
     Swal.fire({
       title: finalhc,
       showCancelButton: true,
@@ -129,7 +126,6 @@ export default function RegisterClinicalHistory() {
 
           {
             const fixedhc = fixhc(newHC, Id);
-            console.log(fixedhc);
 
             dispatch(postClinicalHistory(fixedhc));
 

@@ -12,7 +12,7 @@ export default function SearchBar({ placeholder, handleDni, handleName }) {
   const handleOnChange = e => {
     setSearched(e.target.value);
     if (
-      /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(e.target.value) ||
+      /[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/.test(e.target.value) ||
       /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(e.target.value)
     ) {
       setErrors('Wrong search format, please try again');

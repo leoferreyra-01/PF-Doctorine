@@ -1,16 +1,15 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const login = async credentials => { 
-    console.log(credentials)
-    const {data} = await axios.post("/login" , credentials)
-    console.log(data)
-    return data
-} 
+const login = async credentials => {
+  const { data } = await axios.post('/login', credentials);
+  return data;
+};
+// eslint-disable-next-line
+let token = null;
+const setToken = newToken => {
+  token = `Bearer ${newToken}`;
+};
+// eslint-disable-next-line
+let token2 = JSON.parse(window.localStorage.getItem('loggedToken'));
 
-let token = null 
-const setToken = newToken => { 
-    token = `Bearer ${newToken}`
-}
-let token2 = JSON.parse(window.localStorage.getItem("loggedToken"))
-
-export default { login , setToken }
+export default { login, setToken };

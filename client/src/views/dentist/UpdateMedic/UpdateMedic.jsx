@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
-import S from './UpdateMedic.module.css';
+import { useNavigate } from 'react-router-dom';
+// import toast, { Toaster } from 'react-hot-toast';
+// import S from './UpdateMedic.module.css';
 import { updateMedic, getMedicInfo } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -59,6 +59,7 @@ export default function UpdateMedicInfo() {
       postalCode: data.postalCode,
     };
   } else {
+    // eslint-disable-next-line
     var infoUser = {
       name: data.name,
       lastName: data.lastName,
@@ -98,15 +99,15 @@ export default function UpdateMedicInfo() {
     validateMedic();
     funcSetMedicID();
     console.log('VALIDATIONS useEffect, 1 => ', validations);
-  }, [dispatch,data]);
-
+  }, [dispatch, data]);
+  // eslint-disable-next-line
   let [fail, err] = validations;
   //#endregion
 
   function changePassword() {
     navigate('/home/changePassword');
   }
-  
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log({ infoUser, infoMedic, medicId });
@@ -137,54 +138,56 @@ export default function UpdateMedicInfo() {
   }
 
   return (
-    <div className='container'>
-      <button onClick={changePassword} className='button'>Change Password</button>
-      <div className='container2'>
+    <div className="container">
+      <button onClick={changePassword} className="button">
+        Change Password
+      </button>
+      <div className="container2">
         <form onSubmit={handleSubmit}>
-          <div className='rowContainer'>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <div className='subtitle'>Frist Name</div>
+          <div className="rowContainer">
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <div className="subtitle">Frist Name</div>
               <input
-                className='input'
+                className="input"
                 value={data.name}
-                name='name'
+                name="name"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.name'] && (
                 <p>{err['infoUser.name'].msg}</p>
               )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <div className='subtitle'>Last Name</div>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <div className="subtitle">Last Name</div>
               <input
-                className='input'
+                className="input"
                 value={data.lastName}
-                name='lastName'
+                name="lastName"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.lastName'] && (
                 <p>{err['infoUser.lastName'].msg}</p>
               )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <div className='subtitle'>Email</div>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <div className="subtitle">Email</div>
               <input
-                className='input'
+                className="input"
                 value={data.email}
-                name='email'
+                name="email"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.email'] && (
                 <p>{err['infoUser.email'].msg}</p>
               )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <div className='subtitle'>Birth</div>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <div className="subtitle">Birth</div>
               <input
-                className='input'
+                className="input"
                 value={data.birth}
-                type='date'
-                name='birth'
+                type="date"
+                name="birth"
                 onChange={handleChange}
               />
             </div>
@@ -192,49 +195,49 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.birth'].msg}</p>
               )} */}
           </div>
-          <div className='rowContainer'>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Telephone</label>
+          <div className="rowContainer">
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Telephone</label>
               <input
-                className='input'
+                className="input"
                 value={data.telephone}
-                name='telephone'
+                name="telephone"
                 onChange={handleChange}
               />
               {/* {fail && err['infoUser.telephone'] && (
                 <p>{err['infoUser.telephone'].msg}</p>
               )} */}
             </div>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Cellphone</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Cellphone</label>
               <input
-                className='input'
+                className="input"
                 value={data.cellphone}
-                name='cellphone'
+                name="cellphone"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.cellphone'] && (
                 <p>{err['infoUser.cellphone'].msg}</p>
               )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Street</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Street</label>
               <input
-                className='input'
+                className="input"
                 value={data.street}
-                name='street'
+                name="street"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.street'] && (
                 <p>{err['infoUser.street'].msg}</p>
               )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Number</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Number</label>
               <input
-                className='input'
+                className="input"
                 value={data.number}
-                name='number'
+                name="number"
                 onChange={handleChange}
               />
             </div>
@@ -242,48 +245,48 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.number'].msg}</p>
               )} */}
           </div>
-          <div className='rowContainer'>
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>City</label>
+          <div className="rowContainer">
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">City</label>
               <input
-                className='input'
+                className="input"
                 value={data.city}
-                name='city'
+                name="city"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.city'] && <p>{err['infoUser.city'].msg}</p>} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Postal Code</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Postal Code</label>
               <input
-                className='input'
+                className="input"
                 value={data.postalCode}
-                name='postalCode'
+                name="postalCode"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoUser.postalCode'] && (
             <p>{err['infoUser.postalCode'].msg}</p>
           )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Specialization </label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Specialization </label>
               <input
-                className='input'
+                className="input"
                 value={data.specialization}
-                name='specialization'
+                name="specialization"
                 onChange={handleChange}
               />
             </div>
             {/* {fail && err['infoPatient.specialization'] && (
             <p>{err['infoPatient.specialization'].msg}</p>
           )} */}
-            <div className='containerDivInput' style={{ width: '12vw' }}>
-              <label className='subtitle'>Tuition Date</label>
+            <div className="containerDivInput" style={{ width: '12vw' }}>
+              <label className="subtitle">Tuition Date</label>
               <input
-                className='input'
+                className="input"
                 value={data.tuition_date}
-                type='date'
-                name='tuition_date'
+                type="date"
+                name="tuition_date"
                 onChange={handleChange}
               />
             </div>
@@ -291,7 +294,7 @@ export default function UpdateMedicInfo() {
             <p>{err['infoUser.tuition_date'].msg}</p>
           )} */}
           </div>
-          <button type='submit' className='button'>
+          <button type="submit" className="button">
             Update Patient
           </button>
         </form>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postPatient } from '../../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import s from './buton.module.css';
