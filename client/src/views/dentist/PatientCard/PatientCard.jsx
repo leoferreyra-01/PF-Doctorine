@@ -27,12 +27,6 @@ export default function PatientCard({ ID, name, lastName, document }) {
                 📁
               </span>
             </button>
-            <button className={s.btn}>
-              See Studies{' '}
-              <span role="img" aria-label="medic">
-                🩺
-              </span>
-            </button>
           </div>
         </NavLink>
       </div>

@@ -28,7 +28,8 @@ export default function PatientDetails() {
       if (!filledStudies) dispatch(getStudies(patientID));
       if (!filledEvolutions) dispatch(getEvolutions(patientID));
     }, 1000);
-    if (Object.keys(patient).length === 0) dispatch(getPatient(patientID));
+    // if (Object.keys(patient).length === 0) 
+    dispatch(getPatient(patientID));
   }, []);
 
   return (

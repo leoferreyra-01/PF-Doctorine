@@ -306,11 +306,14 @@ export default function CalendarFunction() {
         {availableTurns.length ? (
           availableTurns.map((turn, idx) => (
             <div key={idx} className={styles.turns}>
-              <button onClick={handleSelect} value={JSON.stringify(turn)}>
-                <span role="img" aria-label="ok">
+              <button
+                onClick={handleSelect}
+                value={JSON.stringify(turn)}
+                className={styles.btn}>
+                SELECT{' '}
+                <span role='img' aria-label='ok'>
                   ✔️
-                </span>{' '}
-                SELECT
+                </span>
               </button>
 
               <p>Time: {numberToHours(turn.time)} hs</p>
@@ -335,8 +338,7 @@ export default function CalendarFunction() {
               ) : (
                 <button
                   onClick={handlePatientAccepts}
-                  value={JSON.stringify(turn)}
-                >
+                  value={JSON.stringify(turn)}>
                   Accept?
                 </button>
               )}
@@ -346,7 +348,7 @@ export default function CalendarFunction() {
             <p>Duration: {turn.duration * 60} min.</p>
             <p>Description: {turn.description}</p>
             <button onClick={handleDelete} value={JSON.stringify(turn)}>
-              <span role="img" aria-label="X">
+              <span role='img' aria-label='X'>
                 ❌
               </span>{' '}
               CANCEL

@@ -54,6 +54,9 @@ function App() {
 
   useEffect(() => {
     loop();
+  }, []);
+
+  useEffect(() => {
 
     function start() {
       gapi.client.init({

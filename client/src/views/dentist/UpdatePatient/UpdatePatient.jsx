@@ -15,7 +15,7 @@ export default function UpdatePatient() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getPatient(patientID)).then(() => {
+    // dispatch(getPatient(patientID)).then(() => {
       setData({
         name: patient.name,
         lastName: patient.lastName,
@@ -28,7 +28,7 @@ export default function UpdatePatient() {
         postalCode: patient.postalCode,
         medicalService: patient.Patient.medicalService,
       });
-    });
+    // });
   }, []);
 
   const [data, setData] = useState({

@@ -26,7 +26,7 @@ export default function SearchComponent() {
   useEffect(() => {
     if (!filledPatients) dispatch(getAllPatients());
     dispatch(getMedicInfo(userEmail));
-    return () => dispatch(clear());
+    // return () => dispatch(clear());
   }, []);
 
   if (searchedPatient === 'Patient Not Found') {
