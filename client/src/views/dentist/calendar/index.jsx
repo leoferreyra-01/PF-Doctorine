@@ -224,7 +224,7 @@ export default function Appointments() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log('infoTurn => ', infoTurn);
+    console.log('infoTurn => ', infoTurn);
 
     try {
       if (fail) {
