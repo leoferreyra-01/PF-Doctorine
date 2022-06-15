@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export default function Study({ studyType, description, attach }) {
   function openTab() {
@@ -23,7 +22,11 @@ export default function Study({ studyType, description, attach }) {
       <h2>
         <div>Description:</div>
         {description === null ? 'Has no description' : description}
-        <button onClick={openTab}>📋</button>
+        <button onClick={openTab}>
+          <span role="img" aria-label="note">
+            📋
+          </span>
+        </button>
       </h2>
     </div>
   );

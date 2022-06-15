@@ -8,6 +8,7 @@
 */
 
 //#region experimental data
+// eslint-disable-next-line
 const officeHours = [
   [], // i = 0 = domingo
   [
@@ -33,7 +34,7 @@ const officeHours = [
   ],
   [], // i = 6 = sábado
 ];
-
+// eslint-disable-next-line
 const turns = [
   {
     date: '2022-05-30',
@@ -56,7 +57,7 @@ const turns = [
     duration: 1,
   },
 ];
-
+// eslint-disable-next-line
 const turn = {
   date: '2022-05-30',
   time: 8.5,
@@ -113,7 +114,7 @@ function validateTurn(turn, turns, officeHours) {
   2) Elegir un turno y mostrar la información del mismo. Para luego con esa info crear un turno.
   3) Si el día no tiene turnos disponibles, mostrar un mensaje.
 */
-
+// eslint-disable-next-line
 const turnStandardDuration = 0.5;
 
 //|> GET TURNS AVAILABLE

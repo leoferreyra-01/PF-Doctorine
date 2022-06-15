@@ -19,7 +19,7 @@ import ClinicDetails from './views/dentist/ClinicDetails/ClinicDetails';
 import AddEvolution from './views/dentist/AddEvolution/AddEvolution';
 import AddStudy from './views/dentist/AddStudies/AddStudies';
 import { AddBudget } from './views/dentist/AddBudget/AddBudget';
-import FileUpload from './FileUpload/FileUpload';
+// import FileUpload from './FileUpload/FileUpload';
 import SearchPatient from './views/patient/searchPatient/searchPatient';
 import PatientHome from './views/patient/PatientHome/PatientHome';
 import PatientData from './views/patient/PatientData/PatientData';

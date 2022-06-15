@@ -7,7 +7,8 @@ export default function PatientCard({ ID, name, lastName, document }) {
     <div>
       <div
         style={{ textDecoration: 'none', width: '100%' }}
-        className={s.container}>
+        className={s.container}
+      >
         <div className={s.title_container}>
           <h3 className={s.title}>
             {name.charAt(0).toUpperCase() +
@@ -20,8 +21,18 @@ export default function PatientCard({ ID, name, lastName, document }) {
         </div>
         <NavLink to={`/home/${ID}`}>
           <div className={s.cardactions}>
-            <button className={s.btn}>See Clinical History 📁</button>
-            <button className={s.btn}>See Studies 🩺</button>
+            <button className={s.btn}>
+              See Clinical History{' '}
+              <span role="img" aria-label="HC">
+                📁
+              </span>
+            </button>
+            <button className={s.btn}>
+              See Studies{' '}
+              <span role="img" aria-label="medic">
+                🩺
+              </span>
+            </button>
           </div>
         </NavLink>
       </div>
