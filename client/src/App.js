@@ -36,6 +36,7 @@ import PatientCHPdf from './views/patient/PatientCH/PatientCHPdf';
 import PatientCH from './views/patient/PatientCH/PatientCH';
 import UpdateData from './views/dentist/ClinicDetails/UpdateData/UpdateData';
 import UpdateTreatments from './views/dentist/UpdateTreatments/UpdateTreatments';
+import UpdatePassword from './views/patient/PatientDataUpdate/ChangePassword/ChangePassword';
 
 import { useDispatch } from 'react-redux';
 import { getTurns } from './redux/actions';
@@ -122,6 +123,7 @@ function App() {
               path="create-clinical-history"
               element={<RegisterClinicalHistory />}
             />
+            <Route path="updatePassword" element={<UpdatePassword />} />
           </Route>
         )}
       </Routes>

@@ -129,6 +129,7 @@ const PatientDataUpdate = () => {
 
   return (
     <div className="container">
+      <Link to="/home/updatePassword">Change your password</Link>
       <div className="container2">
         <form onSubmit={onSubmit}>
           <div className="rowContainer">
