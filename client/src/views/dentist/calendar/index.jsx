@@ -9,6 +9,7 @@ import {
   getTurns,
   postTurn,
   getAllPatients,
+  postBudget,
 } from '../../../redux/actions';
 
 //|> VALIDATIONS
@@ -127,7 +128,7 @@ export default function Appointments() {
         setCounterWarning(false);
         Swal.fire({
           icon: 'warning',
-          title: `"${CONSULTATION}" is a word reserved for consultations. If your patient have a turn with "...${CONSULTATION}..." in the description, he cant be able to create a new consultation turn.`,
+          title: `"${CONSULTATION}" is a word reserved for consultations. If your patient have a turn with "...${CONSULTATION}..." in the description, he cant be able to create a new consultation turn. And a new budget will be automatically created.`,
         });
       }
     }
@@ -224,6 +225,21 @@ export default function Appointments() {
             icon: 'error',
             title: 'Please select a patient.',
           });
+        //#region PAYMENT
+
+        if (infoTurn.description.toLowerCase().includes(CONSULTATION)) {
+          const budget = {
+            PatientID: data.PatientID,
+            treatments:
+              '[{"ID":"0101","treatmentType":"consultas","description":"Examen - Diagnóstico - Fichado y Plan de Tratamiento.","price":1170,"quantity":1,"subTotalPrice":1170}]',
+            discount: null,
+            totalPrice: '1170',
+          };
+
+          dispatch(postBudget(budget));
+        }
+
+        //#endregion
 
         dispatch(postTurn({ ...infoTurn, email: patientSelected.email }));
         setTurnForm(false);
