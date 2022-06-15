@@ -24,10 +24,10 @@ export function validate(input) {
     errors.password = 'Password is required';
   } else if (!/(?=.-*[0-9])/.test(input.password)) {
     errors.password = 'Password is invalid';
-  } else if (input.password.length < 6) {
-    errors.password = 'Password must be greater than 6 digits';
-  } else if (input.password.length > 12) {
-    errors.password = 'Password must be less than 12 digits';
+  } else if (input.password.length < 8) {
+    errors.password = 'Password must be greater than 8 digits';
+  } else if (input.password.length > 20) {
+    errors.password = 'Password must be less than 20 digits';
   }
   return errors;
 }
@@ -239,7 +239,7 @@ function SignUp() {
               clientId="734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={respuestaGoogle}
-              onFailure={(res) => console.log(res)}
+              onFailure={res => console.log(res)}
               cookiePolicy={'single_host_origin'}
               className="Google-button"
               style={{ color: 'black important!' }}
