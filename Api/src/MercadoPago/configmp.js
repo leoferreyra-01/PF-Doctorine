@@ -39,7 +39,7 @@ router.post('/create_preference', (req, res) => {
       },
     ],
     back_urls: {
-      success: 'http://localhost:3001/payments/feedback',
+      success: `${paymentUpdate}/payments/feedback`,
       failure: 'http://localhost:3001/failed',
       pending: 'http://localhost:3001/feedback',
     },
@@ -67,6 +67,10 @@ router.get('/feedback', function (req, res) {
       idPayment: req.query.preference_id,
     });
   }
-  res.redirect('http://localhost:3000/home');
+  const redirectURL =
+    paymentUpdate === 'http://localhost:3001'
+      ? 'http://localhost:3000'
+      : 'https://doctorine.vercel.app/';
+  res.redirect(redirectURL);
 });
 module.exports = router;
