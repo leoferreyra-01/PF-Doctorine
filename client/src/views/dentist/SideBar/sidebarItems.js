@@ -9,7 +9,6 @@ import {
   faCircleInfo,
   faUserPlus,
   faUserDoctor,
-  faHospital,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 

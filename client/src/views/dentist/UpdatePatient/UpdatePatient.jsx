@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import toast, { Toaster } from 'react-hot-toast';
 // import S from './UpdatePatient.module.css';
-import { updatePatient, getPatient } from '../../../redux/actions';
+import { updatePatient } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import bk_validate from '../../../helpers/backend_validators';

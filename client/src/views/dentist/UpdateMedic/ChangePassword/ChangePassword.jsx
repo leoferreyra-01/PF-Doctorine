@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 export default function changePassword() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const medic = useSelector(state => state.searchedMedic);
 

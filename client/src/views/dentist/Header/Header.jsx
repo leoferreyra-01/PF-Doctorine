@@ -1,7 +1,5 @@
 import React from 'react';
 import s from './Header.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header({ title }) {
   return (

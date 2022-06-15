@@ -11,7 +11,6 @@ export default function PatientDetails() {
   let { patientID } = useParams();
   const dispatch = useDispatch();
 
-  const patient = useSelector(state => state.patient);
   // console.log('patient', patient);
   const studies = useSelector(state => state.studies);
   const filledStudies = !!studies.length;

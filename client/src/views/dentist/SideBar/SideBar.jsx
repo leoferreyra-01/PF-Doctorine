@@ -11,6 +11,7 @@ export default function SideBar() {
         <img
           src="https://i.gyazo.com/23e23d3a3612e9151d8031a0eed05ab0.jpg"
           className={s.serviceLogo}
+          alt="Service Logo"
         />
       </div>
       <div className={s.divider}></div>

@@ -95,6 +95,7 @@ const PatientCH = ({ id }) => {
           .toUpperCase();
       }
     }
+    return property;
   });
 
   window.localStorage.setItem('patientCH', JSON.stringify(toRenderParsed));
