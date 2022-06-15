@@ -37,7 +37,7 @@ export default function Budgets() {
   const filledBudgets = !!budgetsToShow.length;
 
   useEffect(() => {
-    if (!filledBudgets) dispatch(getAllBudgets());
+    dispatch(getAllBudgets());
   }, []);
 
   if (budgetsToShow === 'Budget Not Found') {
