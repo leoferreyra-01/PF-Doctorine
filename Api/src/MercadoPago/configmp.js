@@ -3,7 +3,7 @@ require('dotenv').config();
 // Agrega credenciales
 const router = require('express').Router();
 const axios = require('axios');
-axios.defaults.baseURL = process.env.REACT_APP_API || `http://localhost:3001`;
+const paymentUpdate = process.env.REACT_APP_API || `http://localhost:3001`;
 
 mercadopago.configure({
   access_token:
@@ -63,7 +63,7 @@ router.post('/create_preference', (req, res) => {
 
 router.get('/feedback', function (req, res) {
   if (req.query.status === 'approved') {
-    axios.put('/Budgets', {
+    axios.put(`${paymentUpdate}/Budgets`, {
       idPayment: req.query.preference_id,
     });
   }
