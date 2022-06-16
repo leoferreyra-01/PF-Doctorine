@@ -6,6 +6,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import s from './file.module.css';
 
 export default function FileUpload() {
   const [file, setFile] = useState('');
@@ -80,9 +81,11 @@ export default function FileUpload() {
   }, [file]);
 
   return (
-    <div>
+    <div className={s.continer}>
       <form onSubmit={handleSubmit}></form>
-      <input id="file1" type="file" onChange={handleOnChange} accept=".pdf" />
+      <div className={s.fileSelect}>
+        <input id="file1" type="file" onChange={handleOnChange} accept=".pdf" />
+      </div>
       <progress value={progress} max="100" />
       <div>{parseInt(progress) === -2 ? 0 : parseInt(progress)} %</div>
     </div>

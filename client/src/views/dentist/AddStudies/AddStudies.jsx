@@ -147,7 +147,7 @@ function AddStudy() {
           />
 
           <FileUpload />
-          <button className={S.btn} type="submit">
+          <button className={S.btn2} type="submit">
             <span className={S.transition}></span>
             <span className={S.gradient}></span>
             <span className={S.label}>Add Study</span>

@@ -1,0 +1,40 @@
+.continer {
+  background-color: #244063;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.fileSelect {
+  position: relative;
+  display: inline-block;
+  margin: 1%;
+  margin-top: 3%;
+  padding: -2%;
+  border-radius: 1em;
+}
+
+.fileSelect:hover {
+  cursor: pointer;
+}
+
+.fileSelect::before {
+  background-color: #101f33;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  content: 'Select file'; /* testo por defecto */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.fileSelect input[type='file'] {
+  opacity: 0;
+  width: 200px;
+  height: 32px;
+  display: inline-block;
+}

@@ -20,6 +20,81 @@
   width: 32rem;
   padding-top: 10px;
   padding-bottom: 10px;
+  border-radius: 20px;
+}
+
+.form input {
+  text-align: center;
+  margin-top: 5px;
+  width: 90%;
+  height: 23px;
+  border-radius: 5px;
+}
+
+.casillas {
+  border-radius: 7px;
+}
+.casillas2 {
+  border-radius: 7px;
+  width: 28rem;
+}
+
+.btn2 {
+  font-size: 1.4rem;
+  padding: 1em 2.7em;
+  font-weight: 500;
+  background: #101f33;
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.6em;
+  margin: 1rem 0;
+}
+.gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 0.6em;
+  margin-top: -0.25em;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.3)
+  );
+}
+
+.label {
+  position: relative;
+  top: -1px;
+}
+.transition {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 500ms;
+  background-color: #009be5;
+  border-radius: 9999px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn2:hover .transition {
+  width: 14em;
+  height: 14em;
+}
+
+.btn2:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.btn2:active {
+  transform: scale(0.97);
 }
 /* .btn {
   margin: 25px 0 25px 0;
@@ -48,4 +123,10 @@
   grid-area: content;
   margin-right: 60%;
   font-size: 1.4rem;
+}
+
+.label {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
 }

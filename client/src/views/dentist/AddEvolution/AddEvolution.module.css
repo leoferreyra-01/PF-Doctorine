@@ -25,12 +25,21 @@
   -webkit-backdrop-filter: blur(7px);
   backdrop-filter: blur(7px);
   width: 32rem;
-
   border-radius: 20px;
 }
+
+.form input {
+  text-align: center;
+  margin-top: 5px;
+  width: 90%;
+  height: 23px;
+  border-radius: 5px;
+}
+
 .label {
   padding-top: 10px;
   padding-bottom: 10px;
+  font-weight: bold;
 }
 .casillas {
   border-radius: 7px;
