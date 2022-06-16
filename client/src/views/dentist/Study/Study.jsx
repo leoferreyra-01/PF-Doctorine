@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './study.module.css';
 
 export default function Study({ studyType, description, attach }) {
   function openTab() {
@@ -14,20 +15,23 @@ export default function Study({ studyType, description, attach }) {
         borderWidth: '2px',
         borderStyle: 'solid',
         borderColor: 'black',
+        padding: '1%',
       }}
     >
       <h2>
         <div>Study type:</div> {studyType}
       </h2>
       <h2>
-        <div>Description:</div>
+        <p>Description:</p>
         {description === null ? 'Has no description' : description}
-        <button onClick={openTab}>
-          <span role="img" aria-label="note">
-            📋
-          </span>
-        </button>
       </h2>
+      <button onClick={openTab} className={s.btn2}>
+        <span className={s.transition}></span>
+        <span className={s.gradient}></span>
+        <span role="img" aria-label="note">
+          📋
+        </span>
+      </button>
     </div>
   );
 }

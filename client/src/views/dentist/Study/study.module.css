@@ -1,0 +1,23 @@
+.study {
+  margin: 1%;
+  border-radius: 10%;
+}
+
+.btn2 {
+  font-size: 1.4rem;
+  background: #101f33;
+  margin: 1%;
+  border-radius: 10%;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.6em;
+}
+
+.btn2:hover {
+  cursor: pointer;
+}
+
+.btn2:active {
+  transform: scale(0.97);
+}

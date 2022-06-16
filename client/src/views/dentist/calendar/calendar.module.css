@@ -6,9 +6,6 @@
   font-size: 1.4rem;
 }
 
-.create_container {
-}
-
 .btn {
   font-size: 1.4rem;
   padding: 1em 2.7em;
@@ -85,6 +82,7 @@
   color: #fff;
   font-size: 1.4rem;
   position: relative;
+  border-radius: 20px;
 }
 
 .form__group {
@@ -164,4 +162,10 @@
 .timePicker {
   background-color: #009be5;
   padding: 1rem;
+  border-radius: 20px;
+}
+
+.timePicker h3 {
+  font-style: italic;
+  color: black;
 }

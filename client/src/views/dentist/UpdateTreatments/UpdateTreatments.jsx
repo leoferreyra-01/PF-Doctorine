@@ -18,27 +18,27 @@ function UpdateTreatments() {
 
   //|| agregado por Laura
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'creationDate', headerName: 'Creation Date', width: 150 },
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'creationDate', headerName: 'Creation Date', width: 160 },
     { field: 'updateDate', headerName: 'Update Date', width: 150 },
     {
       field: 'treatmentType',
       headerName: 'Treatment Type',
-      width: 150,
+      width: 180,
       /* fontSize: '40px', */
       editable: false,
     },
     {
       field: 'description',
       headerName: 'Description',
-      width: 300,
+      width: 450,
       editable: false,
     },
     {
       field: 'price',
       headerName: 'Price',
       type: 'number',
-      width: 150,
+      width: 100,
       editable: true,
     },
   ];

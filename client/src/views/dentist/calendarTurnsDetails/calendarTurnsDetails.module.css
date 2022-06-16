@@ -1,3 +1,7 @@
+.container {
+  margin: 7%;
+}
+
 .btn {
   font-size: 1.4rem;
   padding: 1em 2.7em;
@@ -60,7 +64,7 @@
   display: flex;
   margin: 2rem 0;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 20px;
   border: solid #009be5;
   border-width: thin;
   justify-content: space-evenly;
@@ -79,4 +83,10 @@
 
 .turn_details p {
   font-size: 1.6rem;
+}
+
+.turns_title {
+  font-style: italic;
+  color: var(--primary);
+  margin: auto;
 }
