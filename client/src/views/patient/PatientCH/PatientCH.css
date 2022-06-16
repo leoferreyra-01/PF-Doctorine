@@ -99,80 +99,114 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-.buttonDownload {
-  display: inline-block;
+
+.buttond {
+  --width: 100px;
+  --height: 25px;
+  --tooltip-height: 35px;
+  --tooltip-width: 90px;
+  --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 3px);
+  --button-color: #1163ff;
+  --tooltip-color: #fff;
+  width: var(--width);
+  height: var(--height);
+  background: var(--button-color);
   position: relative;
-  padding: 10px 25px;
-  background-color: #4cc713;
-  color: white;
-  font-family: sans-serif;
-  text-decoration: none;
-  font-size: 0.9em;
   text-align: center;
-  text-indent: 15px;
-  border: none;
+  border-radius: 0.45em;
+  font-family: 'Arial';
+  margin-left: 45%;
+  transition: background 0.3s;
 }
 
-.buttonDownload:hover {
-  background-color: #45a21a;
-  color: white;
-}
-
-.buttonDownload:before,
-.buttonDownload:after {
-  content: ' ';
-  display: block;
+.buttond::before {
   position: absolute;
-  left: 15px;
-  top: 52%;
+  content: attr(data-tooltip);
+  width: var(--tooltip-width);
+  height: var(--tooltip-height);
+  background-color: var(--tooltip-color);
+  font-size: 0.9rem;
+  color: #111;
+  border-radius: 0.25em;
+  line-height: var(--tooltip-height);
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+  left: calc(50% - var(--tooltip-width) / 2);
 }
 
-.buttonDownload:before {
-  width: 10px;
-  height: 2px;
-  border-style: solid;
-  border-width: 0 2px 2px;
-}
-
-.buttonDownload:after {
+.buttond::after {
+  position: absolute;
+  content: '';
   width: 0;
   height: 0;
-  margin-left: 3px;
-  margin-top: -7px;
-  border-style: solid;
-  border-width: 4px 4px 0 4px;
-  border-color: transparent;
-  border-top-color: inherit;
-  animation: downloadArrow 1s linear infinite;
-  animation-play-state: paused;
+  border: 10px solid transparent;
+  border-top-color: var(--tooltip-color);
+  left: calc(50% - 10px);
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 10px);
 }
 
-.buttonDownload:hover:before {
-  border-color: #cdefbd;
+.buttond::after,
+.buttond::before {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s;
 }
 
-.buttonDownload:hover:after {
-  border-top-color: #cdefbd;
-  animation-play-state: running;
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes downloadArrow {
-  0% {
-    margin-top: -7px;
-    opacity: 1;
-  }
+.button-wrapper,
+.text,
+.icon {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: #fff;
+}
 
-  0.001% {
-    margin-top: -15px;
-    opacity: 0.4;
-  }
+.text {
+  top: 0;
+}
 
-  50% {
-    opacity: 1;
-  }
+.text,
+.icon {
+  transition: top 0.5s;
+}
 
-  100% {
-    margin-top: 0;
-    opacity: 0.4;
-  }
+.icon {
+  color: #fff;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttond:hover {
+  background: #13a100;
+}
+
+.buttond:hover .text {
+  top: -100%;
+}
+
+.buttond:hover .icon {
+  top: 0;
+}
+
+.buttond:hover:before,
+.buttond:hover:after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.buttond:hover:after {
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+}
+
+.buttond:hover:before {
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
 }

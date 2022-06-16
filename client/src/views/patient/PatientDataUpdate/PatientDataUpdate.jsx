@@ -17,18 +17,33 @@ const PatientDataUpdate = () => {
   const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
 
   const [user, setUser] = useState({
-    name: SearchedPatient.name,
-    lastName: SearchedPatient.lastName,
-    document: SearchedPatient.document,
-    birth: SearchedPatient.birth,
-    street: SearchedPatient.street,
-    number: SearchedPatient.number,
-    city: SearchedPatient.city,
-    postalCode: SearchedPatient.postalCode,
-    telephone: SearchedPatient.telephone,
-    cellphone: SearchedPatient.cellphone,
-    email: SearchedPatient.email,
+    name: '',
+    lastName: 'SearchedPatient.lastName',
+    document: 'SearchedPatient.document',
+    birth: 'SearchedPatient.birth',
+    street: 'SearchedPatient.street',
+    number: 'SearchedPatient.number',
+    city: 'SearchedPatient.city',
+    postalCode: 'SearchedPatient.postalCode',
+    telephone: 'SearchedPatient.telephone',
+    cellphone: 'SearchedPatient.cellphone',
+    email: 'SearchedPatient.email',
   });
+  setTimeout(() => {
+    setUser({
+      name: SearchedPatient.name,
+      lastName: SearchedPatient.lastName,
+      document: SearchedPatient.document,
+      birth: SearchedPatient.birth,
+      street: SearchedPatient.street,
+      number: SearchedPatient.number,
+      city: SearchedPatient.city,
+      postalCode: SearchedPatient.postalCode,
+      telephone: SearchedPatient.telephone,
+      cellphone: SearchedPatient.cellphone,
+      email: SearchedPatient.email,
+    });
+  }, 10000);
 
   async function validatePatient() {
     const [fail, err] = await bk_validate.Patient(
@@ -45,6 +60,7 @@ const PatientDataUpdate = () => {
 
   useEffect(() => {
     dispatch(getPatientDni2(uno.document));
+
     // if (!SearchedPatient.medicalService) {
     // }
     validatePatient();
