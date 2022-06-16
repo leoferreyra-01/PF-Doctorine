@@ -49,7 +49,7 @@
   align-items: center;
   padding-bottom: 2rem;
 }
-.buttonhe {
+button {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
   font-size: 10px;
@@ -98,12 +98,12 @@
   transform: translate(-50%, -50%);
 }
 
-.buttonhe:hover .transition {
+button:hover .transition {
   width: 14em;
   height: 14em;
 }
 
-.buttonhe:active {
+button:active {
   transform: scale(0.97);
 }
 
