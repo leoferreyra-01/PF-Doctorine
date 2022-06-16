@@ -31,7 +31,6 @@ import {
   UPDATE_TREATMENT,
   POST_CLINICAL_HISTORY,
   GET_TOOTH,
-  POST_EVOLUTION,
   POST_MEDIC_LOGIN,
   POST_PATIENT_LOGIN,
   UPDATE_MEDIC_INFO,
@@ -292,21 +291,12 @@ export default function rootReducer(state = initialState, action) {
     case GET_EVOLUTIONS:
       return {
         ...state,
-        evolutions: Array.isArray(action.payload)
-          ? [...action.payload]
-          : [action.payload],
-      };
-    case POST_EVOLUTION:
-      return {
-        ...state,
-        evolutions: [...state.evolutions, ...action.payload],
+        evolutions: action.payload,
       };
     case GET_STUDIES:
       return {
         ...state,
-        studies: Array.isArray(action.payload)
-          ? [...action.payload]
-          : [action.payload],
+        studies: action.payload,
       };
 
     //////LOGIN

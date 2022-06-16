@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { postPasswordReset } from '../../redux/actions';
 import Swal from 'sweetalert2';
 // import S from "./PasswordReset.module.css"
@@ -47,7 +47,10 @@ function PasswordReset() {
     try {
       e.preventDefault();
       if (Object.keys(errors).length > 0) {
-        toast.error('User must be completed correctly');
+        Swal.fire({
+          icon: 'error',
+          title: 'User must be completed correctly',
+        })
       }
       dispatch(postPasswordReset(input));
       Swal.fire({
@@ -57,7 +60,10 @@ function PasswordReset() {
       });
     } catch (e) {
       console.log(e);
-      toast.error('Incorrect user');
+      Swal.fire({
+        icon: 'error',
+        title: 'Incorrect User',
+      })
     }
   };
 

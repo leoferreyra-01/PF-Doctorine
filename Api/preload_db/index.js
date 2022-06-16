@@ -27,9 +27,10 @@ async function preload_db() {
   await addUserMedic();
   await addTeeths();
   await addTreatments();
+  await addRealUserPatient();
 
   //|> User-Patients pre-gen-examples
-  const patients = 20;
+  const patients = 0;
   for (let n = 1; n <= patients; n++) {
     await addUserPatient(n);
     await addClinicalHistory(n);
@@ -41,8 +42,8 @@ async function preload_db() {
       await updateBudget(n);
     }
   }
-  await addTurn(1);
-  await updateTurn(1, 9);
+  // await addTurn(1);
+  // await updateTurn(1, 9);
 
   console.log('\x1b[34m%s\x1b[0m', 'Patients: ', patients);
 
@@ -79,12 +80,12 @@ async function addClinic() {
 
   const infoClinic = {
     name: 'Clínica Henry',
-    street: 'Online',
+    street: 'My Street',
     number: 4,
-    city: 'San Salvador',
-    postalcode: 5800,
-    telephone: 385444332,
-    email: 'clinicadeprueba1@dalequeva.com',
+    city: 'My City',
+    postalcode: 5555,
+    telephone: 555555555,
+    email: 'my_email@doctorine.com',
     officeHours,
     imgLogo: null,
   };
@@ -98,18 +99,19 @@ async function addUserMedic() {
   const infoUser = {
     userType: 'Medic',
     document: 30500700,
-    name: 'Doctor',
-    lastName: 'DePrueba1',
+    name: 'Alfonso',
+    lastName: 'Montes de Oca',
     birth: '1992-05-22',
     telephone: '543854449323',
     cellphone: '543854449332',
     street: 'Belgrano',
     number: 553,
-    city: 'San Salvador',
+    city: 'Santiago del Estero',
     postalCode: 5800,
-    email: 'medicodeprueba1@dalequeva.com',
+    email: 'montesdeoca.alfonso@gmail.com',
     password: 'Aa123456',
-    imageProfile: null,
+    imageProfile:
+      'https://fastly.4sqi.net/img/user/260x260/-IY5KFDRRCT5WJF0G.jpg',
   };
 
   const infoMedic = {
@@ -156,6 +158,38 @@ async function addUserPatient(n) {
   const newPatient = await Patient.create(infoPatient);
 
   newPatient.createUser(infoUser);
+}
+
+async function addRealUserPatient() {
+  const infoUser = {
+    userType: 'Patient',
+    document: 40557322,
+    name: 'Arturo',
+    lastName: 'Lugones',
+    birth: '1962-05-22',
+    telephone: '54385444330',
+    cellphone: '54385555220',
+    street: 'Belgrano',
+    number: 57,
+    city: 'Córdoba',
+    postalCode: 5000,
+    email: 'arturo.lugones@gmail.com',
+    password: 'Aa123456',
+    imageProfile:
+      'https://media.a24.com/p/b603a1e908ff6110b7226a3fbb5eac05/adjuntos/296/imagenes/007/941/0007941950/1200x1200/smart/arturo-puig.jpeg',
+  };
+
+  const infoPatient = {
+    medicalService: 'Sancor Salud - Plan: 3000',
+    showClinicalHistory: false,
+    tutor: null,
+  };
+
+  const newPatient = await Patient.create(infoPatient);
+
+  newPatient.createUser(infoUser);
+
+  console.log('\x1b[34m%s\x1b[0m', 'Patient: ', 'Arturo Lugones');
 }
 
 async function addTeeths() {

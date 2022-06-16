@@ -82,8 +82,19 @@ export function postPatient(patient) {
       const patientWithId = (await axios.post('/patients', patient)).data;
       return dispatch({ type: POST_PATIENT, payload: patientWithId });
     } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
+      if (error.response.status === 404) {
+        return Swal.fire({
+          icon: 'warning',
+          title: 'Welcome!',
+          text: 'There are no Patients loaded in your database :(',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     }
   };
 }
@@ -117,8 +128,19 @@ export function getPatientDni2(dni) {
       console.log(patient);
       dispatch({ type: GET_PATIENT_DNI2, payload: { patient } });
     } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
+      if (error.response.status === 404) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.msg,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     }
   };
 }
@@ -148,9 +170,21 @@ export function getAllPatients() {
       .get(`/patients`)
       .then(res => dispatch({ type: GET_ALL_PATIENTS, payload: res.data }))
       .catch(error => {
-        if (error.response.status === 404)
-          return alert(error.response.data.msg);
-        alert(error.message);
+        if (error.response.status === 404) {
+          console.log(error.response.data.msg);
+          // return Swal.fire({
+          //   icon: 'warning',
+          //   title: 'Welcome!',
+          //   text: 'There are no Patients loaded in your database :(',
+          // });
+        } else {
+          console.log(error.message);
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Error',
+          //   text: error.message,
+          // });
+        }
       });
   };
 }
@@ -161,9 +195,19 @@ export function getAllBudgets() {
       .get(`/Budgets`)
       .then(res => dispatch({ type: GET_BUDGETS, payload: res.data }))
       .catch(error => {
-        if (error.response.status === 404)
-          return alert(error.response.data.msg);
-        alert(error.message);
+        if (error.response.status === 404) {
+          return Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.response.data.msg,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message,
+          });
+        }
       });
   };
 }
@@ -230,8 +274,19 @@ export function postBudget(budget) {
       };
       return dispatch({ type: POST_BUDGET, payload: frontBudget });
     } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
+      if (error.response.status === 404) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.msg,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     }
   };
 }
@@ -243,7 +298,11 @@ export function updateBudget(budget) {
       await axios.put('/Budgets', budget);
       return dispatch({ type: UPDATE_BUDGET, payload: budget });
     } catch (error) {
-      alert(error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+      });
     }
   };
 }
@@ -258,8 +317,19 @@ export function postStudy(payload) {
   console.log(payload);
   return async function () {
     return axios.post(`/studies`, payload).catch(error => {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
+      if (error.response.status === 404) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.msg,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     });
   };
 }
@@ -386,9 +456,19 @@ export function getClinicalHistory(id) {
       .get(`/clinicalhistories/search?id=${id}`)
       .then(res => dispatch({ type: GET_CLINICAL_HISTORY, payload: res.data }))
       .catch(error => {
-        if (error.response.status === 404)
-          return alert(error.response.data.msg);
-        alert(error.message);
+        if (error.response.status === 404) {
+          return Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.response.data.msg,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message,
+          });
+        }
       });
   };
 }
@@ -400,8 +480,19 @@ export function getEvolutions(patientID) {
         .data;
       return dispatch({ type: GET_EVOLUTIONS, payload: evolution });
     } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
+      if (error.response.status === 404) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.msg,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     }
   };
 }
@@ -425,8 +516,19 @@ export function getStudies(patientID) {
       const study = (await axios.get(`/studies/search?id=${patientID}`)).data;
       return dispatch({ type: GET_STUDIES, payload: study });
     } catch (error) {
-      if (error.response.status === 404) return alert(error.response.data.msg);
-      alert(error.message);
+      if (error.response.status === 404) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.msg,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     }
   };
 }
@@ -448,7 +550,11 @@ export function getTreatments() {
       return dispatch({ type: GET_TREATMENTS, payload: treatments });
     } catch (e) {
       console.log(e);
-      alert(e.response.data.error);
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: e.response.data.error,
+      });
     }
   };
 }
@@ -471,7 +577,11 @@ export function getTooth() {
       return dispatch({ type: GET_TOOTH, payload: tooth });
     } catch (e) {
       console.log(e);
-      alert(e.response.data.error);
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: e.response.data.error,
+      });
     }
   };
 }
@@ -486,9 +596,19 @@ export function updatePatient(ID, infoPatient, infoUser) {
       })
       .then(res => dispatch({ type: UPDATE_PATIENT, payload: res.data }))
       .catch(error => {
-        if (error.response.status === 404)
-          return alert(error.response.data.msg);
-        alert(error.message);
+        if (error.response.status === 404) {
+          return Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.response.data.msg,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message,
+          });
+        }
       });
   };
 }
@@ -537,7 +657,11 @@ export function getMedics() {
       return dispatch({ type: GET_MEDICS, payload: medics });
     } catch (e) {
       console.log(e);
-      alert(e.response.data.error);
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: e.response.data.error,
+      });
     }
   };
 }
@@ -549,7 +673,11 @@ export function getTurns() {
       return dispatch({ type: GET_TURNS, payload: turns });
     } catch (err) {
       console.log(err);
-      alert(err.response.data.msg);
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: err.response.data.msg,
+      });
     }
   };
 }
@@ -568,7 +696,11 @@ export function postTurn(payload) {
       dispatch({ type: POST_TURN, payload: newTurn });
     } catch (error) {
       console.error(error);
-      alert(error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+      });
     }
   };
 }
@@ -581,7 +713,11 @@ export function getInfoClinic() {
       return dispatch({ type: GET_INFO_CLINIC, payload: clinics });
     } catch (e) {
       console.log(e);
-      alert(e.response.data.error);
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: e.response.data.error,
+      });
     }
   };
 }

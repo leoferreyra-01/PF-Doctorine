@@ -139,7 +139,7 @@ function addEvolution() {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate(`/home`);
+        navigate(`/home/${patientID}`);
       } catch (error) {
         Swal.fire({
           icon: 'error',
@@ -254,7 +254,7 @@ function addEvolution() {
               <hr />
               <ul>
                 {data.treatments.map(t => {
-                  let treat = treatment.filter(tr => (tr.ID === parseInt(t) ? tr : null));
+                  let treat = treatment.filter(tr => (tr.ID === t ? tr : null));
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTreatment(e)} name={t}>
