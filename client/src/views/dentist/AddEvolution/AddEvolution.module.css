@@ -44,6 +44,11 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+.treatment ul li {
+  list-style: none;
+}
+
 .btn {
   margin: 25px 0 25px 0;
   background-color: #ededed;
