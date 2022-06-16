@@ -88,7 +88,7 @@ function AddStudy() {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate('/home', { replace: true });
+      navigate(`/home/${patientID}`, { replace: true });
       setData({
         description: '',
         //date: '',
