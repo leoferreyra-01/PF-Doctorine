@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import toast, { Toaster } from 'react-hot-toast';
-// import S from './UpdateMedic.module.css';
+import S from './UpdateMedic.module.css';
 import { updateMedic, getMedicInfo } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -138,17 +138,23 @@ export default function UpdateMedicInfo() {
   }
 
   return (
-    <div className="container">
-      <button onClick={changePassword} className="button">
-        Change Password
+    <div className={S.container}>
+      <button
+        className={S.btn}
+        onClick={changePassword}
+        style={{ marginBottom: '2rem' }}
+      >
+        <span className={S.transition}></span>
+        <span className={S.gradient}></span>
+        <span className={S.label}> Change Password</span>
       </button>
-      <div className="container2">
+      <div className={S.container2}>
         <form onSubmit={handleSubmit}>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <div className="subtitle">Frist Name</div>
+              <div className={S.subtitle}>First Name</div>
               <input
-                className="input"
+                className={S.input}
                 value={data.name}
                 name="name"
                 onChange={handleChange}
@@ -158,9 +164,9 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.name'].msg}</p>
               )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <div className="subtitle">Last Name</div>
+              <div className={S.subtitle}>Last Name</div>
               <input
-                className="input"
+                className={S.input}
                 value={data.lastName}
                 name="lastName"
                 onChange={handleChange}
@@ -170,9 +176,9 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.lastName'].msg}</p>
               )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <div className="subtitle">Email</div>
+              <div className={S.subtitle}>Email</div>
               <input
-                className="input"
+                className={S.input}
                 value={data.email}
                 name="email"
                 onChange={handleChange}
@@ -182,13 +188,14 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.email'].msg}</p>
               )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <div className="subtitle">Birth</div>
+              <div className={S.subtitle}>Birth</div>
               <input
-                className="input"
+                className={S.input}
                 value={data.birth}
                 type="date"
                 name="birth"
                 onChange={handleChange}
+                style={{ marginBottom: '0' }}
               />
             </div>
             {/* {fail && err['infoUser.birth'] && (
@@ -197,9 +204,9 @@ export default function UpdateMedicInfo() {
           </div>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Telephone</label>
+              <label className={S.subtitle}>Telephone</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.telephone}
                 name="telephone"
                 onChange={handleChange}
@@ -209,9 +216,9 @@ export default function UpdateMedicInfo() {
               )} */}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Cellphone</label>
+              <label className={S.subtitle}>Cellphone</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.cellphone}
                 name="cellphone"
                 onChange={handleChange}
@@ -221,9 +228,9 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.cellphone'].msg}</p>
               )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Street</label>
+              <label className={S.subtitle}>Street</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.street}
                 name="street"
                 onChange={handleChange}
@@ -233,9 +240,9 @@ export default function UpdateMedicInfo() {
                 <p>{err['infoUser.street'].msg}</p>
               )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Number</label>
+              <label className={S.subtitle}>Number</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.number}
                 name="number"
                 onChange={handleChange}
@@ -247,9 +254,9 @@ export default function UpdateMedicInfo() {
           </div>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">City</label>
+              <label className={S.subtitle}>City</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.city}
                 name="city"
                 onChange={handleChange}
@@ -257,9 +264,9 @@ export default function UpdateMedicInfo() {
             </div>
             {/* {fail && err['infoUser.city'] && <p>{err['infoUser.city'].msg}</p>} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Postal Code</label>
+              <label className={S.subtitle}>Postal Code</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.postalCode}
                 name="postalCode"
                 onChange={handleChange}
@@ -269,9 +276,9 @@ export default function UpdateMedicInfo() {
             <p>{err['infoUser.postalCode'].msg}</p>
           )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Specialization </label>
+              <label className={S.subtitle}>Specialization </label>
               <input
-                className="input"
+                className={S.input}
                 value={data.specialization}
                 name="specialization"
                 onChange={handleChange}
@@ -281,21 +288,24 @@ export default function UpdateMedicInfo() {
             <p>{err['infoPatient.specialization'].msg}</p>
           )} */}
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Tuition Date</label>
+              <label className={S.subtitle}>Tuition Date</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.tuition_date}
                 type="date"
                 name="tuition_date"
                 onChange={handleChange}
+                style={{ marginBottom: '0' }}
               />
             </div>
             {/* {fail && err['infoUser.tuition_date'] && (
             <p>{err['infoUser.tuition_date'].msg}</p>
           )} */}
           </div>
-          <button type="submit" className="button">
-            Update Patient
+          <button className={S.btn} type="submit" style={{ marginTop: '2rem' }}>
+            <span className={S.transition}></span>
+            <span className={S.gradient}></span>
+            <span className={S.label}> Update My Info</span>
           </button>
         </form>
       </div>
