@@ -172,7 +172,7 @@ export default function RegisterPatient() {
         </div>
 
         <div className={s.input_container}>
-          <h3>Enter the patient's birth date</h3>
+          <h3 className={s.labelBirth}>Enter the patient's birth date</h3>
           <input
             type="date"
             {...register('birth')}
@@ -183,8 +183,10 @@ export default function RegisterPatient() {
           )}
         </div>
         <div>
-          <button className={s.buton} type="submit">
-            Send
+          <button className={s.btn} type="submit" style={{ marginTop: '2rem' }}>
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}>Send</span>
           </button>
         </div>
       </form>

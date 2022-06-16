@@ -32,6 +32,8 @@
 .title {
   font-size: 1.4rem;
   font-weight: 500;
+  border: none;
+  color: var(--primary);
 }
 
 .title_dni {
