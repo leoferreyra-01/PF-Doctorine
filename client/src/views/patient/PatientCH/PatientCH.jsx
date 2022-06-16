@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClinicalHistory } from '../../../redux/actions';
+import { getClinicalHistory, getPatientDni2 } from '../../../redux/actions';
 import './PatientCH.css';
 // import './hc.module.css';
 // import ClinicalHistory from '../../dentist/clinic-history/get';
@@ -18,11 +18,12 @@ const PatientCH = ({ id }) => {
   const day = today.getDate();
   const date = day + '/' + month + '/' + year;
   // eslint-disable-next-line
-  const patientID = SearchedPatient.Patient.ID;
+
   const toRender = [];
   // eslint-disable-next-line
   const data = 'ErnestoAbril';
-
+  const uno = JSON.parse(window.localStorage.getItem('loggedToken'));
+  console.log(uno);
   for (const property in clinicalHistory) {
     toRender.push(`${property}:  ${clinicalHistory[property]}`); //${clinicalHistory[property]}
   }
@@ -103,22 +104,12 @@ const PatientCH = ({ id }) => {
   console.log(toRenderParsed);
   console.log(toRenderParsed);
   // eslint-disable-next-line
-  const [user, setUser] = useState({
-    name: SearchedPatient.name,
-    lastName: SearchedPatient.lastName,
-    document: SearchedPatient.document,
-    birth: SearchedPatient.birth,
-    street: SearchedPatient.street,
-    number: SearchedPatient.number,
-    city: SearchedPatient.city,
-    postalCode: SearchedPatient.postalCode,
-    telephone: SearchedPatient.telephone,
-    cellphone: SearchedPatient.cellphone,
-    email: SearchedPatient.email,
-  });
 
   useEffect(() => {
+    dispatch(getPatientDni2(uno.document));
     dispatch(getClinicalHistory(2));
+    console.log(uno);
+
     // return () => {
     //   dispatch(clear());
     // };
@@ -129,6 +120,34 @@ const PatientCH = ({ id }) => {
   //     <PatientCHPdf poema={user} ></PatientCHPdf>
   //   )
   // };
+  const [user, setUser] = useState({
+    name: '',
+    lastName: 'SearchedPatient.lastName',
+    document: 'SearchedPatient.document',
+    birth: 'SearchedPatient.birth',
+    street: 'SearchedPatient.street',
+    number: 'SearchedPatient.number',
+    city: 'SearchedPatient.city',
+    postalCode: 'SearchedPatient.postalCode',
+    telephone: 'SearchedPatient.telephone',
+    cellphone: 'SearchedPatient.cellphone',
+    email: 'SearchedPatient.email',
+  });
+  setTimeout(() => {
+    setUser({
+      name: SearchedPatient.name,
+      lastName: SearchedPatient.lastName,
+      document: SearchedPatient.document,
+      birth: SearchedPatient.birth,
+      street: SearchedPatient.street,
+      number: SearchedPatient.number,
+      city: SearchedPatient.city,
+      postalCode: SearchedPatient.postalCode,
+      telephone: SearchedPatient.telephone,
+      cellphone: SearchedPatient.cellphone,
+      email: SearchedPatient.email,
+    });
+  }, 1000);
 
   return (
     <div className="container">
@@ -179,7 +198,7 @@ const PatientCH = ({ id }) => {
       {/* <div className="container"> */}
       <div className="container3">
         {' '}
-        Detalle de la Historia Clínica
+        Detail of the Clinical History
         <div>
           <div className="rowContainer">
             {toRenderParsed ? (
@@ -211,7 +230,31 @@ const PatientCH = ({ id }) => {
         document={<PatientCHPdf />}
         fileName="Clinic History.pdf"
       >
-        <button className="buttonDownload">Download</button>
+        <div class="buttond" data-tooltip="Size: 20Mb">
+          <div class="button-wrapper">
+            <div class="text">Download</div>
+            <span class="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="img"
+                width="2em"
+                height="2em"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </div>
       </PDFDownloadLink>
       {/* <PatientCHPdf poema={user}></PatientCHPdf> */}
     </div>
