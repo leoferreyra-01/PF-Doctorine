@@ -24,3 +24,9 @@
 .button:active {
   transform: translateY(-1px);
 }
+
+.budget {
+  margin-top: 50%;
+  margin-left: 70%;
+  margin-right: -190%;
+}

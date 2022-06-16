@@ -144,7 +144,7 @@ function SignUp() {
       const password =
         respuesta.profileObj.givenName.slice(0, 1).toUpperCase() +
         respuesta.profileObj.givenName.slice(1) +
-        doc.slice(0,7);
+        doc.slice(0, 7);
       const infoUser = {
         email: respuesta.profileObj.email,
         password: password,
@@ -204,57 +204,58 @@ function SignUp() {
 
   return (
     <>
-      <Toaster position='top-center' reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <SignUpDivContainer>
         <ImgSignUp>
           <div className={S.card}>
-            <img className={S.img} src={logo} alt='logo' />
+            <img className={S.img} src={logo} alt="logo" />
           </div>
         </ImgSignUp>
 
         <SignUpContainer>
           <form onSubmit={handleSumbit}>
-            <label>Username</label>
+            <label className={S.label}>Username</label>
             <input
               onChange={handleInputChange}
               value={input.email}
-              placeholder='Email'
-              type='text'
-              name='email'
-              className='input-usuario'
+              placeholder="Email"
+              type="text"
+              name="email"
+              className="input-usuario"
             />
-            {errors.email && <p className='error'>{errors.email}</p>}
+            {errors.email && <p className="error">{errors.email}</p>}
 
-            <label>Password</label>
+            <label className={S.label}>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
-              placeholder='Password'
-              type='password'
-              name='password'
-              className='input-usuario'
+              placeholder="Password"
+              type="password"
+              name="password"
+              className="input-usuario"
             />
-            {errors.password && <p className='error'>{errors.password}</p>}
+            {errors.password && <p className="error">{errors.password}</p>}
             <button>Login</button>
-            <hr className='linea' />
+            <hr className="linea" />
             <GoogleLogin
-              clientId='734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com'
-              buttonText='Login with Google'
+              clientId="734859265946-jtms2p8fmpn0pbcuc24plbkm96nl8k3v.apps.googleusercontent.com"
+              buttonText="Login with Google"
               onSuccess={respuestaGoogle}
               onFailure={res => console.log(res)}
               cookiePolicy={'single_host_origin'}
-              className='Google-button'
+              className="Google-button"
               style={{ color: 'black important!' }}
             />
-            <div className='OR' style={{ position: 'relative', top: '-1rem' }}>
+            <div className="OR" style={{ position: 'relative', top: '-1rem' }}>
               <Link
-                className='link-to-signup'
-                id='olv-ct'
-                to={'/PasswordReset'}>
+                className="link-to-signup"
+                id="olv-ct"
+                to={'/PasswordReset'}
+              >
                 Forgot your password?
               </Link>
 
-              <Link className='link-to-signup' id='register' to={'/SignUp'}>
+              <Link className="link-to-signup" id="register" to={'/SignUp'}>
                 Register
               </Link>
             </div>
@@ -403,7 +404,7 @@ const SignUpContainer = styled.div`
     text-decoration: none;
     color: white;
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 1.3rem;
     transition: 0.2s ease-in-out;
     letter-spacing: 0.2rem;
   }

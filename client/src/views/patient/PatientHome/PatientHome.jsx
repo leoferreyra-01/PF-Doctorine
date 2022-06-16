@@ -52,11 +52,6 @@ export default function Home() {
         <Loader setLoader={setLoader} />
       ) : (
         <div className="homeContainer">
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-            toastOptions={{ className: '', duration: 7000 }}
-          />
           <Header title={title} />
           <SideBar />
           <Outlet />

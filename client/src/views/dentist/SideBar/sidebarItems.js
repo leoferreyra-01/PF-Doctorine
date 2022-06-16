@@ -9,6 +9,7 @@ import {
   faCircleInfo,
   faUserPlus,
   faUserDoctor,
+  faHospital,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
@@ -38,7 +39,7 @@ export const mainSidebarItems = [
     icon: (
       <FontAwesomeIcon icon={faMoneyBills} size="2x" className={s.fa_icon} />
     ),
-    label: 'Budget',
+    label: 'Budgets',
     route: 'budget',
   },
   {
@@ -51,9 +52,7 @@ export const mainSidebarItems = [
   },
   {
     id: 5,
-    icon: (
-      <FontAwesomeIcon icon={faCircleInfo} size="2x" className={s.fa_icon} />
-    ),
+    icon: <FontAwesomeIcon icon={faHospital} size="2x" className={s.fa_icon} />,
     label: 'Clinic info',
     route: 'clinic-details',
   },
@@ -62,7 +61,7 @@ export const mainSidebarItems = [
     icon: (
       <FontAwesomeIcon icon={faUserDoctor} size="2x" className={s.fa_icon} />
     ),
-    label: 'Update Your Info',
+    label: 'Update My Info',
     route: 'updateMedic',
   },
   {
@@ -70,7 +69,7 @@ export const mainSidebarItems = [
     icon: (
       <FontAwesomeIcon icon={faCircleInfo} size="2x" className={s.fa_icon} />
     ),
-    label: 'Info Treatments',
+    label: 'Treatments Info',
     route: 'infoTreatments',
   },
   {

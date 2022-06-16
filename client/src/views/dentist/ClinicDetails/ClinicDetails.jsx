@@ -15,23 +15,40 @@ export default function ClinicDetails() {
   }, []);
   return (
     <div className={s.container}>
-      <h2>Clinic Details</h2>
-      <Link to="/home/clinic-details/initial-config">Initial Config</Link>
       <button
-        onClick={() => navigate('/home/clinic-details/update-data')}
         className={s.btn}
+        onClick={() => navigate('/home/clinic-details/update-data')}
       >
-        Update Clinic Data
+        <span className={s.transition}></span>
+        <span className={s.gradient}></span>
+        <span className={s.label}>Update Clinic Data</span>
       </button>
-
       {filledClinic ? (
-        <div>
-          <p className={s.text}>{clinic.name}</p>
-          <p className={s.text}>{clinic.street}</p>
-          <p className={s.text}>{clinic.city}</p>
-          <p className={s.text}>{clinic.number}</p>
-          <p className={s.text}>{clinic.telephone}</p>
-          <p className={s.text}>{clinic.email}</p>
+        <div className={s.details_container}>
+          <p className={s.text}>
+            Clinic Name <span>{clinic.name}</span>
+          </p>
+          <p className={s.location_text}>Location Details</p>
+          <div className={s.location_container}>
+            <p className={s.text}>
+              Clinic Street <span>{clinic.street}</span>
+            </p>
+            <p className={s.text}>
+              Clinic City <span>{clinic.city}</span>
+            </p>
+            <p className={s.text}>
+              Clinic Street Number <span>{clinic.number}</span>
+            </p>
+          </div>
+          <p className={s.contact_text}>Contact Details</p>
+          <div className={s.contact_container}>
+            <p className={s.text}>
+              Clinic Telephone <span>{clinic.telephone}</span>
+            </p>
+            <p className={s.text}>
+              Clinic Email <span>{clinic.email}</span>
+            </p>
+          </div>
         </div>
       ) : (
         <h3>Loading Clinic details...</h3>

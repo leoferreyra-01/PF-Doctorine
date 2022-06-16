@@ -87,7 +87,7 @@ async function addClinic() {
     telephone: 555555555,
     email: 'my_email@doctorine.com',
     officeHours,
-    imgLogo: null,
+    imgLogo: 'https://i.gyazo.com/759c94436d8bcf34b65fb0e9ca1a4548.png',
   };
 
   Clinic.create(infoClinic);

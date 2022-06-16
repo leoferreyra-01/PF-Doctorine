@@ -4,30 +4,6 @@
   overflow-y: auto;
   padding: 60px 40px;
 }
-/* .btn {
-  margin: 25px 0 25px 0;
-  margin: 10px;
-  background-color: #009be5;
-  padding: 10px 20px;
-  color: white;
-  letter-spacing: 2px;
-  text-decoration: none;
-  font-size: 1.4rem;
-  transition: 0.1s;
-  border-radius: 5px;
-  border: none;
-  left: 70px;
-  box-shadow: 0 5px 10px rgba(255, 255, 255, 0.568);
-}
-.btn:hover {
-  color: black;
-  box-shadow: 0 0 10px #9088a0, 0 0 10px #9088a0, 0 0 15px #9088a0;
-  transition: 0.8s;
-  border: none;
-  color: white;
-  background-color: #9088a0;
-  cursor: pointer;
-} */
 
 .btn {
   font-size: 1.4rem;
@@ -75,7 +51,7 @@
 }
 
 .btn:hover .transition {
-  width: 14em;
+  width: 18em;
   height: 14em;
 }
 

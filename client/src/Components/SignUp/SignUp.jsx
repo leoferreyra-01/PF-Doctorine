@@ -203,7 +203,7 @@ function SignUp() {
         <Toaster position="top-center" reverseOrder={false} />
         <SignUpContainer>
           <form onSubmit={register}>
-            <label>Email</label>
+            <label className={S.label}>Email</label>
             <input
               onChange={handleInputChange}
               value={input.email}
@@ -212,7 +212,7 @@ function SignUp() {
               name="email"
             />
             {errors.username && <p className="error">{errors.username}</p>}
-            <label>Password</label>
+            <label className={S.label}>Password</label>
             <input
               onChange={handleInputChange}
               value={input.password}
@@ -221,7 +221,7 @@ function SignUp() {
               name="password"
             />
             {errors.password && <p className="error">{errors.password}</p>}
-            <label>Confirm password</label>
+            <label className={S.label}>Confirm password</label>
             <input
               onChange={handleInputChange}
               value={input.passwordConfirm}
@@ -232,7 +232,7 @@ function SignUp() {
             {errors.passwordConfirm && (
               <p className="error">{errors.passwordConfirm}</p>
             )}
-            <label>Name</label>
+            <label className={S.label}>Name</label>
             <input
               onChange={handleInputChange}
               value={input.name}
@@ -241,7 +241,7 @@ function SignUp() {
               name="name"
             />
             {errors.name && <p className="error">{errors.name}</p>}
-            <label>Lastname</label>
+            <label className={S.label}>Lastname</label>
             <input
               onChange={handleInputChange}
               value={input.lastName}
@@ -250,7 +250,7 @@ function SignUp() {
               name="lastName"
             />
             {errors.lastName && <p className="error">{errors.lastName}</p>}
-            <label>ID</label>
+            <label className={S.label}>ID</label>
             <input
               onChange={handleInputChange}
               value={input.document}
@@ -259,7 +259,7 @@ function SignUp() {
               name="document"
             />
             {errors.document && <p className="error">{errors.document}</p>}
-            <label>Birth date</label>
+            <label className={S.label}>Birth date</label>
             <input
               onChange={handleInputChange}
               value={input.birth}
@@ -271,7 +271,7 @@ function SignUp() {
 
             {medic === false ? (
               <>
-                <label>N° medical insurance</label>
+                <label className={S.label}>N° medical insurance</label>
                 <input
                   onChange={handleInputChange}
                   value={input.obraSocial}
@@ -285,7 +285,7 @@ function SignUp() {
               </>
             ) : (
               <>
-                <label>Title</label>
+                <label className={S.label}>Title</label>
                 <input
                   onChange={handleInputChange}
                   value={input.title}
@@ -293,7 +293,7 @@ function SignUp() {
                   type="text"
                   name="title"
                 />
-                <label>Tuition</label>
+                <label className={S.label}>Tuition</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_number}
@@ -301,7 +301,7 @@ function SignUp() {
                   type="text"
                   name="tuition_number"
                 />
-                <label>Tuition date</label>
+                <label className={S.label}>Tuition date</label>
                 <input
                   onChange={handleInputChange}
                   value={input.tuition_date}
@@ -472,6 +472,8 @@ const SignUpContainer = styled.div`
   }
   .error {
     color: red;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
   button {
     margin: 25px 0 25px 0;

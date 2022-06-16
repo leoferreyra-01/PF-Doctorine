@@ -9,7 +9,7 @@ export default function SideBar() {
     <div className={s.sidebar_container}>
       <div className={s.serviceLogo_container}>
         <img
-          src="https://i.gyazo.com/23e23d3a3612e9151d8031a0eed05ab0.jpg"
+          src="https://i.gyazo.com/759c94436d8bcf34b65fb0e9ca1a4548.png"
           className={s.serviceLogo}
           alt="Service Logo"
         />

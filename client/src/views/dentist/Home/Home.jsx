@@ -24,8 +24,8 @@ export default function Home() {
 
     if (parsedTitle.length > 19) parsedTitle = parsedTitle.slice(19);
     if (parsedTitle.length > 18) parsedTitle = parsedTitle.slice(18);
-    if (parsedTitle === 'ate data') parsedTitle = 'Update Clinic Data';
     if (parsedTitle.length > 5) parsedTitle = parsedTitle.slice(5);
+    if (parsedTitle === 'ate data') parsedTitle = 'Update Clinic Data';
     if (parsedTitle === 's' && location.pathname === '/home/infoTreatments') {
       parsedTitle = 'Info Treatments';
     }
@@ -49,6 +49,9 @@ export default function Home() {
     if (parsedTitle === 'story ') {
       parsedTitle = `New Patient Clinical History`;
     }
+    if (parsedTitle === 'd' && location.pathname === '/home/changePassword') {
+      parsedTitle = 'Change Password';
+    }
     setTitle(parsedTitle);
   }, [location]);
 
@@ -61,11 +64,6 @@ export default function Home() {
         <Loader setLoader={setLoader} />
       ) : (
         <div className={s.home_container}>
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-            toastOptions={{ className: '', duration: 7000 }}
-          />
           <Header title={title} />
           <SideBar />
           <Outlet />

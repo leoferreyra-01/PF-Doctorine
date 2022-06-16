@@ -312,85 +312,120 @@ export default function Appointments() {
 
   return (
     <div className={s.container}>
-      |-------------------------CALENDAR---------------------------|
       <Calendar
         onDrillDown={selectDay}
         onSelectEvent={selectTurn}
         date={date}
         localizer={localizer}
-        style={{ height: 500, margin: '50px' }}
+        style={{ height: 500, margin: '50px', fontSize: '1.4rem' }}
         events={events}
       />
-      |--------------------------CREATE--------------------------|
-      <div>
-        <h1>Create a Turn</h1>
-        <br />
-        <div>
-          <h3>Select a Patient</h3>
-          <form onSubmit={preventSubmit}>
-            <label>Patient: </label>
-            <input
-              placeholder="Fullname, document or email"
-              type="text"
-              name="patient"
-              onChange={handleSelectPatient}
-            />
-            {patientSelected ? (
-              <div>
-                <p>{`SELECTED: ${patientSelected.lastName}, ${patientSelected.name} ✔️`}</p>
-                <p>{`Document: ${patientSelected.document} ✔️`}</p>
-                <p>{`Email: ${patientSelected.email} ✔️`}</p>
+      <h2 className={s.create_title}>Create a Turn</h2>
+      <div className={s.create_container}>
+        <div className={s.select_p}>
+          <form onSubmit={preventSubmit} className={s.select_form}>
+            <h3>Select a Patient</h3>
+            <div className={s.input_container}>
+              <div className={s.form_group_field}>
+                <input
+                  className={s.form__field}
+                  placeholder="Fullname, document or email"
+                  type="text"
+                  name="patient"
+                  onChange={handleSelectPatient}
+                />
+                <label className={s.form__label} for="patient">
+                  Fullname, document or email
+                </label>
               </div>
-            ) : (
-              <h4>
-                No patient selected{' '}
-                <span role="img" aria-label="X">
-                  ❌
-                </span>
-              </h4>
-            )}
+            </div>
           </form>
+          {patientSelected ? (
+            <div className={`${s.select_patient} ${s.p_details}`}>
+              <p>{`SELECTED: ${patientSelected.lastName}, ${patientSelected.name} ✔️`}</p>
+              <p>{`Document: ${patientSelected.document} ✔️`}</p>
+              <p>{`Email: ${patientSelected.email} ✔️`}</p>
+            </div>
+          ) : (
+            <h4 className={s.p_details}>
+              No patient selected
+              <span role="img" aria-label="X">
+                ❌
+              </span>
+            </h4>
+          )}
         </div>
 
-        <br />
-
-        <h3>Select day and time</h3>
-        <div>
+        <div className={s.timePicker}>
+          <h3>Select day and time</h3>
           <DateTimePicker
             onChange={handleDateTime}
+            style={{ width: '80%', fontSize: '1.4rem' }}
             value={parseISO(dateToString(date))}
           />
         </div>
 
-        <br />
-
         {turnForm && (
           <form onSubmit={handleSubmit}>
-            <label>Duration: </label>
+            <div className={s.input_container}>
+              <div className={s.form_group_field}>
+                <input
+                  className={s.form__field}
+                  value={data.duration}
+                  placeholder="Minutes Duration"
+                  type="number"
+                  name="duration"
+                  onChange={handleChange}
+                />
+                <label className={s.form__label} for="number">
+                  Duration
+                </label>
+              </div>
+            </div>
+            {/* <label>Duration: </label>
             <input
               value={data.duration}
               placeholder="minutes"
               type="number"
               name="duration"
               onChange={handleChange}
-            />
+            /> */}
             {fail && err.duration ? <p>{err.duration.msg}</p> : '✔️'}
 
-            <label>Description: </label>
+            {/* <label>Description: </label>
             <input
               value={data.description}
               placeholder={`Example: ${CONSULTATION}`}
               type="text"
               name="description"
               onChange={handleChange}
-            />
+            /> */}
+            <div className={s.input_container}>
+              <div className={s.form_group_field}>
+                <input
+                  className={s.form__field}
+                  value={data.description}
+                  placeholder={`Example: ${CONSULTATION}`}
+                  type="text"
+                  name="description"
+                  onChange={handleChange}
+                />
+                <label className={s.form__label} for="description">
+                  Description
+                </label>
+              </div>
+            </div>
             {fail && err.description ? <p>{err.description.msg}</p> : '✔️'}
 
-            <button type="submit">
-              <span role="img" aria-label="agend">
-                📝
+            <button className={s.btn} type="submit">
+              <span className={s.transition}></span>
+              <span className={s.gradient}></span>
+              <span className={s.label}>
+                Create
+                <span role="img" aria-label="agend">
+                  📝
+                </span>
               </span>
-              CREATE
             </button>
           </form>
         )}

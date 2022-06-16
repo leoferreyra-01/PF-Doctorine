@@ -114,8 +114,12 @@ export default function UpdateBudget() {
             ) : (
               <div>
                 Pending
-                <button onClick={handleClick}>
-                  <FontAwesomeIcon icon={faSquareCheck} size="2x" />
+                <button className={s.btn} onClick={handleClick}>
+                  <span className={s.transition}></span>
+                  <span className={s.gradient}></span>
+                  <span className={s.label}>
+                    <FontAwesomeIcon icon={faSquareCheck} size="2x" />
+                  </span>
                 </button>
               </div>
             )}
