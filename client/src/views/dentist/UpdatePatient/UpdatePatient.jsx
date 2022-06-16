@@ -274,11 +274,7 @@ export default function UpdatePatient() {
             type="submit"
             style={{ marginTop: '2rem' }}
           >
-            <span className={S.transition}></span>
-            <span className={S.gradient}></span>
-            <span className={S.label} style={{ fontSize: '1.5rem' }}>
-              Update Patient
-            </span>
+            <span style={{ fontSize: '1.5rem' }}>Update Patient</span>
           </button>
         </form>
       </div>
