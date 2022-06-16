@@ -79,9 +79,9 @@ async function addClinic() {
   ]);
 
   const infoClinic = {
-    name: 'Clínica Henry',
+    name: 'Doctorine Clinic',
     street: 'My Street',
-    number: 4,
+    number: 555,
     city: 'My City',
     postalcode: 5555,
     telephone: 555555555,
