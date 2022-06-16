@@ -20,7 +20,7 @@ export default function ClinicalHistory({ id }) {
   toRender.pop();
   toRender.shift();
 
-  const toRenderParsed = toRender.map(property => { 
+  const toRenderParsed = toRender.map(property => {
     if (property.charAt(0) === 'b' && property.charAt(1) === '_') {
       return property
         .substring(2)
@@ -96,7 +96,7 @@ export default function ClinicalHistory({ id }) {
 
   return (
     <div className={s.hc_container}>
-      {clinicalHistory ? (
+      {typeof clinicalHistory === 'object' ? (
         <div className={s.hc}>
           {toRenderParsed.map(property => (
             <div className={s.studies} key={id}>
@@ -106,10 +106,7 @@ export default function ClinicalHistory({ id }) {
         </div>
       ) : (
         <div>
-          <img
-            src="https://giphy.com/gifs/odonto-odontocompany-company-9uIvZGLhJ0MntnhcWy/fullscreen"
-            alt="loading"
-          />
+          <h1>Clinical history not yet uploaded.</h1>
         </div>
       )}
     </div>
