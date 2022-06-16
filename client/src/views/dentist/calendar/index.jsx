@@ -430,7 +430,7 @@ export default function Appointments() {
           </form>
         )}
       </div>
-      |--------------------------DETAILS----------------------------|
+
       <TurnDetails
         unavailableTurns={unavailableTurns}
         selectedTurn={selectedTurn}
