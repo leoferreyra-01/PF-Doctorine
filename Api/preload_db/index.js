@@ -99,19 +99,18 @@ async function addUserMedic() {
   const infoUser = {
     userType: 'Medic',
     document: 30500700,
-    name: 'Alfonso',
-    lastName: 'Montes de Oca',
-    birth: '1992-05-22',
+    name: 'Zulema',
+    lastName: 'Salvatierra',
+    birth: '2000-01-01',
     telephone: '543854449323',
     cellphone: '543854449332',
     street: 'Belgrano',
     number: 553,
     city: 'Santiago del Estero',
     postalCode: 5800,
-    email: 'montesdeoca.alfonso@gmail.com',
-    password: 'Aa123456',
-    imageProfile:
-      'https://fastly.4sqi.net/img/user/260x260/-IY5KFDRRCT5WJF0G.jpg',
+    email: 'zulema.salvatierra.doc@gmail.com',
+    password: 'Aa123456doc',
+    imageProfile: 'https://i.ibb.co/b2NNsjc/Zudoc.jpg',
   };
 
   const infoMedic = {
