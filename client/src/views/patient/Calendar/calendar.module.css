@@ -24,8 +24,21 @@
   align-items: center;
   margin: auto;
   width: 300%;
+  
   height: 500px;
-
+  border: #009be5 solid 2px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-left: -100px;
+}
+.containerDate .uTurns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+  width: 300%;
+  height: 500px;
+  border: black solid 2px;
   flex-wrap: wrap;
   margin-top: 10px;
   margin-left: -100px;
@@ -33,6 +46,10 @@
 
 .turnContainer .turns {
   width: 150px;
+  padding-top: 10px;
+
+  padding-left: 10px;
+  padding-right: 10px;
   height: 120px;
   margin-top: 0px;
 }
@@ -49,7 +66,7 @@
 }
 
 .turnContainer p {
-  border: 1px solid pink;
+  border: 1px solid #009be5 ;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,7 +76,6 @@
 .btn {
   padding: 2px;
   border-radius: 16px;
-
   border: 1px solid transparent;
   color: #ffffff;
   background-color: #1dc9a0;
