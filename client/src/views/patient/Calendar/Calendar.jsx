@@ -258,7 +258,7 @@ export default function CalendarFunction() {
     // console.log('time => ', time);
 
     //#region PAYMENT
-    if (description.toLocaleLowerCase().includes(CONSULTATION))
+    if (description && description.toLowerCase().includes(CONSULTATION))
       navigate('/home/payments');
     else
       return axios
