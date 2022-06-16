@@ -78,7 +78,7 @@
   font-size: 1.4rem;
 }
 
-btn {
+.btn {
   font-size: 1.8rem;
   padding: 1em 2.7em;
   font-weight: 500;
@@ -122,14 +122,12 @@ btn {
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
+.btn:hover {
+  cursor: pointer;
+}
 .btn:hover .transition {
   width: 14em;
   height: 14em;
-}
-
-.btn:hover {
-  cursor: pointer;
 }
 
 .btn:active {
@@ -152,7 +150,9 @@ btn {
   border-radius: 0.6em;
   margin-bottom: 2rem;
 }
-
+.btn2:hover {
+  cursor: pointer;
+}
 .btn2:hover .transition {
   width: 20em;
   height: 14em;

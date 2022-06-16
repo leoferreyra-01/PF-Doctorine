@@ -11,6 +11,7 @@ export default function Evolution({ date, observations, MedicID }) {
         borderWidth: '2px',
         borderStyle: 'solid',
         borderColor: 'black',
+        padding: '1%',
       }}
     >
       <h2>
