@@ -30,22 +30,6 @@ const PatientDataUpdate = () => {
     email: SearchedPatient.email,
   });
 
-  setTimeout(() => {
-    setUser({
-      name: SearchedPatient.name,
-      lastName: SearchedPatient.lastName,
-      document: SearchedPatient.document,
-      birth: SearchedPatient.birth,
-      street: SearchedPatient.street,
-      number: SearchedPatient.number,
-      city: SearchedPatient.city,
-      postalCode: SearchedPatient.postalCode,
-      telephone: SearchedPatient.telephone,
-      cellphone: SearchedPatient.cellphone,
-      email: SearchedPatient.email,
-    });
-  }, 100);
-
   async function validatePatient() {
     const [fail, err] = await bk_validate.Patient(
       { infoUser, infoPatient },
