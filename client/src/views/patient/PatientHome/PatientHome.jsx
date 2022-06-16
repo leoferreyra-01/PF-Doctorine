@@ -5,7 +5,6 @@ import Header from '../HeaderPatient/HeaderPatient';
 // import SearchPatient from './views/patient/PatientHome/searchPatient';
 
 import SideBar from '../SideBarPatient/SideBar';
-import { Toaster } from 'react-hot-toast';
 import Loader from '../../../Components/Loader/loader';
 // import { useSelector } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
