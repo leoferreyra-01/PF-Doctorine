@@ -73,9 +73,7 @@ export default function UpdateData() {
         officeHours: JSON.stringify(updatedClinic.officeHours),
       })
     );
-    Swal.fire(
-      'Update clinic successfully. Please go to initial config to change other details'
-    );
+    Swal.fire('Update clinic details successfully.');
     navigate('/home/clinic-details');
   };
 
@@ -156,7 +154,6 @@ export default function UpdateData() {
 
   return (
     <div className={s.container}>
-      <h2>UpdateData</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={s.form}
@@ -295,7 +292,7 @@ export default function UpdateData() {
           )}
         </div>
       </form>
-      <form onSubmit={setWorkingHours}>
+      <form onSubmit={setWorkingHours} className={s.hours_container}>
         <div>
           <label className={s.selectLabel}>Select a Day of atention: </label>
           <select name="officeHours" onChange={handleSelectDay}>
@@ -348,13 +345,15 @@ export default function UpdateData() {
           />
         </div>
         <div>
-          <button className={s.buton} type="submit">
-            Set working hours
+          <button className={s.btn} type="submit">
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}>Set working hours</span>
           </button>
         </div>
       </form>
       <div className={s.whContainer}>
-        <h3>Working Hours</h3>
+        <h3 style={{ color: 'white' }}>Working Hours</h3>
         {updatedClinic.officeHours.length > 0 ? (
           updatedClinic.officeHours.map((officeHour, index) => {
             let [morning, afterNoon] = officeHour;
@@ -387,8 +386,10 @@ export default function UpdateData() {
         )}
       </div>
       <div>
-        <button className={s.buton} type="submit" form="CreateForm">
-          Update details
+        <button className={s.btn} type="submit" form="CreateForm">
+          <span className={s.transition}></span>
+          <span className={s.gradient}></span>
+          <span className={s.label}>Update details</span>
         </button>
       </div>
     </div>

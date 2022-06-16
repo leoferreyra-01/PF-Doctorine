@@ -179,7 +179,7 @@ const PatientCH = ({ id }) => {
       {/* <div className="container"> */}
       <div className="container3">
         {' '}
-        Detalle de la Historia Clínica
+        Clinic History Details
         <div>
           <div className="rowContainer">
             {toRenderParsed ? (

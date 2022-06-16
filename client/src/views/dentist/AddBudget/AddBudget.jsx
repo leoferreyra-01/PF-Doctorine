@@ -266,11 +266,11 @@ export function AddBudget() {
           className={s.casillas}
           min="1"
         />
-        <input
-          type="submit"
-          value="Add treatment to Budget"
-          className={s.btn}
-        />
+        <button className={s.btn2} type="submit" style={{ marginTop: '2rem' }}>
+          <span className={s.transition}></span>
+          <span className={s.gradient}></span>
+          <span className={s.label}>Add treatment to Budget</span>
+        </button>
       </form>
       <div className={s.summary_container}>
         <h3>Budget Summary</h3>
@@ -327,7 +327,15 @@ export function AddBudget() {
           </h3>
         </div>
         <div>
-          <button onClick={handleSent}>Create Budget</button>
+          <button
+            className={s.btn}
+            style={{ marginTop: '2rem' }}
+            onClick={handleSent}
+          >
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}>Create Budget</span>
+          </button>
         </div>
       </div>
     </div>

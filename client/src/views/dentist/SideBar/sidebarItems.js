@@ -39,7 +39,7 @@ export const mainSidebarItems = [
     icon: (
       <FontAwesomeIcon icon={faMoneyBills} size="2x" className={s.fa_icon} />
     ),
-    label: 'Budget',
+    label: 'Budgets',
     route: 'budget',
   },
   {

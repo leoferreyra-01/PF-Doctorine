@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import toast, { Toaster } from 'react-hot-toast';
-// import S from './UpdatePatient.module.css';
+import S from './UpdatePatient.module.css';
 import { updatePatient } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -16,18 +16,18 @@ export default function UpdatePatient() {
 
   useEffect(() => {
     // dispatch(getPatient(patientID)).then(() => {
-      setData({
-        name: patient.name,
-        lastName: patient.lastName,
-        birth: patient.birth,
-        telephone: patient.telephone,
-        cellphone: patient.cellphone,
-        street: patient.street,
-        number: patient.number,
-        city: patient.city,
-        postalCode: patient.postalCode,
-        medicalService: patient.Patient.medicalService,
-      });
+    setData({
+      name: patient.name,
+      lastName: patient.lastName,
+      birth: patient.birth,
+      telephone: patient.telephone,
+      cellphone: patient.cellphone,
+      street: patient.street,
+      number: patient.number,
+      city: patient.city,
+      postalCode: patient.postalCode,
+      medicalService: patient.Patient.medicalService,
+    });
     // });
   }, []);
 
@@ -120,14 +120,14 @@ export default function UpdatePatient() {
   }
 
   return (
-    <div className="container">
-      <div className="container2">
+    <div className={S.container}>
+      <div className={S.container2}>
         <form onSubmit={handleSubmit}>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Frist Name</label>
+              <label className={S.subtitle}>First Name</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.name}
                 placeholder="Name..."
                 type="text"
@@ -139,9 +139,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Last Name</label>
+              <label className={S.subtitle}>Last Name</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.lastName}
                 placeholder="LastName..."
                 type="text"
@@ -153,9 +153,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Birth</label>
+              <label className={S.subtitle}>Birth</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.birth}
                 placeholder="Birth..."
                 type="date"
@@ -167,9 +167,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Telephone</label>
+              <label className={S.subtitle}>Telephone</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.telephone}
                 placeholder="Telephone..."
                 type="text"
@@ -183,9 +183,9 @@ export default function UpdatePatient() {
           </div>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Cellphone</label>
+              <label className={S.subtitle}>Cellphone</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.cellphone}
                 placeholder="Cellphone..."
                 type="text"
@@ -197,9 +197,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Street</label>
+              <label className={S.subtitle}>Street</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.street}
                 placeholder="Street..."
                 type="text"
@@ -211,9 +211,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Number</label>
+              <label className={S.subtitle}>Number</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.number}
                 placeholder="Number..."
                 type="text"
@@ -225,9 +225,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">City</label>
+              <label className={S.subtitle}>City</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.city}
                 placeholder="City..."
                 type="text"
@@ -241,9 +241,9 @@ export default function UpdatePatient() {
           </div>
           <div className="rowContainer">
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Postal Code</label>
+              <label className={S.subtitle}>Postal Code</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.postalCode}
                 placeholder="Postal Code..."
                 type="text"
@@ -255,9 +255,9 @@ export default function UpdatePatient() {
               )}
             </div>
             <div className="containerDivInput" style={{ width: '12vw' }}>
-              <label className="subtitle">Medical Service</label>
+              <label className={S.subtitle}>Medical Service</label>
               <input
-                className="input"
+                className={S.input}
                 value={data.medicalService}
                 placeholder="Medical Service..."
                 type="text"
@@ -269,9 +269,16 @@ export default function UpdatePatient() {
               )}
             </div>
           </div>
-
-          <button type="submit" className="button">
-            Update Patient
+          <button
+            className={S.btn2}
+            type="submit"
+            style={{ marginTop: '2rem' }}
+          >
+            <span className={S.transition}></span>
+            <span className={S.gradient}></span>
+            <span className={S.label} style={{ fontSize: '1.5rem' }}>
+              Update Patient
+            </span>
           </button>
         </form>
       </div>

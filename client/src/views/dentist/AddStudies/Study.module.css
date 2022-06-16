@@ -21,7 +21,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.btn {
+/* .btn {
   margin: 25px 0 25px 0;
   background-color: #ededed;
   padding: 5px 20px;
@@ -43,8 +43,9 @@
   color: white;
   background-color: #9088a0;
   cursor: pointer;
-}
+} */
 .studiesContainer {
   grid-area: content;
   margin-right: 60%;
+  font-size: 1.4rem;
 }

@@ -15,8 +15,12 @@ export default function Budget({
       <p className={s.date}>{creationDate}</p>
       <p className={s.amount}>{totalPrice}</p>
       <p className={s.status}>{paid ? 'Completed' : 'Pending'}</p>
-      <Link className={s.buton} to={`/home/updateBudget/${budgetID}`}>
-        Details
+      <Link to={`/home/updateBudget/${budgetID}`}>
+        <button className={s.btn}>
+          <span className={s.transition}></span>
+          <span className={s.gradient}></span>
+          <span className={s.label}>Details</span>
+        </button>
       </Link>
     </div>
   );

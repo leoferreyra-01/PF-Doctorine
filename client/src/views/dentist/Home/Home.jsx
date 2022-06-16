@@ -49,6 +49,9 @@ export default function Home() {
     if (parsedTitle === 'story ') {
       parsedTitle = `New Patient Clinical History`;
     }
+    if (parsedTitle === 'd' && location.pathname === '/home/changePassword') {
+      parsedTitle = 'Change Password';
+    }
     setTitle(parsedTitle);
   }, [location]);
 
@@ -61,11 +64,6 @@ export default function Home() {
         <Loader setLoader={setLoader} />
       ) : (
         <div className={s.home_container}>
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-            toastOptions={{ className: '', duration: 7000 }}
-          />
           <Header title={title} />
           <SideBar />
           <Outlet />

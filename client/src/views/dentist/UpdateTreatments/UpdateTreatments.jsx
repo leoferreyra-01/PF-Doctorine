@@ -44,9 +44,10 @@ function UpdateTreatments() {
   ];
   return (
     <div className={s.container}>
-      <div style={{ height: 550, width: '100%' }}>
+      <div style={{ height: 550, width: '100%', fontSize: '1.4rem' }}>
         {filledTreatments ? (
           <DataGrid
+            style={{ fontSize: '1.4rem' }}
             onCellEditCommit={(params, event, details) => {
               console.log(params);
               console.log(event);

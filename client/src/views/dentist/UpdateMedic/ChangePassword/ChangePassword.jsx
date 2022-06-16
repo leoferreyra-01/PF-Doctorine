@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import s from './ChangePassword.module.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -66,36 +67,59 @@ export default function changePassword() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Current Password</label>
-          <input
-            type='password'
-            name='currentPassword'
-            value={data.currentPassword}
-            onChange={handleChange}
-          />
+    <div className={s.container}>
+      <form onSubmit={handleSubmit} className={s.form}>
+        <div className={s.input_container}>
+          <div className={s.form_group_field}>
+            <input
+              className={s.form__field}
+              placeholder="Current Password"
+              type="password"
+              name="currentPassword"
+              value={data.currentPassword}
+              onChange={handleChange}
+            />
+            <label className={s.form__label} for="currentPassword">
+              Current Password
+            </label>
+          </div>
         </div>
-        <div>
-          <label>New Password</label>
-          <input
-            type='password'
-            name='password'
-            value={data.password}
-            onChange={handleChange}
-          />
+        <div className={s.input_container}>
+          <div className={s.form_group_field}>
+            <input
+              className={s.form__field}
+              type="password"
+              name="password"
+              placeholder="New Password"
+              value={data.password}
+              onChange={handleChange}
+            />
+            <label className={s.form__label} for="password">
+              New Password
+            </label>
+          </div>
         </div>
-        <div>
-          <label>Confirm Password</label>
-          <input
-            type='password'
-            name='newPassword'
-            value={data.newPassword}
-            onChange={handleChange}
-          />
+        <div className={s.input_container}>
+          <div className={s.form_group_field}>
+            <input
+              className={s.form__field}
+              placeholder="Confirm Password"
+              type="password"
+              name="newPassword"
+              value={data.newPassword}
+              onChange={handleChange}
+            />
+            <label className={s.form__label} for="newPassword">
+              Confirm Password
+            </label>
+          </div>
         </div>
-        <button type='submit'>Change Password</button>
+
+        <button className={s.btn} type="submit">
+          <span className={s.transition}></span>
+          <span className={s.gradient}></span>
+          <span className={s.label}>Change Password</span>
+        </button>
       </form>
     </div>
   );
