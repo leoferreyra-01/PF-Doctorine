@@ -164,7 +164,7 @@ export default function ClinicalHistory({ id }) {
         Clinic History Details
         <div>
           <div className="rowContainer">
-            {toRenderParsed ? (
+            {typeof clinicalHistory === 'object' ? (
               <div className="rowContainer2">
                 {toRenderParsed.map(property => (
                   <div className="property" key={id}>
@@ -174,10 +174,7 @@ export default function ClinicalHistory({ id }) {
               </div>
             ) : (
               <div>
-                <img
-                  src="https://giphy.com/gifs/odonto-odontocompany-company-9uIvZGLhJ0MntnhcWy/fullscreen"
-                  alt="loading"
-                />
+                <h3>Clinical history not yet uploaded...</h3>
               </div>
             )}
 
