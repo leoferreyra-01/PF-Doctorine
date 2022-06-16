@@ -135,14 +135,16 @@ export default function TurnsDetails({
                 onClick={handleDelete}
                 value={JSON.stringify(turn)}
               >
-                <span className={s.transition}></span>
+                {' '}
+                ❌ CANCEL
+                {/* <span className={s.transition}></span>
                 <span className={s.gradient}></span>
                 <span className={s.label}>
                   <span role="img" aria-label="X">
                     ❌
                   </span>
                   CANCEL
-                </span>
+                </span> */}
               </button>
             </div>
           );
