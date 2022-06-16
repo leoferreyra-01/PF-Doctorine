@@ -12,7 +12,7 @@ const searchPatient = () => {
 
   useEffect(() => {
     dispatch(getPatientDni2(uno.document));
-    dispatch(getPatientBudgets(SearchedPatient.Patient.ID));
+    // dispatch(getPatientBudgets(SearchedPatient.Patient.ID));
     // if (!SearchedPatient.medicalService) {
     // recargar()
     // }

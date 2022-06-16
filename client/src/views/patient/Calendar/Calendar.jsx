@@ -298,31 +298,35 @@ export default function CalendarFunction() {
 
   return (
     <div className={styles.container}>
-      <h3>Choose a date from tomorrow onwards.</h3>
-      <div className={styles.datepicker}>
-        <DatePicker onChange={handleChange} value={parseISO(date)} />
+      <div className={styles.tituloChoose}>
+        <h3>Choose a date from tomorrow onwards.</h3>
       </div>
-      <div className={styles.turnContainer}>
-        {availableTurns.length ? (
-          availableTurns.map((turn, idx) => (
-            <div key={idx} className={styles.turns}>
-              <button
-                onClick={handleSelect}
-                value={JSON.stringify(turn)}
-                className={styles.btn}>
-                SELECT{' '}
-                <span role='img' aria-label='ok'>
-                  ✔️
-                </span>
-              </button>
-
-              <p>Time: {numberToHours(turn.time)} hs</p>
-              <p>Duration: {turn.duration * 60} min.</p>
-            </div>
-          ))
-        ) : (
-          <h3>No available turns</h3>
-        )}
+      <div className={styles.containerDate}>
+        <div className={styles.datepicker}>
+          <DatePicker onChange={handleChange} value={parseISO(date)} />
+        </div>
+        <div className={styles.turnContainer}>
+          {availableTurns.length ? (
+            availableTurns.map((turn, idx) => (
+              <div key={idx} className={styles.turns}>
+                <p>Hour: {numberToHours(turn.time)} hs</p>
+                <p>Duration: {turn.duration * 60} min.</p>
+                <button
+                  onClick={handleSelect}
+                  value={JSON.stringify(turn)}
+                  className={styles.btn}
+                >
+                  SELECT{' '}
+                  <span role="img" aria-label="ok">
+                    ✔️
+                  </span>
+                </button>
+              </div>
+            ))
+          ) : (
+            <h3>No available turns</h3>
+          )}
+        </div>
       </div>
       <h2>Your turns:</h2>
       {PatientTurns.length &&
@@ -338,7 +342,8 @@ export default function CalendarFunction() {
               ) : (
                 <button
                   onClick={handlePatientAccepts}
-                  value={JSON.stringify(turn)}>
+                  value={JSON.stringify(turn)}
+                >
                   Accept?
                 </button>
               )}
@@ -348,7 +353,7 @@ export default function CalendarFunction() {
             <p>Duration: {turn.duration * 60} min.</p>
             <p>Description: {turn.description}</p>
             <button onClick={handleDelete} value={JSON.stringify(turn)}>
-              <span role='img' aria-label='X'>
+              <span role="img" aria-label="X">
                 ❌
               </span>{' '}
               CANCEL
