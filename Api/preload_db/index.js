@@ -24,7 +24,7 @@ async function preload_db() {
 
   //|> Basic info.
   await addClinic();
-  // await addUserMedic();
+  await addUserMedic();
   await addTeeths();
   await addTreatments();
   await addRealUserPatient();
@@ -99,18 +99,19 @@ async function addUserMedic() {
   const infoUser = {
     userType: 'Medic',
     document: 30500700,
-    name: 'Doctor',
-    lastName: 'DePrueba1',
+    name: 'Alfonso',
+    lastName: 'Montes de Oca',
     birth: '1992-05-22',
     telephone: '543854449323',
     cellphone: '543854449332',
     street: 'Belgrano',
     number: 553,
-    city: 'San Salvador',
+    city: 'Santiago del Estero',
     postalCode: 5800,
-    email: 'medicodeprueba1@dalequeva.com',
+    email: 'montesdeoca.alfonso@gmail.com',
     password: 'Aa123456',
-    imageProfile: null,
+    imageProfile:
+      'https://fastly.4sqi.net/img/user/260x260/-IY5KFDRRCT5WJF0G.jpg',
   };
 
   const infoMedic = {
