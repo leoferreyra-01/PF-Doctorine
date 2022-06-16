@@ -258,7 +258,7 @@ export default function CalendarFunction() {
     // console.log('time => ', time);
 
     //#region PAYMENT
-    if (description.toLowerCase().includes(CONSULTATION))
+    if (description.toLocaleLowerCase().includes(CONSULTATION))
       navigate('/home/payments');
     else
       return axios
@@ -309,9 +309,10 @@ export default function CalendarFunction() {
               <button
                 onClick={handleSelect}
                 value={JSON.stringify(turn)}
-                className={styles.btn}>
+                className={styles.btn}
+              >
                 SELECT{' '}
-                <span role='img' aria-label='ok'>
+                <span role="img" aria-label="ok">
                   ✔️
                 </span>
               </button>
@@ -338,7 +339,8 @@ export default function CalendarFunction() {
               ) : (
                 <button
                   onClick={handlePatientAccepts}
-                  value={JSON.stringify(turn)}>
+                  value={JSON.stringify(turn)}
+                >
                   Accept?
                 </button>
               )}
@@ -348,7 +350,7 @@ export default function CalendarFunction() {
             <p>Duration: {turn.duration * 60} min.</p>
             <p>Description: {turn.description}</p>
             <button onClick={handleDelete} value={JSON.stringify(turn)}>
-              <span role='img' aria-label='X'>
+              <span role="img" aria-label="X">
                 ❌
               </span>{' '}
               CANCEL
