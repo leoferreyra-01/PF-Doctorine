@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './calendarTurnsDetails.module.css';
 import { useDispatch } from 'react-redux';
 import { getTurns } from '../../../redux/actions';
 import { DatePicker } from '@material-ui/pickers';
@@ -90,44 +91,58 @@ export default function TurnsDetails({
 
   return (
     <div>
-      <h1>Turns details</h1>
-      <p>Pick a date</p>
-      <DatePicker value={date} onChange={funcSetDate} />
+      <h2 style={{ fontSize: '1.8rem' }}>Turns details</h2>
+      <p style={{ fontSize: '1.8rem' }}>Pick a date</p>
+      <DatePicker
+        value={date}
+        onChange={funcSetDate}
+        style={{ width: '40%' }}
+      />
       {conditionalTurnsRendering().length &&
         conditionalTurnsRendering().map(turn => {
           return (
-            <div key={turn.ID}>
-              <p>-----------------------------------------</p>
+            <div key={turn.ID} className={s.turn_container}>
+              {/* <p>-----------------------------------------</p> */}
               {turn.ID ? <h3>Turn n° {turn.ID}</h3> : <h3>New Turn</h3>}
-              <p>
-                Patient accepts: {turn.patientAccepts ? '✔️' : 'Pending...'}
-              </p>
-              <p>
-                Your confirmation:{' '}
-                {turn.medicAccepts ? (
-                  '✔️'
-                ) : (
-                  <button
-                    onClick={handleMedicAccepts}
-                    value={JSON.stringify(turn)}
-                  >
-                    Accept?
-                  </button>
-                )}
-              </p>
-              <p>Date: {turn.date}.</p>
-              <p>Time: {numberToHours(turn.time)} hs.</p>
-              <p>Duration: {turn.duration * 60} min.</p>
-              <p>
-                Patient: {turn.userPatient.lastName}, {turn.userPatient.name}.
-              </p>
-              <p>Document: {turn.userPatient.document}</p>
-              <p>Description: {turn.description}</p>
-              <button onClick={handleDelete} value={JSON.stringify(turn)}>
-                <span role="img" aria-label="X">
-                  ❌
-                </span>{' '}
-                CANCEL
+              <div className={s.turn_details}>
+                <p>
+                  Patient accepts: {turn.patientAccepts ? '✔️' : 'Pending...'}
+                </p>
+                <p>
+                  Your confirmation:
+                  {turn.medicAccepts ? (
+                    '✔️'
+                  ) : (
+                    <button
+                      onClick={handleMedicAccepts}
+                      value={JSON.stringify(turn)}
+                    >
+                      Accept?
+                    </button>
+                  )}
+                </p>
+                <p>Date: {turn.date}.</p>
+                <p>Time: {numberToHours(turn.time)} hs.</p>
+                <p>Duration: {turn.duration * 60} min.</p>
+                <p>
+                  Patient: {turn.userPatient.lastName}, {turn.userPatient.name}.
+                </p>
+                <p>Document: {turn.userPatient.document}</p>
+                <p>Description: {turn.description}</p>
+              </div>
+              <button
+                className={s.btn}
+                onClick={handleDelete}
+                value={JSON.stringify(turn)}
+              >
+                <span className={s.transition}></span>
+                <span className={s.gradient}></span>
+                <span className={s.label}>
+                  <span role="img" aria-label="X">
+                    ❌
+                  </span>
+                  CANCEL
+                </span>
               </button>
             </div>
           );
