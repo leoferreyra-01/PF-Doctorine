@@ -84,9 +84,9 @@ export function postPatient(patient) {
     } catch (error) {
       if (error.response.status === 404) {
         return Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: error.response.data.msg,
+          icon: 'warning',
+          title: 'Welcome!',
+          text: 'There are no Patients loaded in your database :(',
         });
       } else {
         Swal.fire({
@@ -171,17 +171,19 @@ export function getAllPatients() {
       .then(res => dispatch({ type: GET_ALL_PATIENTS, payload: res.data }))
       .catch(error => {
         if (error.response.status === 404) {
-          return Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error.response.data.msg,
-          });
+          console.log(error.response.data.msg);
+          // return Swal.fire({
+          //   icon: 'warning',
+          //   title: 'Welcome!',
+          //   text: 'There are no Patients loaded in your database :(',
+          // });
         } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error.message,
-          });
+          console.log(error.message);
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Error',
+          //   text: error.message,
+          // });
         }
       });
   };
@@ -711,11 +713,11 @@ export function getInfoClinic() {
       return dispatch({ type: GET_INFO_CLINIC, payload: clinics });
     } catch (e) {
       console.log(e);
-        return Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: e.response.data.error,
-        });
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: e.response.data.error,
+      });
     }
   };
 }
