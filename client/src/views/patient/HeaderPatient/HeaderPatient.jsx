@@ -24,7 +24,7 @@ export default function Header({ title }) {
           </div>
           <div className={s.helpcontainer}>
             <Link to="/home/payments">
-              <button>
+              <button className={s.buttonhe}>
                 <span className={s.transition}></span>
                 <span className={s.gradient}></span>
                 <span className={s.label}>Payments</span>
