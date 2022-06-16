@@ -1,7 +1,9 @@
 .sidebar_container {
   background-color: #101f33;
   color: #b4b3b3;
+
   grid-area: sidebar;
+  height: 168.4%;
 }
 
 /*.icon_container .icons_container .icon_title .fa_icon*/

@@ -298,9 +298,8 @@ export default function CalendarFunction() {
 
   return (
     <div className={styles.container}>
-      <h3>Choose a date from tomorrow onwards.</h3>
-      <div className={styles.datepicker}>
-        <DatePicker onChange={handleChange} value={parseISO(date)} />
+      <div className={styles.tituloChoose}>
+        <h3>Choose a date from tomorrow onwards.</h3>
       </div>
       <div className={styles.turnContainer}>
         {availableTurns.length ? (

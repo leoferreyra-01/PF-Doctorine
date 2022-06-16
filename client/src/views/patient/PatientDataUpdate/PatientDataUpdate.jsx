@@ -103,7 +103,7 @@ const PatientDataUpdate = () => {
         Swal.fire({
           icon: 'error',
           title: 'Your form has errors, please check it out.',
-        })
+        });
       } else {
         console.log(patientID, infoPatient, infoUser);
         dispatch(updatePatient(patientID, infoPatient, infoUser));
@@ -113,7 +113,7 @@ const PatientDataUpdate = () => {
         Swal.fire({
           icon: 'success',
           title: 'Your data has been updated successfully',
-        })
+        });
         navigate(`/home`);
       }
     } catch (error) {
@@ -121,7 +121,7 @@ const PatientDataUpdate = () => {
       Swal.fire({
         icon: 'error',
         title: 'Something went wrong, please try again.',
-      })
+      });
     }
   };
   // eslint-disable-next-line
@@ -138,122 +138,122 @@ const PatientDataUpdate = () => {
 
   return (
     <div className="container">
-      <Link to="/home/updatePassword">Change your password</Link>
-      <div className="container2">
-        <form onSubmit={onSubmit}>
-          <div className="rowContainer">
-            <div className="containerDivInput" style={{ width: '12vw' }}>
-              <div className="subtitle">Document</div>
-              <input
-                className="input"
-                name="document"
-                value={user.document}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '20vw' }}>
-              <div className="subtitle">Name</div>
-              <input
-                className="input"
-                name="name"
-                value={user.name}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '20vw' }}>
-              <div className="subtitle">Lastname</div>
-              <input
-                className="input"
-                name="lastName"
-                value={user.lastName}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '12vw' }}>
-              <div className="subtitle">Birthday</div>
-              <input
-                type="date"
-                name="birth"
-                className="input"
-                value={user.birth}
-                onChange={handleChange}
-              ></input>
-            </div>
+      <form className="form" onSubmit={onSubmit}>
+        <div className="rowContainer">
+          <div className="containerDivInput" style={{ width: '12vw' }}>
+            <div className="subtitle">Document</div>
+            <input
+              className="input"
+              name="document"
+              value={user.document}
+              onChange={handleChange}
+            ></input>
           </div>
-          <div className="rowContainer">
-            <div className="containerDivInput" style={{ width: '15vw' }}>
-              <div className="subtitle">Street</div>
-              <input
-                className="input"
-                name="street"
-                value={user.street}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '20vw' }}>
-              <div className="subtitle">Number</div>
-              <input
-                className="input"
-                name="number"
-                value={user.number}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '20vw' }}>
-              <div className="subtitle">City</div>
-              <input
-                className="input"
-                name="city"
-                value={user.city}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '9vw' }}>
-              <div className="subtitle">Postal Code</div>
-              <input
-                type="input"
-                name="postalCode"
-                className="input"
-                value={user.postalCode}
-                onChange={handleChange}
-              ></input>
-            </div>
+          <div className="containerDivInput" style={{ width: '20vw' }}>
+            <div className="subtitle">Name</div>
+            <input
+              className="input"
+              name="name"
+              value={user.name}
+              onChange={handleChange}
+            ></input>
           </div>
-          <div className="rowContainer">
-            <div className="containerDivInput" style={{ width: '18vw' }}>
-              <div className="subtitle">Telephone</div>
-              <input
-                className="input"
-                name="telephone"
-                value={user.telephone}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '18vw' }}>
-              <div className="subtitle">Cellphone</div>
-              <input
-                className="input"
-                name="cellphone"
-                value={user.cellphone}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="containerDivInput" style={{ width: '20vw' }}>
-              <div className="subtitle">Email</div>
-              <input
-                className="input"
-                name="email"
-                value={user.email}
-                onChange={handleChange}
-              ></input>
-            </div>
-          </div>{' '}
-          <button type="submit" className="button">
-            Update
-          </button>
-        </form>
-        <Link to="/home/create-clinical-history">create </Link>
-      </div>
+          <div className="containerDivInput" style={{ width: '20vw' }}>
+            <div className="subtitle">Lastname</div>
+            <input
+              className="input"
+              name="lastName"
+              value={user.lastName}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="containerDivInput" style={{ width: '12vw' }}>
+            <div className="subtitle1">Birthday</div>
+            <input
+              type="date"
+              name="birth"
+              className="input1"
+              value={user.birth}
+              onChange={handleChange}
+            ></input>
+          </div>
+        </div>
+        <div className="rowContainer">
+          <div className="containerDivInput" style={{ width: '15vw' }}>
+            <div className="subtitle">Street</div>
+            <input
+              className="input"
+              name="street"
+              value={user.street}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="containerDivInput" style={{ width: '20vw' }}>
+            <div className="subtitle">Number</div>
+            <input
+              className="input"
+              name="number"
+              value={user.number}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="containerDivInput" style={{ width: '20vw' }}>
+            <div className="subtitle">City</div>
+            <input
+              className="input"
+              name="city"
+              value={user.city}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="containerDivInput" style={{ width: '9vw' }}>
+            <div className="subtitle">Postal Code</div>
+            <input
+              type="input"
+              name="postalCode"
+              className="input"
+              value={user.postalCode}
+              onChange={handleChange}
+            ></input>
+          </div>
+        </div>
+        <div className="rowContainer">
+          <div className="containerDivInput" style={{ width: '18vw' }}>
+            <div className="subtitle">Telephone</div>
+            <input
+              className="input"
+              name="telephone"
+              value={user.telephone}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="containerDivInput" style={{ width: '18vw' }}>
+            <div className="subtitle">Cellphone</div>
+            <input
+              className="input"
+              name="cellphone"
+              value={user.cellphone}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="containerDivInput" style={{ width: '20vw' }}>
+            <div className="subtitle">Email</div>
+            <input
+              className="input"
+              name="email"
+              value={user.email}
+              onChange={handleChange}
+            ></input>
+          </div>
+        </div>{' '}
+        <button type="submit" className="button">
+          Update
+        </button>
+      </form>
+      <Link className="button1" to="/home/create-clinical-history">
+        {' '}
+        Create Initial History Clinic{' '}
+      </Link>
     </div>
   );
 };
