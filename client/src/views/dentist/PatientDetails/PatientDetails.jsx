@@ -24,8 +24,8 @@ export default function PatientDetails() {
 
   useEffect(() => {
     setTimeout(() => {
-      if (!filledStudies) dispatch(getStudies(patientID));
-      if (!filledEvolutions) dispatch(getEvolutions(patientID));
+      dispatch(getStudies(patientID));
+      dispatch(getEvolutions(patientID));
     }, 1000);
     // if (Object.keys(patient).length === 0) 
     dispatch(getPatient(patientID));
