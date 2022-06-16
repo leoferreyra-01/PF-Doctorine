@@ -44,14 +44,14 @@ export const mainSidebarItems = [
   },
 
   {
-    id: 5,
-    icon: (
-      <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
-    ),
-    label: 'Evolutions and Studies',
-    route: 'evolutionsNStudies',
-  },
-  {
+    //   id: 5,
+    //   icon: (
+    //     <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
+    //   ),
+    //   label: 'Evolutions and Studies',
+    //   route: 'evolutionsNStudies',
+    // },
+    // {
     id: 5,
     icon: (
       <FontAwesomeIcon icon={faClipboardUser} size="2x" className={s.fa_icon} />
