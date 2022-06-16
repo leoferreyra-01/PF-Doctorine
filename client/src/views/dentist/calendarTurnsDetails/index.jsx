@@ -92,7 +92,9 @@ export default function TurnsDetails({
   return (
     <div className={s.container}>
       <h2 className={s.turns_title}>Turns details</h2>
-      <p style={{ fontSize: '1.8rem' }}>Pick a date</p>
+      <p style={{ fontSize: '1.8rem', flex: '1', padding: '1rem 0' }}>
+        Pick a date
+      </p>
       <DatePicker
         value={date}
         onChange={funcSetDate}
