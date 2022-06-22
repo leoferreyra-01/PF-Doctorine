@@ -158,8 +158,25 @@ export default function ClinicalHistory({ id }) {
         </form>
       </div> */}
       {/* <div className="container"> */}
+
       <div className="container3">
-        {' '}
+        {typeof clinicalHistory === 'object' ? (
+          <div className="rowContainer">
+            {toRenderParsed.map(property => (
+              <div className="property" key={id}>
+                {property}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <h1>Clinical history not yet uploaded.</h1>
+          </div>
+        )}
+      </div>
+
+      {/* <div className="container3">
+        
         Clinic History Details
         <div>
           <div className="rowContainer">
@@ -180,10 +197,29 @@ export default function ClinicalHistory({ id }) {
               </div>
             )}
 
-            {/* <ClinicalHistory className='container3' id={patientID} /> */}
+            
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
+/* 
+return (
+    <div className={s.hc_container}>
+      {typeof clinicalHistory === 'object' ? (
+        <div className={s.hc}>
+          {toRenderParsed.map(property => (
+            <div className={s.studies} key={id}>
+              {property}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <h1>Clinical history not yet uploaded.</h1>
+        </div>
+      )}
+    </div>
+  );
+*/
