@@ -129,12 +129,12 @@ export default function RegisterClinicalHistory() {
 
             dispatch(postClinicalHistory(fixedhc));
 
-            navigate(`/home/${Id}`);
+            navigate(`/home`);
           }
         } else if (result.isDenied) {
           Swal.fire('Form not send');
         } else {
-          return Swal.fire('Chupala!');
+          return Swal.fire('You are already have a clinic history!');
         }
       }
     });

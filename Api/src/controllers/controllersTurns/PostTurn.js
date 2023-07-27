@@ -69,42 +69,42 @@ async function postTurns(req, res) {
       include: [Medic, Patient],
     });
 
-    // //#region  |> EMAIL
-    // const medic = (
-    //   await Medic.findOne({ where: { ID: MedicID }, include: [User] })
-    // ).dataValues;
-    // console.log(medic);
-    // const medicEmail = medic.User.dataValues.email;
-    // const user = await User.findOne({
-    //   where: {
-    //     email: email,
-    //   },
-    // });
-    // if (user) {
-    //   let transporter = nodemailer.createTransport({
-    //     host: 'smtp.gmail.com',
-    //     port: 465,
-    //     secure: true, // true for 465, false for other ports
-    //     auth: {
-    //       user: process.env.USER_ADMIN, // generated ethereal user
-    //       pass: process.env.PASSWORD, // generated ethereal password
-    //     },
-    //   });
-    //   transporter.verify().then(() => {
-    //     console.log('Ready for send mails');
-    //   });
-    //   await transporter.sendMail({
-    //     from: '"Turn Created" <doctorine.com@gmail.com>', // sender address
-    //     to: `${email}, ${medicEmail}`, // list of receivers
-    //     subject: `Turn created for ${date}`, // Subject line
-    //     html: `<b>The doctor ${medic.User.dataValues.name} ${
-    //       medic.User.dataValues.lastName
-    //     } has created a Turn on ${date} at ${numberToHours(time)}hs.</b>`, // html body
-    //   });
-    // } else {
-    //   res.json({ error: 'User not found!' });
-    // }
-    // //#endregion
+    //#region  |> EMAIL
+    const medic = (
+      await Medic.findOne({ where: { ID: MedicID }, include: [User] })
+    ).dataValues;
+    console.log(medic);
+    const medicEmail = medic.User.dataValues.email;
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (user) {
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: process.env.USER_ADMIN, // generated ethereal user
+          pass: process.env.PASSWORD, // generated ethereal password
+        },
+      });
+      transporter.verify().then(() => {
+        console.log('Ready for send mails');
+      });
+      await transporter.sendMail({
+        from: '"Turn Created" <doctorine.com@gmail.com>', // sender address
+        to: `${email}, ${medicEmail}`, // list of receivers
+        subject: `Turn created for ${date}`, // Subject line
+        html: `<b>The doctor ${medic.User.dataValues.name} ${
+          medic.User.dataValues.lastName
+        } has created a Turn on ${date} at ${numberToHours(time)}hs.</b>`, // html body
+      });
+    } else {
+      res.json({ error: 'User not found!' });
+    }
+    //#endregion
 
     res.status(200).json(newTurn);
   } catch (err) {

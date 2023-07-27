@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClinicalHistory } from '../../../../redux/actions';
-import s from './hc.module.css';
 import './PatientCH.css';
 
 export default function ClinicalHistory({ id }) {

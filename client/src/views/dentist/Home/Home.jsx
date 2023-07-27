@@ -5,7 +5,6 @@ import { getClinic } from '../../../redux/actions';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import SideBar from '../SideBar/SideBar';
-import { Toaster } from 'react-hot-toast';
 import Loader from '../../../Components/Loader/loader';
 
 export default function Home() {

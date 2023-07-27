@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../searchPatient/searchPatient.css';
-import { getPatientBudgets, getPatientDni2 } from '../../../redux/actions';
+import { getPatientDni2 } from '../../../redux/actions';
 
 const searchPatient = () => {
   const dispatch = useDispatch();

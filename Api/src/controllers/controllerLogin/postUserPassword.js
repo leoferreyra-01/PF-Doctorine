@@ -57,7 +57,7 @@ const passwordReset = async (req) => {
         from: '"Reset password 😎" <doctorine.com@gmail.com>', // sender address
         to: req.email, // list of receivers
         subject: 'Reset Password Doctorine', // Subject line
-        html: '<b>To reset your password, click on the link</b><br/><div><a href=http://localhost:3000/newPassword>Link</a></div>', // html body
+        html: '<b>To reset your password, click on the link</b><br/><div><a href=http://https://doctorine.vercel.app/newPassword>Link</a></div>', // html body
       });
     } else {
       return ({ error: 'Usuario no registrado!' });
