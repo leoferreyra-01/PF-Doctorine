@@ -71,7 +71,7 @@
 .button:hover {
   cursor: pointer;
 } */
-btn2 {
+.btn2 {
   font-size: 1.8rem;
   padding: 1em 2.7em;
   font-weight: 500;

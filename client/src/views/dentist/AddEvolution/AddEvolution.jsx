@@ -218,9 +218,9 @@ function addEvolution() {
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteMedic(e)} name={t}>
-                        <span role="img" aria-label="X">
+                        {/* <span role="img" aria-label="X"> */}
                           ❌
-                        </span>
+                        {/* </span> */}
                       </button>
 
                       {`${medic[0].name}${medic[0].lastName} (${medic[0].Medic.tuition_number})`}
@@ -261,9 +261,9 @@ function addEvolution() {
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTreatment(e)} name={t}>
-                        <span role="img" aria-label="X">
+                        {/* <span role="img" aria-label="X"> */}
                           ❌
-                        </span>
+                        {/* </span> */}
                       </button>
                       {`${treat[0].description}(${treat[0].ID})`}
                     </li>
@@ -304,9 +304,9 @@ function addEvolution() {
                   return (
                     <li key={t.ID}>
                       <button onClick={e => handleDeleteTeeth(e)} name={t}>
-                        <span role="img" aria-label="X">
+                        {/* <span role="img" aria-label="X"> */}
                           ❌
-                        </span>
+                        {/* </span> */}
                       </button>
                       {`${th[0].ID}(zone:${th[0].zone} & pos:${th[0].position})`}
                     </li>

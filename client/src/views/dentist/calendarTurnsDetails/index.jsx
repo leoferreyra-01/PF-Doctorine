@@ -117,8 +117,7 @@ export default function TurnsDetails({
                     ) : (
                       <button
                         onClick={handleMedicAccepts}
-                        value={JSON.stringify(turn)}
-                      >
+                        value={JSON.stringify(turn)}>
                         Accept?
                       </button>
                     )}
@@ -136,12 +135,11 @@ export default function TurnsDetails({
                 <button
                   className={s.btn}
                   onClick={handleDelete}
-                  value={JSON.stringify(turn)}
-                >
+                  value={JSON.stringify(turn)}>
                   <span className={s.transition}></span>
                   <span className={s.gradient}></span>
                   <span className={s.label}>
-                    <span role="img" aria-label="X">
+                    <span role='img' aria-label='X'>
                       ❌
                     </span>
                     CANCEL

@@ -332,7 +332,9 @@ export function AddBudget() {
             style={{ marginTop: '2rem' }}
             onClick={handleSent}
           >
-            <span>Create Budget</span>
+            <span className={s.transition}></span>
+            <span className={s.gradient}></span>
+            <span className={s.label}>Create Budget</span>
           </button>
         </div>
       </div>

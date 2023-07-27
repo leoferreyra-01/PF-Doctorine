@@ -328,6 +328,7 @@ export default function CalendarFunction() {
           )}
         </div>
       </div>
+      <div className={styles.uTurns}>
       <h2>Your turns:</h2>
       {PatientTurns.length &&
         PatientTurns.map(turn => (
@@ -360,6 +361,7 @@ export default function CalendarFunction() {
             </button>
           </div>
         ))}
+    </div>
     </div>
   );
 }
